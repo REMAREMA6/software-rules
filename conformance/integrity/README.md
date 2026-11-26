@@ -21,7 +21,9 @@ node conformance/integrity/validate-integrity.mjs path/to/capture.json
 - Source-derived rule → source evidence.
 - Coverage → scenario and execution references.
 - Replication property inventory IDs are unique and facets are declared.
-- Captured/partial properties link to existing observations and evidence; captured properties link to observed runtime records.
+- Captured/partial properties link to existing observations and evidence; inventory evidence must also be attached to at least one of that property's linked observations.
+- A property marked captured must have at least one observed linked record with runtime-class evidence and must not rely only on an observation explicitly marked partial.
+- These checks improve machine-verifiable evidence linkage, but do not prove semantic sufficiency, exhaustive probing, or inventory completeness.
 - Completeness status is checked against every required inventory property; a capture cannot claim `complete` while a required property is partial, unobserved, unknown, unavailable, conflicting, or source-inferred.
 - This is a structural/reference check only. It does not establish that the linked evidence actually proves the property, that the observation is sufficiently comprehensive, or that the inventory is exhaustive.
 
@@ -29,4 +31,4 @@ This validator checks consistency of the declared inventory. It cannot prove tha
 
 ## Boundaries
 
-This is not a JSON Schema replacement. Run schema validation first, then this validator. It does not verify evidence authenticity, source revision reachability, semantic alignment between captures, contract correctness, or comparison result correctness. It also does not infer missing references: unresolved links are errors, not implicit absence.
+This is not a JSON Schema replacement. Run schema validation first, then this validator. It does not verify evidence authenticity, source revision reachability, semantic alignment between captures, contract correctness, or comparison result correctness. Human review is still required to determine whether evidence actually establishes the proposition and whether the inventory is exhaustive. It also does not infer missing references: unresolved links are errors, not implicit absence.

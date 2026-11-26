@@ -1,0 +1,138 @@
+{
+  "reference": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/tasks",
+        "body": {
+          "title": "API probe"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": false
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PATCH",
+        "url": "/api/tasks/task-1",
+        "body": {
+          "completed": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": true
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "url": "/api/tasks/task-1",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "deleted": true,
+          "id": "task-1"
+        }
+      }
+    }
+  ],
+  "independent": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/tasks",
+        "body": {
+          "title": "API probe"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": false
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PATCH",
+        "url": "/api/tasks/task-1",
+        "body": {
+          "completed": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": true
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "url": "/api/tasks/task-1",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "deleted": true,
+          "id": "task-1"
+        }
+      }
+    }
+  ],
+  "mutated": [
+    {
+      "request": {
+        "method": "POST",
+        "url": "/api/tasks",
+        "body": {
+          "title": "Prepare release notes"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "Prepare release notes",
+          "completed": false
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PATCH",
+        "url": "/api/tasks/task-1",
+        "body": {
+          "completed": true
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "Prepare release notes",
+          "completed": true
+        }
+      }
+    }
+  ]
+}

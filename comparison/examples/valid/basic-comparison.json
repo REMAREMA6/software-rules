@@ -109,5 +109,11 @@
   },
   "limitations": [
     "Illustrative example; no real systems were captured."
-  ]
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "undetermined",
+    "implementationStatus": "undetermined",
+    "result": "undetermined",
+    "statement": "This illustrative report has no independently assessed replication property inventories; it demonstrates comparison structure only and cannot establish replication completeness."
+  }
 }

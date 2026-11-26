@@ -253,6 +253,7 @@ Deliverables:
 - [x] Add separate replication-completeness status to comparison reports.
 - [x] Add integrity checks that reject false completeness and broken inventory evidence links.
 - [x] Add explicit Task Board property inventories and mark current captures incomplete.
+- [x] Bump the incompatible draft capture/report format from 0.1.0 to 0.2.0.
 - [ ] Expand empirical captures to cover every required property in the declared Task Board scope.
 - [ ] Capture complete interface snapshots and retained screenshot/pixel evidence for each required UI state.
 - [ ] Execute missing validation, keyboard, error, recovery, and edge-case behaviour scenarios.

@@ -45,7 +45,7 @@ The baseline reference and independent implementation are compared pixel-for-pix
 
 The expanded probes were executed successfully in [GitHub Actions Phase 6 run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). Its [phase6-expanded-runtime-evidence artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580) contains 41 files, including per-variant JSON captures, probe results, screenshots, and pixel-diff outputs. The artifact expires after 30 days; rerunning the workflow regenerates it.
 
-The earlier baseline run is [#45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953).
+The updated 34-entry capture inventories and comparison reports passed integrity and JSON Schema validation in [run #45859279008](https://github.com/REMAREMA6/software-rules/actions/runs/45859279008). The latest documentation update also passed in [run #45859552354](https://github.com/REMAREMA6/software-rules/actions/runs/45859552354). The earlier baseline run is [#45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953).
 
 **Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior. The remaining unresolved properties are font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint; all three captures correctly report `incomplete`.
 

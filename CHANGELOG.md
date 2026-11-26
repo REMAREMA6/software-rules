@@ -76,3 +76,8 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Reclassified the existing Task Board result as bounded baseline evidence rather than completion of the overall Phase 6 objective.
 - Explicitly recorded that its deterministic in-memory API adapter does not establish production API or persistence behaviour, and that facets absent from this fixture remain unverified rather than globally not applicable.
 - Blocked Phase 7 release work until the expanded Phase 6 exit gate is satisfied.
+
+
+### Correction — Phase 6 status
+
+The initial Task Board completeness result was subsequently re-audited and reclassified. The captures now report incomplete coverage, with seven required properties marked partial across font rendering, business rules, and data. The earlier bounded pixel and workflow comparison results remain valid for the tested conditions, but the earlier claim that the Task Board captures were complete is superseded.

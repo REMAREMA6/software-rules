@@ -104,6 +104,45 @@
     },
     "extensions": {
       "type": "object"
+    },
+    "replicationCompleteness": {
+      "type": "object",
+      "properties": {
+        "referenceStatus": {
+          "enum": [
+            "complete",
+            "incomplete",
+            "undetermined"
+          ]
+        },
+        "implementationStatus": {
+          "enum": [
+            "complete",
+            "incomplete",
+            "undetermined"
+          ]
+        },
+        "result": {
+          "enum": [
+            "complete-both",
+            "incomplete-reference",
+            "incomplete-implementation",
+            "incomplete-both",
+            "undetermined"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referenceStatus",
+        "implementationStatus",
+        "result",
+        "statement"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -116,7 +155,8 @@
     "alignments",
     "results",
     "coverage",
-    "conclusion"
+    "conclusion",
+    "replicationCompleteness"
   ],
   "additionalProperties": false,
   "$defs": {

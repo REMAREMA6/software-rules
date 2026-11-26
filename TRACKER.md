@@ -28,7 +28,7 @@
 
 | Phase | Name | Status | Notes |
 |---|---|---|---|
-| 0 | Repository and project governance | [x] Complete | Plan, tracker, changelog, decision log, maturity/versioning policy, and navigation links established. |
+| 0 | Repository and project governance | [x] Complete | Roadmap, tracker, contribution guide, changelog, decision log, maturity/versioning policy, and navigation links established. |
 | 1 | Research existing standards and prior art | [~] In progress | Consolidate previous research and verify authoritative sources. |
 | 2 | Core concepts and common model | [ ] Not started | Depends on Phase 1 findings. |
 | 3 | Facet specifications | [ ] Not started | Define facet boundaries and typed payloads. |
@@ -45,11 +45,12 @@
 - [x] Propose and document target repository layout.
 - [x] Create project roadmap in `PLAN.md`.
 - [x] Create persistent progress tracker.
+- [x] Create contribution workflow in `CONTRIBUTING.md`.
 - [x] Link plan and tracker and governance documents from the README.
 - [x] Establish changelog and design-decision recording conventions.
 - [x] Define specification maturity labels and versioning policy.
 
-**Phase 0 exit gate: satisfied.** A new chat can find the project purpose, roadmap, progress, decisions, change history, and versioning policy in the repository.
+**Phase 0 exit gate: satisfied.** A new chat or contributor can find the project purpose, roadmap, progress, contribution process, decisions, change history, and versioning policy in the repository.
 
 ## Phase 1 — Research existing standards and prior art
 
@@ -160,7 +161,7 @@ For every facet, track: scope, observable dimensions, trigger/scenario model, ty
 
 ### 2026-11-26
 - Inspected the repository and confirmed README, plan, and tracker.
-- Completed Phase 0 governance: added `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.
+- Completed Phase 0 governance: added `CONTRIBUTING.md`, `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.
 - Updated README navigation and reconciled the plan and tracker.
 - Verified the Phase 0 exit gate and moved the active work to Phase 1.
 - Next: consolidate and verify prior standards research in `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md`.

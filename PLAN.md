@@ -223,7 +223,7 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 
 **6B — Behaviour and functionality**
 - [x] Add an initial discriminating Playwright probe set for title normalization, duplicate titles, HTML-like/Unicode content, long titles, mixed task states, filter truth tables, completion toggling, deletion, and identifier samples.
-- [~] Execute the expanded probe set through the dedicated Phase 6 GitHub Actions workflow and inspect the retained outputs before promoting any property from partial.
+- [x] Execute the expanded probe set through the dedicated Phase 6 GitHub Actions workflow and inspect the retained outputs before promoting supported properties.
 - [ ] Build an explicit operation/trigger inventory from the running target.
 - [ ] Capture preconditions, actors, ordered actions, state before/after, outputs, side effects, timing/order, and termination outcomes.
 - [x] Exercise the initial title, duplicate, mixed-state, toggle, and multiple-delete boundary cases in the Task Board fixture.
@@ -231,14 +231,16 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 - [ ] Compare independently captured behaviour and ensure every rule is evidence-linked.
 
 **6C — Business rules**
-- [ ] Identify domain decisions, conditions, constraints, calculations, defaults, and branch outcomes.
-- [ ] Design scenario sets that distinguish competing rule hypotheses; do not infer a formula or policy from one example.
+- [x] Identify initial task-title normalization, duplicate acceptance, initial completion defaults, and summary-count decisions.
+- [x] Probe initial rules with duplicate titles and a three-task mixed completion/filter truth table.
+- [ ] Extend the inventory to all domain decisions, conditions, constraints, calculations, defaults, and branch outcomes.
+- [ ] Design further scenario sets for maximum title length, additional constraints, precedence, and exception cases.
 - [ ] Capture boundary values, combinations, precedence, and contradictory/exception cases.
 - [ ] Keep domain rules separate from UI validation, generic behaviour, and authorization.
 
 **6D — Data**
-- [ ] Capture runtime structures, fields, types, nullability, missing-vs-empty distinctions, relationships, formats, and serialization.
-- [x] Capture initial task record shape, identifier samples, and PATCH field-preservation behaviour.
+- [~] Capture the initial task record fields/types, identifier sequence within the adapter session, JSON serialization, and PATCH field-preservation behaviour.
+- [ ] Extend capture to nullability, missing-vs-empty distinctions, relationships, malformed values, unknown fields, and broader constraints.
 - [ ] Extend probes to null/missing fields, malformed values, unknown identifiers, and full constraint boundaries.
 - [ ] Record observed values separately from inferred schemas and source declarations.
 - [ ] Link data observations to the operations and API exchanges that produced them.
@@ -386,4 +388,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by adding discriminating runtime probes for behaviour/functionality, business rules, and data (empty/whitespace/trimmed/duplicate/Unicode/long titles; mixed-task filter/count truth tables; create/update/delete boundaries; malformed and unknown-ID API cases). Strengthen validation so evidence quality and facet consistency cannot be inferred from references alone. Treat its in-memory API as a test boundary only. After those facets, select or extend a controlled reference target for facets the Task Board does not implement. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by probing the remaining title-length boundary and API/data edge cases (malformed payloads, unknown identifiers, null/missing fields, repeated operations, and update/delete failures). Continue the interface state/viewport audit. Then select or extend a richer controlled target for persistence, identity, authorization, security, integrations, and background processing. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

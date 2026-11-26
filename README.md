@@ -6,8 +6,11 @@ A technology-independent specification system for capturing, representing, and c
 
 - [Project plan and target repository structure](PLAN.md)
 - [Progress tracker and handoff context](TRACKER.md)
+- [Changelog](CHANGELOG.md)
+- [Design decisions](research/DESIGN-DECISIONS.md)
+- [Maturity and versioning policy](specification/VERSIONING.md)
 
-Read the tracker when resuming work in a new chat. It records the current phase, completed work, blockers, and next action.
+When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this introduction. The tracker records the current phase, completed work, blockers, and next action.
 
 ## Purpose
 
@@ -39,7 +42,7 @@ These classes must remain distinguishable in storage and comparison.
 
 ## Specification status
 
-This repository is the home of the format specification, schemas, examples, and comparison rules. The format is under development; individual documents must state their version and maturity.
+This repository is the home of the format specification, schemas, examples, and comparison rules. The format is under development; individual documents must state their version and maturity. See the [maturity and versioning policy](specification/VERSIONING.md).
 
 ## Planned specification areas
 

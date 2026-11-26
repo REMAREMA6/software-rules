@@ -1,0 +1,20 @@
+# Source candidate — Prometheus
+
+**Repository:** prometheus/prometheus  
+**URL:** https://github.com/prometheus/prometheus  
+**Immutable inspected commit:** 1e794b83ad0d1df86c26fc607f87197734b9d9d9  
+**Licence:** Apache License 2.0  
+**Primary stack:** Go  
+**Candidate facets:** Performance and resource behaviour; data; API; persistence; errors/recovery.
+
+## Evidence inspected
+
+- CHANGELOG.md at the pinned commit records performance changes and benchmark-related measurements, including sample throughput/query improvements.
+- storage/remote/read_handler_test.go contains remote-read handler tests and metric assertions.
+- These entries identify candidate measurements and behaviours but do not define a reproducible workload or establish runtime performance characteristics.
+
+## Candidate rule areas
+
+Select one benchmarkable query or ingestion workload. Record dataset, cardinality, concurrency, warm/cold state, hardware/runtime, measurement method, latency distribution, throughput, allocations, and resource use. Compare only under equivalent workload/environment conditions.
+
+**Status:** candidate only; benchmark target and runtime capture pending.

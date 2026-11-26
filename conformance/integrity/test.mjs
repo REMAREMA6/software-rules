@@ -13,4 +13,4 @@ for (const file of ["reference.capture.json", "independent.capture.json", "indep
   const capture = JSON.parse(fs.readFileSync(path.resolve("examples/task-board/captures", file), "utf8"));
   assert.deepEqual(validateCapture(capture), [], file + " must have valid cross-record references");
 }
-console.log("PASS cross-record integrity unit tests and both empirical Task Board capture graphs");
+console.log("PASS cross-record integrity unit tests and all three empirical Task Board capture graphs");

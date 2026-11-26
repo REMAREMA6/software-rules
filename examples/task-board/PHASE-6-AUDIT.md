@@ -53,12 +53,17 @@ Each capture now has 29 inventory entries: 18 captured, seven partial, one not a
 
 The equivalent and deliberate-difference comparison reports now use incomplete-both. Their observed agreement or mismatch findings remain useful, but neither report claims replication completeness.
 
+## Probe implementation status
+
+The Playwright harness now contains the first expanded probe sequence for title normalization, duplicate titles, HTML-like/Unicode and long titles, mixed task-state counts, filters, completion toggle-back, deletion, and identifier samples. Request/response synchronization and explicit assertions were added. The suite has not yet been executed successfully in CI; the current capture inventories therefore remain incomplete and the relevant properties remain partial.
+
 ## Next probes
 
-1. Title cases: empty, whitespace-only, leading/trailing whitespace, duplicate, long, Unicode, and HTML-like content.
-2. State truth table: zero, one, and multiple tasks with mixed completion states; toggle completion in both directions; compare total/active counts and each filter.
-3. Operation boundaries: repeated delete, unknown ID, malformed payload, invalid field type, unknown fields, repeated PATCH, and request failure for create/update/delete.
-4. Data shape: exact request/response keys, value types, null/missing behaviour, identifier sequence and uniqueness under multiple creates.
-5. Evidence quality: attach property-specific evidence locations and make validation reject missing, mismatched, or non-supporting evidence links where machine-checkable.
+1. Execute the newly added Playwright probes in CI and inspect the three variant outputs before changing any inventory status.
+2. Title cases: empty, whitespace-only, leading/trailing whitespace, duplicate, long, Unicode, and HTML-like content.
+3. State truth table: zero, one, and multiple tasks with mixed completion states; toggle completion in both directions; compare total/active counts and each filter.
+4. Operation boundaries: repeated delete, unknown ID, malformed payload, invalid field type, unknown fields, repeated PATCH, and request failure for create/update/delete.
+5. Data shape: exact request/response keys, value types, null/missing behaviour, identifier sequence and uniqueness under multiple creates.
+6. Evidence quality: attach property-specific evidence locations and make validation reject missing, mismatched, or non-supporting evidence links where machine-checkable.
 
 No unresolved property is to be promoted to captured merely to satisfy CI.

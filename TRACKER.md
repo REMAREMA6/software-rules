@@ -19,8 +19,8 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Complete the Task Board target's expanded capture review, then establish a richer full-stack reference target for facets absent from the Task Board.
-- **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
+- **Current task:** Complete the Task Board capture record and comparison updates; then establish a richer full-stack reference target for facets absent from the Task Board.
+- **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no identity, authorization, messaging, integrations, background processing, or application configuration. A richer reference target has not yet been selected or created.
 - **Next action:** Review the latest supplemental artifact and update the capture records/comparisons. Then add a richer target that actually implements persistence, messaging, identity/authentication, authorization, security, background jobs, integrations, and application configuration.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
@@ -323,3 +323,5 @@
 - Single-run local performance samples were recorded: navigation load event end 8.1–8.9 ms, first contentful paint 16 ms, and 14 resources per variant. These are CI-host measurements, not performance guarantees.
 - Artifact: [#15137373210](https://github.com/REMAREMA6/software-rules/actions/runs/45860499892/artifacts/15137373210), 65 files, 30-day retention.
 - Added `examples/task-board/FACET-APPLICABILITY.md`. It explicitly separates the five facets exercised by Task Board from facets absent from this fixture. It does not mark the project-wide Phase 6 complete.
+
+- Task Board supplemental evidence now spans eight facets: interface, behaviour, business rules, data, API adapter, errors/recovery, limited security output encoding, and single-run performance. The three captures contain 38 inventory entries each (33 captured, two partial, one not applicable, two excluded) and remain explicitly incomplete.

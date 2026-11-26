@@ -7,6 +7,12 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Changed
+- Corrected Phase 6 architecture: use multiple immutable source repositories and a separate independent replication lab. One fixture is no longer expected to implement all 15 facets; each rule must pass source extraction, technology-independent capture, different-stack replication, equivalent probes, comparison, and mutation detection.
+
+### Added
+- Cross-repository Phase 6 programme with a 15-facet validation matrix, source register, replication-lab layout, evidence requirements, rule-level pass criteria, and explicit exit gate.
+
+### Changed
 - Reframed Phase 6 as an expanded multi-facet empirical capture and conformance programme. The initial Task Board result is retained as bounded baseline evidence; Phase 6 remains in progress until all applicable facets in the selected replication scope have evidence-backed inventories and cross-facet conformance. Phase 7 is blocked.
 
 ### Added

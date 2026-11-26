@@ -231,3 +231,26 @@ This preserves the ability to record implementation/contract mismatches without 
 
 ### Consequences
 Future scenario and comparison formats must retain all three concepts and their provenance.
+
+
+## D-010 — Accept the 15-facet catalogue for the current specification draft
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+The Phase 1 research proposed 15 observation facets. Phase 3 needed to validate whether their boundaries were sufficiently distinct to support individual payload specifications and cross-facet capture.
+
+### Options considered
+- Keep the taxonomy provisional until every facet has an empirical system capture.
+- Accept the 15 facets as the working normative catalogue for this specification draft, with explicit overlap rules and the ability to revise based on later evidence.
+- Collapse overlapping concerns into a smaller set of broad facets.
+
+### Decision
+Accept the 15-facet catalogue documented in `facets/README.md` for the current specification draft. Treat facets as observation perspectives, not mutually exclusive architectural modules. Use the boundary and overlap rules in `facets/FACET-BOUNDARIES.md`.
+
+### Rationale
+The boundary matrix distinguishes important questions such as domain decisions versus access permission, synchronous API exchanges versus asynchronous messaging, data values versus durable persistence, and message delivery versus worker lifecycle. Cross-facet links allow one execution to describe a connected operation without forcing all facts into one payload.
+
+### Consequences
+Each facet has an individual conceptual specification. The taxonomy is accepted for this draft but remains revisable through a new decision if empirical captures reveal missing or poorly separated concerns. Worked examples in Phase 3 are illustrative, not empirical. Machine schemas remain Phase 4; empirical end-to-end captures remain Phase 6.

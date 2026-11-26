@@ -93,3 +93,5 @@ The initial Task Board completeness result was subsequently re-audited and recla
 - Corrected the strict-mode filter selector issue and achieved a successful expanded runtime, integrity, and schema-validation run (#45858743131).
 - Updated all three captures and comparison reports with the verified expanded evidence. Inventory counts are now 34 properties per capture: 28 captured, two partial, one not applicable, and three optional exclusions.
 - Retained the expanded 41-file evidence archive as artifact #15136459580. The two remaining partial properties are broader font-rendering conditions and the maximum title-length constraint.
+
+- Follow-up validation runs #45859279008 and #45859552354 passed after updating the 34-property captures, comparison coverage, and project documentation.

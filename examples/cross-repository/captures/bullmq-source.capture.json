@@ -1,0 +1,196 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "bullmq-source-retry-policy",
+  "createdAt": "2026-11-26T17:51:00+01:00",
+  "purpose": "Record source-derived retry-policy rules from the pinned BullMQ source commit. This is not a runtime capture.",
+  "target": {
+    "targetId": "bullmq-source",
+    "systemName": "BullMQ",
+    "systemVersion": "Pinned source commit 526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+    "build": {
+      "revision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+    },
+    "boundary": {
+      "description": "Source inspection limited to BullMQ job retry decision and backoff calculation logic.",
+      "included": [
+        "src/classes/job.ts",
+        "src/classes/backoffs.ts",
+        "src/classes/worker.ts",
+        "docs/gitbook/guide/retrying-failing-jobs.md",
+        "tests/worker.test.ts"
+      ],
+      "excluded": [
+        "Uninspected production deployment configuration",
+        "Unexecuted runtime behaviour",
+        "Other queue lifecycle features outside retry decision"
+      ]
+    }
+  },
+  "scope": {
+    "description": "Source-derived retry eligibility and retry routing rules for a queued job after processor failure.",
+    "facetIds": [
+      "background-processing",
+      "errors-recovery"
+    ],
+    "subjects": [
+      "job-retry-policy"
+    ]
+  },
+  "collector": {
+    "name": "GitHub repository source inspection",
+    "methodDescription": "Pinned source files, documentation, and tests were inspected through repository file retrieval. No source runtime was executed for this capture."
+  },
+  "sourceRules": [
+    {
+      "ruleId": "BMQ-ER-001",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "proposition": "After a processor failure, automatic retry is eligible only when the next failed-attempt number remains below the configured attempts limit, the error is not unrecoverable, and the maximum-started-attempt limit has not been reached.",
+      "reasoning": "The shouldRetryJob implementation checks attemptsMade + 1 < job attempts, rejects UnrecoverableError, and rejects when maxStartedAttempts is reached. The result is source-derived and has not been verified against a running BullMQ instance in this project.",
+      "sourceEvidenceRefs": [
+        "bmq-evidence-job-retry"
+      ],
+      "reachability": "established",
+      "buildInclusion": "established",
+      "deployment": "unknown",
+      "execution": "not-established",
+      "verificationState": "unverified",
+      "limitations": [
+        "Source code establishes the inspected implementation branch, not that a deployed system uses this exact build or configuration."
+      ]
+    },
+    {
+      "ruleId": "BMQ-ER-002",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "proposition": "When retry is eligible, the configured backoff result controls retry routing: -1 suppresses retry, a positive delay routes the job to delayed state, and zero or no delay routes it immediately back to waiting.",
+      "reasoning": "The job implementation treats a backoff result of -1 as no retry, sends truthy positive delays through moveToDelayed, and otherwise calls retryJob. Backoffs.calculate passes a one-based failed-attempt number to the selected strategy. Runtime confirmation remains outstanding.",
+      "sourceEvidenceRefs": [
+        "bmq-evidence-job-retry",
+        "bmq-evidence-backoff"
+      ],
+      "reachability": "established",
+      "buildInclusion": "established",
+      "deployment": "unknown",
+      "execution": "not-established",
+      "verificationState": "unverified",
+      "limitations": [
+        "Custom strategy error/rejection behaviour and negative values other than -1 have not been established by this capture."
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "bmq-evidence-job-retry",
+      "evidenceClass": "source-artifact",
+      "evidenceType": "source-code",
+      "mediaType": "text/plain",
+      "origin": {
+        "sourceUri": "https://github.com/taskforcesh/bullmq/blob/526668f2c5e6de9d5d664df577f09a6bdccac1b4/src/classes/job.ts",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "location": "shouldRetryJob and moveToFailed, source lines 700–830"
+      },
+      "capturedAt": "2026-11-26T17:51:00+01:00",
+      "embedded": {
+        "inspectedClaims": [
+          "attemptsMade + 1 < attempts",
+          "UnrecoverableError suppresses retry",
+          "maxStartedAttempts suppresses retry",
+          "-1 backoff suppresses retry",
+          "positive delay calls moveToDelayed",
+          "zero/no delay calls retryJob"
+        ]
+      },
+      "retention": {
+        "status": "external",
+        "access": "Pinned public GitHub source URL"
+      },
+      "limitations": [
+        "Source-derived evidence only; no runtime execution."
+      ]
+    },
+    {
+      "evidenceId": "bmq-evidence-backoff",
+      "evidenceClass": "source-artifact",
+      "evidenceType": "source-code-and-tests",
+      "mediaType": "text/plain",
+      "origin": {
+        "sourceUri": "https://github.com/taskforcesh/bullmq/blob/526668f2c5e6de9d5d664df577f09a6bdccac1b4/src/classes/backoffs.ts",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "location": "fixed/exponential strategies and Backoffs.calculate; related worker tests around lines 4596–4747"
+      },
+      "capturedAt": "2026-11-26T17:51:00+01:00",
+      "embedded": {
+        "inspectedClaims": [
+          "Fixed strategy returns configured delay",
+          "Exponential strategy uses 2^(attempt-1) * seed delay",
+          "Custom strategy receives attempt number, type, error, and job"
+        ]
+      },
+      "retention": {
+        "status": "external",
+        "access": "Pinned public GitHub source URLs"
+      },
+      "limitations": [
+        "Tests were inspected but not executed in this project; guide contains an exponential example wording inconsistency that requires runtime probing."
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "background-processing",
+      "status": "partial",
+      "reason": "Worker lifecycle is only inspected enough to establish the retry-policy context."
+    },
+    {
+      "facet": "errors-recovery",
+      "status": "partial",
+      "reason": "Retry eligibility and routing are source-derived; source runtime and edge-case probes are outstanding."
+    }
+  ],
+  "limitations": [
+    "No BullMQ runtime scenario has been executed for this case.",
+    "No independent implementation comparison has been completed."
+  ],
+  "replicationScope": {
+    "scopeId": "bullmq-retry-rule-scope",
+    "description": "Two source-derived retry-policy rules only; this is not a complete capture of BullMQ or its background-processing facet.",
+    "facets": [
+      "background-processing",
+      "errors-recovery"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "BMQ-ER-001",
+        "facet": "errors-recovery",
+        "subject": "job-retry-policy",
+        "dimension": "retry eligibility and attempt limits",
+        "requirement": "required",
+        "status": "source-inferred",
+        "evidenceRefs": [
+          "bmq-evidence-job-retry"
+        ],
+        "rationale": "Derived from pinned source implementation; runtime verification remains outstanding."
+      },
+      {
+        "propertyId": "BMQ-ER-002",
+        "facet": "errors-recovery",
+        "subject": "job-retry-policy",
+        "dimension": "backoff and retry routing",
+        "requirement": "required",
+        "status": "source-inferred",
+        "evidenceRefs": [
+          "bmq-evidence-job-retry",
+          "bmq-evidence-backoff"
+        ],
+        "rationale": "Derived from pinned implementation and inspected tests; runtime verification remains outstanding."
+      }
+    ],
+    "completeness": {
+      "status": "incomplete",
+      "assessedAt": "2026-11-26T17:51:00+01:00",
+      "assessmentMethod": "Source-file inspection and manual property inventory.",
+      "rationale": "The selected source rules are identified but not runtime verified, independently replicated, or compared."
+    }
+  }
+}

@@ -14,7 +14,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
-- Completed Phase 1 and moved the tracker to Phase 2.
+- Completed Phase 1 and moved the tracker to Phase 2; subsequently completed Phase 2 and moved active work to Phase 3.
 - Revised the working facet taxonomy to separate identity/authentication from authorization and add configuration and performance/resource behaviour.
 - Recorded the distinction between declared contracts and actual runtime observations.
 - Completed Phase 2's conceptual model and accepted the shared-envelope/facet-payload approach (D-002). Machine schemas and facet payloads remain deferred.

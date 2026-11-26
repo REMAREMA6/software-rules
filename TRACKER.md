@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Audit the existing interface evidence, then extend runtime scenarios and evidence for behaviour/functionality, business rules, and data.
+- **Current task:** Extend the Playwright harness with discriminating behaviour, business-rule, and data probes; strengthen evidence-quality validation.
 - **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
-- **Next action:** Build evidence-backed property inventories and targeted runtime probes for behaviour, business rules, and data. Do not mark properties complete from generic facet observations.
+- **Next action:** Add runtime scenarios for title boundary cases, duplicate titles, mixed task states/counts, repeated toggles/deletes, malformed/unknown-ID API operations, and exact request/response data shapes. Preserve unresolved rules as partial.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -157,22 +157,26 @@
 - [x] Replication-completeness model, inventory fields, and comparison separation.
 
 ### 6A — Interface evidence audit
-- [~] Inspect retained runtime artifacts against each claimed interface property.
-- [ ] Correct inventory entries whose evidence is generic, missing, incomplete, or not directly supporting the property.
+- [x] Inspect retained runtime artifacts and capture records against each claimed interface property.
+- [x] Correct unsupported completeness claims: add font-rendering as partial and retain partial business-rule/data observations.
+- [x] Update all three captures and comparison reports to report incomplete replication coverage.
 - [ ] Add missing UI states, responsive conditions, and interaction states for the declared target.
 - [ ] Re-run baseline and deliberate-mutation conformance.
 
 ### 6B — Behaviour and functionality
+- [~] Draft the discriminating runtime probe backlog for create, complete, filter, delete, validation, and failure paths.
 - [ ] Enumerate every supported operation, trigger, precondition, transition, output, side effect, and failure path.
 - [ ] Probe normal, boundary, repeated, invalid, interrupted, and failure scenarios.
 - [ ] Capture independent executions and compare rule-level outcomes.
 
 ### 6C — Business rules
+- [~] Record candidate rules and unresolved hypotheses for title normalization, blank rejection, initial completion state, and summary counts.
 - [ ] Identify domain decisions, constraints, defaults, calculations, and branch conditions.
 - [ ] Probe boundaries and combinations that distinguish competing rule hypotheses.
 - [ ] Keep business policy distinct from interface validation and generic action mechanics.
 
 ### 6D — Data
+- [~] Record partial observed task record samples and their unresolved schema/constraint questions.
 - [ ] Capture runtime data structures, field types, nullability, relationships, constraints, transformations, defaults, and serialization.
 - [ ] Exercise boundary/invalid values and record what remains unknown.
 - [ ] Link data observations to the operations and API exchanges that produced them.
@@ -264,3 +268,15 @@
 - Ordered the remaining work: interface evidence audit; behaviour/functionality; business rules; data; persistence; API/messaging/integrations; identity/authorization/security; background processing/errors/configuration/performance; cross-facet completeness.
 - Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
 - Next action: inspect the retained artifacts property by property, then add evidence-backed runtime probes for behaviour, business rules, and data.
+
+
+### Phase 6A audit result — 2026-11-26
+
+- Inspected the three capture inventories, evidence records, observation payloads, and integrity validator.
+- Confirmed that the old reference interface observation itself explicitly reported partial completeness for its main-control snapshot; the later Playwright archive contains richer detail, but the inventory had no separate property for the font-rendering limitation.
+- Added an explicit partial font-rendering property and partial business-rule/data observations to each Task Board capture. These include only the facts supported by the existing one-task workflow and in-memory API samples.
+- Added six further partial rule/data properties across title normalization, initial completion state, summary counts, task record shape, identifier generation, and PATCH field-preservation semantics.
+- Updated all three captures to 29 inventory entries: 18 captured, seven partial, one not applicable, and three optional exclusions. Completeness is now incomplete.
+- Updated equivalent and deliberate-difference reports to preserve observed comparison results while reporting incomplete-both.
+- Updated integrity tests to expect the Task Board captures to remain incomplete.
+- Audit finding: the integrity validator checks reference existence, facet labels, and declared statuses; it does not verify that the linked evidence semantically proves the property or that the inventory is exhaustive. This limitation is now explicit. Stronger evidence-quality checks remain active work.

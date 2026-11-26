@@ -106,3 +106,64 @@ This prevents comparison reports from claiming more than the evidence supports.
 
 ### Consequences
 The comparison model must report coverage, unknowns, conflicts, and incomparable cases alongside matches and mismatches.
+
+
+## D-004 — Compose existing standards; do not adopt one as the whole format
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+Phase 1 reviewed requirements, modelling, business-rule, API, messaging, observability, interface inspection, scenario, validation, design-token, and protocol standards.
+
+### Options considered
+- Adopt one existing standard as the complete Software Rules format.
+- Compose relevant standards and define the missing cross-facet capture and comparison model.
+- Invent all terminology and structures without mapping to prior art.
+
+### Decision
+Compose and map to established standards where they fit. Software Rules must define the missing cross-facet runtime capture, evidence/provenance, coverage, uncertainty, normalization, and comparison model itself.
+
+### Rationale
+Each reviewed candidate solves a bounded problem. None provides the complete technology-independent, evidence-backed, multi-facet runtime capture and independent implementation comparison workflow.
+
+### Consequences
+Facet specifications should reuse established concepts and mappings where appropriate. They must not misrepresent any candidate as a complete solution. See STANDARDS-REVIEW.md and REFERENCES.md.
+
+## D-005 — Separate declared contracts from runtime observations
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+Standards such as OpenAPI, AsyncAPI, UML, SBVR, and design-token formats can describe declared interfaces, models, rules, or design decisions. Such declarations do not prove what a particular running implementation actually does.
+
+### Decision
+Declared contracts and models must be represented separately from runtime observations. Runtime evidence records what occurred under documented execution conditions. A mismatch between a declaration and runtime behaviour must remain visible.
+
+### Rationale
+The project's primary goal is to capture and compare actual running systems. Conflating intended/declared behaviour with observed behaviour would undermine the evidence model.
+
+### Consequences
+The core model must support declared-contract references without allowing them to satisfy runtime-evidence requirements. Phase 2 must define these relationships precisely.
+
+## D-006 — Expand the facet taxonomy
+
+- **Date:** 2026-11-26
+- **Status:** Proposed
+
+### Context
+Phase 1 research found that the initial facet list did not clearly separate identity/authentication from authorization and did not explicitly account for runtime configuration or performance/resource observations.
+
+### Options considered
+- Keep the original facet list unchanged.
+- Revise the list by clarifying identity/access boundaries and adding configuration and performance/resource behaviour as candidate facets.
+
+### Decision
+Use the revised 15-facet taxonomy in STANDARDS-REVIEW.md as the working proposal. Do not treat the list or its boundaries as normative yet.
+
+### Rationale
+The additional areas can affect runtime behaviour and comparison conditions. Authentication and authorization are distinct concepts. Configuration and performance/resource observations are not adequately represented by the original list.
+
+### Consequences
+Test the taxonomy against real system examples in Phases 2 and 3. Merge, split, rename, or remove facets when evidence supports doing so.

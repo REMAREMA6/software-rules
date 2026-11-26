@@ -400,7 +400,7 @@
         }
       },
       "evidenceRefs": [
-        "ind-evidence-interface"
+        "mut-evidence-interface"
       ],
       "status": "observed",
       "limitations": [
@@ -537,7 +537,7 @@
         "termination": "Task deleted; rendered list empty"
       },
       "evidenceRefs": [
-        "ind-evidence-workflow"
+        "mut-evidence-workflow"
       ],
       "status": "observed",
       "limitations": [

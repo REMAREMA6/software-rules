@@ -28,9 +28,14 @@ const duplicateProperty=structuredClone(valid); duplicateProperty.replicationSco
 for (const file of ["reference.capture.json", "independent.capture.json", "independent-mutated.capture.json"]) {
   const capture = JSON.parse(fs.readFileSync(path.resolve("examples/task-board/captures", file), "utf8"));
   assert.deepEqual(validateCapture(capture), [], file + " must have valid cross-record and replication-inventory references");
-  assert.equal(capture.replicationScope.completeness.status,"incomplete",file+" must not overclaim completeness");
+  assert.equal(capture.replicationScope.completeness.status,"complete",file+" must account for every required property in the declared Task Board scope");
+  for (const property of capture.replicationScope.propertyInventory) {
+    if (property.requirement === "required") {
+      assert.ok(["captured","not-applicable"].includes(property.status),file+" has unresolved required property "+property.propertyId);
+    }
+  }
 }
 const minimal = JSON.parse(fs.readFileSync(path.resolve("schemas/v1/fixtures/valid/minimal-capture.json"), "utf8"));
 assert.deepEqual(validateCapture(minimal), [], "minimal capture fixture must have valid inventory references");
 assert.equal(minimal.replicationScope.completeness.status, "incomplete", "minimal fixture must not claim replication completeness");
-console.log("PASS cross-record integrity, replication inventory, false-completeness guard, minimal fixture, and all three Task Board capture graphs");
+console.log("PASS cross-record integrity, replication completeness enforcement, minimal incomplete fixture, and all three complete Task Board capture graphs");

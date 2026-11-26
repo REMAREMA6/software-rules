@@ -43,7 +43,7 @@ When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this int
 
 ## Purpose
 
-Software Rules defines a structured way to describe what a software system does and what can be observed while it runs, independently of the language, framework, platform, or implementation used to build it.
+Software Rules exists to capture the complete, technology-independent rules needed to reproduce a declared scope of software in an independent implementation, regardless of language, framework, platform, or stack. Runtime observation and comparison provide the evidence and conformance process for that replication purpose; matching a limited set of captured properties is not sufficient.
 
 The format is intended to support this workflow:
 

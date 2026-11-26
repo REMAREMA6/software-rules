@@ -15,6 +15,7 @@ A technology-independent specification system for capturing, representing, and c
 - [Core model](specification/CORE.md)
 - [Terminology](specification/TERMINOLOGY.md)
 - [Core principles](specification/PRINCIPLES.md)
+- [Replication completeness rule](specification/REPLICATION-COMPLETENESS.md)
 - [Rule classification](specification/RULE-CLASSIFICATION.md)
 - [Observation model](specification/OBSERVATION-MODEL.md)
 - [Evidence and provenance](specification/EVIDENCE-AND-PROVENANCE.md)

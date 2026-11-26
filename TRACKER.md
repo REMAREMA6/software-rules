@@ -18,11 +18,11 @@
 
 ## Current position
 
-- **Current phase:** Phase 4 — Machine-readable schemas
+- **Current phase:** Phase 5 — Canonicalization and comparison
 - **Current task:** Define normalization, identity matching, comparison categories, and coverage reporting.
 - **Blockers:** No Phase 5-specific blockers identified; cross-record referential-integrity checks remain a Phase 6 conformance concern.
 - **Next action:** Start with `comparison/COMPARISON-MODEL.md`; define alignment and result semantics without exceeding capture coverage.
-- **Do not do yet:** Start canonicalization/comparison semantics before the record structures and validation fixtures are established.
+- **Scope note:** Phase 4 record structures and validation fixtures are established. Phase 5 may now define canonicalization and comparison semantics.
 
 ## Phase tracking
 

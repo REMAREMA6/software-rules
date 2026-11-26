@@ -1100,36 +1100,54 @@
       "status": "observed",
       "payload": {
         "facet": "business-rules",
-        "kind": "observed-domain-rule-samples",
+        "kind": "domain-decision",
         "subject": "task-create-and-summary",
-        "observedCases": [
-          {
-            "case": "whitespace-only-title",
-            "outcome": "submission ignored; no task created"
-          },
-          {
-            "case": "single-task-created",
-            "outcome": "task begins incomplete; summary shows one active task"
-          },
-          {
-            "case": "single-task-completed",
-            "outcome": "summary shows zero active tasks"
-          }
-        ],
-        "unresolvedQuestions": [
-          "Whether leading/trailing whitespace is normalized for non-empty titles",
-          "Whether duplicate titles are allowed",
-          "Whether additional title constraints exist",
-          "Whether summary-count semantics hold for multiple mixed tasks and all filters"
-        ],
-        "limitations": [
-          "Only the recorded single-task scenarios were exercised; this does not establish the complete business-rule set."
-        ]
+        "decisionSubject": "Task creation validation, initial completion state, and active-count summary",
+        "inputs": {
+          "testedTitle": "Prepare release notes",
+          "whitespaceOnlyInput": "   "
+        },
+        "conditions": {
+          "initialTaskCount": 0,
+          "adapter": "deterministic in-memory Playwright route"
+        },
+        "decision": {
+          "observedCases": [
+            {
+              "case": "whitespace-only-title",
+              "outcome": "submission ignored; no task created"
+            },
+            {
+              "case": "single-task-created",
+              "outcome": "task begins incomplete; summary shows one active task"
+            },
+            {
+              "case": "single-task-completed",
+              "outcome": "summary shows zero active tasks"
+            }
+          ]
+        },
+        "extensions": {
+          "unresolvedQuestions": [
+            "Whether leading/trailing whitespace is normalized for non-empty titles",
+            "Whether duplicate titles are allowed",
+            "Whether additional title constraints exist",
+            "Whether summary-count semantics hold for multiple mixed tasks and all filters"
+          ],
+          "limitations": [
+            "Only the recorded single-task scenarios were exercised; this does not establish the complete business-rule set."
+          ]
+        }
       },
       "evidenceRefs": [
         "ref-evidence-workflow",
         "ref-evidence-runtime-capture"
-      ]
+      ],
+      "subject": "task-create-and-summary",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Reinterpret retained Playwright workflow observations and request outcomes for candidate domain decisions."
+      }
     },
     {
       "observationId": "ref-obs-data",
@@ -1139,50 +1157,73 @@
       "status": "observed",
       "payload": {
         "facet": "data",
-        "kind": "observed-runtime-record-samples",
+        "kind": "data-value",
         "subject": "task-record",
-        "samples": [
-          {
-            "operation": "POST",
-            "value": {
-              "id": "task-1",
-              "title": "API probe",
-              "completed": false
+        "dataSubject": "Task record returned by the in-memory API adapter",
+        "fieldPath": "task-record",
+        "observedValue": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": false
+        },
+        "observedType": "object",
+        "nullability": "unknown",
+        "serialization": {
+          "format": "JSON",
+          "sampleOperations": [
+            "POST /api/tasks",
+            "PATCH /api/tasks/task-1"
+          ]
+        },
+        "extensions": {
+          "samples": [
+            {
+              "operation": "POST",
+              "value": {
+                "id": "task-1",
+                "title": "API probe",
+                "completed": false
+              },
+              "observedTypes": {
+                "id": "string",
+                "title": "string",
+                "completed": "boolean"
+              }
             },
-            "observedTypes": {
-              "id": "string",
-              "title": "string",
-              "completed": "boolean"
+            {
+              "operation": "PATCH",
+              "value": {
+                "id": "task-1",
+                "title": "API probe",
+                "completed": true
+              },
+              "observedTypes": {
+                "id": "string",
+                "title": "string",
+                "completed": "boolean"
+              }
             }
-          },
-          {
-            "operation": "PATCH",
-            "value": {
-              "id": "task-1",
-              "title": "API probe",
-              "completed": true
-            },
-            "observedTypes": {
-              "id": "string",
-              "title": "string",
-              "completed": "boolean"
-            }
-          }
-        ],
-        "unresolvedQuestions": [
-          "Identifier uniqueness and generation across multiple records or sessions",
-          "Nullability, missing fields, unknown fields, and malformed payload handling",
-          "Validation constraints and accepted title lengths/characters",
-          "Complete update/merge semantics for all fields and invalid identifiers"
-        ],
-        "limitations": [
-          "Samples come from the deterministic in-memory adapter and cover one record only."
-        ]
+          ],
+          "unresolvedQuestions": [
+            "Identifier uniqueness and generation across multiple records or sessions",
+            "Nullability, missing fields, unknown fields, and malformed payload handling",
+            "Validation constraints and accepted title lengths/characters",
+            "Complete update/merge semantics for all fields and invalid identifiers"
+          ],
+          "limitations": [
+            "Samples come from the deterministic in-memory adapter and cover one record only."
+          ]
+        }
       },
       "evidenceRefs": [
         "ref-evidence-api-1",
         "ref-evidence-api-2"
-      ]
+      ],
+      "subject": "task-record",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Inspect retained deterministic-adapter POST and PATCH request/response samples."
+      }
     }
   ],
   "runtimeRules": [

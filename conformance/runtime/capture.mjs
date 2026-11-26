@@ -165,6 +165,7 @@ async function runVariant(name) {
   await page.keyboard.press("Enter");
   await tabUntil('input[type="checkbox"]');
   await page.keyboard.press("Space");
+  await page.waitForFunction(() => document.querySelector("#summary, #meta")?.textContent === "1 task · 0 active");
   const keyboardCompletedSummary = await page.locator("#summary, #meta").innerText();
   await tabUntil('button[aria-label="Delete Keyboard-created task"]');
   await page.keyboard.press("Enter");

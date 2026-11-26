@@ -6,6 +6,8 @@ on:
     paths:
       - "schemas/**"
       - "conformance/validation/**"
+      - "comparison/**"
+      - "comparison/**"
       - ".github/workflows/validate-schemas.yml"
   pull_request:
     paths:

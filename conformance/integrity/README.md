@@ -20,6 +20,11 @@ node conformance/integrity/validate-integrity.mjs path/to/capture.json
 - Runtime rule → supporting, qualifying, and contradicting observations.
 - Source-derived rule → source evidence.
 - Coverage → scenario and execution references.
+- Replication property inventory IDs are unique and facets are declared.
+- Captured/partial properties link to existing observations and evidence; captured properties link to observed runtime records.
+- Completeness status is checked against every required inventory property; a capture cannot claim `complete` while a required property is partial, unobserved, unknown, unavailable, conflicting, or source-inferred.
+
+This validator checks consistency of the declared inventory. It cannot prove that the inventory itself lists every property needed to reproduce the target; that requires scope review and facet/domain expertise.
 
 ## Boundaries
 

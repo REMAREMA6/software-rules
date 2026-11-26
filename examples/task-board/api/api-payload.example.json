@@ -1,0 +1,38 @@
+{
+  "facet": "api",
+  "kind": "request-response",
+  "subject": "task-create-api-example",
+  "protocol": "HTTP",
+  "endpoint": "/api/tasks",
+  "method": "POST",
+  "target": "Deterministic in-memory browser test adapter",
+  "request": {
+    "path": "/api/tasks",
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "title": "Prepare release notes"
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": {
+      "id": "task-1",
+      "title": "Prepare release notes",
+      "completed": false
+    }
+  },
+  "timing": {
+    "state": "not-observed",
+    "reason": "Request/response timing was not retained by the browser harness."
+  },
+  "extensions": {
+    "exampleStatus": "illustrative-schema-example",
+    "notEmpirical": true,
+    "limitations": [
+      "Illustrative shape only; exact request/response events were not retained."
+    ]
+  }
+}

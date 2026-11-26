@@ -21,9 +21,9 @@ Keep these states distinct:
 | Stage | Facet(s) | Required investigation | Status |
 |---|---|---|---|
 | 6A | Interface | Audit retained artifacts property by property; extend states, responsive conditions, and interaction conditions | In progress |
-| 6B | Behaviour and functionality | Triggers, preconditions, actions, transitions, outputs, side effects, ordering, boundary/failure paths | Not started |
-| 6C | Business rules | Domain conditions, constraints, decisions, calculations, defaults, precedence, boundary combinations | Not started |
-| 6D | Data | Runtime structures, types, nullability, relationships, constraints, transformations, defaults, serialization | Not started |
+| 6B | Behaviour and functionality | Triggers, preconditions, actions, transitions, outputs, side effects, ordering, boundary/failure paths | In progress — initial probe suite passed |
+| 6C | Business rules | Domain conditions, constraints, decisions, calculations, defaults, precedence, boundary combinations | In progress — initial task rules captured; title maximum unresolved |
+| 6D | Data | Runtime structures, types, nullability, relationships, constraints, transformations, defaults, serialization | In progress — initial record shape and adapter semantics captured |
 | 6E | Persistence | Durable reads/writes, transaction outcomes, consistency, visibility, retention, deletion | Not started |
 | 6F | API, messaging, integrations | Actual protocol exchanges, delivery/acknowledgement, external dependency behaviour and failures | Not started |
 | 6G | Identity, authorization, security | Principal/session lifecycle, permission matrices, enforcement, authorized security outcomes | Not started |
@@ -95,4 +95,9 @@ The validator now requires each inventory evidence reference to be attached to a
 
 ## Current implementation checkpoint
 
-The initial Task Board audit has been recorded. The capture inventories now report incomplete coverage with seven required properties partial. The Playwright harness includes the first expanded behaviour/business-rule/data probe sequence, but it has not yet been run successfully; its output must be reviewed before the captures are updated or any property is promoted. The integrity validator now checks that inventory evidence references are attached to linked observations and that captured properties have at least one observed runtime-backed record not explicitly marked partial. These checks do not replace semantic evidence review.
+The initial Task Board audit has been recorded and the first expanded behaviour/business-rule/data probe suite has passed in [GitHub Actions run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). Its 41-file artifact is linked from the Task Board audit. All three captures now contain 34 inventory entries: 28 captured, two partial, one not applicable, and three optional exclusions. The remaining partial properties are font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint. Updated capture and comparison files also passed the dedicated workflow in [run #45859552354](https://github.com/REMAREMA6/software-rules/actions/runs/45859552354). The integrity validator now checks evidence attachment and runtime-backed support for captured properties; human review is still required to assess semantic sufficiency and inventory exhaustiveness.
+
+
+## Current coverage snapshot
+
+The Task Board fixture currently has direct empirical inventories for five facets: interface, behaviour, business rules, data, and its deterministic in-memory API boundary. It does not demonstrate production persistence, identity, authorization, security, messaging, external integrations, background processing, or production performance. Those facets remain unverified for this fixture. Phase 6 continues; this snapshot is not the project's final all-facet result.

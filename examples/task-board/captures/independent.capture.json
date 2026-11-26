@@ -46,11 +46,13 @@
     "description": "Initial render and one task lifecycle: create, complete, filter active/completed, delete.",
     "facetIds": [
       "interface",
-      "behavior"
+      "behavior",
+      "api"
     ],
     "scenarioIds": [
       "ind-scenario-interface",
-      "ind-scenario-workflow"
+      "ind-scenario-workflow",
+      "ind-scenario-api"
     ]
   },
   "collector": {
@@ -123,6 +125,43 @@
         "Do filters show the expected task subset?",
         "Does deletion remove the task?"
       ]
+    },
+    {
+      "scenarioId": "ind-scenario-api",
+      "title": "Capture task API exchanges",
+      "purpose": "Observe JSON request/response behavior at the deterministic in-memory adapter boundary.",
+      "facetIds": [
+        "api"
+      ],
+      "subject": "task-api",
+      "preconditions": [
+        "Fresh in-memory adapter store"
+      ],
+      "trigger": "Create, complete, and delete a task",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "POST /api/tasks",
+          "input": {
+            "title": "API probe"
+          }
+        },
+        {
+          "sequence": 2,
+          "action": "PATCH /api/tasks/task-1",
+          "input": {
+            "completed": true
+          }
+        },
+        {
+          "sequence": 3,
+          "action": "DELETE /api/tasks/task-1"
+        }
+      ],
+      "observableQuestions": [
+        "Which HTTP method and path are invoked?",
+        "What status and JSON body are returned?"
+      ]
     }
   ],
   "executions": [
@@ -185,6 +224,26 @@
       },
       "limitations": [
         "API adapter is deterministic and in-memory; this capture does not establish production server behavior."
+      ]
+    },
+    {
+      "executionId": "ind-exec-api",
+      "scenarioId": "ind-scenario-api",
+      "targetId": "task-board-independent",
+      "startedAt": "2026-11-26T15:40:00+01:00",
+      "status": "completed",
+      "actualContext": {
+        "adapter": "deterministic in-memory fetch adapter",
+        "requestResponseInstrumentation": "body data-api-events attribute"
+      },
+      "actualInputs": {
+        "title": "API probe"
+      },
+      "collector": {
+        "name": "Firecrawl isolated Chromium browser"
+      },
+      "limitations": [
+        "The adapter is test-only and does not represent a production backend."
       ]
     }
   ],
@@ -516,6 +575,174 @@
       "limitations": [
         "The browser automation output retained visible outcomes but not the adapter's individual request/response log. API envelope details are therefore not asserted as empirical facts."
       ]
+    },
+    {
+      "observationId": "ind-obs-api-1",
+      "targetId": "task-board-independent",
+      "executionId": "ind-exec-api",
+      "facet": "api",
+      "subject": "task-api-post",
+      "observedAt": "2026-11-26T15:40:00+01:00",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Instrument the deterministic window.fetch adapter to retain request method, URL, JSON body, response status, and an immutable JSON response snapshot.",
+        "tool": "in-page fetch adapter"
+      },
+      "trigger": "Task lifecycle browser scenario",
+      "conditions": {
+        "adapter": "deterministic in-memory",
+        "origin": "isolated browser test"
+      },
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "task-api-post",
+        "protocol": "HTTP",
+        "endpoint": "/api/tasks",
+        "method": "POST",
+        "target": "Deterministic in-memory test adapter",
+        "request": {
+          "path": "/api/tasks",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "body": {
+            "title": "API probe"
+          }
+        },
+        "response": {
+          "status": 200,
+          "contentType": "application/json",
+          "body": {
+            "id": "task-1",
+            "title": "API probe",
+            "completed": false
+          }
+        },
+        "timing": {
+          "state": "not-observed",
+          "reason": "Duration was not measured."
+        }
+      },
+      "evidenceRefs": [
+        "ind-evidence-api-1"
+      ],
+      "status": "observed",
+      "limitations": [
+        "This exchange is observed at the test adapter boundary, not over a production network."
+      ]
+    },
+    {
+      "observationId": "ind-obs-api-2",
+      "targetId": "task-board-independent",
+      "executionId": "ind-exec-api",
+      "facet": "api",
+      "subject": "task-api-patch",
+      "observedAt": "2026-11-26T15:40:00+01:00",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Instrument the deterministic window.fetch adapter to retain request method, URL, JSON body, response status, and an immutable JSON response snapshot.",
+        "tool": "in-page fetch adapter"
+      },
+      "trigger": "Task lifecycle browser scenario",
+      "conditions": {
+        "adapter": "deterministic in-memory",
+        "origin": "isolated browser test"
+      },
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "task-api-patch",
+        "protocol": "HTTP",
+        "endpoint": "/api/tasks/task-1",
+        "method": "PATCH",
+        "target": "Deterministic in-memory test adapter",
+        "request": {
+          "path": "/api/tasks/task-1",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "body": {
+            "completed": true
+          }
+        },
+        "response": {
+          "status": 200,
+          "contentType": "application/json",
+          "body": {
+            "id": "task-1",
+            "title": "API probe",
+            "completed": true
+          }
+        },
+        "timing": {
+          "state": "not-observed",
+          "reason": "Duration was not measured."
+        }
+      },
+      "evidenceRefs": [
+        "ind-evidence-api-2"
+      ],
+      "status": "observed",
+      "limitations": [
+        "This exchange is observed at the test adapter boundary, not over a production network."
+      ]
+    },
+    {
+      "observationId": "ind-obs-api-3",
+      "targetId": "task-board-independent",
+      "executionId": "ind-exec-api",
+      "facet": "api",
+      "subject": "task-api-delete",
+      "observedAt": "2026-11-26T15:40:00+01:00",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Instrument the deterministic window.fetch adapter to retain request method, URL, JSON body, response status, and an immutable JSON response snapshot.",
+        "tool": "in-page fetch adapter"
+      },
+      "trigger": "Task lifecycle browser scenario",
+      "conditions": {
+        "adapter": "deterministic in-memory",
+        "origin": "isolated browser test"
+      },
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "task-api-delete",
+        "protocol": "HTTP",
+        "endpoint": "/api/tasks/task-1",
+        "method": "DELETE",
+        "target": "Deterministic in-memory test adapter",
+        "request": {
+          "path": "/api/tasks/task-1",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "contentType": "application/json",
+          "body": {
+            "deleted": true,
+            "id": "task-1"
+          }
+        },
+        "timing": {
+          "state": "not-observed",
+          "reason": "Duration was not measured."
+        }
+      },
+      "evidenceRefs": [
+        "ind-evidence-api-3"
+      ],
+      "status": "observed",
+      "limitations": [
+        "This exchange is observed at the test adapter boundary, not over a production network."
+      ]
     }
   ],
   "runtimeRules": [
@@ -531,6 +758,20 @@
       ],
       "limitations": [
         "Supported for the tested title and deterministic in-memory adapter only."
+      ]
+    },
+    {
+      "ruleId": "ind-rule-create-api",
+      "facet": "api",
+      "subject": "task-api",
+      "proposition": "POST /api/tasks returns HTTP 200 and a JSON task object whose completed property is false for the tested input.",
+      "trigger": "Create task",
+      "status": "supported",
+      "supportingObservationIds": [
+        "ind-obs-api-1"
+      ],
+      "limitations": [
+        "Only the deterministic test adapter and one input were exercised."
       ]
     }
   ],
@@ -640,6 +881,108 @@
       "retention": {
         "status": "retained"
       }
+    },
+    {
+      "evidenceId": "ind-evidence-api-1",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-exchange",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent",
+        "executionId": "ind-exec-api",
+        "collector": "In-page deterministic fetch adapter"
+      },
+      "capturedAt": "2026-11-26T15:40:00+01:00",
+      "embedded": {
+        "request": {
+          "method": "POST",
+          "url": "/api/tasks",
+          "body": {
+            "title": "API probe"
+          }
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "id": "task-1",
+            "title": "API probe",
+            "completed": false
+          }
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Adapter response is simulated in memory."
+      ]
+    },
+    {
+      "evidenceId": "ind-evidence-api-2",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-exchange",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent",
+        "executionId": "ind-exec-api",
+        "collector": "In-page deterministic fetch adapter"
+      },
+      "capturedAt": "2026-11-26T15:40:00+01:00",
+      "embedded": {
+        "request": {
+          "method": "PATCH",
+          "url": "/api/tasks/task-1",
+          "body": {
+            "completed": true
+          }
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "id": "task-1",
+            "title": "API probe",
+            "completed": true
+          }
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Adapter response is simulated in memory."
+      ]
+    },
+    {
+      "evidenceId": "ind-evidence-api-3",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-exchange",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent",
+        "executionId": "ind-exec-api",
+        "collector": "In-page deterministic fetch adapter"
+      },
+      "capturedAt": "2026-11-26T15:40:00+01:00",
+      "embedded": {
+        "request": {
+          "method": "DELETE",
+          "url": "/api/tasks/task-1",
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "deleted": true,
+            "id": "task-1"
+          }
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Adapter response is simulated in memory."
+      ]
     }
   ],
   "coverage": [
@@ -682,11 +1025,24 @@
       "limitations": [
         "API capture is documented separately as a schema example and remains unverified."
       ]
+    },
+    {
+      "facet": "api",
+      "subject": "task-api",
+      "dimension": "request-response-exchanges",
+      "status": "observed",
+      "scenarioIds": [
+        "ind-scenario-api"
+      ],
+      "executionIds": [
+        "ind-exec-api"
+      ]
     }
   ],
   "limitations": [
     "Two implementations were run in the same isolated Chromium environment at 1280x800 CSS pixels.",
     "The API adapter is in-memory and does not represent a production server or persistence layer.",
-    "The automation retained DOM geometry and visible workflow outcomes, but did not retain screenshots or raw request/response events."
+    "The automation retained DOM geometry and visible workflow outcomes, but did not retain screenshots or raw request/response events.",
+    "API exchanges are empirical at the deterministic in-memory adapter boundary only; no production network, server, database, or authentication behavior is claimed."
   ]
 }

@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 1 — Research existing standards and prior art  
+**Current phase:** Phase 2 — Core concepts and common model  
 **Overall status:** In progress
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
@@ -19,18 +19,18 @@
 ## Current position
 
 - **Current phase:** Phase 1 — Research existing standards and prior art
-- **Current task:** Consolidate and verify the standards/prior-art research already started; record findings and design implications in the repository.
+- **Current task:** Define canonical terminology and the conceptual observation model.
 - **Blockers:** None known.
-- **Next action:** Create `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md`; assess each candidate standard's scope, strengths, limitations, and relevance to the Software Rules capture-and-comparison goal.
-- **Do not do yet:** Freeze the common observation envelope, facet payloads, or JSON schemas before Phase 1 research is documented and reviewed.
+- **Next action:** Create `specification/TERMINOLOGY.md` and `specification/OBSERVATION-MODEL.md`; define scenario execution, observation, expected outcome, actual outcome, capture method, evidence, provenance, and coverage.
+- **Do not do yet:** Freeze JSON schemas or stable facet payloads. First test the conceptual model against at least two unlike facets.
 
 ## Phase tracking
 
 | Phase | Name | Status | Notes |
 |---|---|---|---|
 | 0 | Repository and project governance | [x] Complete | Roadmap, tracker, contribution guide, changelog, decision log, maturity/versioning policy, and navigation links established. |
-| 1 | Research existing standards and prior art | [~] In progress | Consolidate previous research and verify authoritative sources. |
-| 2 | Core concepts and common model | [ ] Not started | Depends on Phase 1 findings. |
+| 1 | Research existing standards and prior art | [x] Complete | Comparative review, authoritative references, limitations, design implications, and revised facet proposal recorded. |
+| 2 | Core concepts and common model | [~] In progress | Define terminology and test the common model against unlike facets. |
 | 3 | Facet specifications | [ ] Not started | Define facet boundaries and typed payloads. |
 | 4 | Machine-readable schemas | [ ] Not started | Schemas follow the agreed conceptual model. |
 | 5 | Canonicalization and comparison | [ ] Not started | Define comparison semantics and limits. |
@@ -54,25 +54,29 @@
 
 ## Phase 1 — Research existing standards and prior art
 
-- [ ] Review requirements/specification standards (ISO/IEC/IEEE 29148).
-- [ ] Review platform-independent modelling (OMG MDA).
-- [ ] Review UML structural and behavioural modelling.
-- [ ] Review business-rule representation (OMG SBVR).
-- [ ] Review API contracts (OpenAPI).
-- [ ] Review event-driven API contracts (AsyncAPI).
-- [ ] Review runtime observability conventions (OpenTelemetry).
-- [ ] Review web runtime inspection (DOM, CSSOM, WebDriver).
-- [ ] Review native UI runtime inspection and accessibility semantics.
-- [ ] Review scenario-based behaviour specification (Gherkin/BDD).
-- [ ] Review JSON Schema for machine validation.
-- [ ] Review design-token interchange and its limits.
-- [ ] Write a comparative standards review.
-- [ ] Record design decisions, rejected approaches, and unresolved questions.
-- [ ] Confirm or revise the proposed facet list.
+- [x] Review requirements/specification standards (ISO/IEC/IEEE 29148).
+- [x] Review platform-independent modelling (OMG MDA).
+- [x] Review UML structural and behavioural modelling.
+- [x] Review business-rule representation (OMG SBVR).
+- [x] Review API contracts (OpenAPI).
+- [x] Review event-driven API contracts (AsyncAPI).
+- [x] Review runtime observability conventions (OpenTelemetry).
+- [x] Review web runtime inspection (DOM, CSSOM, WebDriver).
+- [x] Review native UI runtime inspection and accessibility semantics.
+- [x] Review scenario-based behaviour specification (Gherkin/BDD).
+- [x] Review JSON Schema for machine validation.
+- [x] Review design-token interchange and its limits.
+- [x] Write a comparative standards review.
+- [x] Record design decisions, rejected approaches, and unresolved questions.
+- [x] Revise the proposed facet list and record new candidate facets.
 
 ## Phase 2 — Core concepts and common model
 
 - [ ] Define and review the canonical terminology.
+- [ ] Distinguish declared contracts, runtime observations, and source-derived inferences.
+- [ ] Decide whether scenario executions and individual observations are separate entities.
+- [ ] Define external, platform-inspection, and instrumented runtime observation methods.
+- [ ] Define capture coverage and incomplete/unavailable dimensions.
 - [ ] Define system boundary and facet model.
 - [ ] Define runtime-rule record.
 - [ ] Define source-derived-rule record.
@@ -94,11 +98,14 @@
 - [ ] Persistence
 - [ ] API
 - [ ] Messaging
-- [ ] Security
-- [ ] Permissions
+- [ ] Identity and authentication
+- [ ] Authorization and permissions
+- [ ] Security controls
 - [ ] Background processing
-- [ ] Errors
+- [ ] Errors and recovery
 - [ ] Integrations
+- [ ] Configuration
+- [ ] Performance and resource behaviour
 - [ ] Review facet boundaries and cross-facet relationships.
 
 For every facet, track: scope, observable dimensions, trigger/scenario model, typed payload, evidence requirements, limitations, examples, and schema requirements.
@@ -156,12 +163,17 @@ For every facet, track: scope, observable dimensions, trigger/scenario model, ty
 | D-001 | Keep runtime-observed rules distinct from source-derived rules. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
 | D-002 | Use a shared core envelope with facet-specific typed payloads. | Proposed | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md); validate in Phases 1–2. |
 | D-003 | Bound equivalence claims to captured scenarios and evidence. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
+| D-004 | Compose existing standards; no reviewed standard supplies the complete capture-and-comparison format. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
+| D-005 | Keep declared contracts distinct from runtime observations. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
+| D-006 | Expand the facet taxonomy with configuration, performance/resource behaviour, and clearer identity/access boundaries. | Proposed | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md); validate in Phases 2–3. |
 
 ## Work log
 
 ### 2026-11-26
 - Inspected the repository and confirmed README, plan, and tracker.
 - Completed Phase 0 governance: added `CONTRIBUTING.md`, `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.
-- Updated README navigation and reconciled the plan and tracker.
-- Verified the Phase 0 exit gate and moved the active work to Phase 1.
-- Next: consolidate and verify prior standards research in `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md`.
+- Completed Phase 1 research: added `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md` using authoritative standards-body and project sources.
+- Evaluated requirements engineering, platform-independent modelling, UML, SBVR, OpenAPI, AsyncAPI, OpenTelemetry, web/native UI inspection, Gherkin, JSON Schema, design tokens, and HTTP semantics.
+- Recorded the limits of existing standards, distinguished declared contracts from runtime observations, and revised the facet taxonomy as a proposal.
+- Verified the Phase 1 exit gate and moved active work to Phase 2.
+- Next: define terminology and the observation model; do not freeze schemas until the common model is tested against unlike facets.

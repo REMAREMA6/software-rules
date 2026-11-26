@@ -259,6 +259,7 @@ async function runVariant(name) {
   );
   await matrixCheckbox.check();
   await completeResponse;
+  await page.waitForFunction(() => document.querySelector("#summary, #meta")?.textContent === "3 tasks · 2 active");
   const afterComplete = {
     total: await page.locator("li").count(),
     summary: await page.locator("#summary, #meta").innerText()
@@ -273,15 +274,18 @@ async function runVariant(name) {
   );
   await matrixCheckbox.uncheck();
   await uncompleteResponse;
+  await page.waitForFunction(() => document.querySelector("#summary, #meta")?.textContent === "3 tasks · 3 active");
   const afterToggleBack = await page.locator("#summary, #meta").innerText();
   const matrixPatch = apiLog[name].slice(matrixStart).filter(event => event.method === "PATCH").map(event => event.response?.body);
   const matrixDeleteResults = [];
   while (await page.locator('button[aria-label^="Delete Matrix"]').count()) {
+    const beforeDeleteCount = await page.locator('button[aria-label^="Delete Matrix"]').count();
     const deleteResponse = page.waitForResponse(candidate =>
       candidate.url().includes("/api/tasks/") && candidate.request().method() === "DELETE"
     );
     await page.locator('button[aria-label^="Delete Matrix"]').first().click();
     await deleteResponse;
+    await page.waitForFunction(expected => document.querySelectorAll('button[aria-label^="Delete Matrix"]').length === expected, beforeDeleteCount - 1);
     matrixDeleteResults.push("deleted");
   }
   const matrixFinalSummary = await page.locator("#summary, #meta").innerText();

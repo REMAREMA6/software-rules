@@ -216,7 +216,8 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 
 **6A — Audit the existing interface baseline**
 - [x] Build the initial browser runtime capture and pixel-comparison harness.
-- [~] Independently audit the actual retained artifacts against every claimed interface property; distinguish captured evidence from generic facet-level references.
+- [x] Audit the retained capture records and evidence references; distinguish actual property-level observations from generic artifact references.
+- [x] Downgrade unsupported font-rendering coverage and add partial business-rule/data observations rather than asserting complete capture.
 - [ ] Expand interface scenarios to all relevant states, responsive conditions, focus/hover/disabled/loading/error states, and supported environment variations for the declared fixture.
 - [ ] Keep any untested or unsupported interface dimension unresolved rather than marking it complete.
 
@@ -380,4 +381,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 in sequence: audit the existing interface artifact claims, then expand the Task Board evidence for behaviour/functionality, business rules, and data. Treat its in-memory API as a test boundary only. After those facets, select or extend a controlled reference target for facets the Task Board does not implement. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by adding discriminating runtime probes for behaviour/functionality, business rules, and data (empty/whitespace/trimmed/duplicate/Unicode/long titles; mixed-task filter/count truth tables; create/update/delete boundaries; malformed and unknown-ID API cases). Strengthen validation so evidence quality and facet consistency cannot be inferred from references alone. Treat its in-memory API as a test boundary only. After those facets, select or extend a controlled reference target for facets the Task Board does not implement. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

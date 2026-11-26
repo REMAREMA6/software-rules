@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — expanded multi-facet runtime capture and conformance in progress  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-26
 

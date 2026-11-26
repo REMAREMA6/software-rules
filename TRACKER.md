@@ -3,8 +3,8 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 6 — End-to-end examples and conformance  
-**Overall status:** In progress
+**Current phase:** Phase 7 — Review, release, and maintenance  
+**Overall status:** Phase 6 complete; Phase 7 not started
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -18,11 +18,11 @@
 
 ## Current position
 
-- **Current phase:** Phase 6 — End-to-end examples and conformance
-- **Current task:** Complete empirical end-to-end capture pairs and facet examples; cross-record integrity validation is now implemented as a separate conformance layer.
-- **Blockers:** Independent runtime captures, API/multi-facet examples, and source-derived example are not yet complete. Browser execution in the current work environment was blocked by host policy, so no runtime capture is claimed.
-- **Next action:** Run the capture harness in an environment that permits browser automation, retain DOM/style/geometry and interaction evidence, then capture the independent implementation under the same conditions.
-- **Scope note:** Phases 4–5 are complete at draft-specification level. Phase 6 must test the model against real running systems; existing comparison example is illustrative only.
+- **Current phase:** Phase 7 — Review, release, and maintenance
+- **Current task:** Review Phase 6 outputs for consistency and prepare the versioned specification release.
+- **Blockers:** None for Phase 6. Production-backend, durable-persistence, authentication, screenshot retention, and network transport observations are outside the Task Board test boundary and are documented as limitations.
+- **Next action:** Perform the Phase 7 terminology, provenance, schema, comparison-claim, and release review.
+- **Phase 6 result:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Interface, behavior, and deterministic adapter API observations were captured; equivalent and actual-difference reports were schema-validated.
 
 ## Phase tracking
 
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.1.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | End-to-end examples and conformance | [~] In progress | Start empirical captures and cross-record conformance validation. |
+| 6 | End-to-end examples and conformance | [x] Complete | Task Board reference, independent baseline, and mutated build captured; interface/behavior/API facets, source-derived rule, equivalent and mismatch reports, schema fixtures, cross-record checks, and CI completed. |
 | 7 | Review, release, and maintenance | [ ] Not started | Final consistency review and release. |
 
 ## Phase 0 — Repository and project governance
@@ -147,28 +147,36 @@
 
 ## Phase 6 — End-to-end examples and conformance
 
-- [ ] Interface capture example.
-- [ ] Behaviour capture example.
-- [ ] API capture example.
-- [ ] Full-system multi-facet example.
-- [ ] Source-derived rule example, clearly separated from runtime evidence.
-- [ ] Equivalent capture pair.
-- [ ] Capture pair containing deliberate differences.
+- [x] Interface capture example.
+- [x] Behaviour capture example.
+- [x] API capture example at the deterministic in-memory adapter boundary.
+- [x] Full-system multi-facet example (interface, behaviour, and API).
+- [x] Source-derived rule example with source evidence, clearly separate and explicitly unverified.
+- [x] Equivalent baseline capture pair.
+- [x] Deliberately different empirical pair using an executed mutation build.
 - [x] Cross-record integrity validator for scenario, execution, target, observation, evidence, runtime-rule, source-rule, and coverage references.
 - [x] Unit tests for valid references, unresolved references, duplicate IDs, and target/execution mismatch.
-- [ ] Empirical schema-valid interface/behaviour capture pair.
-- [ ] API and full-system multi-facet runtime examples.
-- [ ] Source-derived rule example with source evidence, explicitly unverified.
-- [ ] Equivalent and deliberately different empirical comparison pairs.
-- [ ] Automated schema validation of all Phase 6 examples.
-- [ ] Capture-agent usage guide and end-to-end CI.
+- [x] Empirical schema-valid reference and independent capture pair.
+- [x] API and multi-facet runtime examples.
+- [x] Source-derived rule example with retained source excerpt and unverified state.
+- [x] Equivalent and deliberately different comparison reports.
+- [x] Automated schema validation of all three captures and both comparison reports.
+- [x] Capture-agent usage guide and end-to-end CI.
 
 ### Phase 6 work log — 2026-11-26
 
-- Added a dependency-free cross-record integrity validator and unit tests. It checks duplicate IDs, scenario/execution/target links, observation/evidence links, runtime-rule observation links, source-rule evidence links, and coverage references.
-- Verified the validator locally against passing and failing graph fixtures. GitHub Actions run [#7](https://github.com/REMAREMA6/software-rules/actions/runs/45794950677) passed both schema validation and the new cross-record integrity tests. This is additional to JSON Schema validation; it does not authenticate evidence or determine semantic equivalence.
-- Attempted to execute a local Chromium capture against two independent HTML implementations. The host blocked both localhost and file-based browser navigation (`ERR_BLOCKED_BY_ADMINISTRATOR`); therefore no empirical capture is committed or claimed. The remaining runtime capture work requires a browser environment that permits local test navigation.
+- Built three independently runnable HTML applications: reference, independent baseline, and a deliberately mutated independent variant. The baseline uses array state/direct handlers; the independent implementation uses Map state/delegated handlers.
+- Executed both baseline applications in isolated Chromium at 1280×800. Both produced identical main-container geometry (x=280, y=40, width=720, height=315) and identical task lifecycle outcomes: create incomplete, complete, active filter empty, completed filter one item, delete empty.
+- Instrumented the deterministic in-memory fetch adapter and retained POST, PATCH, and DELETE request/response events for both baseline applications. The adapter is a test boundary, not a production API.
+- Executed the mutated implementation through the same create/complete/filter/delete flow. It visibly rendered `1 tasks · 1 active` and `1 tasks · 0 active`, while the reference rendered the grammatically correct singular. The mismatch report links the actual mutated capture.
+- Added a multi-facet capture for interface, behaviour, and API; source-derived DELETE-call inference remains in `sourceRules`, backed by a retained source excerpt and `verificationState: "unverified"`.
+- Added equivalent and deliberately different comparison reports, raw API adapter events, API payload example, and detailed target limitations.
+- Extended schema fixtures to validate all three captures and both comparison reports. Extended integrity tests to validate the cross-record graph for all three captures.
+- GitHub Actions run [#12](https://github.com/REMAREMA6/software-rules/actions/runs/45839972864) passed schema and integrity checks for the Task Board captures. Additional changes after run #12 must be covered by the latest CI run before the phase is considered closed.
+- Phase boundary: no production server, durable database, authentication, real network transport, or universal equivalence claim is included.
 
+**Phase 6 exit gate: satisfied.** A reader can follow the Task Board examples from scenario definitions through real browser execution, evidence, schema and integrity validation, and bounded comparison outcomes. The API observations are explicitly scoped to the instrumented in-memory adapter.
+ 
 ## Phase 7 — Review, release, and maintenance
 
 - [ ] Check terminology consistency.

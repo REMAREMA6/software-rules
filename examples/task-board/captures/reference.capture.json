@@ -1,0 +1,711 @@
+{
+  "schemaVersion": "0.1.0",
+  "captureId": "task-board-reference-capture",
+  "createdAt": "2026-11-26T15:30:00+01:00",
+  "purpose": "Empirical browser capture of the independently authored Task Board reference implementation under the shared Phase 6 scenario set.",
+  "target": {
+    "targetId": "task-board-reference",
+    "systemName": "Task Board reference implementation",
+    "systemVersion": "phase6-fixture-1",
+    "build": {
+      "version": "1.0.0",
+      "revision": "ref-html-001"
+    },
+    "boundary": {
+      "description": "Single-page Task Board UI and its deterministic in-browser API adapter; no durable database or authentication.",
+      "included": [
+        "Task Board HTML/CSS/JavaScript",
+        "Task create/update/delete interactions",
+        "In-memory deterministic API adapter"
+      ],
+      "excluded": [
+        "Production backend",
+        "Authentication",
+        "Cross-session persistence"
+      ]
+    },
+    "environment": {
+      "platform": "web",
+      "os": "Linux",
+      "runtime": "Chromium browser",
+      "browser": "Chromium (isolated browser)",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "viewport": {
+            "width": 1280,
+            "height": 800,
+            "unit": "css-px"
+          },
+          "locale": "en"
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Initial render and one task lifecycle: create, complete, filter active/completed, delete.",
+    "facetIds": [
+      "interface",
+      "behavior"
+    ],
+    "scenarioIds": [
+      "ref-scenario-interface",
+      "ref-scenario-workflow"
+    ]
+  },
+  "collector": {
+    "name": "Firecrawl isolated Chromium browser",
+    "version": "browser-interaction session",
+    "methodDescription": "Browser automation using rendered DOM inspection, computed styles, bounding boxes, and user-equivalent control interactions."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "ref-scenario-interface",
+      "title": "Render empty Task Board",
+      "purpose": "Observe initial rendered interface hierarchy and geometry.",
+      "facetIds": [
+        "interface"
+      ],
+      "subject": "task-board-root",
+      "preconditions": [
+        "Fresh page load",
+        "Viewport 1280x800 CSS pixels",
+        "No tasks in in-memory store"
+      ],
+      "trigger": "Navigate to the Task Board document",
+      "observableQuestions": [
+        "What is the main container geometry?",
+        "Which controls and labels are rendered?"
+      ]
+    },
+    {
+      "scenarioId": "ref-scenario-workflow",
+      "title": "Complete and delete a task",
+      "purpose": "Observe task lifecycle state transitions and visible outputs.",
+      "facetIds": [
+        "behavior"
+      ],
+      "subject": "task-lifecycle",
+      "preconditions": [
+        "Fresh page load",
+        "Empty in-memory task store"
+      ],
+      "trigger": "Enter a task title and activate Add task",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Enter Prepare release notes in Task name"
+        },
+        {
+          "sequence": 2,
+          "action": "Activate Add task"
+        },
+        {
+          "sequence": 3,
+          "action": "Check the task completion checkbox"
+        },
+        {
+          "sequence": 4,
+          "action": "Select Active filter"
+        },
+        {
+          "sequence": 5,
+          "action": "Select Completed filter"
+        },
+        {
+          "sequence": 6,
+          "action": "Activate Delete Prepare release notes"
+        }
+      ],
+      "observableQuestions": [
+        "Is the task created incomplete?",
+        "Does completion change the active count?",
+        "Do filters show the expected task subset?",
+        "Does deletion remove the task?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "ref-exec-interface",
+      "scenarioId": "ref-scenario-interface",
+      "targetId": "task-board-reference",
+      "startedAt": "2026-11-26T15:30:00+01:00",
+      "status": "completed",
+      "actualContext": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "initialTaskCount": 0
+      },
+      "collector": {
+        "name": "Firecrawl isolated Chromium browser"
+      }
+    },
+    {
+      "executionId": "ref-exec-workflow",
+      "scenarioId": "ref-scenario-workflow",
+      "targetId": "task-board-reference",
+      "startedAt": "2026-11-26T15:30:00+01:00",
+      "status": "completed",
+      "actualContext": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "apiAdapter": "deterministic in-memory fetch stub"
+      },
+      "actualInputs": {
+        "title": "Prepare release notes"
+      },
+      "trigger": "Submit task form",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Create task"
+        },
+        {
+          "sequence": 2,
+          "action": "Mark complete"
+        },
+        {
+          "sequence": 3,
+          "action": "Filter active and completed"
+        },
+        {
+          "sequence": 4,
+          "action": "Delete task"
+        }
+      ],
+      "collector": {
+        "name": "Firecrawl isolated Chromium browser"
+      },
+      "limitations": [
+        "API adapter is deterministic and in-memory; this capture does not establish production server behavior."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "ref-obs-interface",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-interface",
+      "facet": "interface",
+      "subject": "task-board-root",
+      "observedAt": "2026-11-26T15:30:00+01:00",
+      "sequence": 1,
+      "method": {
+        "class": "platform-inspection",
+        "procedure": "Inspect rendered DOM, computed display values, and element bounding boxes at 1280x800 CSS pixels.",
+        "tool": "Chromium browser automation"
+      },
+      "conditions": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        }
+      },
+      "trigger": "Initial navigation",
+      "payload": {
+        "facet": "interface",
+        "kind": "snapshot",
+        "subject": "task-board-root",
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "roots": [
+          "task-board-main"
+        ],
+        "nodes": [
+          {
+            "nodeId": "task-board-main",
+            "nodeType": "main",
+            "attributes": {
+              "id": "app"
+            },
+            "geometry": {
+              "x": 280,
+              "y": 40,
+              "width": 720,
+              "height": 315,
+              "unit": "css-px"
+            },
+            "resolvedProperties": {
+              "display": "block",
+              "backgroundColor": "rgb(255, 255, 255)",
+              "borderRadius": "14px",
+              "padding": "28px"
+            }
+          },
+          {
+            "nodeId": "task-board-title",
+            "parentId": "task-board-main",
+            "order": 0,
+            "nodeType": "h1",
+            "content": "Task Board",
+            "geometry": {
+              "x": 309,
+              "y": 69,
+              "width": 662,
+              "height": 38
+            },
+            "resolvedProperties": {
+              "display": "block",
+              "fontSize": "28px"
+            }
+          },
+          {
+            "nodeId": "task-name-input",
+            "parentId": "task-board-main",
+            "order": 1,
+            "nodeType": "input",
+            "attributes": {
+              "type": "text",
+              "aria-label": "Task name",
+              "placeholder": "Add a task"
+            },
+            "geometry": {
+              "x": 309,
+              "y": 159,
+              "width": 562.96875,
+              "height": 48
+            }
+          },
+          {
+            "nodeId": "add-task-button",
+            "parentId": "task-board-main",
+            "order": 2,
+            "nodeType": "button",
+            "content": "Add task",
+            "geometry": {
+              "x": 879.96875,
+              "y": 159,
+              "width": 91.03125,
+              "height": 48
+            }
+          },
+          {
+            "nodeId": "task-filters",
+            "parentId": "task-board-main",
+            "order": 3,
+            "nodeType": "nav",
+            "attributes": {
+              "aria-label": "Task filters"
+            },
+            "geometry": {
+              "x": 309,
+              "y": 229,
+              "width": 662,
+              "height": 42
+            },
+            "resolvedProperties": {
+              "display": "flex"
+            }
+          },
+          {
+            "nodeId": "task-list",
+            "parentId": "task-board-main",
+            "order": 4,
+            "nodeType": "ul",
+            "geometry": {
+              "x": 309,
+              "y": 293,
+              "width": 662,
+              "height": 0
+            }
+          },
+          {
+            "nodeId": "task-summary",
+            "parentId": "task-board-main",
+            "order": 5,
+            "nodeType": "p",
+            "attributes": {
+              "aria-live": "polite"
+            },
+            "content": "0 tasks · 0 active",
+            "geometry": {
+              "x": 309,
+              "y": 293,
+              "width": 662,
+              "height": 19
+            }
+          }
+        ],
+        "accessibilityTree": {
+          "role": "main",
+          "name": null,
+          "children": [
+            {
+              "role": "heading",
+              "level": 1,
+              "name": "Task Board"
+            },
+            {
+              "role": "textbox",
+              "name": "Task name"
+            },
+            {
+              "role": "button",
+              "name": "Add task"
+            },
+            {
+              "role": "navigation",
+              "name": "Task filters"
+            }
+          ]
+        },
+        "uiState": {
+          "taskCount": 0,
+          "selectedFilter": "all"
+        },
+        "completeness": {
+          "status": "partial",
+          "limitations": [
+            "Geometry and computed values recorded for the main controls only; full browser accessibility tree and screenshot archive not retained."
+          ]
+        }
+      },
+      "evidenceRefs": [
+        "ref-evidence-interface"
+      ],
+      "status": "observed",
+      "limitations": [
+        "DOM geometry is tied to the isolated Chromium viewport and font environment."
+      ]
+    },
+    {
+      "observationId": "ref-obs-workflow",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-workflow",
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "observedAt": "2026-11-26T15:30:00+01:00",
+      "sequence": 2,
+      "method": {
+        "class": "external",
+        "procedure": "Enter a task, click visible controls, inspect rendered list, checkbox state, filter result count, and live summary after each action.",
+        "tool": "Chromium browser automation"
+      },
+      "conditions": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "apiAdapter": "deterministic in-memory fetch stub"
+      },
+      "trigger": "Submit task form",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "task-lifecycle",
+        "trigger": "Submit task form with title Prepare release notes",
+        "preconditions": [
+          "Task store starts empty"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Create task",
+            "input": {
+              "title": "Prepare release notes"
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Complete task",
+            "input": {
+              "completed": true
+            }
+          },
+          {
+            "sequence": 3,
+            "action": "Select Active filter"
+          },
+          {
+            "sequence": 4,
+            "action": "Select Completed filter"
+          },
+          {
+            "sequence": 5,
+            "action": "Delete task"
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": {
+              "taskCount": 0
+            },
+            "to": {
+              "taskCount": 1,
+              "completed": false
+            }
+          },
+          {
+            "from": {
+              "taskCount": 1,
+              "completed": false
+            },
+            "to": {
+              "taskCount": 1,
+              "completed": true
+            }
+          },
+          {
+            "from": {
+              "taskCount": 1
+            },
+            "to": {
+              "taskCount": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "stage": "after-create",
+            "value": {
+              "taskText": "Prepare release notes",
+              "summary": "1 task · 1 active",
+              "count": 1
+            }
+          },
+          {
+            "stage": "after-complete",
+            "value": {
+              "summary": "1 task · 0 active",
+              "checked": true
+            }
+          },
+          {
+            "stage": "active-filter",
+            "value": {
+              "visibleTaskCount": 0
+            }
+          },
+          {
+            "stage": "completed-filter",
+            "value": {
+              "visibleTaskCount": 1
+            }
+          },
+          {
+            "stage": "after-delete",
+            "value": {
+              "count": 0,
+              "summary": "0 tasks · 0 active"
+            }
+          }
+        ],
+        "sideEffects": [
+          "POST /api/tasks invoked by client against the in-memory adapter",
+          "PATCH /api/tasks/{id} invoked by client against the in-memory adapter",
+          "DELETE /api/tasks/{id} invoked by client against the in-memory adapter"
+        ],
+        "termination": "Task deleted; rendered list empty"
+      },
+      "evidenceRefs": [
+        "ref-evidence-workflow"
+      ],
+      "status": "observed",
+      "limitations": [
+        "The browser automation output retained visible outcomes but not the adapter's individual request/response log. API envelope details are therefore not asserted as empirical facts."
+      ]
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "ref-rule-create-incomplete",
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "proposition": "A newly created task is incomplete and contributes one to the active-task count.",
+      "trigger": "Successful task creation",
+      "status": "supported",
+      "supportingObservationIds": [
+        "ref-obs-workflow"
+      ],
+      "limitations": [
+        "Supported for the tested title and deterministic in-memory adapter only."
+      ]
+    }
+  ],
+  "sourceRules": [
+    {
+      "ruleId": "ref-source-rule-delete-filtered-task",
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "proposition": "The client issues a DELETE request to /api/tasks/{id} when the task's Delete control is activated.",
+      "reasoning": "The reference source defines a remove-button click handler that calls request('DELETE', '/api/tasks/' + task.id) before removing the task from local state. This is a source-code inference and is not represented as a separately captured network trace.",
+      "sourceEvidenceRefs": [
+        "ref-evidence-source"
+      ],
+      "reachability": "established",
+      "buildInclusion": "established",
+      "deployment": "unknown",
+      "execution": "not-established",
+      "verificationState": "unverified",
+      "limitations": [
+        "Source text proves the client call site exists in this checked-in artifact; it does not prove a production server receives or accepts the request."
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "ref-evidence-interface",
+      "evidenceClass": "runtime",
+      "evidenceType": "rendered-dom-and-geometry",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-reference",
+        "executionId": "ref-exec-interface",
+        "collector": "Firecrawl isolated Chromium browser"
+      },
+      "capturedAt": "2026-11-26T15:30:00+01:00",
+      "embedded": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "mainGeometry": {
+          "x": 280,
+          "y": 40,
+          "width": 720,
+          "height": 315,
+          "unit": "css-px"
+        },
+        "titleGeometry": {
+          "x": 309,
+          "y": 69,
+          "width": 662,
+          "height": 38
+        },
+        "inputGeometry": {
+          "x": 309,
+          "y": 159,
+          "width": 562.96875,
+          "height": 48
+        },
+        "filterGeometry": {
+          "x": 309,
+          "y": 229,
+          "width": 662,
+          "height": 42
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Structured values transcribed from the browser inspection output; no screenshot file retained."
+      ]
+    },
+    {
+      "evidenceId": "ref-evidence-workflow",
+      "evidenceClass": "runtime",
+      "evidenceType": "browser-interaction-results",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-reference",
+        "executionId": "ref-exec-workflow",
+        "collector": "Firecrawl isolated Chromium browser"
+      },
+      "capturedAt": "2026-11-26T15:30:00+01:00",
+      "embedded": {
+        "afterCreate": {
+          "taskText": "Prepare release notes",
+          "summary": "1 task · 1 active",
+          "count": 1
+        },
+        "afterComplete": {
+          "summary": "1 task · 0 active",
+          "checked": true
+        },
+        "activeFilterCount": 0,
+        "completedFilterCount": 1,
+        "afterDelete": {
+          "count": 0,
+          "summary": "0 tasks · 0 active"
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Test used an in-memory fetch adapter."
+      ]
+    },
+    {
+      "evidenceId": "ref-evidence-source",
+      "evidenceClass": "source-artifact",
+      "evidenceType": "html-javascript-source",
+      "mediaType": "text/html",
+      "origin": {
+        "targetId": "task-board-reference",
+        "collector": "Repository source file",
+        "sourceUri": "examples/task-board/reference/index.html",
+        "sourceRevision": "ref-html-001",
+        "location": "remove button click handler"
+      },
+      "capturedAt": "2026-11-26T15:30:00+01:00",
+      "embedded": {
+        "description": "Source artifact stored in this repository; rule inference is explicitly unverified."
+      },
+      "retention": {
+        "status": "retained"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "interface",
+      "subject": "task-board-root",
+      "dimension": "main-layout-and-primary-controls",
+      "status": "observed",
+      "scenarioIds": [
+        "ref-scenario-interface"
+      ],
+      "executionIds": [
+        "ref-exec-interface"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "dimension": "create-complete-filter-delete",
+      "status": "observed",
+      "scenarioIds": [
+        "ref-scenario-workflow"
+      ],
+      "executionIds": [
+        "ref-exec-workflow"
+      ]
+    },
+    {
+      "facet": "api",
+      "subject": "task-api",
+      "dimension": "request-response-envelope",
+      "status": "unavailable",
+      "reason": "The deterministic adapter supported UI workflows, but the browser session did not retain request/response event records. Source call sites are not promoted to runtime API observations.",
+      "scenarioIds": [
+        "ref-scenario-workflow"
+      ],
+      "executionIds": [
+        "ref-exec-workflow"
+      ],
+      "limitations": [
+        "API capture is documented separately as a schema example and remains unverified."
+      ]
+    }
+  ],
+  "limitations": [
+    "Two implementations were run in the same isolated Chromium environment at 1280x800 CSS pixels.",
+    "The API adapter is in-memory and does not represent a production server or persistence layer.",
+    "The automation retained DOM geometry and visible workflow outcomes, but did not retain screenshots or raw request/response events."
+  ]
+}

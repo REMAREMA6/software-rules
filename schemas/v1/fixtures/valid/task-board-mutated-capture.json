@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "captureId": "task-board-independent-mutated-capture",
   "createdAt": "2026-11-26T15:30:00+01:00",
   "purpose": "Empirical browser capture of the deliberately mutated Task Board implementation; summary pluralization defect is intentional.",

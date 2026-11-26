@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; replication-lab scaffolding exists, six source candidates are registered, and the first source-derived rule has an independent Python model; no facet has passed the complete cross-stack evidence loop
+**Overall status:** Phase 6 in progress; replication-lab scaffolding exists, nine source candidates are registered, and the first source-derived rule has an independent Python model; no facet has passed the complete cross-stack evidence loop
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -155,7 +155,7 @@
 - [x] Rules must be extracted into a technology-independent specification before implementation.
 - [x] Equivalent source/replica probes, comparison, and mutation detection are required.
 - [x] Create the replication-lab skeleton, case template, source register, and source-record template.
-- [~] Start source selection and inspection; six immutable repository candidates are registered. This is not yet complete 15-facet coverage.
+- [~] Start source selection and inspection; nine immutable repository candidates are registered. This is not yet complete 15-facet coverage.
 - [~] Start the first independent rule case: BullMQ retry-policy source capture plus a Python decision-model replica. Source runtime comparison remains pending.
 - [ ] Complete the final evidence and coverage audit.
 

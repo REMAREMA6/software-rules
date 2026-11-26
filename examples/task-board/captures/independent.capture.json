@@ -1177,7 +1177,8 @@
         "status": "excluded",
         "observationRefs": [],
         "evidenceRefs": [],
-        "rationale": "This fixture explicitly fixes the comparison viewport at 1280×800 CSS px; other viewport classes are outside this declared scope."
+        "rationale": "This fixture explicitly fixes the comparison viewport at 1280×800 CSS px; other viewport classes are outside this declared scope.",
+        "exclusionReason": "This fixture explicitly fixes the comparison viewport at 1280×800 CSS px; other viewport classes are outside this declared scope."
       },
       {
         "propertyId": "ui-visual-proof",
@@ -1303,7 +1304,8 @@
         "status": "excluded",
         "observationRefs": [],
         "evidenceRefs": [],
-        "rationale": "The declared target boundary excludes durable/cross-session persistence."
+        "rationale": "The declared target boundary excludes durable/cross-session persistence.",
+        "exclusionReason": "The declared target boundary excludes durable/cross-session persistence."
       },
       {
         "propertyId": "api-lifecycle",
@@ -1344,7 +1346,8 @@
         "status": "excluded",
         "observationRefs": [],
         "evidenceRefs": [],
-        "rationale": "The fixture boundary is a deterministic in-memory adapter, not a production network service."
+        "rationale": "The fixture boundary is a deterministic in-memory adapter, not a production network service.",
+        "exclusionReason": "The fixture boundary is a deterministic in-memory adapter, not a production network service."
       }
     ],
     "completeness": {

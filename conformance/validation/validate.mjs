@@ -4,7 +4,7 @@ import process from "node:process";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
-const root = path.resolve("schemas/v1");
+const root = path.resolve("../../schemas/v1");
 const fixtureRoot = path.join(root, "fixtures");
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);

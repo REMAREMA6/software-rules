@@ -1100,13 +1100,9 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "mut-obs-interface",
-          "mut-obs-workflow"
+          "mut-obs-interface"
         ],
-        "evidenceRefs": [
-          "mut-evidence-interface",
-          "mut-evidence-workflow"
-        ],
+        "evidenceRefs": [],
         "rationale": "Initial empty state and workflow outputs are recorded, but full snapshots for every state and transition are absent."
       },
       {

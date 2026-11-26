@@ -209,13 +209,18 @@ async function runVariant(name) {
   await page.reload();
   const probeStart = apiLog[name].length;
   async function createProbeTask(value) {
+    const title = value.trim();
+    const existingCount = await page.getByText(title, { exact: true }).count();
     await input.fill(value);
     const response = page.waitForResponse(candidate =>
       candidate.url().includes("/api/tasks") && candidate.request().method() === "POST"
     );
     await page.getByRole("button", { name: "Add task" }).click();
     await response;
-    await page.getByText(value.trim(), { exact: true }).waitFor();
+    await page.waitForFunction(({ expectedTitle, expectedCount }) => {
+      const rows = [...document.querySelectorAll("#task-list li, #items li")];
+      return rows.filter(row => row.querySelector("span")?.textContent === expectedTitle).length >= expectedCount;
+    }, { expectedTitle: title, expectedCount: existingCount + 1 });
   }
 
   await createProbeTask("  Trim boundary  ");

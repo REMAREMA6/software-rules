@@ -621,6 +621,22 @@
         "notApplicableUnits": {
           "type": "integer",
           "minimum": 0
+        },
+        "partialUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conflictingUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sourceInferredUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "excludedUnits": {
+          "type": "integer",
+          "minimum": 0
         }
       },
       "required": [

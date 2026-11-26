@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | End-to-end multi-facet capture and conformance | [~] In progress | Initial interface/behaviour/API fixture exists. Audit interface evidence, then expand behaviour, business rules, data, and the remaining applicable facets. Phase 6 is not complete. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Multi-repository strategy and replication-lab skeleton established; six source candidates registered; first source-derived rule and Python model added. Full source-runtime/replica/comparison cases across all 15 facets remain outstanding. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance

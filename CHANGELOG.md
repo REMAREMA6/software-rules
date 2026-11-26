@@ -6,6 +6,14 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
+### Added
+- Cross-repository replication lab scaffolding, rule-case and source-repository templates, and a Python rule-model CI workflow.
+- Initial source candidates for BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n, each pinned to an inspected commit with licence/evidence status recorded.
+- BullMQ retry-policy source capture and a narrow independent Python retry-decision replica with eight test cases, including an off-by-one mutation check. This case remains incomplete pending source runtime execution and capture comparison.
+
+### Changed
+- Updated the Phase 6 tracker to record the new multi-repository work and distinguish candidate/source-derived evidence from completed cross-stack conformance.
+
 ### Changed
 - Corrected Phase 6 architecture: use multiple immutable source repositories and a separate independent replication lab. One fixture is no longer expected to implement all 15 facets; each rule must pass source extraction, technology-independent capture, different-stack replication, equivalent probes, comparison, and mutation detection.
 

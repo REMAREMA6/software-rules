@@ -28,3 +28,15 @@ A capture agent records observations; it must not convert guesses, source declar
 - Are exclusions and limitations explicit?
 
 This guide is procedural. It does not certify collector trustworthiness or evidence authenticity.
+
+## Executed Phase 6 example
+
+The Task Board conformance target in `examples/task-board/` demonstrates this procedure end to end:
+
+- Capture the reference and independent baseline with the same 1280×800 viewport and scenario inputs.
+- Retain interface geometry, behavior outputs, and instrumented adapter request/response events as runtime evidence.
+- Keep the source-derived DELETE-call inference in the separate `sourceRules` collection with `verificationState: "unverified"`.
+- Run the deliberately mutated build separately and compare its actual singular-count output against the reference.
+- Validate every capture fixture with the capture schema and cross-record integrity validator; validate both comparison reports with the comparison schema.
+
+The adapter is deliberately in-memory. Mark its boundary and do not generalize these API observations to a production server or durable persistence.

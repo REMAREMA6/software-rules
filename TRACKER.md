@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Execute the expanded Playwright probe suite and inspect its outputs; then add any missing scenarios and update the capture evidence.
+- **Current task:** Verify the new Phase 6 GitHub Actions workflow executes successfully, inspect its three-variant runtime artifact, and fix any failures.
 - **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
-- **Next action:** Run runtime conformance for the new title, duplicate, HTML-like/Unicode, long-title, mixed-state, filter, toggle, deletion, and identifier probes. Inspect all three variant outputs before changing partial statuses.
+- **Next action:** Inspect the Phase 6 expanded runtime workflow run and artifact. Do not promote partial inventory properties until the new probes have actually run and their evidence has been reviewed.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -166,7 +166,7 @@
 ### 6B — Behaviour and functionality
 - [x] Draft the discriminating runtime probe backlog for create, complete, filter, delete, validation, and failure paths.
 - [x] Add initial runtime probes for title normalization, duplicates, HTML-like/Unicode and long values, mixed-task filters/counts, toggle-back, and deletion.
-- [ ] Execute the expanded probe suite and inspect the output archive.
+- [~] Execute the expanded probe suite through the new dedicated GitHub Actions workflow and inspect the output archive.
 - [ ] Enumerate every supported operation, trigger, precondition, transition, output, side effect, and failure path.
 - [ ] Probe normal, boundary, repeated, invalid, interrupted, and failure scenarios.
 - [ ] Capture independent executions and compare rule-level outcomes.
@@ -292,3 +292,6 @@
 - Added request/response synchronization and explicit outcome assertions so the test does not mistake a click for a completed asynchronous operation.
 - The harness now retains the probe results in the per-variant runtime output. These probes have been authored but **not yet executed in a successful CI run**; no new property has been promoted to captured on their basis.
 - Next: execute the runtime workflow, inspect all reference/independent/mutated outputs, and then update the capture records with only verified results.
+
+
+- Added .github/workflows/phase6-expanded-conformance.yml to run the expanded Playwright capture, evidence-link integrity tests, schema validation, and artifact upload on relevant pushes and pull requests. The workflow has been added; its first execution result still needs verification.

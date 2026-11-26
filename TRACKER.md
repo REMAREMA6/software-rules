@@ -291,8 +291,7 @@
 
 - Added an expanded Playwright probe sequence to the runtime harness for leading/trailing whitespace normalization, duplicate titles, HTML-like/Unicode title safety, 512-character titles, mixed active/completed records, filter counts, completion toggle-back, deletion, and identifier samples.
 - Added request/response synchronization and explicit outcome assertions so the test does not mistake a click for a completed asynchronous operation.
-- The harness now retains the probe results in the per-variant runtime output. These probes have been authored but **not yet executed in a successful CI run**; no new property has been promoted to captured on their basis.
-- Next: execute the runtime workflow, inspect all reference/independent/mutated outputs, and then update the capture records with only verified results.
+- The harness retains the probe results in the per-variant runtime output. This initial implementation was subsequently executed successfully in run #45858743131; verified results are recorded in the later work-log entry.
 
 
 - Added .github/workflows/phase6-expanded-conformance.yml to run the expanded Playwright capture, evidence-link integrity tests, schema validation, and artifact upload on relevant pushes and pull requests. The workflow has been added; its first execution result still needs verification.

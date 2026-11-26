@@ -895,7 +895,9 @@
       },
       "capturedAt": "2026-11-26T15:30:00+01:00",
       "embedded": {
-        "description": "Source artifact stored in this repository; rule inference is explicitly unverified."
+        "sourceSnippet": "remove.addEventListener(\"click\", async () => { await request(\"DELETE\", \"/api/tasks/\" + task.id); tasks = tasks.filter(t => t.id !== task.id); render(); });",
+        "interpretation": "The click handler calls the client request helper with DELETE and the selected task ID before removing the task from local state.",
+        "verificationState": "unverified"
       },
       "retention": {
         "status": "retained"

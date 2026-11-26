@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:comparison-report",
+  "title": "Software Rules comparison report envelope (structural draft)",
+  "type": "object",
+  "description": "Defines report identity and capture references only. Difference classification, matching, normalization, and equivalence semantics are deferred to Phase 5.",
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "reportId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "referenceCaptureId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "implementationCaptureId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "comparisonScope": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "facetIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "scenarioIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "minItems": 0
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "recordLinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "referenceRecordId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "implementationRecordId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "facet": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "facet"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "coverageRefs": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "minItems": 0
+        },
+        "implementation": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "minItems": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "createdAt",
+    "referenceCaptureId",
+    "implementationCaptureId",
+    "comparisonScope"
+  ],
+  "additionalProperties": false
+}

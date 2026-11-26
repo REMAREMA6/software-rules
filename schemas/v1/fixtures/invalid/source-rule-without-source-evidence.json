@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "captureId": "capture-invalid-002",
+  "createdAt": "2026-11-26T10:00:00Z",
+  "purpose": "Must fail: source-derived rule lacks source evidence",
+  "target": {
+    "targetId": "target-demo",
+    "systemName": "Demo",
+    "boundary": {
+      "description": "Demo boundary"
+    }
+  },
+  "scope": {
+    "description": "Invalid example",
+    "facetIds": [
+      "business-rules"
+    ]
+  },
+  "collector": {
+    "name": "fixture"
+  },
+  "sourceRules": [
+    {
+      "ruleId": "rule-1",
+      "facet": "business-rules",
+      "subject": "discount",
+      "proposition": "A discount is applied",
+      "reasoning": "Inferred from code",
+      "sourceEvidenceRefs": [],
+      "verificationState": "unverified"
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "business-rules",
+      "status": "planned"
+    }
+  ]
+}

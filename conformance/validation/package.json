@@ -1,0 +1,12 @@
+{
+  "name": "software-rules-schema-validation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

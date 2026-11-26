@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/security-controls",
+  "title": "security-controls facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "security-controls"
+    },
+    "kind": {
+      "const": "security-control-outcome"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "testObjective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorizedScope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "control": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stimulusClass": {
+      "type": "string",
+      "minLength": 1
+    },
+    "environment": {
+      "type": "object"
+    },
+    "observedOutcome": {
+      "enum": [
+        "detected",
+        "blocked",
+        "allowed",
+        "contained",
+        "not-detected",
+        "inconclusive"
+      ]
+    },
+    "controlResponse": {
+      "type": "object"
+    },
+    "telemetryRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "observedImpact": {
+      "type": "object"
+    },
+    "safetyConstraints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

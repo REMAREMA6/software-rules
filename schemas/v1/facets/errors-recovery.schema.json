@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/errors-recovery",
+  "title": "errors-recovery facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "errors-recovery"
+    },
+    "kind": {
+      "const": "failure-recovery-event"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operationRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "origin": {
+      "type": "string"
+    },
+    "propagationBoundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recoveryActions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "recoveryState": {
+      "type": "string"
+    },
+    "terminalOutcome": {
+      "type": "string"
+    },
+    "timing": {
+      "type": "object"
+    },
+    "impact": {
+      "type": "object"
+    },
+    "expectedRejection": {
+      "type": "boolean"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

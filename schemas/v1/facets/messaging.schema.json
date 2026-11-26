@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/messaging",
+  "title": "messaging facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "messaging"
+    },
+    "kind": {
+      "const": "message-lifecycle"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "channel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message": {
+      "type": "object",
+      "properties": {
+        "messageId": {
+          "type": "string"
+        },
+        "correlationId": {
+          "type": "string"
+        },
+        "causationId": {
+          "type": "string"
+        },
+        "headers": {
+          "type": "object"
+        },
+        "payload": {}
+      },
+      "additionalProperties": false
+    },
+    "producer": {
+      "type": "string"
+    },
+    "consumer": {
+      "type": "string"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "acceptedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deliveryAttempts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "ordering": {
+      "type": "object"
+    },
+    "acknowledgement": {
+      "type": "object"
+    },
+    "redelivery": {
+      "type": "object"
+    },
+    "deadLetter": {
+      "type": "object"
+    },
+    "processingOutcome": {
+      "type": "object"
+    },
+    "brokerContext": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

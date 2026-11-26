@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/integrations",
+  "title": "integrations facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "integrations"
+    },
+    "kind": {
+      "const": "external-interaction"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "direction": {
+      "enum": [
+        "inbound",
+        "outbound",
+        "bidirectional"
+      ]
+    },
+    "operation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocolRef": {
+      "type": "string"
+    },
+    "requestRef": {
+      "type": "string"
+    },
+    "responseRef": {
+      "type": "string"
+    },
+    "credentialContext": {
+      "type": "object"
+    },
+    "resilience": {
+      "type": "object"
+    },
+    "mapping": {
+      "type": "object"
+    },
+    "dependencyOutcome": {
+      "type": "string"
+    },
+    "correlation": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

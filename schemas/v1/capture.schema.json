@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:capture",
+  "title": "Software Rules capture",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "captureId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "$ref": "./records.schema.json#/$defs/target"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "facetIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "scenarioIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "description",
+        "facetIds"
+      ],
+      "additionalProperties": false
+    },
+    "collector": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string"
+        },
+        "agentId": {
+          "type": "string"
+        },
+        "methodDescription": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/scenario"
+      },
+      "minItems": 0
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/execution"
+      },
+      "minItems": 0
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/observation"
+      },
+      "minItems": 0
+    },
+    "runtimeRules": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/runtimeRule"
+      },
+      "minItems": 0
+    },
+    "sourceRules": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/sourceRule"
+      },
+      "minItems": 0
+    },
+    "declaredContracts": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/declaredContract"
+      },
+      "minItems": 0
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/evidence"
+      },
+      "minItems": 0
+    },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "$ref": "./records.schema.json#/$defs/coverageItem"
+      },
+      "minItems": 1
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "captureId",
+    "createdAt",
+    "purpose",
+    "target",
+    "scope",
+    "collector",
+    "coverage"
+  ],
+  "additionalProperties": false
+}

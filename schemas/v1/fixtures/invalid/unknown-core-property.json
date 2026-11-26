@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "captureId": "capture-invalid-003",
+  "createdAt": "2026-11-26T10:00:00Z",
+  "purpose": "Must fail: unknown core property",
+  "target": {
+    "targetId": "target-demo",
+    "systemName": "Demo",
+    "boundary": {
+      "description": "Demo boundary"
+    }
+  },
+  "scope": {
+    "description": "Invalid example",
+    "facetIds": [
+      "interface"
+    ]
+  },
+  "collector": {
+    "name": "fixture"
+  },
+  "coverage": [
+    {
+      "facet": "interface",
+      "status": "planned"
+    }
+  ],
+  "undocumentedRootField": true
+}

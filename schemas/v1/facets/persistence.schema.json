@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/persistence",
+  "title": "persistence facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "persistence"
+    },
+    "kind": {
+      "const": "state-operation"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "store": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation": {
+      "enum": [
+        "read",
+        "create",
+        "write",
+        "update",
+        "delete",
+        "query",
+        "transaction",
+        "other"
+      ]
+    },
+    "selector": {},
+    "beforeState": {},
+    "afterState": {},
+    "transaction": {
+      "type": "object"
+    },
+    "commitResult": {
+      "type": "string"
+    },
+    "consistency": {
+      "type": "object"
+    },
+    "ordering": {
+      "type": "string"
+    },
+    "durabilityInterval": {
+      "type": "object"
+    },
+    "concurrency": {
+      "type": "object"
+    },
+    "retention": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

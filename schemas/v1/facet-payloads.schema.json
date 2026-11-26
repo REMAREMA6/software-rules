@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facet-payloads",
+  "oneOf": [
+    {
+      "$ref": "./facets/interface.schema.json"
+    },
+    {
+      "$ref": "./facets/behavior.schema.json"
+    },
+    {
+      "$ref": "./facets/business-rules.schema.json"
+    },
+    {
+      "$ref": "./facets/data.schema.json"
+    },
+    {
+      "$ref": "./facets/persistence.schema.json"
+    },
+    {
+      "$ref": "./facets/api.schema.json"
+    },
+    {
+      "$ref": "./facets/messaging.schema.json"
+    },
+    {
+      "$ref": "./facets/identity-authentication.schema.json"
+    },
+    {
+      "$ref": "./facets/authorization-permissions.schema.json"
+    },
+    {
+      "$ref": "./facets/security-controls.schema.json"
+    },
+    {
+      "$ref": "./facets/background-processing.schema.json"
+    },
+    {
+      "$ref": "./facets/errors-recovery.schema.json"
+    },
+    {
+      "$ref": "./facets/integrations.schema.json"
+    },
+    {
+      "$ref": "./facets/configuration.schema.json"
+    },
+    {
+      "$ref": "./facets/performance-resource-behaviour.schema.json"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/interface",
+  "title": "interface facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "interface"
+    },
+    "kind": {
+      "const": "snapshot"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platformContext": {
+      "type": "object"
+    },
+    "viewport": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "unit": {
+          "const": "css-px"
+        },
+        "deviceScaleFactor": {
+          "type": "number"
+        },
+        "orientation": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "roots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 0
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parentId": {
+            "type": "string"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nodeType": {
+            "type": "string",
+            "minLength": 1
+          },
+          "attributes": {
+            "type": "object"
+          },
+          "state": {
+            "type": "object"
+          },
+          "content": {},
+          "resolvedProperties": {
+            "type": "object"
+          },
+          "geometry": {
+            "type": "object"
+          },
+          "positioning": {
+            "type": "object"
+          },
+          "visibility": {
+            "type": "object"
+          },
+          "layering": {
+            "type": "object"
+          },
+          "assetRefs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "nodeId",
+          "nodeType"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "accessibilityTree": {},
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "uiState": {
+      "type": "object"
+    },
+    "renderingEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "completeness": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

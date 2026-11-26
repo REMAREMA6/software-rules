@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0.0",
+  "captureId": "capture-reference-001",
+  "createdAt": "2026-11-26T10:00:00Z",
+  "purpose": "Minimal structural validation fixture",
+  "target": {
+    "targetId": "target-demo",
+    "systemName": "Demo application",
+    "boundary": {
+      "description": "The demo application process and exposed UI boundary",
+      "included": [
+        "web application"
+      ],
+      "excluded": [
+        "external identity provider"
+      ]
+    }
+  },
+  "scope": {
+    "description": "One interface snapshot scenario",
+    "facetIds": [
+      "interface"
+    ],
+    "scenarioIds": [
+      "scenario-home"
+    ]
+  },
+  "collector": {
+    "name": "fixture-generator",
+    "version": "0.1.0"
+  },
+  "scenarios": [
+    {
+      "scenarioId": "scenario-home",
+      "title": "Open home page",
+      "facetIds": [
+        "interface"
+      ],
+      "trigger": "Navigate to /"
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "execution-home-001",
+      "scenarioId": "scenario-home",
+      "targetId": "target-demo",
+      "startedAt": "2026-11-26T10:00:01Z",
+      "status": "completed"
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "observation-home-001",
+      "targetId": "target-demo",
+      "executionId": "execution-home-001",
+      "facet": "interface",
+      "subject": "home-root",
+      "observedAt": "2026-11-26T10:00:02Z",
+      "method": {
+        "class": "platform-inspection",
+        "procedure": "Read rendered DOM and computed layout values",
+        "tool": "browser-inspector"
+      },
+      "payload": {
+        "facet": "interface",
+        "kind": "snapshot",
+        "subject": "home-root",
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "roots": [
+          "node-root"
+        ],
+        "nodes": [
+          {
+            "nodeId": "node-root",
+            "nodeType": "document"
+          }
+        ]
+      },
+      "evidenceRefs": [
+        "evidence-dom-001"
+      ],
+      "status": "observed"
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "evidence-dom-001",
+      "evidenceClass": "runtime",
+      "evidenceType": "dom-snapshot",
+      "mediaType": "application/json",
+      "capturedAt": "2026-11-26T10:00:02Z",
+      "embedded": {
+        "nodes": 1
+      },
+      "retention": {
+        "status": "retained"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "interface",
+      "subject": "home-root",
+      "dimension": "rendered-hierarchy",
+      "status": "observed"
+    }
+  ]
+}

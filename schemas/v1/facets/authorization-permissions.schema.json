@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/authorization-permissions",
+  "title": "authorization-permissions facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "authorization-permissions"
+    },
+    "kind": {
+      "const": "access-decision"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principalRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authenticationContextRef": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resource": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contextAttributes": {
+      "type": "object"
+    },
+    "policyEvidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "decision": {
+      "enum": [
+        "permit",
+        "deny",
+        "indeterminate"
+      ]
+    },
+    "enforcementPoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "response": {
+      "type": "object"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

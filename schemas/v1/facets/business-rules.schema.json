@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/business-rules",
+  "title": "business-rules facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "business-rules"
+    },
+    "kind": {
+      "const": "domain-decision"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decisionSubject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputs": {
+      "type": "object"
+    },
+    "conditions": {
+      "type": "object"
+    },
+    "ruleIdentifier": {
+      "type": "string"
+    },
+    "evaluatedCriteria": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "decision": {},
+    "calculation": {
+      "type": "object",
+      "properties": {
+        "operands": {
+          "type": "array",
+          "items": {},
+          "minItems": 0
+        },
+        "result": {},
+        "unit": {
+          "type": "string"
+        },
+        "precision": {
+          "type": "string"
+        },
+        "rounding": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "effectivePeriod": {
+      "type": "object"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

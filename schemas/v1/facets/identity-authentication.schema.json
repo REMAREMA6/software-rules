@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/identity-authentication",
+  "title": "identity-authentication facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "identity-authentication"
+    },
+    "kind": {
+      "const": "authentication-event"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principalRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mechanism": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol": {
+      "type": "string"
+    },
+    "credentialType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "session": {
+      "type": "object"
+    },
+    "challenge": {
+      "type": "object"
+    },
+    "outcome": {
+      "enum": [
+        "success",
+        "failure",
+        "step-up",
+        "inconclusive"
+      ]
+    },
+    "claims": {
+      "type": "object"
+    },
+    "expiry": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "refresh": {
+      "type": "object"
+    },
+    "revocation": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

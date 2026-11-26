@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/behavior",
+  "title": "behavior facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "behavior"
+    },
+    "kind": {
+      "const": "triggered-operation"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "actor": {
+      "$ref": "../records.schema.json#/$defs/fieldState"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sequence": {
+            "type": "integer"
+          },
+          "action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "input": {}
+        },
+        "required": [
+          "sequence",
+          "action"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "stateTransitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": {},
+          "to": {},
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "emittedEvents": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "sideEffects": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "timing": {
+      "type": "object"
+    },
+    "termination": {
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

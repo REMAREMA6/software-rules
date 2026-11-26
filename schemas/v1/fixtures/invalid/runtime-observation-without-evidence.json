@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0.0",
+  "captureId": "capture-invalid-001",
+  "createdAt": "2026-11-26T10:00:00Z",
+  "purpose": "Must fail: runtime observation lacks evidence references",
+  "target": {
+    "targetId": "target-demo",
+    "systemName": "Demo",
+    "boundary": {
+      "description": "Demo boundary"
+    }
+  },
+  "scope": {
+    "description": "Invalid example",
+    "facetIds": [
+      "behavior"
+    ]
+  },
+  "collector": {
+    "name": "fixture"
+  },
+  "observations": [
+    {
+      "observationId": "obs-1",
+      "targetId": "target-demo",
+      "executionId": "exec-1",
+      "facet": "behavior",
+      "subject": "submit",
+      "method": {
+        "class": "external",
+        "procedure": "Manual interaction"
+      },
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "submit",
+        "trigger": "click"
+      },
+      "status": "observed"
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "behavior",
+      "status": "observed"
+    }
+  ]
+}

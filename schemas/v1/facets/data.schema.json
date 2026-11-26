@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/data",
+  "title": "data facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "data"
+    },
+    "kind": {
+      "const": "data-value"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataSubject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fieldPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observedValue": {},
+    "observedType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullability": {
+      "enum": [
+        "nullable",
+        "non-null",
+        "unknown",
+        "not-applicable"
+      ]
+    },
+    "format": {
+      "type": "string"
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "transformations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "validation": {
+      "type": "object"
+    },
+    "serialization": {
+      "type": "object"
+    },
+    "redaction": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

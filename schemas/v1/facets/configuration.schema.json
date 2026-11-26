@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/configuration",
+  "title": "configuration facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "configuration"
+    },
+    "kind": {
+      "const": "effective-configuration"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {},
+    "redacted": {
+      "type": "boolean"
+    },
+    "valueType": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "origin": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "precedence": {
+      "type": "integer"
+    },
+    "activationTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "mutability": {
+      "type": "string"
+    },
+    "reloadBehaviour": {
+      "type": "string"
+    },
+    "targetContext": {
+      "type": "object"
+    },
+    "effectObservationIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+      },
+      "minItems": 0
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

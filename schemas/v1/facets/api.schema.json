@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/api",
+  "title": "api facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "api"
+    },
+    "kind": {
+      "const": "request-response"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol": {
+      "type": "string",
+      "minLength": 1
+    },
+    "endpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "query": {
+          "type": "object"
+        },
+        "headers": {
+          "type": "object"
+        },
+        "body": {},
+        "authContext": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "headers": {
+          "type": "object"
+        },
+        "body": {},
+        "contentType": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "timing": {
+      "type": "object"
+    },
+    "correlationIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "redirects": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "retries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "transportError": {
+      "type": "object"
+    },
+    "sideEffectObservationIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+      },
+      "minItems": 0
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

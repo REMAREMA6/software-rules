@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:software-rules:schema:v1:facets/background-processing",
+  "title": "background-processing facet payload",
+  "type": "object",
+  "properties": {
+    "facet": {
+      "const": "background-processing"
+    },
+    "kind": {
+      "const": "job-lifecycle"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "job": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trigger": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schedule": {
+      "type": "object"
+    },
+    "enqueue": {
+      "type": "object"
+    },
+    "worker": {
+      "type": "object"
+    },
+    "lifecycle": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "attemptCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "inputs": {
+      "type": "object"
+    },
+    "output": {},
+    "sideEffects": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "timeout": {
+      "type": "object"
+    },
+    "cancellation": {
+      "type": "object"
+    },
+    "retry": {
+      "type": "object"
+    },
+    "terminalResult": {
+      "type": "string"
+    },
+    "initiatingCorrelationId": {
+      "type": "string"
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "facet",
+    "kind",
+    "subject"
+  ],
+  "additionalProperties": false
+}

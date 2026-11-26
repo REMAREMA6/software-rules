@@ -160,8 +160,8 @@
 - [x] Inspect retained runtime artifacts and capture records against each claimed interface property.
 - [x] Correct unsupported completeness claims: add font-rendering as partial and retain partial business-rule/data observations.
 - [x] Update all three captures and comparison reports to report incomplete replication coverage.
+- [x] Re-run baseline and deliberate-mutation conformance after the initial evidence audit.
 - [ ] Add missing UI states, responsive conditions, and interaction states for the declared target.
-- [ ] Re-run baseline and deliberate-mutation conformance.
 
 ### 6B — Behaviour and functionality
 - [x] Draft the discriminating runtime probe backlog for create, complete, filter, delete, validation, and failure paths.
@@ -169,7 +169,8 @@
 - [x] Execute the expanded probe suite through the dedicated GitHub Actions workflow and inspect the three-variant output archive.
 - [ ] Enumerate every supported operation, trigger, precondition, transition, output, side effect, and failure path.
 - [ ] Probe normal, boundary, repeated, invalid, interrupted, and failure scenarios.
-- [ ] Capture independent executions and compare rule-level outcomes.
+- [x] Compare the initial expanded probe outcomes across reference, independent, and mutated variants.
+- [ ] Extend independent comparisons to remaining operations and failure paths.
 
 ### 6C — Business rules
 - [x] Record candidate rules and unresolved hypotheses for title normalization, blank rejection, initial completion state, and summary counts.
@@ -306,3 +307,7 @@
 - Updated all three captures with the new scenario, execution, evidence, and observations. Inventory now has 34 entries per capture: 28 captured, two partial, one not applicable, and three optional exclusions.
 - Updated comparison coverage to 28 observed/captured units and two partial units; all reports remain incomplete-both.
 - Remaining partial properties: font rendering beyond the recorded Chromium/Linux conditions and maximum title-length constraint.
+
+
+- Updated the Phase 6 facet-expansion document with current 6B–6D progress and a clear statement of which facets the Task Board does not exercise.
+- The latest documentation/capture validation run #45859552354 also completed successfully.

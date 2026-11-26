@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:software-rules:schema:v1:comparison-report",
-  "title": "Software Rules comparison report envelope (structural draft)",
+  "title": "Software Rules comparison report",
+  "description": "A bounded comparison of two identified captures. Results are evidence-scoped and do not assert universal system equivalence.",
   "type": "object",
-  "description": "Defines report identity and capture references only. Difference classification, matching, normalization, and equivalence semantics are deferred to Phase 5.",
   "properties": {
     "schemaVersion": {
       "const": "0.1.0"
@@ -16,13 +16,11 @@
       "type": "string",
       "format": "date-time"
     },
-    "referenceCaptureId": {
-      "type": "string",
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    "referenceCapture": {
+      "$ref": "#/$defs/captureRef"
     },
-    "implementationCaptureId": {
-      "type": "string",
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    "implementationCapture": {
+      "$ref": "#/$defs/captureRef"
     },
     "comparisonScope": {
       "type": "object",
@@ -31,90 +29,78 @@
           "type": "string",
           "minLength": 1
         },
-        "facetIds": {
+        "facets": {
           "type": "array",
           "items": {
             "type": "string",
             "minLength": 1
           },
-          "minItems": 1
+          "minItems": 1,
+          "uniqueItems": true
         },
         "scenarioIds": {
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+            "minLength": 1
           },
-          "minItems": 0
+          "uniqueItems": true
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "excludedDimensions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "limitations": {
           "type": "array",
           "items": {
             "type": "string",
             "minLength": 1
-          },
-          "minItems": 0
+          }
         }
       },
       "required": [
-        "description"
+        "description",
+        "facets"
       ],
       "additionalProperties": false
     },
-    "recordLinks": {
+    "normalizationProfile": {
+      "$ref": "#/$defs/normalizationProfile"
+    },
+    "alignments": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "referenceRecordId": {
-            "type": "string",
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
-          },
-          "implementationRecordId": {
-            "type": "string",
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
-          },
-          "facet": {
-            "type": "string",
-            "minLength": 1
-          }
-        },
-        "required": [
-          "facet"
-        ],
-        "additionalProperties": false
-      },
-      "minItems": 0
+        "$ref": "#/$defs/alignment"
+      }
     },
-    "coverageRefs": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
-          },
-          "minItems": 0
-        },
-        "implementation": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
-          },
-          "minItems": 0
-        }
-      },
-      "additionalProperties": false
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/result"
+      }
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "conclusion": {
+      "$ref": "#/$defs/conclusion"
     },
     "limitations": {
       "type": "array",
       "items": {
         "type": "string",
         "minLength": 1
-      },
-      "minItems": 0
+      }
     },
     "extensions": {
       "type": "object"
@@ -124,9 +110,547 @@
     "schemaVersion",
     "reportId",
     "createdAt",
-    "referenceCaptureId",
-    "implementationCaptureId",
-    "comparisonScope"
+    "referenceCapture",
+    "implementationCapture",
+    "comparisonScope",
+    "alignments",
+    "results",
+    "coverage",
+    "conclusion"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "captureRef": {
+      "type": "object",
+      "properties": {
+        "captureId": {
+          "$ref": "#/$defs/id"
+        },
+        "schemaVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifactRef": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "captureId",
+        "schemaVersion"
+      ],
+      "additionalProperties": false
+    },
+    "normalizationProfile": {
+      "type": "object",
+      "properties": {
+        "profileId": {
+          "$ref": "#/$defs/id"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "operationId": {
+                "$ref": "#/$defs/id"
+              },
+              "facet": {
+                "type": "string",
+                "minLength": 1
+              },
+              "dimension": {
+                "type": "string",
+                "minLength": 1
+              },
+              "method": {
+                "type": "string",
+                "minLength": 1
+              },
+              "methodVersion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "inputRepresentation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "outputRepresentation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preservesRaw": {
+                "const": true
+              },
+              "parameters": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "operationId",
+              "facet",
+              "dimension",
+              "method",
+              "methodVersion",
+              "inputRepresentation",
+              "outputRepresentation",
+              "preservesRaw"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "profileId",
+        "version",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "alignment": {
+      "type": "object",
+      "properties": {
+        "alignmentId": {
+          "$ref": "#/$defs/id"
+        },
+        "facet": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referenceRecordIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "implementationRecordIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "enum": [
+            "paired",
+            "reference-only",
+            "implementation-only",
+            "ambiguous",
+            "not-aligned"
+          ]
+        },
+        "identityBasis": {
+          "enum": [
+            "stable-identifier",
+            "scenario-subject-facet-condition",
+            "explicit-mapping",
+            "semantic-review",
+            "none"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "alignmentId",
+        "facet",
+        "referenceRecordIds",
+        "implementationRecordIds",
+        "status",
+        "identityBasis",
+        "rationale"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "paired"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "referenceRecordIds": {
+                "minItems": 1
+              },
+              "implementationRecordIds": {
+                "minItems": 1
+              },
+              "identityBasis": {
+                "not": {
+                  "const": "none"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "reference-only"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "referenceRecordIds": {
+                "minItems": 1
+              },
+              "implementationRecordIds": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "implementation-only"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "referenceRecordIds": {
+                "maxItems": 0
+              },
+              "implementationRecordIds": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tolerance": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "type": "string",
+          "minLength": 1
+        },
+        "absolute": {
+          "type": "number",
+          "minimum": 0
+        },
+        "relative": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "metric",
+        "rationale"
+      ],
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "resultId": {
+          "$ref": "#/$defs/id"
+        },
+        "alignmentId": {
+          "$ref": "#/$defs/id"
+        },
+        "facet": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimension": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "enum": [
+            "match",
+            "mismatch",
+            "missing",
+            "additional",
+            "unknown",
+            "conflicting",
+            "not-comparable"
+          ]
+        },
+        "missingSide": {
+          "enum": [
+            "reference",
+            "implementation",
+            "both"
+          ]
+        },
+        "comparisonBasis": {
+          "enum": [
+            "exact",
+            "normalized",
+            "semantic",
+            "tolerance",
+            "none"
+          ]
+        },
+        "referenceObservationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "implementationObservationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "referenceValue": {
+          "description": "Optional comparison projection; raw observation remains in its capture."
+        },
+        "implementationValue": {
+          "description": "Optional comparison projection; raw observation remains in its capture."
+        },
+        "normalizationOperationIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "uniqueItems": true
+        },
+        "tolerance": {
+          "$ref": "#/$defs/tolerance"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      },
+      "required": [
+        "resultId",
+        "alignmentId",
+        "facet",
+        "dimension",
+        "classification",
+        "comparisonBasis",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "missing"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "required": [
+              "missingSide"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "const": "match"
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "comparisonBasis": {
+                "enum": [
+                  "exact",
+                  "normalized",
+                  "semantic",
+                  "tolerance"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "classification": {
+                "enum": [
+                  "unknown",
+                  "conflicting",
+                  "not-comparable"
+                ]
+              }
+            },
+            "required": [
+              "classification"
+            ]
+          },
+          "then": {
+            "properties": {
+              "comparisonBasis": {
+                "const": "none"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "comparisonBasis": {
+                "const": "tolerance"
+              }
+            },
+            "required": [
+              "comparisonBasis"
+            ]
+          },
+          "then": {
+            "required": [
+              "tolerance"
+            ]
+          }
+        }
+      ]
+    },
+    "coverageSide": {
+      "type": "object",
+      "properties": {
+        "declaredUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observedUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notObservedUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unknownUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unavailableUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notApplicableUnits": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "declaredUnits",
+        "observedUnits"
+      ],
+      "additionalProperties": false
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "$ref": "#/$defs/coverageSide"
+        },
+        "implementation": {
+          "$ref": "#/$defs/coverageSide"
+        },
+        "sharedComparableUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "incomparableUnits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "reference",
+        "implementation",
+        "sharedComparableUnits",
+        "incomparableUnits"
+      ],
+      "additionalProperties": false
+    },
+    "conclusion": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "agreement-within-observed-scope",
+            "differences-found",
+            "inconclusive",
+            "not-comparable"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scopeBounded": {
+          "const": true
+        },
+        "universalEquivalenceClaimed": {
+          "const": false
+        }
+      },
+      "required": [
+        "status",
+        "statement",
+        "scopeBounded",
+        "universalEquivalenceClaimed"
+      ],
+      "additionalProperties": false
+    }
+  }
 }

@@ -10,7 +10,7 @@
 - `records.schema.json` — common target, coverage, scenario, execution, observation, rule, contract, and evidence definitions.
 - `facet-payloads.schema.json` — union of the facet payloads.
 - `facets/*.schema.json` — 15 typed facet payloads.
-- `comparison-report.schema.json` — structural report envelope only; Phase 5 owns comparison semantics.
+- `comparison-report.schema.json` — comparison report structure, alignments, normalization profile, result classifications, coverage, and bounded conclusion.
 
 All schemas use stable URN identifiers under `urn:software-rules:schema:v1:`. The `v1` path/namespace identifies the intended major compatibility family; the current draft version is `0.1.0`, not a stable 1.0.0 release. These URNs are identifiers, not network retrieval endpoints.
 
@@ -25,8 +25,8 @@ All schemas use stable URN identifiers under `urn:software-rules:schema:v1:`. Th
 - Omission is not equivalent to null, false, zero, or an empty collection.
 - Unknown facet-specific fields belong under `extensions`; core records reject unrecognized sibling properties.
 
-## Deliberate limits
+## Comparison boundary
 
-These schemas validate structure, not truth, execution, evidence integrity, referential integrity, semantic completeness, or equivalence. Cross-record ID resolution and temporal consistency require conformance checks beyond JSON Schema. Facet payload dimensions are intentionally mostly optional because captures may be partial; coverage and limitations must disclose gaps.
+The report schema validates local structure and classification constraints. It does not verify that referenced captures, observations, alignments, normalization operations, or evidence IDs exist or are semantically compatible. It does not calculate results. Cross-record integrity and comparison correctness require conformance procedures beyond JSON Schema.
 
-The comparison report schema does not define matching, canonicalization, tolerance, or difference classification. Those decisions belong to Phase 5.
+See `comparison/` for the normative comparison model and limitations.

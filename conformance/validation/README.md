@@ -1,6 +1,6 @@
-# Schema validation
+# Schema and comparison validation
 
-The validation suite uses Ajv 8 with the JSON Schema Draft 2020-12 implementation and `ajv-formats` for date-time format checks.
+The suite uses Ajv 8 with JSON Schema Draft 2020-12 and `ajv-formats`.
 
 From the repository root:
 
@@ -9,8 +9,6 @@ npm install
 npm run validate --prefix conformance/validation
 ```
 
-The suite recursively registers versioned schemas, validates every JSON fixture against `schemas/v1/capture.schema.json`, expects files under `fixtures/valid/` to pass, and expects files under `fixtures/invalid/` to fail.
+The runner registers all versioned schemas, validates capture fixtures against `schemas/v1/capture.schema.json`, and validates comparison-report fixtures against `schemas/v1/comparison-report.schema.json`. Files in each `valid/` directory must pass; files in each `invalid/` directory must fail.
 
-A fixture passing JSON Schema validation proves only structural validity. It does not prove that referenced IDs exist, that evidence is authentic, that the observation really occurred, or that two captures are equivalent. Those checks require later conformance and comparison work.
-
-No claim is made that the suite has been executed in this repository environment; run it after installing dependencies.
+Validation checks structural constraints only. It does not resolve cross-record references, prove evidence authenticity, validate semantic alignment, or recalculate comparison results.

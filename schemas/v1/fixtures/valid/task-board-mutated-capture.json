@@ -1,0 +1,889 @@
+{
+  "schemaVersion": "0.1.0",
+  "captureId": "task-board-independent-mutated-capture",
+  "createdAt": "2026-11-26T15:30:00+01:00",
+  "purpose": "Empirical browser capture of the deliberately mutated Task Board implementation; summary pluralization defect is intentional.",
+  "target": {
+    "targetId": "task-board-independent-mutated",
+    "systemName": "Task Board independent implementation — mutated",
+    "systemVersion": "phase6-fixture-1",
+    "build": {
+      "version": "1.0.0",
+      "revision": "ind-mutated-html-001"
+    },
+    "boundary": {
+      "description": "Single-page Task Board UI and its deterministic in-browser API adapter; no durable database or authentication.",
+      "included": [
+        "Task Board HTML/CSS/JavaScript",
+        "Task create/update/delete interactions",
+        "In-memory deterministic API adapter"
+      ],
+      "excluded": [
+        "Production backend",
+        "Authentication",
+        "Cross-session persistence"
+      ]
+    },
+    "environment": {
+      "platform": "web",
+      "os": "Linux",
+      "runtime": "Chromium browser",
+      "browser": "Chromium (isolated browser)",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "viewport": {
+            "width": 1280,
+            "height": 800,
+            "unit": "css-px"
+          },
+          "locale": "en"
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Initial render and one task lifecycle: create, complete, filter active/completed, delete.",
+    "facetIds": [
+      "interface",
+      "behavior",
+      "api"
+    ],
+    "scenarioIds": [
+      "mut-scenario-interface",
+      "mut-scenario-workflow",
+      "mut-scenario-api"
+    ]
+  },
+  "collector": {
+    "name": "Firecrawl isolated Chromium browser",
+    "version": "browser-interaction session",
+    "methodDescription": "Browser automation using rendered DOM inspection, computed styles, bounding boxes, and user-equivalent control interactions."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "mut-scenario-interface",
+      "title": "Render empty Task Board",
+      "purpose": "Observe initial rendered interface hierarchy and geometry.",
+      "facetIds": [
+        "interface"
+      ],
+      "subject": "task-board-root",
+      "preconditions": [
+        "Fresh page load",
+        "Viewport 1280x800 CSS pixels",
+        "No tasks in in-memory store"
+      ],
+      "trigger": "Navigate to the Task Board document",
+      "observableQuestions": [
+        "What is the main container geometry?",
+        "Which controls and labels are rendered?"
+      ]
+    },
+    {
+      "scenarioId": "mut-scenario-workflow",
+      "title": "Complete and delete a task",
+      "purpose": "Observe task lifecycle state transitions and visible outputs.",
+      "facetIds": [
+        "behavior"
+      ],
+      "subject": "task-lifecycle",
+      "preconditions": [
+        "Fresh page load",
+        "Empty in-memory task store"
+      ],
+      "trigger": "Enter a task title and activate Add task",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Enter Prepare release notes in Task name"
+        },
+        {
+          "sequence": 2,
+          "action": "Activate Add task"
+        },
+        {
+          "sequence": 3,
+          "action": "Check the task completion checkbox"
+        },
+        {
+          "sequence": 4,
+          "action": "Select Active filter"
+        },
+        {
+          "sequence": 5,
+          "action": "Select Completed filter"
+        },
+        {
+          "sequence": 6,
+          "action": "Activate Delete Prepare release notes"
+        }
+      ],
+      "observableQuestions": [
+        "Is the task created incomplete?",
+        "Does completion change the active count?",
+        "Do filters show the expected task subset?",
+        "Does deletion remove the task?"
+      ]
+    },
+    {
+      "scenarioId": "mut-scenario-api",
+      "title": "Capture task API exchanges",
+      "purpose": "Observe the deterministic adapter request/response boundary.",
+      "facetIds": [
+        "api"
+      ],
+      "subject": "task-api",
+      "trigger": "Create and complete a task"
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "mut-exec-interface",
+      "scenarioId": "mut-scenario-interface",
+      "targetId": "task-board-independent-mutated",
+      "startedAt": "2026-11-26T15:30:00+01:00",
+      "status": "completed",
+      "actualContext": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "initialTaskCount": 0
+      },
+      "collector": {
+        "name": "Firecrawl isolated Chromium browser"
+      }
+    },
+    {
+      "executionId": "mut-exec-workflow",
+      "scenarioId": "mut-scenario-workflow",
+      "targetId": "task-board-independent-mutated",
+      "startedAt": "2026-11-26T15:30:00+01:00",
+      "status": "completed",
+      "actualContext": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "apiAdapter": "deterministic in-memory fetch stub"
+      },
+      "actualInputs": {
+        "title": "Prepare release notes"
+      },
+      "trigger": "Submit task form",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Create task"
+        },
+        {
+          "sequence": 2,
+          "action": "Mark complete"
+        },
+        {
+          "sequence": 3,
+          "action": "Filter active and completed"
+        },
+        {
+          "sequence": 4,
+          "action": "Delete task"
+        }
+      ],
+      "collector": {
+        "name": "Firecrawl isolated Chromium browser"
+      },
+      "limitations": [
+        "API adapter is deterministic and in-memory; this capture does not establish production server behavior."
+      ]
+    },
+    {
+      "executionId": "mut-exec-api",
+      "scenarioId": "mut-scenario-api",
+      "targetId": "task-board-independent-mutated",
+      "startedAt": "2026-11-26T15:40:00+01:00",
+      "status": "completed",
+      "actualContext": {
+        "adapter": "deterministic in-memory fetch adapter"
+      },
+      "actualInputs": {
+        "title": "Prepare release notes"
+      },
+      "collector": {
+        "name": "Firecrawl isolated Chromium browser"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "mut-obs-interface",
+      "targetId": "task-board-independent-mutated",
+      "executionId": "mut-exec-interface",
+      "facet": "interface",
+      "subject": "task-board-root",
+      "observedAt": "2026-11-26T15:30:00+01:00",
+      "sequence": 1,
+      "method": {
+        "class": "platform-inspection",
+        "procedure": "Inspect rendered DOM, computed display values, and element bounding boxes at 1280x800 CSS pixels.",
+        "tool": "Chromium browser automation"
+      },
+      "conditions": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        }
+      },
+      "trigger": "Initial navigation",
+      "payload": {
+        "facet": "interface",
+        "kind": "snapshot",
+        "subject": "task-board-root",
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "roots": [
+          "task-board-main"
+        ],
+        "nodes": [
+          {
+            "nodeId": "task-board-main",
+            "nodeType": "main",
+            "attributes": {
+              "id": "board"
+            },
+            "geometry": {
+              "x": 280,
+              "y": 40,
+              "width": 720,
+              "height": 315,
+              "unit": "css-px"
+            },
+            "resolvedProperties": {
+              "display": "block",
+              "backgroundColor": "rgb(255, 255, 255)",
+              "borderRadius": "14px",
+              "padding": "28px"
+            }
+          },
+          {
+            "nodeId": "task-board-title",
+            "parentId": "task-board-main",
+            "order": 0,
+            "nodeType": "h1",
+            "content": "Task Board",
+            "geometry": {
+              "x": 309,
+              "y": 69,
+              "width": 662,
+              "height": 38
+            },
+            "resolvedProperties": {
+              "display": "block",
+              "fontSize": "28px"
+            }
+          },
+          {
+            "nodeId": "task-name-input",
+            "parentId": "task-board-main",
+            "order": 1,
+            "nodeType": "input",
+            "attributes": {
+              "type": "text",
+              "aria-label": "Task name",
+              "placeholder": "Add a task"
+            },
+            "geometry": {
+              "x": 309,
+              "y": 159,
+              "width": 562.96875,
+              "height": 48
+            }
+          },
+          {
+            "nodeId": "add-task-button",
+            "parentId": "task-board-main",
+            "order": 2,
+            "nodeType": "button",
+            "content": "Add task",
+            "geometry": {
+              "x": 879.96875,
+              "y": 159,
+              "width": 91.03125,
+              "height": 48
+            }
+          },
+          {
+            "nodeId": "task-filters",
+            "parentId": "task-board-main",
+            "order": 3,
+            "nodeType": "nav",
+            "attributes": {
+              "aria-label": "Task filters"
+            },
+            "geometry": {
+              "x": 309,
+              "y": 229,
+              "width": 662,
+              "height": 42
+            },
+            "resolvedProperties": {
+              "display": "flex"
+            }
+          },
+          {
+            "nodeId": "task-list",
+            "parentId": "task-board-main",
+            "order": 4,
+            "nodeType": "ul",
+            "geometry": {
+              "x": 309,
+              "y": 293,
+              "width": 662,
+              "height": 0
+            }
+          },
+          {
+            "nodeId": "task-summary",
+            "parentId": "task-board-main",
+            "order": 5,
+            "nodeType": "p",
+            "attributes": {
+              "aria-live": "polite"
+            },
+            "content": "0 tasks · 0 active",
+            "geometry": {
+              "x": 309,
+              "y": 293,
+              "width": 662,
+              "height": 19
+            }
+          }
+        ],
+        "accessibilityTree": {
+          "role": "main",
+          "name": null,
+          "children": [
+            {
+              "role": "heading",
+              "level": 1,
+              "name": "Task Board"
+            },
+            {
+              "role": "textbox",
+              "name": "Task name"
+            },
+            {
+              "role": "button",
+              "name": "Add task"
+            },
+            {
+              "role": "navigation",
+              "name": "Task filters"
+            }
+          ]
+        },
+        "uiState": {
+          "taskCount": 0,
+          "selectedFilter": "all"
+        },
+        "completeness": {
+          "status": "partial",
+          "limitations": [
+            "Geometry and computed values recorded for the main controls only; full browser accessibility tree and screenshot archive not retained."
+          ]
+        }
+      },
+      "evidenceRefs": [
+        "ind-evidence-interface"
+      ],
+      "status": "observed",
+      "limitations": [
+        "DOM geometry is tied to the isolated Chromium viewport and font environment."
+      ]
+    },
+    {
+      "observationId": "mut-obs-workflow",
+      "targetId": "task-board-independent-mutated",
+      "executionId": "mut-exec-workflow",
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "observedAt": "2026-11-26T15:30:00+01:00",
+      "sequence": 2,
+      "method": {
+        "class": "external",
+        "procedure": "Enter a task, click visible controls, inspect rendered list, checkbox state, filter result count, and live summary after each action.",
+        "tool": "Chromium browser automation"
+      },
+      "conditions": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "apiAdapter": "deterministic in-memory fetch stub"
+      },
+      "trigger": "Submit task form",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "task-lifecycle",
+        "trigger": "Submit task form with title Prepare release notes",
+        "preconditions": [
+          "Task store starts empty"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Create task",
+            "input": {
+              "title": "Prepare release notes"
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Complete task",
+            "input": {
+              "completed": true
+            }
+          },
+          {
+            "sequence": 3,
+            "action": "Select Active filter"
+          },
+          {
+            "sequence": 4,
+            "action": "Select Completed filter"
+          },
+          {
+            "sequence": 5,
+            "action": "Delete task"
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": {
+              "taskCount": 0
+            },
+            "to": {
+              "taskCount": 1,
+              "completed": false
+            }
+          },
+          {
+            "from": {
+              "taskCount": 1,
+              "completed": false
+            },
+            "to": {
+              "taskCount": 1,
+              "completed": true
+            }
+          },
+          {
+            "from": {
+              "taskCount": 1
+            },
+            "to": {
+              "taskCount": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "stage": "after-create",
+            "value": {
+              "summary": "1 tasks · 1 active",
+              "count": 1
+            }
+          },
+          {
+            "stage": "after-complete",
+            "value": {
+              "summary": "1 tasks · 0 active",
+              "checked": true
+            }
+          }
+        ],
+        "sideEffects": [
+          "POST /api/tasks invoked by client against the in-memory adapter",
+          "PATCH /api/tasks/{id} invoked by client against the in-memory adapter",
+          "DELETE /api/tasks/{id} invoked by client against the in-memory adapter"
+        ],
+        "termination": "Task deleted; rendered list empty"
+      },
+      "evidenceRefs": [
+        "ind-evidence-workflow"
+      ],
+      "status": "observed",
+      "limitations": [
+        "The deliberately mutated build pluralizes the singular task count incorrectly."
+      ]
+    },
+    {
+      "observationId": "mut-obs-api-1",
+      "targetId": "task-board-independent-mutated",
+      "executionId": "mut-exec-api",
+      "facet": "api",
+      "subject": "task-api-post",
+      "observedAt": "2026-11-26T15:40:00+01:00",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Capture deterministic fetch adapter request and immutable response snapshot.",
+        "tool": "in-page fetch adapter"
+      },
+      "trigger": "Create and complete task",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "task-api-post",
+        "protocol": "HTTP",
+        "endpoint": "/api/tasks",
+        "method": "POST",
+        "target": "Deterministic in-memory test adapter",
+        "request": {
+          "path": "/api/tasks",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "body": {
+            "title": "Prepare release notes"
+          }
+        },
+        "response": {
+          "status": 200,
+          "contentType": "application/json",
+          "body": {
+            "id": "task-1",
+            "title": "Prepare release notes",
+            "completed": false
+          }
+        },
+        "timing": {
+          "state": "not-observed",
+          "reason": "Duration not measured."
+        }
+      },
+      "evidenceRefs": [
+        "mut-evidence-api-1"
+      ],
+      "status": "observed",
+      "limitations": [
+        "Observed at test adapter boundary only."
+      ]
+    },
+    {
+      "observationId": "mut-obs-api-2",
+      "targetId": "task-board-independent-mutated",
+      "executionId": "mut-exec-api",
+      "facet": "api",
+      "subject": "task-api-patch",
+      "observedAt": "2026-11-26T15:40:00+01:00",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Capture deterministic fetch adapter request and immutable response snapshot.",
+        "tool": "in-page fetch adapter"
+      },
+      "trigger": "Create and complete task",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "task-api-patch",
+        "protocol": "HTTP",
+        "endpoint": "/api/tasks/task-1",
+        "method": "PATCH",
+        "target": "Deterministic in-memory test adapter",
+        "request": {
+          "path": "/api/tasks/task-1",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "body": {
+            "completed": true
+          }
+        },
+        "response": {
+          "status": 200,
+          "contentType": "application/json",
+          "body": {
+            "id": "task-1",
+            "title": "Prepare release notes",
+            "completed": true
+          }
+        },
+        "timing": {
+          "state": "not-observed",
+          "reason": "Duration not measured."
+        }
+      },
+      "evidenceRefs": [
+        "mut-evidence-api-2"
+      ],
+      "status": "observed",
+      "limitations": [
+        "Observed at test adapter boundary only."
+      ]
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "mut-rule-create-incomplete",
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "proposition": "A newly created task is incomplete and contributes one to the active-task count.",
+      "trigger": "Successful task creation",
+      "status": "supported",
+      "supportingObservationIds": [
+        "mut-obs-workflow"
+      ],
+      "limitations": [
+        "Supported for the tested title and deterministic in-memory adapter only."
+      ]
+    },
+    {
+      "ruleId": "mut-rule-create-api",
+      "facet": "api",
+      "subject": "task-api",
+      "proposition": "POST /api/tasks returns HTTP 200 and a newly created incomplete task.",
+      "trigger": "Create task",
+      "status": "supported",
+      "supportingObservationIds": [
+        "mut-obs-api-1"
+      ],
+      "limitations": [
+        "Only the in-memory adapter and one input were tested."
+      ]
+    }
+  ],
+  "sourceRules": [],
+  "evidence": [
+    {
+      "evidenceId": "mut-evidence-interface",
+      "evidenceClass": "runtime",
+      "evidenceType": "rendered-dom-and-geometry",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent-mutated",
+        "executionId": "mut-exec-interface",
+        "collector": "Firecrawl isolated Chromium browser"
+      },
+      "capturedAt": "2026-11-26T15:30:00+01:00",
+      "embedded": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px"
+        },
+        "mainGeometry": {
+          "x": 280,
+          "y": 40,
+          "width": 720,
+          "height": 315,
+          "unit": "css-px"
+        },
+        "titleGeometry": {
+          "x": 309,
+          "y": 69,
+          "width": 662,
+          "height": 38
+        },
+        "inputGeometry": {
+          "x": 309,
+          "y": 159,
+          "width": 562.96875,
+          "height": 48
+        },
+        "filterGeometry": {
+          "x": 309,
+          "y": 229,
+          "width": 662,
+          "height": 42
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Structured values transcribed from the browser inspection output; no screenshot file retained."
+      ]
+    },
+    {
+      "evidenceId": "mut-evidence-workflow",
+      "evidenceClass": "runtime",
+      "evidenceType": "browser-interaction-results",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent-mutated",
+        "executionId": "mut-exec-workflow",
+        "collector": "Firecrawl isolated Chromium browser"
+      },
+      "capturedAt": "2026-11-26T15:30:00+01:00",
+      "embedded": {
+        "afterCreate": {
+          "taskText": "Prepare release notes",
+          "summary": "1 task · 1 active",
+          "count": 1
+        },
+        "afterComplete": {
+          "summary": "1 task · 0 active",
+          "checked": true
+        },
+        "activeFilterCount": 0,
+        "completedFilterCount": 1,
+        "afterDelete": {
+          "count": 0,
+          "summary": "0 tasks · 0 active"
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Test used an in-memory fetch adapter."
+      ]
+    },
+    {
+      "evidenceId": "mut-evidence-source",
+      "evidenceClass": "source-artifact",
+      "evidenceType": "html-javascript-source",
+      "mediaType": "text/html",
+      "origin": {
+        "targetId": "task-board-independent-mutated",
+        "collector": "Repository source file",
+        "sourceUri": "examples/task-board/independent/index.html",
+        "sourceRevision": "ind-html-001",
+        "location": "remove button click handler"
+      },
+      "capturedAt": "2026-11-26T15:30:00+01:00",
+      "embedded": {
+        "description": "Source artifact stored in this repository; rule inference is explicitly unverified."
+      },
+      "retention": {
+        "status": "retained"
+      }
+    },
+    {
+      "evidenceId": "mut-evidence-api-1",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-exchange",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent-mutated",
+        "executionId": "mut-exec-api",
+        "collector": "In-page deterministic fetch adapter"
+      },
+      "capturedAt": "2026-11-26T15:40:00+01:00",
+      "embedded": {
+        "request": {
+          "method": "POST",
+          "url": "/api/tasks",
+          "body": {
+            "title": "Prepare release notes"
+          }
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "id": "task-1",
+            "title": "Prepare release notes",
+            "completed": false
+          }
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Test-only in-memory adapter."
+      ]
+    },
+    {
+      "evidenceId": "mut-evidence-api-2",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-exchange",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent-mutated",
+        "executionId": "mut-exec-api",
+        "collector": "In-page deterministic fetch adapter"
+      },
+      "capturedAt": "2026-11-26T15:40:00+01:00",
+      "embedded": {
+        "request": {
+          "method": "PATCH",
+          "url": "/api/tasks/task-1",
+          "body": {
+            "completed": true
+          }
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "id": "task-1",
+            "title": "Prepare release notes",
+            "completed": true
+          }
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Test-only in-memory adapter."
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "interface",
+      "subject": "task-board-root",
+      "dimension": "main-layout-and-primary-controls",
+      "status": "observed",
+      "scenarioIds": [
+        "mut-scenario-interface"
+      ],
+      "executionIds": [
+        "mut-exec-interface"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "task-lifecycle",
+      "dimension": "create-complete-filter-delete",
+      "status": "observed",
+      "scenarioIds": [
+        "mut-scenario-workflow"
+      ],
+      "executionIds": [
+        "mut-exec-workflow"
+      ]
+    },
+    {
+      "facet": "api",
+      "subject": "task-api",
+      "dimension": "request-response-exchanges",
+      "status": "observed",
+      "scenarioIds": [
+        "mut-scenario-api"
+      ],
+      "executionIds": [
+        "mut-exec-api"
+      ]
+    }
+  ],
+  "limitations": [
+    "Two implementations were run in the same isolated Chromium environment at 1280x800 CSS pixels.",
+    "The API adapter is in-memory and does not represent a production server or persistence layer.",
+    "The automation retained DOM geometry and visible workflow outcomes, but did not retain screenshots or raw request/response events.",
+    "API exchanges are empirical at the deterministic in-memory adapter boundary only; no production network, server, database, or authentication behavior is claimed.",
+    "Intentional mutation: summary count uses plural 'tasks' even when the count is one.",
+    "API exchanges are captured at the deterministic in-memory adapter boundary, not a production server."
+  ]
+}

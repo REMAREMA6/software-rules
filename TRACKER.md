@@ -154,9 +154,9 @@
 - [x] A separate independent replication project is required.
 - [x] Rules must be extracted into a technology-independent specification before implementation.
 - [x] Equivalent source/replica probes, comparison, and mutation detection are required.
-- [ ] Create the replication-lab skeleton and case manifest.
-- [ ] Select and inspect immutable source repositories for all 15 facets.
-- [ ] Implement and validate independent cross-stack cases for every facet.
+- [x] Create the replication-lab skeleton, case template, source register, and source-record template.
+- [~] Start source selection and inspection; six immutable repository candidates are registered. This is not yet complete 15-facet coverage.
+- [~] Start the first independent rule case: BullMQ retry-policy source capture plus a Python decision-model replica. Source runtime comparison remains pending.
 - [ ] Complete the final evidence and coverage audit.
 
 ### Existing bounded evidence
@@ -193,7 +193,7 @@
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** the replication lab and multi-repository case set have not yet been built. The earlier Task Board-only approach is superseded as the overall Phase 6 strategy. Do not claim Phase 6 complete until the 15-facet cross-repository exit gate passes.
+**Current blocker:** the replication lab skeleton exists, but the multi-repository case set is only at candidate/source-inspection stage. No facet has yet passed the full source-runtime → independent replica → comparison → mutation loop. The earlier Task Board-only approach is superseded as the overall Phase 6 strategy. Do not claim Phase 6 complete until the 15-facet cross-repository exit gate passes.
 
 ## Phase 7 — Review, release, and maintenance
 
@@ -318,3 +318,15 @@
 - Task Board supplemental evidence now spans eight facets: interface, behaviour, business rules, data, API adapter, errors/recovery, limited security output encoding, and single-run performance. The three captures contain 38 inventory entries each (33 captured, two partial, one not applicable, two excluded) and remain explicitly incomplete.
 
 - Corrected an intermittent screenshot race by waiting for PATCH/DELETE responses and the resulting DOM state before saving the pointer workflow. [Run #45861726449](https://github.com/REMAREMA6/software-rules/actions/runs/45861726449) passed runtime capture, cross-record integrity, and schema/comparison validation. Artifact #15137768292 contains the corrected 65-file evidence archive.
+
+
+### Cross-repository Phase 6 implementation — 2026-11-26
+
+- Replaced the single-rich-reference-target assumption with a multi-repository validation strategy. The source repository for each rule is selected according to the facet it actually demonstrates; an independent replication lab implements the extracted rule in a different stack.
+- Added the full 15-facet matrix, source register requirements, independent replication layout, rule-level pass criteria, mutation requirement, and Phase 6 exit gate in examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md.
+- Updated PLAN.md, TRACKER.md, and CHANGELOG.md to use the cross-repository strategy.
+- Created conformance/replication-lab with case and source templates, shared layout, and Python test workflow.
+- Registered six source candidates with pinned inspected commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n. They remain candidates, not passed cases.
+- Inspected BullMQ retry/backoff source, guide, and tests at commit 526668f2c5e6de9d5d664df577f09a6bdccac1b4. Added a source-derived Software Rules capture with two unverified rules and an explicitly incomplete scope.
+- Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The corresponding test logic passed an isolated local Python run. Repository CI has been configured; source runtime execution and source/replica capture comparison remain outstanding.
+- No Phase 6 completion claim is made. The current work demonstrates the cross-repository process has begun, not that all 15 facets have passed.

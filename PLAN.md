@@ -235,7 +235,6 @@ software-rules/
 ├── TRACKER.md
 ├── CONTRIBUTING.md
 ├── CHANGELOG.md
-├── CONTRIBUTING.md
 ├── specification/
 │   ├── CORE.md
 │   ├── TERMINOLOGY.md

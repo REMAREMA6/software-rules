@@ -86,3 +86,8 @@ For every property, record:
 ## Completion rule
 
 A stage is not complete because its checklist is populated or a CI job passes. The investigator must review whether the inventory itself is exhaustive for the declared target and whether each claimed property has adequate, direct evidence. A stage can finish with explicit unresolved properties only if the overall replication scope remains marked incomplete. Phase 6 completes only after the 6I cross-facet gate passes.
+
+
+## Evidence-link integrity improvement
+
+The validator now requires each inventory evidence reference to be attached to at least one of that property's linked observations. A property marked captured must have at least one observed linked record supported by runtime-class evidence and not explicitly marked partial. These checks catch detached or weakly classified evidence links; they do not replace semantic review or prove that a probe set is exhaustive.

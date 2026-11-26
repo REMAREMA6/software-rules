@@ -1047,9 +1047,9 @@
       ]
     },
     {
-      "observationId": "ind-obs-business-data",
+      "observationId": "mut-obs-business-data",
       "targetId": "task-board-independent-mutated",
-      "executionId": "ind-exec-runtime-completeness",
+      "executionId": "mut-exec-runtime-completeness",
       "facet": "business-rules",
       "status": "observed",
       "payload": {
@@ -1081,14 +1081,14 @@
         ]
       },
       "evidenceRefs": [
-        "ind-evidence-workflow",
-        "ind-evidence-runtime-capture"
+        "mut-evidence-workflow",
+        "mut-evidence-runtime-capture"
       ]
     },
     {
-      "observationId": "ind-obs-data",
+      "observationId": "mut-obs-data",
       "targetId": "task-board-independent-mutated",
-      "executionId": "ind-exec-api",
+      "executionId": "mut-exec-api",
       "facet": "data",
       "status": "observed",
       "payload": {
@@ -1134,8 +1134,8 @@
         ]
       },
       "evidenceRefs": [
-        "ind-evidence-api-1",
-        "ind-evidence-api-2"
+        "mut-evidence-api-1",
+        "mut-evidence-api-2"
       ]
     }
   ],
@@ -1910,7 +1910,7 @@
           "ind-obs-runtime-interface"
         ],
         "evidenceRefs": [
-          "ind-evidence-runtime-capture"
+          "mut-evidence-runtime-capture"
         ],
         "rationale": "The archive records computed font-family values, loaded-font metadata, and a screenshot in one Chromium/Linux environment, but does not establish fallback/glyph rendering across the declared font conditions."
       },
@@ -1922,11 +1922,11 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-business-data"
+          "mut-obs-business-data"
         ],
         "evidenceRefs": [
-          "ind-evidence-workflow",
-          "ind-evidence-runtime-capture"
+          "mut-evidence-workflow",
+          "mut-evidence-runtime-capture"
         ],
         "rationale": "Whitespace-only input is ignored, but non-empty leading/trailing whitespace and the responsible validation layer have not been distinguished."
       },
@@ -1938,11 +1938,11 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-business-data"
+          "mut-obs-business-data"
         ],
         "evidenceRefs": [
-          "ind-evidence-workflow",
-          "ind-evidence-runtime-capture"
+          "mut-evidence-workflow",
+          "mut-evidence-runtime-capture"
         ],
         "rationale": "One successful create produced an incomplete task; broader input and creation-path coverage is still missing."
       },
@@ -1954,11 +1954,11 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-business-data"
+          "mut-obs-business-data"
         ],
         "evidenceRefs": [
-          "ind-evidence-workflow",
-          "ind-evidence-runtime-capture"
+          "mut-evidence-workflow",
+          "mut-evidence-runtime-capture"
         ],
         "rationale": "A one-task create/complete sequence was observed; multiple mixed records and filter/count interactions remain untested."
       },
@@ -1970,11 +1970,11 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-data"
+          "mut-obs-data"
         ],
         "evidenceRefs": [
-          "ind-evidence-api-1",
-          "ind-evidence-api-2"
+          "mut-evidence-api-1",
+          "mut-evidence-api-2"
         ],
         "rationale": "The adapter returned id, title, and completed with string/string/boolean values for one record; nullability, optional fields, and broader values remain untested."
       },
@@ -1986,10 +1986,10 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-data"
+          "mut-obs-data"
         ],
         "evidenceRefs": [
-          "ind-evidence-api-1"
+          "mut-evidence-api-1"
         ],
         "rationale": "Only one identifier value was observed; uniqueness, ordering, and cross-session scope are unknown."
       },
@@ -2001,11 +2001,11 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-data"
+          "mut-obs-data"
         ],
         "evidenceRefs": [
-          "ind-evidence-api-1",
-          "ind-evidence-api-2"
+          "mut-evidence-api-1",
+          "mut-evidence-api-2"
         ],
         "rationale": "One PATCH changed completed while preserving title; other field combinations and invalid updates remain untested."
       }

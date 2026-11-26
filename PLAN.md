@@ -223,7 +223,7 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 
 **6B — Behaviour and functionality**
 - [x] Add an initial discriminating Playwright probe set for title normalization, duplicate titles, HTML-like/Unicode content, long titles, mixed task states, filter truth tables, completion toggling, deletion, and identifier samples.
-- [ ] Execute the expanded probe set in CI and inspect the retained outputs before promoting any property from partial.
+- [~] Execute the expanded probe set through the dedicated Phase 6 GitHub Actions workflow and inspect the retained outputs before promoting any property from partial.
 - [ ] Build an explicit operation/trigger inventory from the running target.
 - [ ] Capture preconditions, actors, ordered actions, state before/after, outputs, side effects, timing/order, and termination outcomes.
 - [ ] Exercise normal, boundary, repeated, invalid, interrupted, and failure paths.

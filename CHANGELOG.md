@@ -95,3 +95,6 @@ The initial Task Board completeness result was subsequently re-audited and recla
 - Retained the expanded 41-file evidence archive as artifact #15136459580. The two remaining partial properties are broader font-rendering conditions and the maximum title-length constraint.
 
 - Follow-up validation runs #45859279008 and #45859552354 passed after updating the 34-property captures, comparison coverage, and project documentation.
+
+- Expanded the Task Board runtime capture with responsive/focus/hover/colour-scheme UI states, SVG/script injection-shaped title probes, create/update/delete HTTP 503 failure outcomes, and navigation/paint/resource measurements. Run #45860499892 passed all 13 screenshot comparisons, integrity checks, and schema validation; artifact #15137373210 retains 65 files.
+- Added a 15-facet applicability assessment that distinguishes Task Board's implemented facets from full-stack facets absent from its declared boundary.

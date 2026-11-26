@@ -71,7 +71,7 @@ The future data model, schemas, examples, and comparison rules must preserve thi
 ## D-002 — Shared envelope with facet-specific payloads
 
 - **Date:** 2026-11-26
-- **Status:** Proposed
+- **Status:** Accepted
 
 ### Context
 The project covers unlike software facets, including interfaces, behaviour, data, APIs, persistence, security, and integrations.
@@ -82,13 +82,13 @@ The project covers unlike software facets, including interfaces, behaviour, data
 - Entirely independent formats with no shared structure.
 
 ### Decision
-Proceed with a shared envelope and facet-specific payloads as the working proposal. Validate the boundary and required shared fields during Phase 1 and Phase 2 before making it normative.
+Use a shared conceptual envelope for cross-facet identity, execution context, method, time, evidence, and coverage, with typed facet-specific payloads. The conceptual model has been tested against interface-layout and API request/response examples. The exact serialized fields remain deferred to later schema design.
 
 ### Rationale
 A common identity, condition, provenance, and evidence model may enable cross-facet navigation and comparison without flattening different kinds of observations into generic prose.
 
 ### Consequences
-Do not freeze a schema yet. Research and cross-facet examples must test whether the proposed shared fields are genuinely common and whether any facet requires a different treatment.
+The conceptual split is accepted. Do not freeze a schema yet: facet specifications must still test requiredness, cardinality, and specialized payload needs.
 
 ## D-003 — Bound equivalence claims to captured evidence
 
@@ -167,3 +167,67 @@ The additional areas can affect runtime behaviour and comparison conditions. Aut
 
 ### Consequences
 Test the taxonomy against real system examples in Phases 2 and 3. Merge, split, rename, or remove facets when evidence supports doing so.
+
+
+## D-007 — Separate scenario definitions, executions, and observations
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+A reusable test description, one actual attempt, and facts detected during that attempt have different identities and lifecycles. Combining them would make repeated runs, partial runs, and conflicting outcomes difficult to represent.
+
+### Options considered
+- Store scenario, execution, and observations as one combined record.
+- Store a reusable scenario with separate execution records and linked observations.
+
+### Decision
+Represent scenario definitions, scenario executions, and observations as distinct linked entities. A scenario may have multiple executions; each execution may produce multiple observations.
+
+### Rationale
+This supports repeatability, state-dependent results, nondeterminism, execution failures, and evidence traceability without duplicating the scenario definition.
+
+### Consequences
+The common model and future schemas must preserve these links. Facet specifications define observation granularity.
+
+## D-008 — A rule is a proposition supported by observations, not an observation itself
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+The project needs durable rules that can be compared across implementations, while each observation remains bounded to one execution and its conditions.
+
+### Options considered
+- Treat every captured observation as a rule.
+- Treat a rule as a reusable proposition linked to one or more supporting, qualifying, or contradicting observations.
+
+### Decision
+A rule is a scoped proposition; observations are execution-specific findings that support, qualify, or contradict it. One rule may link to many observations and an observation may support more than one rule.
+
+### Rationale
+This avoids overgeneralizing from one test run and allows rules to accumulate evidence across scenarios, versions, and conditions.
+
+### Consequences
+Rule status must be interpreted with its evidence and coverage. Rule identity is distinct from observation identity.
+
+## D-009 — Keep expected outcomes separate from actual outcomes
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+A test oracle or declared contract can state what should happen, but that expectation does not establish what the running system actually did.
+
+### Options considered
+- Store expected and actual outcomes in one result field.
+- Preserve expected outcome, observed actual outcome, and evaluation as separate concepts.
+
+### Decision
+Represent expected outcome, actual outcome, and their evaluation separately. Expected outcomes identify their source; actual outcomes are grounded in observations.
+
+### Rationale
+This preserves the ability to record implementation/contract mismatches without allowing expectations to masquerade as runtime facts.
+
+### Consequences
+Future scenario and comparison formats must retain all three concepts and their provenance.

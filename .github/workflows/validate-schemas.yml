@@ -7,12 +7,12 @@ on:
       - "schemas/**"
       - "conformance/validation/**"
       - "comparison/**"
-      - "comparison/**"
       - ".github/workflows/validate-schemas.yml"
   pull_request:
     paths:
       - "schemas/**"
       - "conformance/validation/**"
+      - "comparison/**"
       - ".github/workflows/validate-schemas.yml"
   workflow_dispatch:
 

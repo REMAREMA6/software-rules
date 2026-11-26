@@ -27,6 +27,7 @@ A technology-independent specification system for capturing, representing, and c
 - [Draft schema index](schemas/v1/README.md)
 - [Validation instructions](conformance/validation/README.md)
 - [Cross-record integrity validation](conformance/integrity/README.md)
+- [Runtime browser capture and pixel conformance harness](conformance/runtime/README.md)
 - [Capture-agent guidance](examples/CAPTURE-AGENT-GUIDE.md)
 - [Phase 6 Task Board conformance system](examples/task-board/README.md)
 - [Empirical reference capture](examples/task-board/captures/reference.capture.json)

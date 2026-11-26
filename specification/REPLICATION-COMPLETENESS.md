@@ -1,6 +1,6 @@
 # Replication Completeness Rule
 
-**Status:** Draft — Phase 7 normative review requirement.  
+**Status:** Draft — accepted project requirement; Phase 6 conformance implementation in progress.  
 **Applies to:** Capture planning, facet specifications, capture records, conformance, and comparison.
 
 ## 1. Purpose

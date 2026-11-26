@@ -23,6 +23,7 @@ node conformance/integrity/validate-integrity.mjs path/to/capture.json
 - Replication property inventory IDs are unique and facets are declared.
 - Captured/partial properties link to existing observations and evidence; captured properties link to observed runtime records.
 - Completeness status is checked against every required inventory property; a capture cannot claim `complete` while a required property is partial, unobserved, unknown, unavailable, conflicting, or source-inferred.
+- This is a structural/reference check only. It does not establish that the linked evidence actually proves the property, that the observation is sufficiently comprehensive, or that the inventory is exhaustive.
 
 This validator checks consistency of the declared inventory. It cannot prove that the inventory itself lists every property needed to reproduce the target; that requires scope review and facet/domain expertise.
 

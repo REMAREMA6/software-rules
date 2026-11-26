@@ -254,7 +254,11 @@ async function runVariant(name) {
   await createProbeTask("Matrix active two");
   await createProbeTask("Matrix completed");
   const matrixCheckbox = page.getByRole("checkbox", { name: "Complete Matrix completed" });
+  const completeResponse = page.waitForResponse(candidate =>
+    candidate.url().includes("/api/tasks/") && candidate.request().method() === "PATCH"
+  );
   await matrixCheckbox.check();
+  await completeResponse;
   const afterComplete = {
     total: await page.locator("li").count(),
     summary: await page.locator("#summary, #meta").innerText()
@@ -264,12 +268,20 @@ async function runVariant(name) {
   await page.getByRole("button", { name: "Completed" }).click();
   const completedFilterCount = await page.locator("li").count();
   await page.getByRole("button", { name: "All" }).click();
+  const uncompleteResponse = page.waitForResponse(candidate =>
+    candidate.url().includes("/api/tasks/") && candidate.request().method() === "PATCH"
+  );
   await matrixCheckbox.uncheck();
+  await uncompleteResponse;
   const afterToggleBack = await page.locator("#summary, #meta").innerText();
   const matrixPatch = apiLog[name].slice(matrixStart).filter(event => event.method === "PATCH").map(event => event.response?.body);
   const matrixDeleteResults = [];
   while (await page.locator('button[aria-label^="Delete Matrix"]').count()) {
+    const deleteResponse = page.waitForResponse(candidate =>
+      candidate.url().includes("/api/tasks/") && candidate.request().method() === "DELETE"
+    );
     await page.locator('button[aria-label^="Delete Matrix"]').first().click();
+    await deleteResponse;
     matrixDeleteResults.push("deleted");
   }
   const matrixFinalSummary = await page.locator("#summary, #meta").innerText();

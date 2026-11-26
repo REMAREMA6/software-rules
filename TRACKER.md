@@ -267,7 +267,7 @@
 - Kept the existing interface/behaviour/API runtime work as a bounded baseline. It does not establish complete interface capture or coverage of other software facets.
 - Ordered the remaining work: interface evidence audit; behaviour/functionality; business rules; data; persistence; API/messaging/integrations; identity/authorization/security; background processing/errors/configuration/performance; cross-facet completeness.
 - Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
-- Next action: inspect the retained artifacts property by property, then add evidence-backed runtime probes for behaviour, business rules, and data.
+- Next action: extend the Playwright harness with title boundary cases, duplicate titles, mixed-task state/count truth tables, repeated toggles/deletes, malformed/unknown-ID API operations, and exact request/response data-shape capture.
 
 
 ### Phase 6A audit result — 2026-11-26

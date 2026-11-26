@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Task Board — Independent</title>
+<style>
+:root{font:16px system-ui,sans-serif;color:#172033;background:#f4f6fa}*{box-sizing:border-box}body{margin:0;padding:40px 18px}.shell{max-width:720px;margin:auto;background:#fff;border:1px solid #dce2ec;border-radius:14px;padding:28px;box-shadow:0 12px 36px #18243a0c}h1{margin:0 0 6px;font-size:28px}.hint{margin:0 0 24px;color:#667085}.entry{display:flex;gap:8px}.entry input{flex:1;min-width:0;padding:12px;border:1px solid #cbd3df;border-radius:8px;font:inherit}.entry button,.tabs button,.row button{padding:10px 13px;border:0;border-radius:8px;background:#2357d8;color:white;font:inherit;cursor:pointer}.tabs{display:flex;gap:8px;margin:22px 0}.tabs button{background:#edf1f8;color:#344054}.tabs button[aria-pressed=true]{background:#2357d8;color:#fff}.items{list-style:none;padding:0;margin:0}.row{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid #edf0f5}.row .name{flex:1}.row.is-done .name{text-decoration:line-through;color:#98a2b3}.row button{background:#fcebea;color:#b42318}.meta{margin-top:18px;color:#667085;font-size:14px}
+</style>
+</head>
+<body>
+<main class="shell" id="board">
+<header><h1>Task Board</h1><p class="hint">A small place to track what needs doing.</p></header>
+<form class="entry" id="create"><input id="title" aria-label="Task name" placeholder="Add a task" required><button type="submit">Add task</button></form>
+<nav class="tabs" aria-label="Task filters"><button type="button" data-filter="all" aria-pressed="true">All</button><button type="button" data-filter="active" aria-pressed="false">Active</button><button type="button" data-filter="completed" aria-pressed="false">Completed</button></nav>
+<ul class="items" id="items"></ul><p class="meta" id="meta" aria-live="polite">0 tasks · 0 active</p>
+</main>
+<script>
+(() => {
+  const records = new Map();
+  let selectedView = "all";
+  const items = document.getElementById("items");
+  const titleField = document.getElementById("title");
+  const summary = document.getElementById("meta");
+  const api = async (method, url, value) => {
+    const response = await fetch(url, {method, headers:{"content-type":"application/json"}, body:value === undefined ? undefined : JSON.stringify(value)});
+    if (!response.ok) throw new Error("Request rejected");
+    return response.json();
+  };
+  const visibleRecords = () => Array.from(records.values()).filter(({completed}) => selectedView === "all" || (selectedView === "active" ? !completed : completed));
+  function paint() {
+    items.innerHTML = visibleRecords().map(task => `<li class="row ${task.completed ? "is-done" : ""}" data-id="${task.id}"><input type="checkbox" data-action="toggle" aria-label="Complete ${escapeText(task.title)}" ${task.completed ? "checked" : ""}><span class="name">${escapeText(task.title)}</span><button type="button" data-action="remove" aria-label="Delete ${escapeText(task.title)}">Delete</button></li>`).join("");
+    const activeCount = [...records.values()].reduce((count, task) => count + Number(!task.completed), 0);
+    const totalCount = records.size;
+    summary.textContent = totalCount + (totalCount === 1 ? " task" : " tasks") + " · " + activeCount + " active";
+    document.querySelectorAll("[data-filter]").forEach(node => node.setAttribute("aria-pressed", String(node.dataset.filter === selectedView)));
+  }
+  function escapeText(value) { return String(value).replace(/[&<>"']/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character])); }
+  document.getElementById("create").addEventListener("submit", async event => {
+    event.preventDefault();
+    const taskName = titleField.value.trim();
+    if (!taskName) return;
+    const saved = await api("POST", "/api/tasks", {title:taskName});
+    records.set(saved.id, saved); titleField.value = ""; paint();
+  });
+  document.querySelector("nav").addEventListener("click", event => {
+    const control = event.target.closest("[data-filter]");
+    if (!control) return;
+    selectedView = control.dataset.filter; paint();
+  });
+  items.addEventListener("change", async event => {
+    if (event.target.dataset.action !== "toggle") return;
+    const id = event.target.closest("[data-id]").dataset.id;
+    const changed = await api("PATCH", "/api/tasks/" + id, {completed:event.target.checked});
+    records.set(id, changed); paint();
+  });
+  items.addEventListener("click", async event => {
+    if (event.target.dataset.action !== "remove") return;
+    const id = event.target.closest("[data-id]").dataset.id;
+    await api("DELETE", "/api/tasks/" + id); records.delete(id); paint();
+  });
+  paint();
+})();
+</script>
+</body></html>

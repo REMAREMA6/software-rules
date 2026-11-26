@@ -200,7 +200,7 @@
   },
   "conclusion": {
     "status": "differences-found",
-    "statement": "The captured interface geometry and POST API adapter response match. The task summary differs: the reference renders '1 task' while the mutated implementation renders '1 tasks' for a single task. This is a bounded, directly observed mismatch.",
+    "statement": "The captured interface geometry and POST API adapter response match. The task summary differs: the reference renders '1 task' while the mutated implementation renders '1 tasks' for a single task. This is a bounded, directly observed mismatch. Both captures are explicitly replication-incomplete; this agreement/difference result applies only to the observed dimensions and is not evidence of faithful replication.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
@@ -208,5 +208,11 @@
     "The mismatch belongs to the explicitly mutated test build, not the baseline independent implementation.",
     "The API exchanges are observed at the deterministic in-memory adapter boundary, not a production server.",
     "The report covers only the captured route, viewport, inputs, and task lifecycle."
-  ]
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "incomplete",
+    "implementationStatus": "incomplete",
+    "result": "incomplete-both",
+    "statement": "Both captures have required properties marked partial or unresolved in their replication inventories. The report compares only the observations actually captured; it does not establish faithful replication or complete interface equivalence."
+  }
 }

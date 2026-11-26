@@ -245,7 +245,7 @@ Deliverables:
 - `comparison/examples/valid/task-board-*.json`
 - `conformance/integrity/` and updated `examples/CAPTURE-AGENT-GUIDE.md`
 
-**Exit gate: satisfied (2026-11-26).** The baseline pair matches for the recorded interface, behavior, and adapter API observations. The mutated build produces a real, observed summary-label mismatch that the comparison report classifies as `mismatch`. All three captures and both comparison reports are included in automated validation; cross-record integrity is tested in CI. The API evidence is bounded to an instrumented in-memory adapter and makes no claim about production services or durable persistence.
+**Exit gate: satisfied (2026-11-26).** The baseline pair matches for the recorded interface, behavior, and adapter API observations. The mutated build produces a real, observed summary-label mismatch that the comparison report classifies as `mismatch`. All three captures and both Task Board comparison reports passed automated validation; cross-record integrity passed for all three capture graphs in [GitHub Actions run #23](https://github.com/REMAREMA6/software-rules/actions/runs/45841141089). The API evidence is bounded to an instrumented in-memory adapter and makes no claim about production services or durable persistence.
  
 ### Phase 7 — Review, release, and maintenance
 

@@ -1,7 +1,7 @@
 # Case — BullMQ custom retry/backoff semantics
 
 **Case ID:** BMQ-ER-002  
-**Status:** source inspection started; runtime and replica pending  
+**Status:** source-derived rules captured; independent Python decision-model added and locally exercised; source runtime and end-to-end queue comparison pending  
 **Facet(s):** Background processing; Errors and recovery  
 **Source:** https://github.com/taskforcesh/bullmq  
 **Source commit:** 526668f2c5e6de9d5d664df577f09a6bdccac1b4  
@@ -48,11 +48,15 @@ Source code and tests are pinned to the immutable commit above. See the associat
 
 ## Independent replica
 
-Not started. Implement the technology-independent rule in a different language/runtime without importing BullMQ or copying its implementation.
+A narrow independent Python implementation is committed under conformance/replication-lab/projects/retry-policy-python/. It models only retry eligibility and retry routing; it does not recreate BullMQ, Redis, or the worker scheduler. It uses no BullMQ imports.
+
+The eight corresponding Python test cases were exercised in an isolated local Python run and passed, including an off-by-one mutation check. The committed test module still needs to be run through the repository's automated workflow. This validates the Python model against the extracted source-code proposition, not against BullMQ runtime output.
+
+Source-derived capture: examples/cross-repository/captures/bullmq-source.capture.json. It explicitly records the two rules as source-inferred and marks replication completeness incomplete.
 
 ## Comparison and mutation
 
-Not started. Required mutation examples include ignoring the configured delay, retrying after the attempt limit, or retrying when the strategy explicitly suppresses retry. The probe suite must detect each applicable mutation.
+The local Python test includes a deliberate off-by-one attempt-limit mutation and demonstrates that the expected terminal-failure case distinguishes it. Full source/replica capture comparison is not yet possible because the source runtime has not been executed. Additional required mutations include ignoring the configured delay and retrying when the strategy explicitly suppresses retry.
 
 ## Current conclusion
 

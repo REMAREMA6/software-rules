@@ -43,6 +43,8 @@ The Playwright harness in [`conformance/runtime/`](../../conformance/runtime/REA
 
 The baseline reference and independent implementation are compared pixel-for-pixel in seven states at 1280×800 CSS px. The deliberate mutation is required to produce a visual difference. The harness also asserts that baseline API traces and runtime error outcomes agree.
 
+The current capture harness now includes an expanded behaviour/business-rule/data probe sequence, but the linked successful run and artifact predate those additions. The new probes have not yet been executed in a successful CI run, so their results are not part of the committed captures and the associated properties remain partial.
+
 The successful runtime run is recorded in [GitHub Actions runtime conformance run #45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953). Its [task-board-runtime-captures artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524) contains the screenshots, JSON captures, and pixel-diff outputs. The artifact has a 30-day retention period; rerunning the workflow regenerates it.
 
 **Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior. The per-property audit also found unresolved font-rendering, business-rule, and data dimensions; all three captures now correctly report `incomplete`.

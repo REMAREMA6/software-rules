@@ -7,6 +7,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- Phase 2 core specification: terminology, principles, rule classification, evidence/provenance, observation model, source-derived rules, and core model.
+- Cross-facet conceptual model tests for interface layout and API request/response observations.
+- Design decisions D-007 through D-009 for scenario/execution/observation separation, rule-versus-observation distinction, and expected-versus-actual outcomes.
 - Repository governance documents and conventions.
 - Comparative standards review and authoritative research bibliography.
 
@@ -14,6 +17,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Completed Phase 1 and moved the tracker to Phase 2.
 - Revised the working facet taxonomy to separate identity/authentication from authorization and add configuration and performance/resource behaviour.
 - Recorded the distinction between declared contracts and actual runtime observations.
+- Completed Phase 2's conceptual model and accepted the shared-envelope/facet-payload approach (D-002). Machine schemas and facet payloads remain deferred.
 
 ### Deprecated
 - None.

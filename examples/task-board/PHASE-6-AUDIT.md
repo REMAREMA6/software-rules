@@ -57,7 +57,7 @@ The equivalent and deliberate-difference comparison reports now use incomplete-b
 
 The expanded Playwright probe suite passed in [GitHub Actions run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). It captured title trimming, duplicate-title acceptance, literal HTML-like/Unicode rendering, a 512-character title, five unique sequential string identifiers within the adapter session, a three-task mixed-state count/filter truth table, completion toggle-back, PATCH title preservation, and three deletions returning the UI to empty. The run passed cross-record/evidence-link integrity and JSON Schema/comparison validation. Its [41-file runtime artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580) is retained for 30 days.
 
-Six previously partial properties were promoted based on the new evidence. Four additional properties were captured, and the 512-character title result was recorded as partial because the maximum length remains unknown. Two required properties remain partial overall.
+Six previously partial properties were promoted based on the new evidence. Four additional properties were captured, and the 512-character title result was recorded as partial because the maximum length remains unknown. Two required properties remain partial overall. The updated capture inventories and comparison reports passed the full workflow in [run #45859279008](https://github.com/REMAREMA6/software-rules/actions/runs/45859279008), including integrity and JSON Schema validation.
 
 ## Next probes
 

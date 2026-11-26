@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Status:** Planning and specification design  
-**Plan version:** 0.1.0  
+**Plan version:** 0.1.1  
 **Last updated:** 2026-11-26
 
 ## 1. Mission
@@ -14,7 +14,7 @@ The intended workflow is:
 
 1. Identify the software system and the scenarios to examine.
 2. Trigger controlled scenarios against the running reference system.
-3. capture observable results and supporting evidence in the Software Rules format.
+3. Capture observable results and supporting evidence in the Software Rules format.
 4. Build an independent implementation in any suitable technology.
 5. Run equivalent scenarios against that implementation.
 6. Capture its results using the same format.
@@ -52,11 +52,14 @@ All rule records should share a common identity, provenance, condition, and evid
 ### Phase 0 — Repository and project governance
 
 - [x] Create repository and initial README.
-- [ ] Establish this plan and persistent tracker.
-- [ ] Establish contribution, decision, and change-recording conventions.
-- [ ] Define specification maturity labels and versioning policy.
+- [x] Establish this plan and persistent tracker.
+- [x] Establish contribution, decision, and change-recording conventions.
+- [x] Define specification maturity labels and versioning policy.
+- [x] Link governance documents from the README.
+- [x] Establish changelog and design-decision recording conventions.
+- [x] Define initial specification maturity labels and versioning policy.
 
-**Exit gate:** A new contributor or new chat can understand the mission, current state, next task, and where decisions are recorded.
+**Exit gate:** A new contributor or new chat can understand the mission, current state, next task, and where decisions are recorded. The repository has a maintained roadmap, tracker, changelog, decision log, and explicit maturity/versioning policy.
 
 ### Phase 1 — Research existing standards and prior art
 
@@ -210,7 +213,7 @@ Deliverables:
 
 ## 4. Target repository layout
 
-```text
+~~~text
 software-rules/
 ├── README.md
 ├── PLAN.md
@@ -254,7 +257,7 @@ software-rules/
     ├── STANDARDS-REVIEW.md
     ├── DESIGN-DECISIONS.md
     └── REFERENCES.md
-```
+~~~
 
 This is the target layout, not a statement that every planned file has already been created. Directories will appear in Git when their first tracked file is added.
 
@@ -271,8 +274,9 @@ This is the target layout, not a statement that every planned file has already b
 9. Never claim universal equivalence from finite test captures.
 10. Update `TRACKER.md` whenever work starts, changes status, is blocked, or is completed.
 11. Update `CHANGELOG.md` when a meaningful specification or structure change is made.
-12. Record consequential design choices in `research/DESIGN-DECISIONS.md`.
+12. Record consequential design choices in `research/DESIGN-DECISIONS.md` using permanent decision IDs and explicit statuses.
 13. Keep this plan as the roadmap. If the roadmap changes, update it rather than relying on chat history.
+14. Apply the maturity labels and versioning policy in `specification/VERSIONING.md` to substantial specification and schema documents.
 
 ## 6. How to resume in a new chat
 
@@ -290,4 +294,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Start Phase 1: research and evaluate existing standards and prior art. Do not freeze the core schema or facet schemas until the research findings and design decisions have been documented.
+Begin Phase 1: research and evaluate existing standards and prior art. Transfer and verify previously gathered research, cite authoritative sources, document limitations and design implications, and record decisions. Do not freeze the core schema or facet schemas until the research findings and design decisions have been documented.

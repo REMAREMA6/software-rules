@@ -10,6 +10,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Reframed Phase 6 as an expanded multi-facet empirical capture and conformance programme. The initial Task Board result is retained as bounded baseline evidence; Phase 6 remains in progress until all applicable facets in the selected replication scope have evidence-backed inventories and cross-facet conformance. Phase 7 is blocked.
 
 ### Added
+- Expanded Playwright probes for title trimming, duplicate titles, HTML-like/Unicode and long inputs, mixed task-state/filter truth tables, completion toggling, deletion, and identifier samples; execution and evidence review are pending.
+- Stronger cross-record integrity checks require property evidence references to be attached to linked observations and require captured properties to have observed runtime-class evidence not explicitly marked partial.
+- Comparison coverage now supports explicit partial, conflicting, source-inferred, and excluded unit counts.
 - Draft schema format bumped to 0.2.0 because replication-scope inventories and separate comparison-completeness reporting are incompatible additions to the 0.1.0 draft.
 - Added the Playwright runtime conformance harness, retaining full computed CSS properties, DOM hierarchy, pseudo-element content, geometry, accessibility snapshots, UI-state screenshots, keyboard/validation scenarios, API traces, and pixel comparisons.
 - Normative `specification/REPLICATION-COMPLETENESS.md`: replication-scope completeness is a separate requirement from agreement among the properties captured; incomplete captures cannot establish faithful replication.

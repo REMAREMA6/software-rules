@@ -49,7 +49,7 @@ All three captures now include:
 - partial business-rule observations for title/blank handling, initial completion state, and summary counts;
 - partial data observations for task record shape, identifier generation, and PATCH field-preservation semantics.
 
-After the first audit, each capture had 29 entries with seven partial properties. The successful expanded probe run then supplied evidence for six of those properties and added four captured properties plus one new partial title-length property. Each capture now has 34 entries: 28 captured, two partial, one not applicable, and three optional exclusions. All three still report replication-scope completeness as incomplete.
+After the first audit, each capture had 29 entries with seven partial properties. The successful expanded probe run then supplied evidence for six of those properties and added four captured properties plus one new partial title-length property. Each capture initially had 34 entries: 28 captured, two partial, one not applicable, and three optional exclusions. The supplemental runtime work then promoted responsive layout to captured and added focus/hover, error-recovery, security-output, and performance-sample properties. Each capture now has 38 entries: 33 captured, two partial, one not applicable, and two optional exclusions. All three still report replication-scope completeness as incomplete.
 
 The equivalent and deliberate-difference comparison reports now use incomplete-both. Their observed agreement or mismatch findings remain useful, but neither report claims replication completeness.
 
@@ -82,3 +82,8 @@ The expanded harness passed in [run #45860499892](https://github.com/REMAREMA6/s
 - One-run performance samples recorded navigation load event end of 8.1–8.9 ms, first paint/FCP of 16 ms, and 14 resources per variant. These are hosted-CI measurements, not production performance claims.
 
 The capture inventory updates are being recorded separately. This run does not close facets absent from the Task Board boundary.
+
+
+## Final Task Board supplemental capture verification
+
+The pointer workflow was made deterministic by waiting for the actual PATCH/DELETE responses and resulting DOM state before taking screenshots. This corrected an intermittent race in the deleted-state capture. The corrected [run #45861726449](https://github.com/REMAREMA6/software-rules/actions/runs/45861726449) passed runtime capture, cross-record integrity, and JSON Schema/comparison validation. Its [65-file artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45861726449/artifacts/15137768292) contains the final supplemental captures. All 13 reference/independent screenshot comparisons were pixel-identical; the deliberate mutation still produced 272 differing pixels. The three captures each have 38 inventory entries: 33 captured, two partial, one not applicable, and two optional exclusions. The Task Board still does not cover the full-stack facets listed in [FACET-APPLICABILITY.md](FACET-APPLICABILITY.md).

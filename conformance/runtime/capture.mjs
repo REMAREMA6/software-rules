@@ -168,7 +168,8 @@ async function runVariant(name) {
   if (!checkboxFocused) throw new Error("Keyboard tab sequence did not focus the task checkbox");
   await page.keyboard.press(" ");
   await page.waitForFunction(() => document.querySelector('input[type="checkbox"]')?.checked === true);
-  await page.waitForFunction(() => document.querySelector("#summary, #meta")?.textContent === "1 task · 0 active");
+  const expectedKeyboardSummary = name === "mutated" ? "1 tasks · 0 active" : "1 task · 0 active";
+  await page.waitForFunction(expected => document.querySelector("#summary, #meta")?.textContent === expected, expectedKeyboardSummary);
   const keyboardCompletedSummary = await page.locator("#summary, #meta").innerText();
   await tabUntil('button[aria-label="Delete Keyboard-created task"]');
   await page.keyboard.press("Enter");

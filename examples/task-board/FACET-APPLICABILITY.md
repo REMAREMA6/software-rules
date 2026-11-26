@@ -13,7 +13,7 @@ This assessment distinguishes:
 - a facet absent from this target's declared boundary;
 - a facet that is relevant but only partially observed.
 
-Absence from this toy fixture is not evidence that the facet is generally unnecessary. Facets outside this target's boundary remain uncovered by the project's multi-facet programme and require a richer target.
+Absence from this toy fixture is not evidence that the facet is generally unnecessary. Facets outside this target's boundary are covered by the project's cross-repository programme using other suitable source repositories and independent replicas.
 
 ## Facet matrix
 
@@ -45,7 +45,7 @@ This is a source-boundary finding, not runtime proof that a deployed system else
 
 The Task Board can validate multi-facet capture for the facets it actually implements. It cannot complete the project's Phase 6 objective across the accepted 15-facet catalogue by relabelling absent full-stack facets as universally irrelevant.
 
-To close Phase 6 as a multi-facet programme, add a richer controlled reference target that actually exercises persistence, messaging, identity/authentication, authorization, security controls, background processing, integrations, application configuration, and meaningful performance behaviour. Capture those facets at runtime, build an independent implementation/capture, and compare the results. The Task Board remains the interface/behaviour/data/API conformance fixture.
+The Task Board remains the interface/behaviour/data/API-adapter fixture. Other facets are validated from separate source repositories selected for their actual behaviour, then reproduced independently in the replication lab using different stacks. See [the cross-repository Phase 6 programme](../CROSS-REPOSITORY-REPLICATION-PROGRAM.md).
 
 
 ## Supplemental runtime results

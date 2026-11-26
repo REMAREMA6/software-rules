@@ -13,6 +13,7 @@ on:
     paths:
       - "schemas/**"
       - "conformance/validation/**"
+      - "conformance/integrity/**"
       - "comparison/**"
       - ".github/workflows/validate-schemas.yml"
   workflow_dispatch:

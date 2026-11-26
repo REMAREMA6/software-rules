@@ -1065,5 +1065,314 @@
     "The API adapter is in-memory and does not represent a production server or persistence layer.",
     "The automation retained DOM geometry and visible workflow outcomes, but did not retain screenshots or raw request/response events.",
     "API exchanges are empirical at the deterministic in-memory adapter boundary only; no production network, server, database, or authentication behavior is claimed."
-  ]
+  ],
+  "replicationScope": {
+    "scopeId": "task-board-replication-scope-v2",
+    "description": "Task Board browser application at 1280×800 CSS px, including its rendered interface and the documented create, completion, filter, and delete workflow. The inventory explicitly records unobserved interface and workflow properties; this capture is not replication-complete.",
+    "facets": [
+      "interface",
+      "behavior",
+      "api"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "ui-hierarchy",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "rendered-hierarchy",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-interface"
+        ],
+        "rationale": "The snapshot contains a partial DOM hierarchy; not every node and relationship is inventoried."
+      },
+      {
+        "propertyId": "ui-content",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "rendered-text-and-content",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-interface"
+        ],
+        "rationale": "Primary labels and task outputs are captured, but all rendered content and content states are not exhaustively recorded."
+      },
+      {
+        "propertyId": "ui-style",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "resolved-presentation-properties",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-interface"
+        ],
+        "rationale": "Only selected resolved properties are recorded; this is not a complete computed-style inventory."
+      },
+      {
+        "propertyId": "ui-geometry",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "element-geometry",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-interface"
+        ],
+        "rationale": "Main container and selected element geometry are recorded, not every rendered element."
+      },
+      {
+        "propertyId": "ui-visibility-layering",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "visibility-clipping-and-stacking",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "No complete visibility, occlusion, clipping, stacking-context, or paint-order inspection was retained."
+      },
+      {
+        "propertyId": "ui-accessibility",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "accessibility-tree-and-semantics",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-interface"
+        ],
+        "rationale": "Some native semantics and ARIA attributes are visible in the snapshot; a complete accessibility tree and relationships were not captured."
+      },
+      {
+        "propertyId": "ui-focus",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "focus-order-and-keyboard-interaction",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "Focus traversal, keyboard-only workflows, and focus restoration were not executed or recorded."
+      },
+      {
+        "propertyId": "ui-states",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "empty-active-completed-filtered-and-error-states",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-interface",
+          "ref-obs-workflow"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-interface",
+          "ref-evidence-workflow"
+        ],
+        "rationale": "Initial empty state and workflow outputs are recorded, but full snapshots for every state and transition are absent."
+      },
+      {
+        "propertyId": "ui-responsive",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "responsive-layout-across-viewports",
+        "requirement": "optional",
+        "status": "excluded",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "This fixture explicitly fixes the comparison viewport at 1280×800 CSS px; other viewport classes are outside this declared scope."
+      },
+      {
+        "propertyId": "ui-visual-proof",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "screenshot-or-pixel-rendering-evidence",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "No retained screenshot or pixel-level rendering comparison is linked to these captures."
+      },
+      {
+        "propertyId": "ui-assets",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "external-image-icon-and-media-assets",
+        "requirement": "required",
+        "status": "not-applicable",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "The application markup contains no external image, icon, or media assets; system font rendering is covered separately and remains partial."
+      },
+      {
+        "propertyId": "behavior-create",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "create-task-transition",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-workflow"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow"
+        ],
+        "rationale": "Create workflow was executed and its visible outcome retained."
+      },
+      {
+        "propertyId": "behavior-complete",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "completion-transition",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-workflow"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow"
+        ],
+        "rationale": "Completion toggle was executed and its resulting active count retained."
+      },
+      {
+        "propertyId": "behavior-filter",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "all-active-completed-filtering",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-workflow"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow"
+        ],
+        "rationale": "Active and Completed filter outcomes were executed and retained; the All filter's populated state is not separately evidenced."
+      },
+      {
+        "propertyId": "behavior-delete",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "delete-task-transition",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-workflow"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow"
+        ],
+        "rationale": "Delete workflow was executed and the empty result retained."
+      },
+      {
+        "propertyId": "behavior-validation",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "empty-whitespace-and-invalid-input-validation",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "Empty, whitespace-only, and malformed input cases were not captured as separate scenarios."
+      },
+      {
+        "propertyId": "behavior-errors",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "failure-and-recovery-behavior",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "Rejected API requests, network failures, retries, and recovery states were not exercised."
+      },
+      {
+        "propertyId": "behavior-keyboard",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "keyboard-only-operation",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "Keyboard-only task creation, filtering, completion, and deletion were not captured."
+      },
+      {
+        "propertyId": "behavior-reload",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "reload-and-cross-session-state",
+        "requirement": "optional",
+        "status": "excluded",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "The declared target boundary excludes durable/cross-session persistence."
+      },
+      {
+        "propertyId": "api-lifecycle",
+        "facet": "api",
+        "subject": "task-api",
+        "dimension": "create-update-delete-request-response",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-api-1",
+          "ref-obs-api-2",
+          "ref-obs-api-3"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-api-1",
+          "ref-evidence-api-2",
+          "ref-evidence-api-3"
+        ],
+        "rationale": "POST, PATCH, and DELETE exchanges were retained at the deterministic in-memory adapter boundary."
+      },
+      {
+        "propertyId": "api-failure",
+        "facet": "api",
+        "subject": "task-api",
+        "dimension": "error-status-and-error-payloads",
+        "requirement": "required",
+        "status": "not-observed",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "Error status codes and error response bodies were not exercised."
+      },
+      {
+        "propertyId": "api-transport",
+        "facet": "api",
+        "subject": "task-api",
+        "dimension": "real-network-transport-and-server-behavior",
+        "requirement": "optional",
+        "status": "excluded",
+        "observationRefs": [],
+        "evidenceRefs": [],
+        "rationale": "The fixture boundary is a deterministic in-memory adapter, not a production network service."
+      }
+    ],
+    "completeness": {
+      "status": "incomplete",
+      "assessedAt": "2026-11-26T16:00:00+01:00",
+      "assessmentMethod": "Evaluate each required property inventory entry against linked runtime observation and evidence references; unresolved required properties prevent a complete result.",
+      "rationale": "Required interface properties, visual rendering evidence, keyboard behavior, validation cases, and failure/recovery behavior remain partially captured or unobserved. Matching selected observations cannot establish replication completeness."
+    }
+  }
 }

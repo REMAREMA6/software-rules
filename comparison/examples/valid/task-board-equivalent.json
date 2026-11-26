@@ -372,20 +372,21 @@
   },
   "conclusion": {
     "status": "agreement-within-observed-scope",
-    "statement": "Both captures are complete for the declared Task Board scope. The reference and independent baseline are pixel-identical in all seven tested UI states (zero differing pixels at 1280×800 CSS px); keyboard workflow, input validation, API request/response traces, and HTTP 503 failure behavior also agree. This conclusion is bounded to the recorded Chromium/Linux environment and explicit exclusions.",
+    "statement": "The reference and independent baseline agree in the seven tested UI states and in the recorded keyboard, validation, and in-memory API scenarios. However, both captures remain incomplete because font-rendering, business-rule, and data properties are still partial. This is observed agreement within tested conditions, not a faithful-replication claim.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
   "limitations": [
-    "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
     "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
     "The API boundary is a deterministic in-memory adapter, not a production service.",
-    "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."
+    "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it.",
+    "Seven required inventory properties remain partial: font rendering, title normalization, initial completion default, summary-count rules, task record shape, identifier generation, and PATCH field-preservation semantics.",
+    "The integrity validator checks references and declared statuses; it does not independently establish evidence adequacy or inventory exhaustiveness."
   ],
   "replicationCompleteness": {
-    "referenceStatus": "complete",
-    "implementationStatus": "complete",
-    "result": "complete-both",
-    "statement": "Both captures account for every required property in the declared Task Board replication scope with linked runtime observations and evidence. Optional responsive, durable persistence, and production transport dimensions are explicitly excluded. Completeness does not imply that the implementations agree; observed agreement and mismatch results are reported separately."
+    "referenceStatus": "incomplete",
+    "implementationStatus": "incomplete",
+    "result": "incomplete-both",
+    "statement": "Both captures contain observed examples and comparison evidence, but seven required properties remain partial across font rendering, business rules, and data. Observed agreement or a detected mismatch does not establish replication completeness."
   }
 }

@@ -7,6 +7,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- Phase 6 cross-record integrity validator and unit tests for duplicate IDs and unresolved/mismatched references across capture records.
 - Phase 5 comparison specification: matching/alignment, normalization, difference classification, coverage/limitations, and a worked comparison report.
 - Expanded comparison-report JSON Schema with alignment, normalization profile, result, coverage, and bounded conclusion structures.
 - Comparison valid/invalid fixtures, including a schema-enforced prohibition on universal-equivalence claims.
@@ -22,6 +23,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
+- Phase 6 now distinguishes completed structural cross-record validation from outstanding empirical runtime captures; no browser evidence is represented as collected.
 - Completed Phase 5 and advanced active work to Phase 6 after GitHub Actions run #4 validated both capture and comparison fixtures.
 - Extended automated validation to run on comparison specification changes and validate comparison-report fixtures alongside capture fixtures.
 - Completed Phase 4 and advanced active work to Phase 5 after the Ajv 2020-12 GitHub Actions validation passed the valid fixture and all three negative fixtures.

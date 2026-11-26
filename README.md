@@ -25,6 +25,8 @@ A technology-independent specification system for capturing, representing, and c
 - [Schema design](specification/SCHEMA-DESIGN.md)
 - [Draft schema index](schemas/v1/README.md)
 - [Validation instructions](conformance/validation/README.md)
+- [Cross-record integrity validation](conformance/integrity/README.md)
+- [Capture-agent guidance](examples/CAPTURE-AGENT-GUIDE.md)
 - [Comparison specification](comparison/README.md)
 - [Comparison model](comparison/COMPARISON-MODEL.md)
 - [Normalization rules](comparison/NORMALIZATION.md)
@@ -78,7 +80,7 @@ The current draft defines 15 observation facets. See the [facet catalogue](facet
 
 ## Remaining specification work
 
-- Empirical end-to-end captures and cross-record conformance tests (Phase 6)
+- Empirical end-to-end captures and facet examples (Phase 6; cross-record integrity validator added, runtime capture work remains)
 - Final review, stable release, and maintenance process (Phase 7)
 
 The draft capture schemas, comparison-report schema, structural fixtures, and comparison methodology are available under `schemas/v1/`, `conformance/validation/`, and `comparison/`.

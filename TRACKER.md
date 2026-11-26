@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — End-to-end examples and conformance
-- **Current task:** Produce empirical facet captures and cross-record conformance checks.
-- **Blockers:** Empirical reference/implementation captures and cross-record conformance checks are not yet completed.
-- **Next action:** Build an empirical interface capture pair first, then validate the same scenario against an independent implementation.
+- **Current task:** Complete empirical end-to-end capture pairs and facet examples; cross-record integrity validation is now implemented as a separate conformance layer.
+- **Blockers:** Independent runtime captures, API/multi-facet examples, and source-derived example are not yet complete. Browser execution in the current work environment was blocked by host policy, so no runtime capture is claimed.
+- **Next action:** Run the capture harness in an environment that permits browser automation, retain DOM/style/geometry and interaction evidence, then capture the independent implementation under the same conditions.
 - **Scope note:** Phases 4–5 are complete at draft-specification level. Phase 6 must test the model against real running systems; existing comparison example is illustrative only.
 
 ## Phase tracking
@@ -154,8 +154,20 @@
 - [ ] Source-derived rule example, clearly separated from runtime evidence.
 - [ ] Equivalent capture pair.
 - [ ] Capture pair containing deliberate differences.
-- [ ] Automated schema validation tests.
-- [ ] Conformance test cases and capture-agent usage guidance.
+- [x] Cross-record integrity validator for scenario, execution, target, observation, evidence, runtime-rule, source-rule, and coverage references.
+- [x] Unit tests for valid references, unresolved references, duplicate IDs, and target/execution mismatch.
+- [ ] Empirical schema-valid interface/behaviour capture pair.
+- [ ] API and full-system multi-facet runtime examples.
+- [ ] Source-derived rule example with source evidence, explicitly unverified.
+- [ ] Equivalent and deliberately different empirical comparison pairs.
+- [ ] Automated schema validation of all Phase 6 examples.
+- [ ] Capture-agent usage guide and end-to-end CI.
+
+### Phase 6 work log — 2026-11-26
+
+- Added a dependency-free cross-record integrity validator and unit tests. It checks duplicate IDs, scenario/execution/target links, observation/evidence links, runtime-rule observation links, source-rule evidence links, and coverage references.
+- Verified the validator locally against passing and failing graph fixtures. This is additional to JSON Schema validation; it does not authenticate evidence or determine semantic equivalence.
+- Attempted to execute a local Chromium capture against two independent HTML implementations. The host blocked both localhost and file-based browser navigation (`ERR_BLOCKED_BY_ADMINISTRATOR`); therefore no empirical capture is committed or claimed. The remaining runtime capture work requires a browser environment that permits local test navigation.
 
 ## Phase 7 — Review, release, and maintenance
 

@@ -217,12 +217,14 @@ Deliverables:
 - Include runtime evidence and a separately labelled source-derived example.
 - Create equivalent and deliberately different implementation captures.
 - Validate every example against its schema.
+- Add cross-record integrity validation for references between scenarios, executions, observations, evidence, rules, targets, and coverage.
 - Test comparison outcomes and coverage reporting.
-- Document how a capture agent should use the format.
+- Document how a capture agent should use the format, including evidence retention and explicit uncertainty.
 
 Deliverables:
 - `examples/`
 - `conformance/test-cases/`
+- `conformance/integrity/` for cross-record reference validation.
 - Updated README and usage documentation.
 
 **Exit gate:** A reader can follow an example from scenario definition through capture, validation, and comparison without guessing missing format rules.
@@ -326,4 +328,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Begin Phase 4: define machine-readable schemas from the common model and the 15 facet specifications. Start with the capture manifest, scenario/execution/observation envelope, evidence references, and rule records; then define facet payload schemas. Validate every schema against positive and negative fixtures. Preserve the distinction between conceptual payload inventories and normative serialized fields.
+Continue Phase 6: produce and execute empirical reference/implementation captures, complete facet examples and source-derived separation, and validate cross-record references alongside schema structure. Preserve the distinction between runtime evidence, source-derived inference, and illustrative examples.

@@ -90,21 +90,17 @@ async function runVariant(name) {
             classes: [...element.classList], attributes: attrs,
             text: [...element.childNodes].filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent.trim()).filter(Boolean).join(" "),
             rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height, top: rect.top, right: rect.right, bottom: rect.bottom, left: rect.left },
-            computed: {
-              display: style.display, position: style.position, boxSizing: style.boxSizing,
-              width: style.width, height: style.height, margin: style.margin, padding: style.padding,
-              color: style.color, backgroundColor: style.backgroundColor, font: style.font,
-              lineHeight: style.lineHeight, letterSpacing: style.letterSpacing,
-              border: style.border, borderRadius: style.borderRadius, boxShadow: style.boxShadow,
-              gap: style.gap, alignItems: style.alignItems, justifyContent: style.justifyContent,
-              opacity: style.opacity, visibility: style.visibility, overflow: style.overflow,
-              zIndex: style.zIndex, transform: style.transform
+            computed: Object.fromEntries(Array.from(style).map(property => [property, style.getPropertyValue(property)])),
+            pseudoElements: {
+              before: getComputedStyle(element, "::before").content,
+              after: getComputedStyle(element, "::after").content
             },
             children: [...element.children].map(describe)
           };
         };
         return describe(body);
       }),
+      accessibilityTree: await page.locator("body").ariaSnapshot(),
       accessibilitySemantics: await page.locator("body").evaluate(body => [...body.querySelectorAll("*")].map(el => ({
         tag: el.tagName.toLowerCase(), role: el.getAttribute("role"),
         ariaLabel: el.getAttribute("aria-label"), ariaLive: el.getAttribute("aria-live"),
@@ -151,11 +147,35 @@ async function runVariant(name) {
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
   await page.getByText("Keyboard-created task").waitFor();
-  snapshots["keyboard-workflow"] = { firstFocus, visibleText: await page.locator("body").innerText(), requests: [...apiLog[name]] };
+  // Exercise filter selection, completion, and deletion with keyboard activation only.
+  await page.keyboard.press("Tab"); // All
+  await page.keyboard.press("Tab"); // Active
+  await page.keyboard.press("Enter");
+  const keyboardActiveCount = await page.locator("li").count();
+  await page.keyboard.press("Tab"); // Completed
+  await page.keyboard.press("Enter");
+  const keyboardCompletedCount = await page.locator("li").count();
+  await page.keyboard.press("Tab"); // All
+  await page.keyboard.press("Enter");
+  await page.keyboard.press("Tab"); // task checkbox
+  await page.keyboard.press("Space");
+  const keyboardCompletedSummary = await page.locator("#summary, #meta").innerText();
+  // After rerender focus returns to the document; tab through the same controls to Delete.
+  for (let i = 0; i < 7; i++) await page.keyboard.press("Tab");
+  await page.keyboard.press("Enter");
+  await page.getByText("Keyboard-created task").waitFor({ state: "detached" });
+  snapshots["keyboard-workflow"] = {
+    firstFocus, keyboardActiveCount, keyboardCompletedCount, keyboardCompletedSummary,
+    visibleText: await page.locator("body").innerText(), requests: [...apiLog[name]]
+  };
   await save("keyboard-workflow");
 
-  // Completion and each filter are captured as separate rendered states.
-  const checkbox = page.getByRole("checkbox", { name: "Complete Keyboard-created task" });
+  // Run pointer workflow separately for full visual-state comparison.
+  await input.fill("Prepare release notes");
+  await page.getByRole("button", { name: "Add task" }).click();
+  await page.getByText("Prepare release notes").waitFor();
+  await save("one-active");
+  const checkbox = page.getByRole("checkbox", { name: "Complete Prepare release notes" });
   await checkbox.check();
   await save("completed");
   await page.getByRole("button", { name: "Active" }).click();
@@ -164,7 +184,7 @@ async function runVariant(name) {
   await save("completed-filter");
   await page.getByRole("button", { name: "All" }).click();
   await save("all-filter");
-  await page.getByRole("button", { name: "Delete Keyboard-created task" }).click();
+  await page.getByRole("button", { name: "Delete Prepare release notes" }).click();
   await save("deleted");
 
   // Record failure semantics without pretending that an error UI exists.

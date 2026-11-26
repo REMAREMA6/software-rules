@@ -226,7 +226,8 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 - [~] Execute the expanded probe set through the dedicated Phase 6 GitHub Actions workflow and inspect the retained outputs before promoting any property from partial.
 - [ ] Build an explicit operation/trigger inventory from the running target.
 - [ ] Capture preconditions, actors, ordered actions, state before/after, outputs, side effects, timing/order, and termination outcomes.
-- [ ] Exercise normal, boundary, repeated, invalid, interrupted, and failure paths.
+- [x] Exercise the initial title, duplicate, mixed-state, toggle, and multiple-delete boundary cases in the Task Board fixture.
+- [ ] Extend probes to malformed, interrupted, repeated, and failure paths.
 - [ ] Compare independently captured behaviour and ensure every rule is evidence-linked.
 
 **6C — Business rules**
@@ -237,7 +238,8 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 
 **6D — Data**
 - [ ] Capture runtime structures, fields, types, nullability, missing-vs-empty distinctions, relationships, formats, and serialization.
-- [ ] Exercise validation constraints, transformations, defaults, and boundary values.
+- [x] Capture initial task record shape, identifier samples, and PATCH field-preservation behaviour.
+- [ ] Extend probes to null/missing fields, malformed values, unknown identifiers, and full constraint boundaries.
 - [ ] Record observed values separately from inferred schemas and source declarations.
 - [ ] Link data observations to the operations and API exchanges that produced them.
 

@@ -508,6 +508,25 @@
               "summary": "1 tasks · 0 active",
               "checked": true
             }
+          },
+          {
+            "stage": "active-filter",
+            "value": {
+              "visibleTaskCount": 0
+            }
+          },
+          {
+            "stage": "completed-filter",
+            "value": {
+              "visibleTaskCount": 1
+            }
+          },
+          {
+            "stage": "after-delete",
+            "value": {
+              "count": 0,
+              "summary": "0 tasks · 0 active"
+            }
           }
         ],
         "sideEffects": [
@@ -522,7 +541,7 @@
       ],
       "status": "observed",
       "limitations": [
-        "The deliberately mutated build pluralizes the singular task count incorrectly."
+        "The deliberately mutated build pluralizes the singular task count incorrectly; all other tested lifecycle outcomes matched."
       ]
     },
     {
@@ -630,6 +649,56 @@
       "limitations": [
         "Observed at test adapter boundary only."
       ]
+    },
+    {
+      "observationId": "mut-obs-api-3",
+      "targetId": "task-board-independent-mutated",
+      "executionId": "mut-exec-api",
+      "facet": "api",
+      "subject": "task-api-delete",
+      "observedAt": "2026-11-26T15:45:00+01:00",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Capture deterministic fetch adapter request and immutable response snapshot.",
+        "tool": "in-page fetch adapter"
+      },
+      "trigger": "Delete task",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "task-api-delete",
+        "protocol": "HTTP",
+        "endpoint": "/api/tasks/task-1",
+        "method": "DELETE",
+        "target": "Deterministic in-memory test adapter",
+        "request": {
+          "path": "/api/tasks/task-1",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "contentType": "application/json",
+          "body": {
+            "deleted": true,
+            "id": "task-1"
+          }
+        },
+        "timing": {
+          "state": "not-observed",
+          "reason": "Duration not measured."
+        }
+      },
+      "evidenceRefs": [
+        "mut-evidence-api-3"
+      ],
+      "status": "observed",
+      "limitations": [
+        "Observed at test adapter boundary only."
+      ]
     }
   ],
   "runtimeRules": [
@@ -727,12 +796,11 @@
       "capturedAt": "2026-11-26T15:30:00+01:00",
       "embedded": {
         "afterCreate": {
-          "taskText": "Prepare release notes",
-          "summary": "1 task · 1 active",
+          "summary": "1 tasks · 1 active",
           "count": 1
         },
         "afterComplete": {
-          "summary": "1 task · 0 active",
+          "summary": "1 tasks · 0 active",
           "checked": true
         },
         "activeFilterCount": 0,
@@ -829,6 +897,38 @@
             "id": "task-1",
             "title": "Prepare release notes",
             "completed": true
+          }
+        }
+      },
+      "retention": {
+        "status": "retained"
+      },
+      "limitations": [
+        "Test-only in-memory adapter."
+      ]
+    },
+    {
+      "evidenceId": "mut-evidence-api-3",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-exchange",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "task-board-independent-mutated",
+        "executionId": "mut-exec-api",
+        "collector": "In-page deterministic fetch adapter"
+      },
+      "capturedAt": "2026-11-26T15:45:00+01:00",
+      "embedded": {
+        "request": {
+          "method": "DELETE",
+          "url": "/api/tasks/task-1",
+          "body": null
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "deleted": true,
+            "id": "task-1"
           }
         }
       },

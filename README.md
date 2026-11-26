@@ -6,6 +6,7 @@ A technology-independent specification system for capturing, representing, and c
 
 - [Project plan and target repository structure](PLAN.md)
 - [Progress tracker and handoff context](TRACKER.md)
+- [Contribution workflow](CONTRIBUTING.md)
 - [Changelog](CHANGELOG.md)
 - [Design decisions](research/DESIGN-DECISIONS.md)
 - [Maturity and versioning policy](specification/VERSIONING.md)

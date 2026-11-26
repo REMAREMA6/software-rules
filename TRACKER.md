@@ -311,3 +311,5 @@
 
 - Updated the Phase 6 facet-expansion document with current 6B–6D progress and a clear statement of which facets the Task Board does not exercise.
 - The latest documentation/capture validation run #45859552354 also completed successfully.
+
+- Post-update verification: [run #45859279008](https://github.com/REMAREMA6/software-rules/actions/runs/45859279008) passed after the 34-entry capture inventories and comparison reports were updated; [run #45859552354](https://github.com/REMAREMA6/software-rules/actions/runs/45859552354) also passed after the latest documentation/plan updates.

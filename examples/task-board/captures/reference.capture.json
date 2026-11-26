@@ -49,13 +49,17 @@
       "behavior",
       "api",
       "business-rules",
-      "data"
+      "data",
+      "errors-recovery",
+      "security-controls",
+      "performance-resource-behaviour"
     ],
     "scenarioIds": [
       "ref-scenario-interface",
       "ref-scenario-workflow",
       "ref-scenario-api",
-      "ref-scenario-expanded-probes"
+      "ref-scenario-expanded-probes",
+      "ref-scenario-ui-security-error-performance"
     ]
   },
   "collector": {
@@ -297,6 +301,70 @@
         "Does deleting multiple tasks return the UI to the empty state?",
         "Are observed identifiers unique strings within the adapter session, and does PATCH preserve the title?"
       ]
+    },
+    {
+      "scenarioId": "ref-scenario-ui-security-error-performance",
+      "title": "Supplemental interface, security, error/recovery, and performance probes",
+      "purpose": "Expand the Task Board runtime capture to responsive layout, focus/hover/media presentation, injection-shaped input, all three API failure operations, and controlled navigation measurements.",
+      "facetIds": [
+        "interface",
+        "behavior",
+        "errors-recovery",
+        "security-controls",
+        "performance-resource-behaviour",
+        "api"
+      ],
+      "subject": "task-board-supplemental-runtime-probes",
+      "preconditions": [
+        "Fresh browser page for each variant",
+        "Chromium 159.0.8154.6 on Linux",
+        "Deterministic in-memory Playwright API adapter",
+        "No external network dependencies"
+      ],
+      "trigger": "Execute the supplemental Playwright runtime probe sequence",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Capture responsive layout geometry and horizontal overflow at three viewport sizes",
+          "inputs": [
+            {
+              "width": 320,
+              "height": 720
+            },
+            {
+              "width": 768,
+              "height": 900
+            },
+            {
+              "width": 1920,
+              "height": 1080
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "action": "Capture input focus, Add task button hover, dark colour-scheme response, and disabled-control count"
+        },
+        {
+          "sequence": 3,
+          "action": "Submit SVG-like and script-like titles and inspect DOM injection and execution"
+        },
+        {
+          "sequence": 4,
+          "action": "Force HTTP 503 on create, update, and delete independently and inspect request, DOM, and page-error outcomes"
+        },
+        {
+          "sequence": 5,
+          "action": "Record navigation timing, paint timing, and resource count under the controlled local Chromium run"
+        }
+      ],
+      "observableQuestions": [
+        "Do reference and independent layouts remain pixel-identical at 320, 768, and 1920 CSS-pixel widths?",
+        "Are focus and hover states captured consistently, and does the page respond to dark colour-scheme preference?",
+        "Are SVG-like and script-like task titles rendered literally without DOM injection or execution?",
+        "What happens when create, update, and delete requests each receive HTTP 503?",
+        "What navigation, paint, and resource measurements are observed in this CI environment?"
+      ]
     }
   ],
   "executions": [
@@ -483,6 +551,86 @@
       },
       "limitations": [
         "The API adapter is deterministic and in-memory; these observations do not establish production server or durable persistence behaviour."
+      ]
+    },
+    {
+      "executionId": "ref-exec-ui-security-error-performance",
+      "scenarioId": "ref-scenario-ui-security-error-performance",
+      "targetId": "task-board-reference",
+      "startedAt": "2026-11-26T16:37:00Z",
+      "endedAt": "2026-11-26T16:38:52Z",
+      "status": "completed",
+      "actualContext": {
+        "browser": "Chromium",
+        "browserVersion": "159.0.8154.6",
+        "platform": "Linux",
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px",
+          "deviceScaleFactor": 1
+        },
+        "responsiveViewports": [
+          {
+            "width": 320,
+            "height": 720
+          },
+          {
+            "width": 768,
+            "height": 900
+          },
+          {
+            "width": 1920,
+            "height": 1080
+          }
+        ],
+        "apiAdapter": "deterministic in-memory Playwright route"
+      },
+      "trigger": "Automated supplemental Playwright runtime probe sequence",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Capture responsive layout geometry and horizontal overflow at three viewport sizes",
+          "inputs": [
+            {
+              "width": 320,
+              "height": 720
+            },
+            {
+              "width": 768,
+              "height": 900
+            },
+            {
+              "width": 1920,
+              "height": 1080
+            }
+          ]
+        },
+        {
+          "sequence": 2,
+          "action": "Capture input focus, Add task button hover, dark colour-scheme response, and disabled-control count"
+        },
+        {
+          "sequence": 3,
+          "action": "Submit SVG-like and script-like titles and inspect DOM injection and execution"
+        },
+        {
+          "sequence": 4,
+          "action": "Force HTTP 503 on create, update, and delete independently and inspect request, DOM, and page-error outcomes"
+        },
+        {
+          "sequence": 5,
+          "action": "Record navigation timing, paint timing, and resource count under the controlled local Chromium run"
+        }
+      ],
+      "collector": {
+        "name": "GitHub Actions Playwright Chromium runtime conformance",
+        "version": "Phase 6 expanded runtime workflow"
+      },
+      "limitations": [
+        "Performance values are single-run measurements on a hosted CI machine, not an SLO or production benchmark.",
+        "Security probes cover only injection-shaped task-title rendering; they are not a general security assessment.",
+        "API failures are injected at the in-memory route adapter."
       ]
     }
   ],
@@ -1794,6 +1942,349 @@
           }
         }
       }
+    },
+    {
+      "observationId": "ref-obs-responsive-interaction-states",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-ui-security-error-performance",
+      "facet": "interface",
+      "subject": "responsive-layout-and-interaction-presentation",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the supplemental Playwright runtime probe sequence in Chromium."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-ui-security-error-performance"
+      ],
+      "payload": {
+        "facet": "interface",
+        "kind": "snapshot",
+        "subject": "responsive-layout-and-interaction-presentation",
+        "platformContext": {
+          "browser": "Chromium 159.0.8154.6",
+          "platform": "Linux"
+        },
+        "viewport": {
+          "width": 320,
+          "height": 720,
+          "unit": "css-px",
+          "deviceScaleFactor": 1
+        },
+        "roots": [
+          "main"
+        ],
+        "nodes": [
+          {
+            "nodeId": "task-board-main",
+            "nodeType": "main",
+            "geometry": {
+              "x": 18,
+              "y": 40,
+              "width": 284,
+              "height": 317
+            },
+            "state": {
+              "horizontalOverflow": false
+            }
+          }
+        ],
+        "uiState": {
+          "focusInput": true,
+          "hoverAddTaskButton": true,
+          "darkColorSchemeScreenshotCaptured": true,
+          "disabledControlCount": 0
+        },
+        "renderingEvidence": [
+          "https://github.com/REMAREMA6/software-rules/actions/runs/45860499892/artifacts/15137373210"
+        ],
+        "extensions": {
+          "responsiveResults": [
+            {
+              "viewport": {
+                "width": 320,
+                "height": 720
+              },
+              "viewportWidth": 320,
+              "documentWidth": 320,
+              "bodyWidth": 320,
+              "horizontalOverflow": false,
+              "appRect": {
+                "x": 18,
+                "y": 40,
+                "width": 284,
+                "height": 317
+              },
+              "filterRects": [
+                {
+                  "label": "All",
+                  "x": 47,
+                  "y": 237,
+                  "width": 45.84375,
+                  "height": 39
+                },
+                {
+                  "label": "Active",
+                  "x": 100.84375,
+                  "y": 237,
+                  "width": 75.5,
+                  "height": 39
+                },
+                {
+                  "label": "Completed",
+                  "x": 184.34375,
+                  "y": 237,
+                  "width": 113.265625,
+                  "height": 39
+                }
+              ]
+            },
+            {
+              "viewport": {
+                "width": 768,
+                "height": 900
+              },
+              "viewportWidth": 768,
+              "documentWidth": 768,
+              "bodyWidth": 768,
+              "horizontalOverflow": false,
+              "appRect": {
+                "x": 24,
+                "y": 40,
+                "width": 720,
+                "height": 298
+              },
+              "filterRects": [
+                {
+                  "label": "All",
+                  "x": 53,
+                  "y": 218,
+                  "width": 45.84375,
+                  "height": 39
+                },
+                {
+                  "label": "Active",
+                  "x": 106.84375,
+                  "y": 218,
+                  "width": 75.5,
+                  "height": 39
+                },
+                {
+                  "label": "Completed",
+                  "x": 190.34375,
+                  "y": 218,
+                  "width": 113.265625,
+                  "height": 39
+                }
+              ]
+            },
+            {
+              "viewport": {
+                "width": 1920,
+                "height": 1080
+              },
+              "viewportWidth": 1920,
+              "documentWidth": 1920,
+              "bodyWidth": 1920,
+              "horizontalOverflow": false,
+              "appRect": {
+                "x": 600,
+                "y": 40,
+                "width": 720,
+                "height": 298
+              },
+              "filterRects": [
+                {
+                  "label": "All",
+                  "x": 629,
+                  "y": 218,
+                  "width": 45.84375,
+                  "height": 39
+                },
+                {
+                  "label": "Active",
+                  "x": 682.84375,
+                  "y": 218,
+                  "width": 75.5,
+                  "height": 39
+                },
+                {
+                  "label": "Completed",
+                  "x": 766.34375,
+                  "y": 218,
+                  "width": 113.265625,
+                  "height": 39
+                }
+              ]
+            }
+          ],
+          "comparisonStates": [
+            "responsive-320",
+            "responsive-768",
+            "responsive-1920",
+            "focus-input",
+            "hover-add-button",
+            "dark-color-scheme"
+          ],
+          "baselinePixelDiffs": 0
+        }
+      }
+    },
+    {
+      "observationId": "ref-obs-operation-failure-matrix",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-ui-security-error-performance",
+      "facet": "errors-recovery",
+      "subject": "create-update-delete-http-503-failure-outcomes",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the supplemental Playwright runtime probe sequence in Chromium."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-ui-security-error-performance"
+      ],
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "create-update-delete-http-503-failure-outcomes",
+        "trigger": "Inject HTTP 503 for each operation independently",
+        "operationRef": "POST/PATCH/DELETE /api/tasks",
+        "error": {
+          "category": "http-response",
+          "code": "503",
+          "message": "Service unavailable"
+        },
+        "origin": "Deterministic in-memory Playwright API route adapter",
+        "propagationBoundary": "Browser request helper rejects non-2xx response; event-handler promise rejection reaches the page error channel",
+        "recoveryActions": [],
+        "recoveryState": "no-recovery-path-observed",
+        "terminalOutcome": "Create does not create a task; failed update leaves the checkbox visually checked although the request did not update the record; failed delete leaves the task rendered. No user-facing alert or recovery control is rendered.",
+        "expectedRejection": true,
+        "extensions": {
+          "operationFailureProbes": {
+            "createFailureObserved": true,
+            "updateFailureObserved": true,
+            "updateFailureDomChecked": true,
+            "updateFailureTaskCount": 1,
+            "deleteFailureObserved": true,
+            "deleteFailureTaskCount": 1,
+            "pageErrors": [
+              "API request failed",
+              "API request failed",
+              "API request failed"
+            ]
+          },
+          "visibleErrorText": []
+        }
+      }
+    },
+    {
+      "observationId": "ref-obs-title-injection-security",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-ui-security-error-performance",
+      "facet": "security-controls",
+      "subject": "injection-shaped-task-title-output-encoding",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the supplemental Playwright runtime probe sequence in Chromium."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-ui-security-error-performance"
+      ],
+      "payload": {
+        "facet": "security-controls",
+        "kind": "security-control-outcome",
+        "subject": "injection-shaped-task-title-output-encoding",
+        "testObjective": "Determine whether SVG-like and script-like task titles are inserted as executable DOM rather than literal user text",
+        "authorizedScope": "Local Task Board fixture; non-destructive browser-only input probes",
+        "control": "User-supplied title output encoding / literal text rendering",
+        "stimulusClass": "SVG and script markup embedded in task title",
+        "environment": {
+          "browser": "Chromium 159.0.8154.6",
+          "platform": "Linux"
+        },
+        "observedOutcome": "blocked",
+        "controlResponse": {
+          "svgPayloadExactTextCount": 1,
+          "scriptPayloadExactTextCount": 1,
+          "injectedSvgCount": 0,
+          "injectedScriptCount": 0,
+          "injectedImageCount": 0,
+          "executedPayload": false
+        },
+        "telemetryRefs": [
+          "https://github.com/REMAREMA6/software-rules/actions/runs/45860499892/artifacts/15137373210"
+        ],
+        "observedImpact": {
+          "scriptExecution": false,
+          "unexpectedDomElements": 0
+        },
+        "safetyConstraints": [
+          "No external targets or destructive payloads were used.",
+          "The probe does not test other security controls or vulnerability classes."
+        ]
+      }
+    },
+    {
+      "observationId": "ref-obs-navigation-performance",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-ui-security-error-performance",
+      "facet": "performance-resource-behaviour",
+      "subject": "local-document-navigation-performance-sample",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the supplemental Playwright runtime probe sequence in Chromium."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-ui-security-error-performance"
+      ],
+      "payload": {
+        "facet": "performance-resource-behaviour",
+        "kind": "measurement",
+        "subject": "local-document-navigation-performance-sample",
+        "metric": "document-load-event-end",
+        "definition": "Elapsed time from navigation start until the document load event ended, as reported by the browser Navigation Timing entry",
+        "value": 8.9,
+        "unit": "ms",
+        "statistic": "other",
+        "measurementBoundary": "Single navigation to the local Task Board HTML fixture in hosted GitHub Actions Chromium",
+        "startedAt": "2026-11-26T16:37:00Z",
+        "endedAt": "2026-11-26T16:38:52Z",
+        "workload": {
+          "scenario": "initial document load",
+          "resourceCount": 14,
+          "transferSizeBytes": 4759,
+          "encodedBodySizeBytes": 4459
+        },
+        "concurrency": 1,
+        "sampleCount": 1,
+        "warmState": "unknown",
+        "runtime": {
+          "browser": "Chromium 159.0.8154.6",
+          "node": "22",
+          "platform": "Linux"
+        },
+        "resourceScope": "Browser navigation and page resource timing only",
+        "collectionMethod": "window.performance Navigation Timing and Paint Timing APIs",
+        "sampling": "Single sample per variant; no repeated benchmark or load test",
+        "uncertainty": {
+          "limitations": [
+            "Hosted CI hardware and contention are not controlled.",
+            "No production traffic, throughput, CPU, memory, or latency distribution is measured."
+          ]
+        },
+        "extensions": {
+          "duration": 8.9,
+          "domContentLoadedEventEnd": 8.6,
+          "responseStart": 3.1,
+          "firstPaintMs": 16,
+          "firstContentfulPaintMs": 16,
+          "resourceCount": 14
+        }
+      }
     }
   ],
   "runtimeRules": [
@@ -2228,6 +2719,198 @@
         "The adapter is in-memory and does not establish production transport or persistence.",
         "A 512-character title was accepted; the maximum supported title length remains unknown."
       ]
+    },
+    {
+      "evidenceId": "ref-evidence-ui-security-error-performance",
+      "evidenceClass": "runtime",
+      "evidenceType": "playwright-supplemental-multifacet-probe-archive",
+      "mediaType": "application/zip",
+      "origin": {
+        "targetId": "task-board-reference",
+        "executionId": "ref-exec-ui-security-error-performance",
+        "collector": "GitHub Actions Playwright Chromium runtime conformance"
+      },
+      "capturedAt": "2026-11-26T16:38:52Z",
+      "locator": "https://github.com/REMAREMA6/software-rules/actions/runs/45860499892/artifacts/15137373210",
+      "digest": "5b8f924dfbd323f5bba89920a6da8ba8e96d56d912e664ea403e9d428e39b413",
+      "sizeBytes": 2539040,
+      "embedded": {
+        "workflowRunId": 45860499892,
+        "artifactId": 15137373210,
+        "sha256": "5b8f924dfbd323f5bba89920a6da8ba8e96d56d912e664ea403e9d428e39b413",
+        "archiveFileCount": 65,
+        "variant": "ref",
+        "browser": "Chromium 159.0.8154.6",
+        "platform": "Linux",
+        "responsiveViewports": [
+          320,
+          768,
+          1920
+        ],
+        "responsiveResults": [
+          {
+            "viewport": {
+              "width": 320,
+              "height": 720
+            },
+            "viewportWidth": 320,
+            "documentWidth": 320,
+            "bodyWidth": 320,
+            "horizontalOverflow": false,
+            "appRect": {
+              "x": 18,
+              "y": 40,
+              "width": 284,
+              "height": 317
+            },
+            "filterRects": [
+              {
+                "label": "All",
+                "x": 47,
+                "y": 237,
+                "width": 45.84375,
+                "height": 39
+              },
+              {
+                "label": "Active",
+                "x": 100.84375,
+                "y": 237,
+                "width": 75.5,
+                "height": 39
+              },
+              {
+                "label": "Completed",
+                "x": 184.34375,
+                "y": 237,
+                "width": 113.265625,
+                "height": 39
+              }
+            ]
+          },
+          {
+            "viewport": {
+              "width": 768,
+              "height": 900
+            },
+            "viewportWidth": 768,
+            "documentWidth": 768,
+            "bodyWidth": 768,
+            "horizontalOverflow": false,
+            "appRect": {
+              "x": 24,
+              "y": 40,
+              "width": 720,
+              "height": 298
+            },
+            "filterRects": [
+              {
+                "label": "All",
+                "x": 53,
+                "y": 218,
+                "width": 45.84375,
+                "height": 39
+              },
+              {
+                "label": "Active",
+                "x": 106.84375,
+                "y": 218,
+                "width": 75.5,
+                "height": 39
+              },
+              {
+                "label": "Completed",
+                "x": 190.34375,
+                "y": 218,
+                "width": 113.265625,
+                "height": 39
+              }
+            ]
+          },
+          {
+            "viewport": {
+              "width": 1920,
+              "height": 1080
+            },
+            "viewportWidth": 1920,
+            "documentWidth": 1920,
+            "bodyWidth": 1920,
+            "horizontalOverflow": false,
+            "appRect": {
+              "x": 600,
+              "y": 40,
+              "width": 720,
+              "height": 298
+            },
+            "filterRects": [
+              {
+                "label": "All",
+                "x": 629,
+                "y": 218,
+                "width": 45.84375,
+                "height": 39
+              },
+              {
+                "label": "Active",
+                "x": 682.84375,
+                "y": 218,
+                "width": 75.5,
+                "height": 39
+              },
+              {
+                "label": "Completed",
+                "x": 766.34375,
+                "y": 218,
+                "width": 113.265625,
+                "height": 39
+              }
+            ]
+          }
+        ],
+        "interactionPresentation": {
+          "focusedInput": true,
+          "hoveredButton": true,
+          "disabledControlCount": 0
+        },
+        "securityProbeResults": {
+          "svgPayloadExactTextCount": 1,
+          "scriptPayloadExactTextCount": 1,
+          "injectedSvgCount": 0,
+          "injectedScriptCount": 0,
+          "injectedImageCount": 0,
+          "executedPayload": false
+        },
+        "operationFailureProbes": {
+          "createFailureObserved": true,
+          "updateFailureObserved": true,
+          "updateFailureDomChecked": true,
+          "updateFailureTaskCount": 1,
+          "deleteFailureObserved": true,
+          "deleteFailureTaskCount": 1,
+          "pageErrors": [
+            "API request failed",
+            "API request failed",
+            "API request failed"
+          ]
+        },
+        "performance": {
+          "duration": 8.9,
+          "domContentLoaded": 8.6,
+          "loadEventEnd": 8.9,
+          "responseStart": 3.1,
+          "transferSize": 4759,
+          "encodedBodySize": 4459
+        }
+      },
+      "retention": {
+        "status": "external",
+        "access": "GitHub Actions artifact; expires after 30 days",
+        "expiresAt": "2026-12-26T16:38:52Z"
+      },
+      "limitations": [
+        "Performance sample is not a production benchmark.",
+        "The API boundary is an in-memory adapter.",
+        "Security coverage is limited to the listed title-rendering payloads."
+      ]
     }
   ],
   "coverage": [
@@ -2334,7 +3017,10 @@
       "behavior",
       "api",
       "business-rules",
-      "data"
+      "data",
+      "errors-recovery",
+      "security-controls",
+      "performance-resource-behaviour"
     ],
     "propertyInventory": [
       {
@@ -2474,11 +3160,15 @@
         "facet": "interface",
         "subject": "task-board-root",
         "dimension": "responsive-layout-across-viewports",
-        "requirement": "optional",
-        "status": "excluded",
-        "observationRefs": [],
-        "evidenceRefs": [],
-        "rationale": "This fixture explicitly fixes the comparison viewport at 1280×800 CSS px; other viewport classes are outside this declared scope.",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-responsive-interaction-states"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-ui-security-error-performance"
+        ],
+        "rationale": "Responsive geometry and horizontal overflow were captured at 320×720, 768×900, and 1920×1080 CSS px. The reference and independent screenshots were pixel-identical at all three viewports.",
         "exclusionReason": "This fixture explicitly fixes the comparison viewport at 1280×800 CSS px; other viewport classes are outside this declared scope."
       },
       {
@@ -2598,10 +3288,12 @@
         "requirement": "required",
         "status": "captured",
         "observationRefs": [
-          "ref-obs-runtime-behavior"
+          "ref-obs-runtime-behavior",
+          "ref-obs-operation-failure-matrix"
         ],
         "evidenceRefs": [
-          "ref-evidence-runtime-capture"
+          "ref-evidence-runtime-capture",
+          "ref-evidence-ui-security-error-performance"
         ],
         "rationale": "Captured at runtime in the Playwright evidence archive for the declared Task Board scope (https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524)."
       },
@@ -2876,13 +3568,73 @@
           "ref-evidence-expanded-probes"
         ],
         "rationale": "A 512-character title was accepted and preserved, but no upper bound or maximum-length rejection condition has been established."
+      },
+      {
+        "propertyId": "ui-focus-hover-colour-scheme",
+        "facet": "interface",
+        "subject": "task-board-controls",
+        "dimension": "focus-hover-and-preferred-colour-scheme-presentation",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-responsive-interaction-states"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-ui-security-error-performance"
+        ],
+        "rationale": "Input focus, Add task hover, dark colour-scheme response, and the absence of disabled controls were observed; baseline screenshots matched."
+      },
+      {
+        "propertyId": "errors-recovery-operation-failures",
+        "facet": "errors-recovery",
+        "subject": "task-api-operations",
+        "dimension": "create-update-delete-503-propagation-and-recovery",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-operation-failure-matrix"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-ui-security-error-performance"
+        ],
+        "rationale": "All three operations were forced to receive HTTP 503. The failed state, propagated page errors, and absence of a recovery UI were captured."
+      },
+      {
+        "propertyId": "security-task-title-output-encoding",
+        "facet": "security-controls",
+        "subject": "task-title",
+        "dimension": "literal-rendering-of-svg-and-script-shaped-user-content",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-title-injection-security"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-ui-security-error-performance"
+        ],
+        "rationale": "The tested SVG-like and script-like payloads rendered as literal text; no SVG, script, or image elements were injected and no test payload executed. This is not a general security assessment."
+      },
+      {
+        "propertyId": "performance-local-navigation-sample",
+        "facet": "performance-resource-behaviour",
+        "subject": "task-board-page-load",
+        "dimension": "single-navigation-and-paint-timing-sample",
+        "requirement": "optional",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-navigation-performance"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-ui-security-error-performance"
+        ],
+        "rationale": "Navigation, paint, transfer-size, and resource-count measurements were recorded for this one hosted CI run; no production performance guarantee is inferred."
       }
     ],
     "completeness": {
       "status": "incomplete",
-      "assessedAt": "2026-11-26T16:26:46Z",
-      "assessmentMethod": "Reviewed the successful expanded Playwright artifact, probe result objects, per-variant API events, integrity tests, and schema validation; promoted only properties directly exercised by the new probes.",
-      "rationale": "Two required properties remain partial: font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint. All other currently inventoried properties have supporting evidence for the bounded fixture scope; this does not establish that the inventory itself is exhaustive."
+      "assessedAt": "2026-11-26T16:38:52Z",
+      "assessmentMethod": "Reviewed the 65-file supplemental runtime artifact, all three variant captures, responsive screenshot diffs, operation-failure outcomes, injection-shaped input outcomes, and browser performance entries.",
+      "rationale": "The new runtime evidence expands the Task Board target to responsive UI, focus/hover/media presentation, output-encoding security probes, create/update/delete failure propagation, and local navigation measurements. The two earlier required partial properties remain unresolved, and persistence, messaging, identity, authorization, background processing, integrations, and application configuration remain outside this fixture boundary."
     }
   }
 }

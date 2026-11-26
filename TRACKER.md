@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 3 — Facet specifications  
+**Current phase:** Phase 4 — Machine-readable schemas  
 **Overall status:** In progress
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
@@ -18,11 +18,11 @@
 
 ## Current position
 
-- **Current phase:** Phase 3 — Facet specifications
-- **Current task:** Validate the proposed facet taxonomy and define facet-specific capture requirements.
-- **Blockers:** The 15-facet taxonomy remains provisional; boundaries and overlaps need validation against concrete examples.
-- **Next action:** Define the interface facet boundary and its runtime observation payload, using the resolved DOM/layout capture workflow as the first concrete case.
-- **Do not do yet:** Freeze machine schemas or claim the facet taxonomy is final. First review facet boundaries, required observations, and evidence needs.
+- **Current phase:** Phase 4 — Machine-readable schemas
+- **Current task:** Define versioned schemas for the common capture model and facet payloads.
+- **Blockers:** Exact serialized field names, types, cardinalities, and compatibility rules remain to be formalized.
+- **Next action:** Design the common capture manifest and typed record schemas from `specification/CORE.md`, `specification/OBSERVATION-MODEL.md`, and the facet specifications.
+- **Do not do yet:** Start canonicalization/comparison semantics before the record structures and validation fixtures are established.
 
 ## Phase tracking
 
@@ -31,8 +31,8 @@
 | 0 | Repository and project governance | [x] Complete | Roadmap, tracker, contribution guide, changelog, decision log, maturity/versioning policy, and navigation links established. |
 | 1 | Research existing standards and prior art | [x] Complete | Comparative review, authoritative references, limitations, design implications, and revised facet proposal recorded. |
 | 2 | Core concepts and common model | [x] Complete | Core vocabulary, rule/evidence classes, linked observation model, source-derived model, and interface/API conceptual tests completed. Schemas remain deferred. |
-| 3 | Facet specifications | [~] In progress | Validate facet boundaries and define typed payloads against concrete capture cases. |
-| 4 | Machine-readable schemas | [ ] Not started | Schemas follow the agreed conceptual model. |
+| 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
+| 4 | Machine-readable schemas | [~] In progress | Formalize common and facet-specific schemas; add positive/negative validation fixtures. |
 | 5 | Canonicalization and comparison | [ ] Not started | Define comparison semantics and limits. |
 | 6 | End-to-end examples and conformance | [ ] Not started | Validate the format in realistic examples. |
 | 7 | Review, release, and maintenance | [ ] Not started | Final consistency review and release. |
@@ -93,24 +93,27 @@
 
 ## Phase 3 — Facet specifications
 
-- [ ] Interface
-- [ ] Behaviour
-- [ ] Business rules
-- [ ] Data
-- [ ] Persistence
-- [ ] API
-- [ ] Messaging
-- [ ] Identity and authentication
-- [ ] Authorization and permissions
-- [ ] Security controls
-- [ ] Background processing
-- [ ] Errors and recovery
-- [ ] Integrations
-- [ ] Configuration
-- [ ] Performance and resource behaviour
-- [ ] Review facet boundaries and cross-facet relationships.
+- [x] Interface — resolved hierarchy, presentation, geometry, stacking, accessibility, assets, and UI states.
+- [x] Behaviour — triggers, conditions, transitions, outputs, and side effects.
+- [x] Business rules — domain decisions, constraints, calculations, and policy outcomes.
+- [x] Data — runtime structures, values, validation, and transformations.
+- [x] Persistence — durable state, transactions, consistency, and lifecycle.
+- [x] API — synchronous request/response exchanges.
+- [x] Messaging — asynchronous message/event delivery and processing.
+- [x] Identity and authentication — principal establishment and credential/session lifecycle.
+- [x] Authorization and permissions — runtime access decisions and enforcement.
+- [x] Security controls — security-relevant mechanisms and outcomes under authorized tests.
+- [x] Background processing — queued, scheduled, and worker lifecycle.
+- [x] Errors and recovery — failures, retries, fallbacks, compensation, and recovery.
+- [x] Integrations — external-system interactions and dependency outcomes.
+- [x] Configuration — effective runtime configuration and changes.
+- [x] Performance and resource behaviour — measured workload and resource characteristics.
+- [x] Review facet boundaries and cross-facet relationships.
+- [x] Create a catalogue and explicit boundary/overlap matrix.
+- [x] Define observation unit, conceptual payload dimensions, scenario requirements, evidence, limitations, and cross-facet links for every facet.
+- [x] Add a worked conceptual example to every facet specification.
 
-For every facet, track: scope, observable dimensions, trigger/scenario model, typed payload, evidence requirements, limitations, examples, and schema requirements.
+**Phase 3 exit gate: satisfied at the specification level.** All 15 facets have a boundary, conceptual typed payload inventory, evidence model, limitations, and illustrative worked example. These examples are not empirical captures. Machine schemas remain Phase 4; empirical end-to-end examples and conformance fixtures remain Phase 6.
 
 ## Phase 4 — Machine-readable schemas
 
@@ -180,6 +183,9 @@ For every facet, track: scope, observable dimensions, trigger/scenario model, ty
 - Tested the conceptual model against interface resolved-layout and API request/response cases. These tests validate model fit conceptually, not empirical capture or schema conformance.
 - Accepted D-002 and added D-007, D-008, and D-009. No machine-readable schemas or final facet payloads were created.
 - Moved active work to Phase 3; next task is the interface facet specification.
+- Completed Phase 3: added the 15-facet catalogue, boundary/overlap matrix, and an individual specification for every facet. Each includes a conceptual payload inventory, scenario requirements, evidence, limitations, cross-facet links, and an illustrative example.
+- Accepted the 15-facet taxonomy for this specification draft. Examples are illustrative model tests, not empirical captures; machine schemas remain Phase 4 and empirical end-to-end fixtures remain Phase 6.
+- Moved active work to Phase 4: define common and facet-specific machine-readable schemas.
 
 - Inspected the repository and confirmed README, plan, and tracker.
 - Completed Phase 0 governance: added `CONTRIBUTING.md`, `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.

@@ -19,6 +19,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
+- Completed Phase 4 and advanced active work to Phase 5 after the Ajv 2020-12 GitHub Actions validation passed the valid fixture and all three negative fixtures.
 - Phase 4 schema design formalizes the common record envelope; comparison semantics and cross-record conformance remain deferred to Phases 5–6.
 - Completed Phase 3 and moved active work to Phase 4 (machine-readable schemas). The facet examples are illustrative; empirical end-to-end captures remain Phase 6 work.
 - Completed Phase 1 and moved the tracker to Phase 2; subsequently completed Phase 2 and moved active work to Phase 3.

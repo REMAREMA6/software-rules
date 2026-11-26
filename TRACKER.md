@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 4 — Machine-readable schemas  
+**Current phase:** Phase 5 — Canonicalization and comparison  
 **Overall status:** In progress
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 4 — Machine-readable schemas
-- **Current task:** Run and verify the Phase 4 schema validation suite.
-- **Blockers:** Automated validation has not yet been executed; cross-record referential-integrity checks remain future conformance work.
-- **Next action:** Execute `npm install` and `npm run validate --prefix conformance/validation`, resolve any failures, then verify the final Git tree.
+- **Current task:** Define normalization, identity matching, comparison categories, and coverage reporting.
+- **Blockers:** No Phase 5-specific blockers identified; cross-record referential-integrity checks remain a Phase 6 conformance concern.
+- **Next action:** Start with `comparison/COMPARISON-MODEL.md`; define alignment and result semantics without exceeding capture coverage.
 - **Do not do yet:** Start canonicalization/comparison semantics before the record structures and validation fixtures are established.
 
 ## Phase tracking
@@ -32,8 +32,8 @@
 | 1 | Research existing standards and prior art | [x] Complete | Comparative review, authoritative references, limitations, design implications, and revised facet proposal recorded. |
 | 2 | Core concepts and common model | [x] Complete | Core vocabulary, rule/evidence classes, linked observation model, source-derived model, and interface/API conceptual tests completed. Schemas remain deferred. |
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
-| 4 | Machine-readable schemas | [~] In progress | Draft v0.1.0 schemas and fixtures created; automated validation still needs execution. |
-| 5 | Canonicalization and comparison | [ ] Not started | Define comparison semantics and limits. |
+| 4 | Machine-readable schemas | [x] Complete | Draft v0.1.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
+| 5 | Canonicalization and comparison | [~] In progress | Begin comparison model, normalization, matching, and bounded result classification. |
 | 6 | End-to-end examples and conformance | [ ] Not started | Validate the format in realistic examples. |
 | 7 | Review, release, and maintenance | [ ] Not started | Final consistency review and release. |
 
@@ -126,10 +126,10 @@
 - [x] Structural comparison-report envelope (comparison semantics deferred to Phase 5).
 - [x] Positive and negative validation fixtures.
 - [x] Automated validation runner and instructions.
-- [ ] Execute validation and verify expected fixture outcomes.
+- [x] Execute validation and verify expected fixture outcomes.
 - [x] Document schema evolution and validation boundaries.
 
-**Phase 4 exit gate:** Pending actual validation run. The schemas are draft version 0.1.0 in the v1 compatibility family; they are not a stable release. JSON Schema cannot establish cross-record reference integrity, evidence authenticity, or semantic equivalence.
+**Phase 4 exit gate: satisfied.** GitHub Actions run [#2](https://github.com/REMAREMA6/software-rules/actions/runs/45792470335) completed successfully on 2026-11-26. Ajv 2020-12 validated the valid fixture and rejected all three negative fixtures for the expected structural reasons. The schemas remain Draft version 0.1.0 in the intended v1 compatibility family; they are not a stable release. Cross-record reference integrity and evidence authenticity remain outside JSON Schema validation.
 
 ## Phase 5 — Canonicalization and comparison
 
@@ -181,6 +181,7 @@
 ## Work log
 
 ### 2026-11-26
+- Completed Phase 4: added the draft 0.1.0 capture and record schemas, all 15 typed facet payload schemas, and a structural comparison-report envelope. Added three negative fixtures and one positive fixture. GitHub Actions run #2 passed all four fixture expectations using Ajv 2020-12. The first CI attempt exposed an incorrect working-directory path in the validator; corrected it and verified the succeeding run. Active work moved to Phase 5.
 - Completed Phase 0 governance: added the contribution guide, changelog, design-decision log, and versioning policy.
 - Completed Phase 1 research: reviewed candidate standards and prior art, collected authoritative references, documented limitations, and proposed the revised facet taxonomy.
 - Completed Phase 2: added the core conceptual documents; separated scenario definitions, executions, observations, evidence, runtime rules, source-derived rules, and declared contracts; tested the model against interface and API examples.

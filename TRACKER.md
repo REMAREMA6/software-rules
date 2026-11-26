@@ -178,21 +178,11 @@
 ## Work log
 
 ### 2026-11-26
-- Completed Phase 2: added TERMINOLOGY.md, PRINCIPLES.md, RULE-CLASSIFICATION.md, EVIDENCE-AND-PROVENANCE.md, OBSERVATION-MODEL.md, SOURCE-DERIVED-RULES.md, and CORE.md.
-- Defined separate scenario, execution, observation, evidence, and rule concepts; separated expected from actual outcomes; specified runtime observation methods and coverage/missingness states.
-- Tested the conceptual model against interface resolved-layout and API request/response cases. These tests validate model fit conceptually, not empirical capture or schema conformance.
-- Accepted D-002 and added D-007, D-008, and D-009. No machine-readable schemas or final facet payloads were created.
-- Moved active work to Phase 3; next task is the interface facet specification.
-- Completed Phase 3: added the 15-facet catalogue, boundary/overlap matrix, and an individual specification for every facet. Each includes a conceptual payload inventory, scenario requirements, evidence, limitations, cross-facet links, and an illustrative example.
-- Accepted the 15-facet taxonomy for this specification draft. Examples are illustrative model tests, not empirical captures; machine schemas remain Phase 4 and empirical end-to-end fixtures remain Phase 6.
-- Moved active work to Phase 4: define common and facet-specific machine-readable schemas.
+- Completed Phase 0 governance: added the contribution guide, changelog, design-decision log, and versioning policy.
+- Completed Phase 1 research: reviewed candidate standards and prior art, collected authoritative references, documented limitations, and proposed the revised facet taxonomy.
+- Completed Phase 2: added the core conceptual documents; separated scenario definitions, executions, observations, evidence, runtime rules, source-derived rules, and declared contracts; tested the model against interface and API examples.
+- Accepted D-002 and recorded D-007 through D-009.
+- Completed Phase 3: added the 15-facet catalogue, boundary/overlap matrix, and an individual specification for every facet. Each facet includes its scope, observation unit, conceptual payload dimensions, scenario requirements, evidence expectations, limitations, cross-facet links, and an illustrative worked example.
+- Accepted D-010, the 15-facet catalogue for this specification draft. Phase 3 examples are illustrative model tests, not empirical captures. Machine schemas remain Phase 4; empirical end-to-end captures remain Phase 6.
+- Verified the Phase 3 files and project navigation on GitHub. Active work moved to Phase 4: machine-readable schemas.
 
-- Inspected the repository and confirmed README, plan, and tracker.
-- Completed Phase 0 governance: added `CONTRIBUTING.md`, `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.
-- Completed Phase 1 research: added `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md` using authoritative standards-body and project sources.
-- Evaluated requirements engineering, platform-independent modelling, UML, SBVR, OpenAPI, AsyncAPI, OpenTelemetry, web/native UI inspection, Gherkin, JSON Schema, design tokens, and HTTP semantics.
-- Recorded the limits of existing standards, distinguished declared contracts from runtime observations, and revised the facet taxonomy as a proposal.
-- Verified the Phase 1 exit gate and moved active work to Phase 2.
-- Completed Phase 2: created the core conceptual documents and tested the shared model against interface layout and API request/response cases. These are illustrative model tests, not empirical system captures.
-- Accepted D-002 and recorded D-007 through D-009. Machine schemas, facet payloads, and the final facet taxonomy remain open.
-- Moved active work to Phase 3. Next: define and validate the interface facet boundary and its runtime capture requirements.

@@ -12,6 +12,13 @@ A technology-independent specification system for capturing, representing, and c
 - [Maturity and versioning policy](specification/VERSIONING.md)
 - [Standards and prior-art review](research/STANDARDS-REVIEW.md)
 - [Research references](research/REFERENCES.md)
+- [Core model](specification/CORE.md)
+- [Terminology](specification/TERMINOLOGY.md)
+- [Core principles](specification/PRINCIPLES.md)
+- [Rule classification](specification/RULE-CLASSIFICATION.md)
+- [Observation model](specification/OBSERVATION-MODEL.md)
+- [Evidence and provenance](specification/EVIDENCE-AND-PROVENANCE.md)
+- [Source-derived rules](specification/SOURCE-DERIVED-RULES.md)
 
 When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this introduction. The tracker records the current phase, completed work, blockers, and next action.
 
@@ -26,6 +33,12 @@ The format is intended to support this workflow:
 3. Build an independent implementation using any suitable technology.
 4. Capture the implementation under equivalent conditions.
 5. Compare the captures and identify differences.
+
+## Core model
+
+The common model separates scenario definitions, individual scenario executions, observations, evidence artifacts, and rules. A rule is a scoped claim supported or challenged by observations; it is not the observation itself. The shared model provides common identity, context, provenance, and coverage while each facet retains a typed payload.
+
+See the [observation model](specification/OBSERVATION-MODEL.md) and [core model](specification/CORE.md).
 
 ## Rule evidence classes
 

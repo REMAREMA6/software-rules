@@ -331,6 +331,7 @@ software-rules/
 │   └── v1/
 ├── comparison/
 ├── examples/
+│   ├── PHASE-6-FACET-EXPANSION.md
 │   ├── interface/
 │   ├── behavior/
 │   ├── api/

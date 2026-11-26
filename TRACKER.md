@@ -181,7 +181,6 @@ For every facet, track: scope, observable dimensions, trigger/scenario model, ty
 - Accepted D-002 and added D-007, D-008, and D-009. No machine-readable schemas or final facet payloads were created.
 - Moved active work to Phase 3; next task is the interface facet specification.
 
-### 2026-11-26
 - Inspected the repository and confirmed README, plan, and tracker.
 - Completed Phase 0 governance: added `CONTRIBUTING.md`, `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.
 - Completed Phase 1 research: added `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md` using authoritative standards-body and project sources.

@@ -172,7 +172,7 @@
 - Added a multi-facet capture for interface, behaviour, and API; source-derived DELETE-call inference remains in `sourceRules`, backed by a retained source excerpt and `verificationState: "unverified"`.
 - Added equivalent and deliberately different comparison reports, raw API adapter events, API payload example, and detailed target limitations.
 - Extended schema fixtures to validate all three captures and both comparison reports. Extended integrity tests to validate the cross-record graph for all three captures.
-- GitHub Actions run [#12](https://github.com/REMAREMA6/software-rules/actions/runs/45839972864) passed schema and integrity checks for the Task Board captures. Additional changes after run #12 must be covered by the latest CI run before the phase is considered closed.
+- GitHub Actions run [#23](https://github.com/REMAREMA6/software-rules/actions/runs/45841141089) passed all three Task Board capture fixtures, both Task Board comparison fixtures, the existing positive/negative fixtures, and cross-record integrity checks for all three empirical capture graphs.
 - Phase boundary: no production server, durable database, authentication, real network transport, or universal equivalence claim is included.
 
 **Phase 6 exit gate: satisfied.** A reader can follow the Task Board examples from scenario definitions through real browser execution, evidence, schema and integrity validation, and bounded comparison outcomes. The API observations are explicitly scoped to the instrumented in-memory adapter.

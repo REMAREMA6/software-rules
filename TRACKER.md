@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
 **Current phase:** Phase 7 — Review, release, and maintenance  
-**Overall status:** Phase 6 complete; Phase 7 not started
+**Overall status:** Phase 6 complete; Phase 7 in progress
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 7 — Review, release, and maintenance
-- **Current task:** Review Phase 6 outputs for consistency and prepare the versioned specification release.
+- **Current task:** Enforce the newly recorded Replication Completeness Rule throughout the specification, then continue the Phase 7 review and release.
 - **Blockers:** None for Phase 6. Production-backend, durable-persistence, authentication, screenshot retention, and network transport observations are outside the Task Board test boundary and are documented as limitations.
-- **Next action:** Perform the Phase 7 terminology, provenance, schema, comparison-claim, and release review.
+- **Next action:** Audit capture scope/coverage, required property inventories, completeness status, comparison conclusions, schemas, examples, and conformance against `specification/REPLICATION-COMPLETENESS.md`.
 - **Phase 6 result:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Interface, behavior, and deterministic adapter API observations were captured; equivalent and actual-difference reports were schema-validated.
 
 ## Phase tracking
@@ -35,7 +35,7 @@
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.1.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
 | 6 | End-to-end examples and conformance | [x] Complete | Task Board reference, independent baseline, and mutated build captured; interface/behavior/API facets, source-derived rule, equivalent and mismatch reports, schema fixtures, cross-record checks, and CI completed. |
-| 7 | Review, release, and maintenance | [ ] Not started | Final consistency review and release. |
+| 7 | Review, release, and maintenance | [~] In progress | Added the normative Replication Completeness Rule. Remaining work: propagate it into capture/comparison models, schemas, conformance, examples, and release review. |
 
 ## Phase 0 — Repository and project governance
 

@@ -35,3 +35,6 @@ A capture is not replication-complete merely because the automation passes. The 
 
 
 The expanded business/data probe sequence has been added to the harness but must be executed and its outputs reviewed before any associated inventory property is promoted from partial to captured.
+
+
+The dedicated workflow is defined in .github/workflows/phase6-expanded-conformance.yml. It runs the expanded capture, integrity tests, and schema validation on relevant pushes and pull requests, then uploads the runtime-output directory as a 30-day artifact. The first run must be checked before treating the new probe outputs as verified.

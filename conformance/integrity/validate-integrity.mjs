@@ -22,6 +22,45 @@ export function validateCapture(capture) {
   for (const [i,r] of (capture.runtimeRules ?? []).entries()) for (const field of ["supportingObservationIds","qualifyingObservationIds","contradictingObservationIds"]) for (const id of r[field] ?? []) ref(observations.has(id),id,`runtimeRules[${i}].${field}`,"observation");
   for (const [i,r] of (capture.sourceRules ?? []).entries()) for (const id of r.sourceEvidenceRefs ?? []) ref(evidence.has(id),id,`sourceRules[${i}].sourceEvidenceRefs`,"evidence");
   for (const [i,c] of (capture.coverage ?? []).entries()) { for (const id of c.scenarioIds ?? []) ref(scenarios.has(id),id,`coverage[${i}].scenarioIds`,"scenario"); for (const id of c.executionIds ?? []) ref(executions.has(id),id,`coverage[${i}].executionIds`,"execution"); }
+
+  // Replication completeness is evaluated against the declared property inventory,
+  // not inferred from the count of observations or successful comparisons.
+  const scope = capture.replicationScope;
+  if (!scope || !Array.isArray(scope.propertyInventory) || scope.propertyInventory.length === 0) {
+    errors.push("replicationScope.propertyInventory: a non-empty declared replication property inventory is required");
+  } else {
+    const seenProperties = new Set();
+    const blocking = new Set(["partial","not-observed","unknown","unavailable","conflicting","source-inferred"]);
+    let unresolvedRequired = false;
+    for (const [i,property] of scope.propertyInventory.entries()) {
+      const path = `replicationScope.propertyInventory[${i}]`;
+      if (seenProperties.has(property.propertyId)) errors.push(`${path}.propertyId: duplicate identifier "${property.propertyId}"`);
+      seenProperties.add(property.propertyId);
+      if (!(scope.facets ?? []).includes(property.facet)) errors.push(`${path}.facet: facet "${property.facet}" is not declared in replicationScope.facets`);
+      const obsRefs = property.observationRefs ?? [];
+      const evidenceRefs = property.evidenceRefs ?? [];
+      for (const id of obsRefs) ref(observations.has(id),id,`${path}.observationRefs`,"observation");
+      for (const id of evidenceRefs) ref(evidence.has(id),id,`${path}.evidenceRefs`,"evidence");
+      if (["captured","partial"].includes(property.status)) {
+        if (obsRefs.length === 0) errors.push(`${path}: ${property.status} property requires observationRefs`);
+        if (evidenceRefs.length === 0) errors.push(`${path}: ${property.status} property requires evidenceRefs`);
+      }
+      for (const id of obsRefs) {
+        const observation = observations.get(id);
+        if (observation && observation.facet !== property.facet) errors.push(`${path}: observation "${id}" belongs to facet "${observation.facet}", not "${property.facet}"`);
+        if (property.status === "captured" && observation && observation.status !== "observed") errors.push(`${path}: captured property references non-observed observation "${id}"`);
+      }
+      if (property.requirement === "required" && blocking.has(property.status)) unresolvedRequired = true;
+      if (property.requirement === "required" && property.status === "excluded") errors.push(`${path}: required property cannot be excluded from the declared replication scope`);
+      if (property.requirement === "required" && property.status === "not-applicable" && !property.rationale) errors.push(`${path}: required not-applicable property needs a rationale`);
+    }
+    const declared = scope.completeness?.status;
+    const expected = unresolvedRequired ? "incomplete" : "complete";
+    if (declared === "complete" && unresolvedRequired) errors.push("replicationScope.completeness.status: cannot be complete while required inventory properties are unresolved");
+    if (declared === "incomplete" && !unresolvedRequired) errors.push("replicationScope.completeness.status: marked incomplete but no required inventory property is unresolved");
+    if (declared === "undetermined" && !unresolvedRequired) errors.push("replicationScope.completeness.status: undetermined requires an unresolved inventory assessment or an explicitly incomplete inventory definition");
+    if (!["complete","incomplete","undetermined"].includes(declared)) errors.push("replicationScope.completeness.status: missing or invalid completeness status");
+  }
   return errors;
 }
-if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) { const file=process.argv[2]; if (!file) { console.error("Usage: node validate-integrity.mjs <capture.json>"); process.exit(2); } const errors=validateCapture(JSON.parse(fs.readFileSync(file,"utf8"))); if (errors.length) { console.error(errors.map(e=>`FAIL ${e}`).join("\n")); process.exit(1); } console.log(`PASS cross-record integrity: ${file}`); }
+if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) { const file=process.argv[2]; if (!file) { console.error("Usage: node validate-integrity.mjs <capture.json>"); process.exit(2); } const errors=validateCapture(JSON.parse(fs.readFileSync(file,"utf8"))); if (errors.length) { console.error(errors.map(e=>`FAIL ${e}`).join("\n")); process.exit(1); } console.log(`PASS cross-record integrity and replication inventory: ${file}`); }

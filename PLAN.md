@@ -258,7 +258,6 @@ software-rules/
 │   ├── STANDARDS-REVIEW.md
 │   ├── DESIGN-DECISIONS.md
 │   └── REFERENCES.md
-└──
 ~~~
 
 This is the target layout, not a statement that every planned file has already been created. Directories will appear in Git when their first tracked file is added.

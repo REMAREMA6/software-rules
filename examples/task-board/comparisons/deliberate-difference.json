@@ -361,20 +361,21 @@
   },
   "conclusion": {
     "status": "differences-found",
-    "statement": "Both captures are complete for the declared scope. The deliberately mutated implementation differs from the reference in the task summary: it renders '1 tasks' instead of '1 task' for one task, producing a 272-pixel screenshot difference in the one-active state. The keyboard workflow exposes the same defect. Other captured API and validation outcomes agree. This is a bounded comparison in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
+    "statement": "The deliberately mutated implementation differs from the reference in the task summary: it renders '1 tasks' instead of '1 task' for one task, producing a 272-pixel screenshot difference in the one-active state. This observed mismatch is valid within the tested conditions, but both captures remain incomplete because font-rendering, business-rule, and data properties are still partial.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
   "limitations": [
-    "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
     "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
     "The API boundary is a deterministic in-memory adapter, not a production service.",
-    "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."
+    "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it.",
+    "Seven required inventory properties remain partial: font rendering, title normalization, initial completion default, summary-count rules, task record shape, identifier generation, and PATCH field-preservation semantics.",
+    "The integrity validator checks references and declared statuses; it does not independently establish evidence adequacy or inventory exhaustiveness."
   ],
   "replicationCompleteness": {
-    "referenceStatus": "complete",
-    "implementationStatus": "complete",
-    "result": "complete-both",
-    "statement": "Both captures account for every required property in the declared Task Board replication scope with linked runtime observations and evidence. Optional responsive, durable persistence, and production transport dimensions are explicitly excluded. Completeness does not imply that the implementations agree; observed agreement and mismatch results are reported separately."
+    "referenceStatus": "incomplete",
+    "implementationStatus": "incomplete",
+    "result": "incomplete-both",
+    "statement": "Both captures contain observed examples and comparison evidence, but seven required properties remain partial across font rendering, business rules, and data. Observed agreement or a detected mismatch does not establish replication completeness."
   }
 }

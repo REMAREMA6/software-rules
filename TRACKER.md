@@ -3,8 +3,8 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 6 — Expanded multi-facet capture and conformance  
-**Overall status:** Phase 6 in progress; initial interface/behaviour/API fixture exists, but multi-facet completeness is not established
+**Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
+**Overall status:** Phase 6 in progress; replication-lab scaffolding exists, six source candidates are registered, and the first source-derived rule has an independent Python model; no facet has passed the complete cross-stack evidence loop
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -18,10 +18,10 @@
 
 ## Current position
 
-- **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Complete the Task Board capture record and comparison updates; then establish a richer full-stack reference target for facets absent from the Task Board.
-- **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no identity, authorization, messaging, integrations, background processing, or application configuration. A richer reference target has not yet been selected or created.
-- **Next action:** Review the latest supplemental artifact and update the capture records/comparisons. Then add a richer target that actually implements persistence, messaging, identity/authentication, authorization, security, background jobs, integrations, and application configuration.
+- **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
+- **Current task:** Execute the first cross-repository case end to end, beginning with BullMQ retry/backoff: verify source runtime, run the Python replica tests in CI, capture both sides, compare, and mutation-test.
+- **Blockers:** The Task Board is only one fixture. The cross-repository case set is incomplete; BullMQ source runtime and capture comparison are pending; the other source candidates still require property-level inspection and suitable independent replicas.
+- **Next action:** Complete the BullMQ retry-policy source/replica case, then proceed facet by facet using the registered source candidates and add more repositories where coverage requires them.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking

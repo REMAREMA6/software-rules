@@ -21,6 +21,8 @@ The core model defines the minimum shared structure for capturing and comparing 
 
 Not every partial capture contains every group. Requiredness depends on record class and declared scope. Absence must be represented honestly.
 
+A replication-oriented capture additionally declares a **replication scope** and a **property inventory**. The inventory enumerates the rules and properties required to reproduce that scope, records each item's capture state, and links captured items to runtime observations and evidence. Its completeness assessment is separate from ordinary observation coverage.
+
 ## 3. Relationship requirements
 
 The model must express:
@@ -61,7 +63,7 @@ Runtime observations, source-derived inferences, and declared contracts must hav
 
 ## 6. Comparison boundary
 
-Before records can be compared, establish target/scope alignment, scenario/condition alignment, facet/dimension compatibility, normalization compatibility, and sufficient coverage/evidence. Otherwise report unknown or not comparable rather than passing by default.
+Before records can be compared, establish target/scope alignment, scenario/condition alignment, facet/dimension compatibility, normalization compatibility, and sufficient coverage/evidence. For replication claims, assess both observed agreement and each capture's replication-scope completeness. Otherwise report unknown or not comparable rather than passing by default.
 
 ## 7. Versioning
 

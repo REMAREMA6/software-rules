@@ -253,11 +253,14 @@ software-rules/
 │   ├── persistence/
 │   ├── api/
 │   ├── messaging/
-│   ├── security/
-│   ├── permissions/
+│   ├── identity-authentication/
+│   ├── authorization-permissions/
+│   ├── security-controls/
 │   ├── background-processing/
-│   ├── errors/
-│   └── integrations/
+│   ├── errors-recovery/
+│   ├── integrations/
+│   ├── configuration/
+│   └── performance-resource-behaviour/
 ├── schemas/
 │   └── v1/
 ├── comparison/

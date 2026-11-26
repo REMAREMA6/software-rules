@@ -19,6 +19,8 @@ The script starts a local fixture server and supplies a deterministic in-memory 
 - API request/response events and rejected-request behavior.
 - Page errors and visible error/recovery UI (including an explicit record when none exists).
 
+The expanded probe sequence additionally tests leading/trailing whitespace normalization, duplicate titles, HTML-like/Unicode and long title values, mixed active/completed task counts, filter results, completion toggle-back, deletion, and identifier samples. Probe results are retained in each variant's JSON output under businessDataProbes.
+
 It compares reference and independent baseline screenshots pixel-for-pixel for seven common workflow states. The successful Phase 6 run produced zero differing pixels in all seven states; the deliberately mutated build produced a 272-pixel mismatch in the one-active state. It also asserts matching baseline API traces and runtime error outcomes.
 
 ## Output
@@ -30,3 +32,6 @@ The script writes `runtime-output/` containing one JSON capture per implementati
 A passing run establishes only that the enumerated Task Board states were executed and that the baseline pair rendered identically under the recorded Chromium/viewport environment. It does not prove that every conceivable software rule has been discovered, nor does it establish cross-platform font/raster equivalence. Computed style and pixel rendering are environment-dependent. The API remains an in-memory adapter; production transport, server, persistence, identity, and authorization are outside this fixture's declared boundary.
 
 A capture is not replication-complete merely because the automation passes. The property inventory must be reviewed against the actual output artifacts, and unresolved required properties must remain incomplete. The CI job intentionally does not promote a capture to complete automatically. The Phase 6 Task Board inventories were reviewed against the output archive and are now marked complete for their explicit declared scope; see `examples/task-board/captures/`.
+
+
+The expanded business/data probe sequence has been added to the harness but must be executed and its outputs reviewed before any associated inventory property is promoted from partial to captured.

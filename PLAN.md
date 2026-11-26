@@ -182,16 +182,20 @@ Deliverables:
 
 ### Phase 5 — Canonicalization and comparison
 
-Specify how captures are normalized without erasing meaningful differences.
+Specify how independently produced captures are aligned and compared without erasing meaningful differences or exceeding evidence.
 
 Tasks:
-- Define identity matching and scope alignment.
-- Define normalization of units, timestamps, ordering, identifiers, and equivalent representations.
-- Define exact, semantic, tolerance-based, and unsupported comparison classes where justified.
-- Define missing evidence, incomplete coverage, and incomparable cases.
-- Classify differences: match, mismatch, missing, additional, unknown, conflicting, and not comparable.
-- Preserve raw observations alongside normalized comparison values.
-- Define coverage reporting and limits on equivalence claims.
+- [x] Define capture, scenario, execution, subject, observation, and rule alignment.
+- [x] Define identity evidence, ambiguity, and one-to-many/many-to-one alignment constraints.
+- [x] Define normalization profiles and preserve raw observations/evidence.
+- [x] Define rules for identifiers, timestamps, units, numbers, ordering, text, structured values, geometry, and performance measurements.
+- [x] Define exact, normalized, semantic, and tolerance-based comparison bases.
+- [x] Define match, mismatch, missing, additional, unknown, conflicting, and not-comparable classifications.
+- [x] Define decision ordering so missing evidence cannot become a match.
+- [x] Define coverage counts and bounded conclusions.
+- [x] Expand the comparison-report JSON Schema.
+- [x] Add a valid comparison example and an invalid universal-equivalence fixture.
+- [x] Validate capture and comparison fixtures in CI.
 
 Deliverables:
 - `comparison/COMPARISON-MODEL.md`
@@ -199,8 +203,10 @@ Deliverables:
 - `comparison/MATCHING-RULES.md`
 - `comparison/DIFFERENCE-CLASSIFICATION.md`
 - `comparison/COVERAGE-AND-LIMITATIONS.md`
+- `comparison/examples/`
+- Updated `schemas/v1/comparison-report.schema.json`
 
-**Exit gate:** A documented comparison example demonstrates how two independent captures are aligned and how uncertainty and differences are reported.
+**Exit gate: satisfied (2026-11-26).** The illustrative report demonstrates alignment, a matched dimension, an excluded/not-comparable dimension, separate per-capture coverage, and an inconclusive scope-bounded conclusion. GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture fixtures and comparison-report fixtures, including rejection of a universal-equivalence claim. The example is a model demonstration, not an empirical system capture.
 
 ### Phase 6 — End-to-end examples and conformance
 

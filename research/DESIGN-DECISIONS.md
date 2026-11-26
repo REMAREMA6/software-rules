@@ -280,3 +280,29 @@ JSON Schema validates local structure, not reference existence, evidence authent
 
 ### Evidence and references
 See `specification/SCHEMA-DESIGN.md`, `schemas/v1/README.md`, and the Phase 1 JSON Schema review in `research/STANDARDS-REVIEW.md`.
+
+
+## D-012 — Use evidence-backed alignment and bounded comparison results
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+Independent implementations may use different internal identifiers, structures, runtimes, and representations. A comparison needs to align genuinely corresponding observations without confusing superficial similarity, missing evidence, or incompatible conditions with behavioural agreement.
+
+### Options considered
+- Compare serialized records directly.
+- Normalize all values generically and compare the resulting structures.
+- Align records using explicit evidence and facet context, apply versioned facet-aware normalization, and classify each comparison dimension with coverage and uncertainty.
+
+### Decision
+Use evidence-backed scenario/execution/subject/dimension alignment. Capture-local IDs are not cross-implementation identity. Ambiguous matches remain ambiguous. Normalization is facet- and dimension-aware, versioned, deterministic where possible, and never replaces raw observations/evidence. Comparison bases are exact, normalized, semantic, and tolerance-based. Result classes are match, mismatch, missing, additional, unknown, conflicting, and not-comparable. Missing evidence is not a match. Reports include independent capture coverage and a scope-bounded conclusion; universal equivalence is prohibited.
+
+### Rationale
+Direct serialization comparison would incorrectly treat harmless representation changes as behavioural differences and could miss semantic distinctions. Generic normalization could erase ordering, nullability, identity, or other meaningful behaviour. Evidence-backed alignment and explicit uncertainty avoid both errors.
+
+### Consequences
+Comparison results are dimension-level and traceable to capture records. Semantic and tolerance-based comparisons require documented evaluators/metrics. Cross-record referential integrity, execution equivalence, evidence authenticity, and empirical correctness remain Phase 6 conformance work. The report schema can enforce local shape but cannot independently prove comparison truth.
+
+### Evidence and references
+See comparison/COMPARISON-MODEL.md, comparison/NORMALIZATION.md, comparison/MATCHING-RULES.md, comparison/DIFFERENCE-CLASSIFICATION.md, comparison/COVERAGE-AND-LIMITATIONS.md, and schemas/v1/comparison-report.schema.json.

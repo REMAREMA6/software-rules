@@ -25,6 +25,12 @@ A technology-independent specification system for capturing, representing, and c
 - [Schema design](specification/SCHEMA-DESIGN.md)
 - [Draft schema index](schemas/v1/README.md)
 - [Validation instructions](conformance/validation/README.md)
+- [Comparison specification](comparison/README.md)
+- [Comparison model](comparison/COMPARISON-MODEL.md)
+- [Normalization rules](comparison/NORMALIZATION.md)
+- [Matching rules](comparison/MATCHING-RULES.md)
+- [Difference classification](comparison/DIFFERENCE-CLASSIFICATION.md)
+- [Coverage and limitations](comparison/COVERAGE-AND-LIMITATIONS.md)
 
 When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this introduction. The tracker records the current phase, completed work, blockers, and next action.
 
@@ -72,10 +78,10 @@ The current draft defines 15 observation facets. See the [facet catalogue](facet
 
 ## Remaining specification work
 
-- Canonicalization and comparison semantics (Phase 5)
-- Empirical end-to-end captures and conformance tests (Phase 6)
+- Empirical end-to-end captures and cross-record conformance tests (Phase 6)
+- Final review, stable release, and maintenance process (Phase 7)
 
-The initial schema draft and structural validation fixtures are available under `schemas/v1/` and `conformance/validation/`.
+The draft capture schemas, comparison-report schema, structural fixtures, and comparison methodology are available under `schemas/v1/`, `conformance/validation/`, and `comparison/`.
 
 ## Scope boundary
 

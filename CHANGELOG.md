@@ -7,6 +7,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- Phase 5 comparison specification: matching/alignment, normalization, difference classification, coverage/limitations, and a worked comparison report.
+- Expanded comparison-report JSON Schema with alignment, normalization profile, result, coverage, and bounded conclusion structures.
+- Comparison valid/invalid fixtures, including a schema-enforced prohibition on universal-equivalence claims.
 - Phase 4 draft JSON Schema set (0.1.0) with a capture manifest, shared records, 15 typed facet payload schemas, and a structural comparison-report envelope.
 - Positive and negative fixtures plus an Ajv 2020-12 validation runner and instructions.
 - `specification/SCHEMA-DESIGN.md` documenting serialization choices, missingness, provenance, extensions, and validation boundaries.
@@ -19,6 +22,8 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
+- Completed Phase 5 and advanced active work to Phase 6 after GitHub Actions run #4 validated both capture and comparison fixtures.
+- Extended automated validation to run on comparison specification changes and validate comparison-report fixtures alongside capture fixtures.
 - Completed Phase 4 and advanced active work to Phase 5 after the Ajv 2020-12 GitHub Actions validation passed the valid fixture and all three negative fixtures.
 - Phase 4 schema design formalizes the common record envelope; comparison semantics and cross-record conformance remain deferred to Phases 5–6.
 - Completed Phase 3 and moved active work to Phase 4 (machine-readable schemas). The facet examples are illustrative; empirical end-to-end captures remain Phase 6 work.

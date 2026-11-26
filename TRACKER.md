@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 5 — Canonicalization and comparison  
+**Current phase:** Phase 6 — End-to-end examples and conformance  
 **Overall status:** In progress
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
@@ -19,10 +19,10 @@
 ## Current position
 
 - **Current phase:** Phase 5 — Canonicalization and comparison
-- **Current task:** Define normalization, identity matching, comparison categories, and coverage reporting.
+- **Current task:** Produce empirical facet captures and cross-record conformance checks.
 - **Blockers:** No Phase 5-specific blockers identified; cross-record referential-integrity checks remain a Phase 6 conformance concern.
-- **Next action:** Start with `comparison/COMPARISON-MODEL.md`; define alignment and result semantics without exceeding capture coverage.
-- **Scope note:** Phase 4 record structures and validation fixtures are established. Phase 5 may now define canonicalization and comparison semantics.
+- **Next action:** Build an empirical interface capture pair first, then validate the same scenario against an independent implementation.
+- **Scope note:** Phases 4–5 are complete at draft-specification level. Phase 6 must test the model against real running systems; existing comparison example is illustrative only.
 
 ## Phase tracking
 
@@ -33,8 +33,8 @@
 | 2 | Core concepts and common model | [x] Complete | Core vocabulary, rule/evidence classes, linked observation model, source-derived model, and interface/API conceptual tests completed. Schemas remain deferred. |
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.1.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
-| 5 | Canonicalization and comparison | [~] In progress | Begin comparison model, normalization, matching, and bounded result classification. |
-| 6 | End-to-end examples and conformance | [ ] Not started | Validate the format in realistic examples. |
+| 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
+| 6 | End-to-end examples and conformance | [~] In progress | Start empirical captures and cross-record conformance validation. |
 | 7 | Review, release, and maintenance | [ ] Not started | Final consistency review and release. |
 
 ## Phase 0 — Repository and project governance
@@ -133,13 +133,17 @@
 
 ## Phase 5 — Canonicalization and comparison
 
-- [ ] Define capture alignment and identity matching.
-- [ ] Define normalization without loss of meaningful distinctions.
-- [ ] Define comparison categories and tolerances.
-- [ ] Define missing, unknown, conflicting, and incomparable results.
-- [ ] Define coverage and bounded-equivalence reporting.
-- [ ] Define comparison report format.
-- [ ] Create and review comparison examples.
+- [x] Define capture alignment and identity matching.
+- [x] Define normalization without loss of meaningful distinctions.
+- [x] Define comparison bases: exact, normalized, semantic, and tolerance-based.
+- [x] Define match, mismatch, missing, additional, unknown, conflicting, and not-comparable results.
+- [x] Define missingness decision order; missing evidence never becomes a match.
+- [x] Define coverage and bounded-equivalence reporting.
+- [x] Expand comparison report schema.
+- [x] Create and review a comparison example.
+- [x] Add valid and invalid comparison fixtures to automated CI.
+
+**Phase 5 exit gate: satisfied.** GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture and comparison fixture suites. The valid comparison example passed; the invalid report claiming universal equivalence was rejected. The example is illustrative, not empirical. Active work moved to Phase 6.
 
 ## Phase 6 — End-to-end examples and conformance
 
@@ -177,11 +181,13 @@
 | D-007 | Separate scenario definitions, executions, and observations. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
 | D-008 | Treat rules as propositions supported/qualified/contradicted by observations. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
 | D-009 | Keep expected outcomes, actual outcomes, and evaluations separate. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
+| D-012 | Use evidence-backed alignment, loss-aware normalization, explicit result classes, and bounded comparison conclusions. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
 
 ## Work log
 
 ### 2026-11-26
-- Completed Phase 4: added the draft 0.1.0 capture and record schemas, all 15 typed facet payload schemas, and a structural comparison-report envelope. Added three negative fixtures and one positive fixture. GitHub Actions run #2 passed all four fixture expectations using Ajv 2020-12. The first CI attempt exposed an incorrect working-directory path in the validator; corrected it and verified the succeeding run. Active work moved to Phase 5.
+- Completed Phase 4: added the draft 0.1.0 capture and record schemas, all 15 typed facet payload schemas, and validation fixtures. GitHub Actions run #2 passed the four fixture expectations using Ajv 2020-12.
+- Completed Phase 5: defined matching, normalization, comparison bases, result classification, coverage, and bounded conclusions; expanded the report schema and added comparison fixtures. GitHub Actions run #4 passed the capture and comparison fixture suites. The comparison example is illustrative, not empirical. Active work moved to Phase 6.
 - Completed Phase 0 governance: added the contribution guide, changelog, design-decision log, and versioning policy.
 - Completed Phase 1 research: reviewed candidate standards and prior art, collected authoritative references, documented limitations, and proposed the revised facet taxonomy.
 - Completed Phase 2: added the core conceptual documents; separated scenario definitions, executions, observations, evidence, runtime rules, source-derived rules, and declared contracts; tested the model against interface and API examples.

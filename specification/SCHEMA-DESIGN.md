@@ -53,6 +53,6 @@ JSON Schema validates syntax, local structure, enumerations, primitive types, an
 
 Those require conformance procedures and comparison semantics beyond this phase.
 
-## 9. Comparison report boundary
+## 9. Comparison report
 
-The v1 comparison-report schema defines only report identity, capture references, declared scope, and linked record pairs. It intentionally does not define canonicalization, matching, tolerances, result classifications, or equivalence claims; those belong to Phase 5.
+The v1 comparison-report schema defines report identity, capture references, declared scope, a versioned normalization profile, record alignments, per-dimension results, coverage, and a bounded conclusion. Its structure is defined in Phase 5 comparison documents. JSON Schema validates local shape and selected conditional constraints; it does not resolve capture/observation references, verify alignment quality, run normalization, or calculate comparison outcomes.

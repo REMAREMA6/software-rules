@@ -69,3 +69,16 @@ Six previously partial properties were promoted based on the new evidence. Four 
 6. Evidence quality: attach property-specific evidence locations and make validation reject missing, mismatched, or non-supporting evidence links where machine-checkable.
 
 No unresolved property is to be promoted to captured merely to satisfy CI.
+
+
+## Supplemental runtime probe result
+
+The expanded harness passed in [run #45860499892](https://github.com/REMAREMA6/software-rules/actions/runs/45860499892). The 65-file [runtime artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45860499892/artifacts/15137373210) contains all three variant captures.
+
+- Reference and independent screenshots matched exactly in 13 states: the original seven, three responsive viewports, focus, hover, and dark colour-scheme preference.
+- No horizontal overflow was observed at 320×720, 768×900, or 1920×1080 CSS px.
+- SVG-like and script-like titles rendered literally; no SVG, script, or image element was injected and no payload executed.
+- Create, update, and delete requests were each forced to return HTTP 503. The errors propagated as page errors; no user-facing recovery UI was observed. A failed update left the checkbox visually checked while the failed delete left the task present.
+- One-run performance samples recorded navigation load event end of 8.1–8.9 ms, first paint/FCP of 16 ms, and 14 resources per variant. These are hosted-CI measurements, not production performance claims.
+
+The capture inventory updates are being recorded separately. This run does not close facets absent from the Task Board boundary.

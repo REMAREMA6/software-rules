@@ -16,13 +16,16 @@
     "description": "Same Task Board initial route and create/complete/filter/delete scenario at 1280x800 CSS px in isolated Chromium with the same deterministic in-memory API adapter.",
     "facets": [
       "interface",
-      "behavior"
+      "behavior",
+      "api"
     ],
     "scenarioIds": [
       "ref-scenario-interface",
       "ref-scenario-workflow",
+      "ref-scenario-api",
       "ind-scenario-interface",
-      "ind-scenario-workflow"
+      "ind-scenario-workflow",
+      "ind-scenario-api"
     ],
     "conditions": [
       "Same browser engine and viewport",
@@ -78,6 +81,19 @@
       "status": "paired",
       "identityBasis": "scenario-subject-facet-condition",
       "rationale": "Both observations exercise the same create/complete/filter/delete sequence with the same input."
+    },
+    {
+      "alignmentId": "align-task-api-post",
+      "facet": "api",
+      "referenceRecordIds": [
+        "ref-obs-api-1"
+      ],
+      "implementationRecordIds": [
+        "ind-obs-api-1"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are the POST /api/tasks exchange for the same input at the same deterministic adapter boundary."
     }
   ],
   "results": [
@@ -136,27 +152,58 @@
         "afterDelete": "0 tasks · 0 active"
       },
       "reason": "Both browser runs produced identical task lifecycle outputs."
+    },
+    {
+      "resultId": "result-task-api-post",
+      "alignmentId": "align-task-api-post",
+      "facet": "api",
+      "dimension": "POST /api/tasks.response",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-api-1"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-api-1"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": false
+        }
+      },
+      "implementationValue": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "API probe",
+          "completed": false
+        }
+      },
+      "reason": "Both deterministic adapters return HTTP 200 with a newly created incomplete task for the same request."
     }
   ],
   "coverage": {
     "reference": {
-      "declaredUnits": 2,
-      "observedUnits": 2,
+      "declaredUnits": 3,
+      "observedUnits": 3,
       "notObservedUnits": 0,
       "unknownUnits": 0,
-      "unavailableUnits": 1
+      "unavailableUnits": 0
     },
     "implementation": {
-      "declaredUnits": 2,
-      "observedUnits": 2,
+      "declaredUnits": 3,
+      "observedUnits": 3,
       "notObservedUnits": 0,
       "unknownUnits": 0,
-      "unavailableUnits": 1
+      "unavailableUnits": 0
     },
-    "sharedComparableUnits": 2,
+    "sharedComparableUnits": 3,
     "incomparableUnits": 1,
     "limitations": [
-      "API request/response events were not retained; API facet excluded from empirical comparison."
+      "Production server behavior, durable persistence, authentication, and transport-level network behavior are outside the test boundary."
     ]
   },
   "conclusion": {
@@ -166,8 +213,8 @@
     "universalEquivalenceClaimed": false
   },
   "limitations": [
-    "Captures are empirical for tested UI and interaction scenarios, not every state or facet.",
-    "The deterministic API adapter is in-memory; production backend and persistence behavior are outside scope.",
-    "The deliberate-difference report uses a controlled comparison mutation; it is not evidence that the checked-in baseline differs."
+    "Empirical browser captures at 1280x800 CSS px with deterministic in-memory adapters.",
+    "The captures establish agreement only for the recorded interface, behavior, and API-adapter scenarios.",
+    "No production server, durable persistence, or authentication was tested."
   ]
 }

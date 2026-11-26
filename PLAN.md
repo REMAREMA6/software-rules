@@ -282,9 +282,13 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 
 #### Current fixture boundary
 
-The Task Board fixture currently supports empirical work on interface, behaviour, a limited set of domain rules, data, and a deterministic in-memory API adapter. Its adapter does not establish production API, persistence, identity, authorization, security, messaging, integrations, background processing, or performance properties. These facets remain unverified for this fixture; they are not globally declared irrelevant to the Software Rules format.
+The Task Board fixture now has empirical observations across interface, behaviour, business rules, data, its deterministic in-memory API boundary, errors/recovery, limited output-encoding security behaviour, and single-run performance measurements. The current capture inventory has 38 properties (33 captured, two partial, one not applicable, two excluded). Its adapter does not establish production API, persistence, identity, authorization, messaging, integrations, background processing, or application configuration. These facets remain unverified for this fixture; they are not globally declared irrelevant to the Software Rules format.
 
 Where a facet is genuinely absent from a selected target, record the evidence and rationale for not-applicable status. Where a target does not expose enough evidence, record unknown/unavailable/partial. Do not manufacture coverage by adding generic inventory rows.
+
+#### Remaining target-selection dependency
+
+The Task Board is not a suitable target for closing the remaining full-stack facets. No richer reference system has yet been selected or added to this repository. Phase 6 therefore remains open until a target with real persistence, messaging, identity/authentication, authorization, security controls, background processing, integrations, and application configuration is captured and independently reproduced. A purpose-built reference system is an acceptable test target only if those facets are implemented and exercised, not merely listed in a manifest.
 
 #### Phase 6 exit gate
 

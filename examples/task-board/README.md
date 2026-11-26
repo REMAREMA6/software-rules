@@ -21,7 +21,7 @@ This directory contains two independently authored implementations of the same t
 
 Each capture includes `replicationScope.propertyInventory`, which lists the properties required to reproduce the declared Task Board scope. Every item records its facet, subject, dimension, required/optional status, capture state, and evidence references where available.
 
-The current inventories intentionally mark all three captures **incomplete**. The initial DOM/style/geometry snapshots are partial; no retained screenshot or pixel comparison is linked; and keyboard, validation, error/recovery, and other relevant states remain unobserved. The comparison reports separately record agreement among observed properties and replication completeness. Matching selected properties does **not** establish full screen equivalence or faithful replication.
+All three inventories are now **complete for this declared scope**. Each contains 22 entries: 18 captured properties, one explicitly not applicable property (no external media assets), and three optional dimensions explicitly excluded (other responsive viewports, reload/cross-session persistence, and production transport). Every required property has linked runtime observation and evidence; no required property remains unresolved. The comparison reports separately record replication completeness and agreement/difference.
 
 ## Captures and comparisons
 
@@ -33,7 +33,7 @@ The current inventories intentionally mark all three captures **incomplete**. Th
 - [API facet example](api/api-payload.example.json)
 - [Raw adapter events](api/raw-adapter-events.json)
 
-The baseline pair was run under the same isolated Chromium environment and 1280×800 CSS-pixel viewport. Both produced the same initial main-container geometry and the same create/complete/filter/delete outputs. The API exchanges were instrumented at the deterministic in-memory adapter boundary. They do not establish production network, server, database, authentication, or persistence behavior.
+The reference and independent baseline were run under Chromium 159.0.8154.6 on Linux at 1280×800 CSS px. They produced pixel-identical screenshots in all seven compared UI states (zero differing pixels in each). Keyboard-only workflows, empty/whitespace validation, API request/response traces, and HTTP 503 failure outcomes also agree. API exchanges use a deterministic in-memory adapter, not a production service.
 
 The mutation build was run through the same workflow. It actually displayed `1 tasks · 1 active` and `1 tasks · 0 active`, while the reference displayed `1 task · 1 active` and `1 task · 0 active`. The difference report records this observed mismatch.
 
@@ -43,7 +43,7 @@ The Playwright harness in [`conformance/runtime/`](../../conformance/runtime/REA
 
 The baseline reference and independent implementation are compared pixel-for-pixel in seven states at 1280×800 CSS px. The deliberate mutation is required to produce a visual difference. The harness also asserts that baseline API traces and runtime error outcomes agree.
 
-The successful runtime run is recorded in [GitHub Actions runtime conformance run #](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953). Its [task-board-runtime-captures artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524) contains the screenshots, JSON captures, and pixel-diff outputs. The artifact has a 30-day retention period; rerunning the workflow regenerates it.
+The successful runtime run is recorded in [GitHub Actions runtime conformance run #45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953). Its [task-board-runtime-captures artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524) contains the screenshots, JSON captures, and pixel-diff outputs. The artifact has a 30-day retention period; rerunning the workflow regenerates it.
 
 **Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior.
 

@@ -208,7 +208,7 @@
   },
   "conclusion": {
     "status": "agreement-within-observed-scope",
-    "statement": "The reference and independent baseline builds agree on the captured initial main-container geometry and tested task lifecycle outputs. This is bounded to the listed scenarios and test environment.",
+    "statement": "The reference and independent baseline builds agree on the captured initial main-container geometry and tested task lifecycle outputs. This is bounded to the listed scenarios and test environment. Both captures are explicitly replication-incomplete; this agreement/difference result applies only to the observed dimensions and is not evidence of faithful replication.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
@@ -216,5 +216,11 @@
     "Empirical browser captures at 1280x800 CSS px with deterministic in-memory adapters.",
     "The captures establish agreement only for the recorded interface, behavior, and API-adapter scenarios.",
     "No production server, durable persistence, or authentication was tested."
-  ]
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "incomplete",
+    "implementationStatus": "incomplete",
+    "result": "incomplete-both",
+    "statement": "Both captures have required properties marked partial or unresolved in their replication inventories. The report compares only the observations actually captured; it does not establish faithful replication or complete interface equivalence."
+  }
 }

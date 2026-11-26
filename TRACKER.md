@@ -18,9 +18,9 @@
 
 ## Current position
 
-- **Current phase:** Phase 7 — Review, release, and maintenance
+- **Current phase:** Phase 6 — End-to-end examples and conformance (redo)
 - **Current task:** Redo Phase 6 conformance using an explicit, evidence-backed replication property inventory and completeness gate.
-- **Blockers:** None for Phase 6. Production-backend, durable-persistence, authentication, screenshot retention, and network transport observations are outside the Task Board test boundary and are documented as limitations.
+- **Blockers:** Phase 6 cannot pass until required Task Board interface and behaviour properties have runtime evidence. Production-backend, durable-persistence, authentication, and real network transport remain explicitly outside the selected test boundary.
 - **Next action:** Expand runtime capture of the Task Board's missing interface and behaviour properties, then update comparisons and run schema, integrity, and completeness tests.
 - **Phase 6 result:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Interface, behavior, and deterministic adapter API observations were captured; equivalent and actual-difference reports were schema-validated.
 
@@ -175,7 +175,7 @@
 - GitHub Actions run [#23](https://github.com/REMAREMA6/software-rules/actions/runs/45841141089) passed all three Task Board capture fixtures, both Task Board comparison fixtures, the existing positive/negative fixtures, and cross-record integrity checks for all three empirical capture graphs.
 - Phase boundary: no production server, durable database, authentication, real network transport, or universal equivalence claim is included.
 
-**Phase 6 exit gate: satisfied.** A reader can follow the Task Board examples from scenario definitions through real browser execution, evidence, schema and integrity validation, and bounded comparison outcomes. The API observations are explicitly scoped to the instrumented in-memory adapter.
+**Original Phase 6 exit gate: withdrawn pending redo.** The original examples demonstrate bounded observations and a mismatch, but they did not establish a complete property inventory or replication-sufficient captures.
  
 ## Phase 7 — Review, release, and maintenance
 

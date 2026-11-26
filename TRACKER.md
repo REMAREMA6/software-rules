@@ -3,8 +3,8 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 6 — End-to-end examples and conformance (redo)  
-**Overall status:** Phase 6 reopened; replication-completeness enforcement in progress
+**Current phase:** Phase 7 — Review, release, and maintenance  
+**Overall status:** Phase 6 complete for the declared Task Board scope; Phase 7 review active
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -18,11 +18,11 @@
 
 ## Current position
 
-- **Current phase:** Phase 6 — End-to-end examples and conformance (redo)
-- **Current task:** Redo Phase 6 conformance using an explicit, evidence-backed replication property inventory and completeness gate.
-- **Blockers:** Phase 6 cannot pass until required Task Board interface and behaviour properties have runtime evidence. Production-backend, durable-persistence, authentication, and real network transport remain explicitly outside the selected test boundary.
-- **Next action:** Expand runtime capture of the Task Board's missing interface and behaviour properties, then update comparisons and run schema, integrity, and completeness tests.
-- **Original Phase 6 evidence:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Those captures establish only the recorded observations; the new inventory classifies them as replication-incomplete, so the original result does not satisfy the Phase 6 exit gate.
+- **Current phase:** Phase 7 — Review, release, and maintenance
+- **Current task:** Perform the final specification consistency review, document remaining limitations, and prepare the draft release.
+- **Blockers:** No Phase 6 blockers. Cross-stack universality, additional browsers/viewports, production network/server behavior, durable persistence, authentication, and authorization remain outside the Task Board conformance demonstration.
+- **Next action:** Review terminology, facet boundaries, provenance, schema/version consistency, and comparison claims before publishing a versioned draft release.
+- **Phase 6 result:** Three runtime captures now account for every required property in the declared Task Board scope. The reference and independent baseline are pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. Keyboard, validation, API success/failure, and cross-record conformance checks pass.
 
 ## Phase tracking
 
@@ -34,8 +34,8 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | End-to-end examples and conformance | [~] Redo in progress | Added explicit replication property inventories, separate completeness reporting, schema requirements, and integrity checks. Existing captures correctly remain incomplete; additional runtime evidence and expanded conformance scenarios are still required. |
-| 7 | Review, release, and maintenance | [ ] Pending Phase 6 redo | Resume final consistency review and release only after Phase 6 conformance satisfies the replication-completeness requirements. |
+| 6 | End-to-end examples and conformance | [x] Complete | All required properties in the declared Task Board scope have runtime evidence. Seven baseline UI states match pixel-for-pixel; the deliberate mutation is detected. Keyboard, validation, API success/failure, schema, and integrity checks pass. See the runtime evidence artifact linked in `examples/task-board/README.md`. |
+| 7 | Review, release, and maintenance | [~] In progress | Begin final consistency review and prepare the versioned draft release. |
 
 ## Phase 0 — Repository and project governance
 
@@ -224,13 +224,18 @@
 - [x] Require a declared replication scope and per-property inventory in the capture schema.
 - [x] Require comparisons to report replication completeness separately from observed agreement.
 - [x] Add cross-record integrity checks for unique inventory IDs, facet declarations, observation/evidence references, and false complete claims.
-- [x] Add Task Board inventories for interface, behaviour, and API properties; current captures are explicitly incomplete.
+- [x] Add Task Board inventories for interface, behaviour, and API properties.
 - [x] Bump the incompatible draft capture/report format from 0.1.0 to 0.2.0 and update the valid fixtures.
-- [x] Audit all three inventories: 22 properties each, with 13 required properties still unresolved in each capture; no completeness claim is permitted.
+- [x] Audit all three inventories: 22 properties each; every required property is captured or explicitly not applicable, and optional exclusions have reasons.
 - [x] Add tests rejecting a complete status when required properties are partial or unresolved.
-- [ ] Expand reference, independent, and mutated runtime captures to cover all required properties in the declared Task Board scope.
-- [ ] Add retained screenshots/pixel evidence and complete per-state interface snapshots where applicable.
-- [ ] Add validation, error/recovery, keyboard, and other missing behaviour scenarios.
-- [ ] Re-run the full conformance suite and review final comparison conclusions.
+- [x] Expand reference, independent, and mutated runtime captures to cover all required properties in the declared Task Board scope.
+- [x] Capture full per-element computed CSS properties, DOM hierarchy, pseudo-element content, geometry, accessibility snapshots, and screenshots for every declared UI state.
+- [x] Compare reference and independent baseline screenshots pixel-for-pixel across seven states; all seven comparisons have zero differing pixels.
+- [x] Preserve and detect the deliberate mutation; its one-active screenshot differs by 272 pixels.
+- [x] Execute empty/whitespace validation, keyboard-only create/filter/complete/delete, API success, and HTTP 503 failure scenarios.
+- [x] Update all three capture records, schema fixtures, and both comparison reports with runtime evidence and completeness conclusions.
+- [x] Re-run schema validation and cross-record integrity checks; both pass.
 
-**Current redo status:** In progress. The capture/report schemas and fixtures now require completeness accounting. Each Task Board capture has 22 inventory entries and 13 unresolved required properties; the reports retain observed agreement/difference while explicitly stating that replication is incomplete. Structural reference/status checks were reviewed against the repository files; GitHub Actions validation now passes after correcting the interface inventory's cross-facet observation/evidence references. Successful run: [Validate schemas #45850453041](https://github.com/REMAREMA6/software-rules/actions/runs/45850453041). Earlier runs failed first on the cross-facet reference and then on a fixture updated before the final evidence-reference correction; the latest run validates both schema fixtures and cross-record integrity. The empirical property inventory is not yet complete, so Phase 6 remains open.
+**Phase 6 redo result:** Complete for the declared Task Board replication scope. The three captures each account for all 22 inventory properties: 18 captured, one explicitly not applicable, and three optional dimensions explicitly excluded. The reference and independent baseline are pixel-identical in seven tested UI states at 1280×800 CSS px under Chromium 159.0.8154.6 on Linux. Keyboard, validation, API request/response, and failure outcomes agree. The mutated implementation remains fully captured but comparison correctly reports its deliberate pluralization mismatch. Runtime evidence: [successful Playwright run #45855076741](https://github.com/REMAREMA6/software-rules/actions/runs/45855076741), [capture artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524). Final schema and integrity validation: [run #45855135858](https://github.com/REMAREMA6/software-rules/actions/runs/45855135858).
+
+**Boundary:** This proves completeness and pixel identity only for the declared Task Board scope and captured environment. It does not prove universal equivalence across every stack, browser, operating system, viewport, or arbitrary software system. Phase 7 is now active.

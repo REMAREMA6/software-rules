@@ -98,3 +98,5 @@ The initial Task Board completeness result was subsequently re-audited and recla
 
 - Expanded the Task Board runtime capture with responsive/focus/hover/colour-scheme UI states, SVG/script injection-shaped title probes, create/update/delete HTTP 503 failure outcomes, and navigation/paint/resource measurements. Run #45860499892 passed all 13 screenshot comparisons, integrity checks, and schema validation; artifact #15137373210 retains 65 files.
 - Added a 15-facet applicability assessment that distinguishes Task Board's implemented facets from full-stack facets absent from its declared boundary.
+
+- Corrected the pointer-driven update/delete screenshot race and passed the complete expanded runtime, integrity, and schema/comparison workflow in run #45861726449. The final Task Board capture inventories contain 38 entries each (33 captured, two partial, one not applicable, two excluded); the 13-state baseline remains pixel-identical and the deliberate mutation remains detectable.

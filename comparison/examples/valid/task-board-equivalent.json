@@ -13,7 +13,7 @@
     "artifactRef": "examples/task-board/captures/independent.capture.json"
   },
   "comparisonScope": {
-    "description": "Same Task Board initial route and create/complete/filter/delete scenario at 1280x800 CSS px in isolated Chromium with the same deterministic in-memory API adapter.",
+    "description": "Complete declared Task Board replication scope: fixed 1280×800 CSS-pixel viewport; rendered interface properties and states; create, complete, filter, delete, keyboard, validation, and API success/failure behavior at a deterministic in-memory adapter boundary.",
     "facets": [
       "interface",
       "behavior",
@@ -25,18 +25,28 @@
       "ref-scenario-api",
       "ind-scenario-interface",
       "ind-scenario-workflow",
-      "ind-scenario-api"
+      "ind-scenario-api",
+      "ref-scenario-runtime-completeness",
+      "ind-scenario-runtime-completeness"
     ],
     "conditions": [
       "Same browser engine and viewport",
       "Fresh in-memory task store for each run",
-      "Same input title: Prepare release notes"
+      "Same input title: Prepare release notes",
+      "Chromium 159.0.8154.6 on Linux",
+      "1280×800 CSS px at deviceScaleFactor 1",
+      "Fresh client page and deterministic in-memory API route adapter",
+      "Runtime capture archive: https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524"
     ],
     "excludedDimensions": [
       "Production server behavior",
       "Durable persistence",
       "Authentication",
-      "Raw network request/response event details"
+      "Raw network request/response event details",
+      "Responsive layouts outside 1280×800",
+      "Durable and cross-session persistence",
+      "Production network transport and server behavior",
+      "Authentication and authorization"
     ]
   },
   "normalizationProfile": {
@@ -94,6 +104,45 @@
       "status": "paired",
       "identityBasis": "scenario-subject-facet-condition",
       "rationale": "Both records are the POST /api/tasks exchange for the same input at the same deterministic adapter boundary."
+    },
+    {
+      "alignmentId": "align-runtime-interface",
+      "facet": "interface",
+      "referenceRecordIds": [
+        "ref-obs-runtime-interface"
+      ],
+      "implementationRecordIds": [
+        "ind-obs-runtime-interface"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both captures cover the same declared UI properties and state sequence under the same browser and viewport conditions."
+    },
+    {
+      "alignmentId": "align-runtime-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "ref-obs-runtime-behavior"
+      ],
+      "implementationRecordIds": [
+        "ind-obs-runtime-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both captures execute the same pointer and keyboard workflows, validation cases, and rejected-request scenario."
+    },
+    {
+      "alignmentId": "align-runtime-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "ref-obs-runtime-api"
+      ],
+      "implementationRecordIds": [
+        "ind-obs-runtime-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both captures retain the same eight API events, including successful POST/PATCH/DELETE exchanges and a rejected POST with HTTP 503."
     }
   ],
   "results": [
@@ -183,44 +232,160 @@
         }
       },
       "reason": "Both deterministic adapters return HTTP 200 with a newly created incomplete task for the same request."
+    },
+    {
+      "resultId": "result-runtime-pixel-states",
+      "alignmentId": "align-runtime-interface",
+      "facet": "interface",
+      "dimension": "rendered-pixels.seven-declared-states",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-interface"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-runtime-interface"
+      ],
+      "referenceValue": {
+        "stateCount": 7,
+        "exactPixelMatches": 7,
+        "differingPixels": 0
+      },
+      "implementationValue": {
+        "stateCount": 7,
+        "exactPixelMatches": 7,
+        "differingPixels": 0
+      },
+      "reason": "Reference and independent baseline screenshots are pixel-identical in all seven tested UI states at 1280×800 CSS px."
+    },
+    {
+      "resultId": "result-runtime-keyboard",
+      "alignmentId": "align-runtime-behavior",
+      "facet": "behavior",
+      "dimension": "keyboard-only.create-filter-complete-delete",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-behavior"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-runtime-behavior"
+      ],
+      "referenceValue": {
+        "activeFilterCount": 1,
+        "completedFilterCount": 0,
+        "afterCompletion": "1 task · 0 active",
+        "deleteSucceeded": true
+      },
+      "implementationValue": {
+        "activeFilterCount": 1,
+        "completedFilterCount": 0,
+        "afterCompletion": "1 task · 0 active",
+        "deleteSucceeded": true
+      },
+      "reason": "Both implementations support the same keyboard-only workflow outcomes and delete the task successfully."
+    },
+    {
+      "resultId": "result-runtime-validation",
+      "alignmentId": "align-runtime-behavior",
+      "facet": "behavior",
+      "dimension": "native-empty-and-whitespace-validation",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-behavior"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-runtime-behavior"
+      ],
+      "referenceValue": {
+        "emptySubmissionBlocked": true,
+        "whitespaceSubmissionIgnored": true,
+        "apiCallsForInvalidInputs": 0
+      },
+      "implementationValue": {
+        "emptySubmissionBlocked": true,
+        "whitespaceSubmissionIgnored": true,
+        "apiCallsForInvalidInputs": 0
+      },
+      "reason": "Both implementations block empty required input and ignore whitespace-only input without issuing API requests."
+    },
+    {
+      "resultId": "result-runtime-api-trace",
+      "alignmentId": "align-runtime-api",
+      "facet": "api",
+      "dimension": "success-and-failure-request-response-trace",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-api"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-runtime-api"
+      ],
+      "referenceValue": {
+        "eventCount": 8,
+        "methods": [
+          "POST",
+          "PATCH",
+          "DELETE"
+        ],
+        "failedPostStatus": 503,
+        "runtimeError": "API request failed"
+      },
+      "implementationValue": {
+        "eventCount": 8,
+        "methods": [
+          "POST",
+          "PATCH",
+          "DELETE"
+        ],
+        "failedPostStatus": 503,
+        "runtimeError": "API request failed"
+      },
+      "reason": "The full deterministic adapter request/response traces and rejected-request runtime error outcomes agree."
     }
   ],
   "coverage": {
     "reference": {
-      "declaredUnits": 3,
-      "observedUnits": 3,
+      "declaredUnits": 22,
+      "observedUnits": 18,
       "notObservedUnits": 0,
       "unknownUnits": 0,
       "unavailableUnits": 0
     },
     "implementation": {
-      "declaredUnits": 3,
-      "observedUnits": 3,
+      "declaredUnits": 22,
+      "observedUnits": 18,
       "notObservedUnits": 0,
       "unknownUnits": 0,
       "unavailableUnits": 0
     },
-    "sharedComparableUnits": 3,
-    "incomparableUnits": 1,
+    "sharedComparableUnits": 18,
+    "incomparableUnits": 0,
     "limitations": [
-      "Production server behavior, durable persistence, authentication, and transport-level network behavior are outside the test boundary."
+      "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
+      "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
+      "The API boundary is a deterministic in-memory adapter, not a production service.",
+      "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."
     ]
   },
   "conclusion": {
     "status": "agreement-within-observed-scope",
-    "statement": "The reference and independent baseline builds agree on the captured initial main-container geometry and tested task lifecycle outputs. This is bounded to the listed scenarios and test environment. Both captures are explicitly replication-incomplete; this agreement/difference result applies only to the observed dimensions and is not evidence of faithful replication.",
+    "statement": "Both captures are complete for the declared Task Board scope. The reference and independent baseline are pixel-identical in all seven tested UI states (zero differing pixels at 1280×800 CSS px); keyboard workflow, input validation, API request/response traces, and HTTP 503 failure behavior also agree. This conclusion is bounded to the recorded Chromium/Linux environment and explicit exclusions.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
   "limitations": [
-    "Empirical browser captures at 1280x800 CSS px with deterministic in-memory adapters.",
-    "The captures establish agreement only for the recorded interface, behavior, and API-adapter scenarios.",
-    "No production server, durable persistence, or authentication was tested."
+    "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
+    "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
+    "The API boundary is a deterministic in-memory adapter, not a production service.",
+    "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."
   ],
   "replicationCompleteness": {
-    "referenceStatus": "incomplete",
-    "implementationStatus": "incomplete",
-    "result": "incomplete-both",
-    "statement": "Both captures have required properties marked partial or unresolved in their replication inventories. The report compares only the observations actually captured; it does not establish faithful replication or complete interface equivalence."
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for every required property in the declared Task Board replication scope with linked runtime observations and evidence. Optional responsive, durable persistence, and production transport dimensions are explicitly excluded. Completeness does not imply that the implementations agree; observed agreement and mismatch results are reported separately."
   }
 }

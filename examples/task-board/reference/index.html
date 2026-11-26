@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Task Board — Reference</title>
+<style>
+:root{font:16px system-ui,sans-serif;color:#172033;background:#f4f6fa}*{box-sizing:border-box}body{margin:0;padding:40px 18px}.app{max-width:720px;margin:auto;background:#fff;border:1px solid #dce2ec;border-radius:14px;padding:28px;box-shadow:0 12px 36px #18243a0c}h1{margin:0 0 6px;font-size:28px}.hint{margin:0 0 24px;color:#667085}.composer{display:flex;gap:8px}.composer input{flex:1;min-width:0;padding:12px;border:1px solid #cbd3df;border-radius:8px;font:inherit}.composer button,.filters button,.task button{padding:10px 13px;border:0;border-radius:8px;background:#2357d8;color:white;font:inherit;cursor:pointer}.filters{display:flex;gap:8px;margin:22px 0}.filters button{background:#edf1f8;color:#344054}.filters button[aria-pressed=true]{background:#2357d8;color:#fff}.tasks{list-style:none;padding:0;margin:0}.task{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid #edf0f5}.task span{flex:1}.task.done span{text-decoration:line-through;color:#98a2b3}.task button{background:#fcebea;color:#b42318}.summary{margin-top:18px;color:#667085;font-size:14px}
+</style>
+</head>
+<body>
+<main class="app" id="app">
+<h1>Task Board</h1><p class="hint">A small place to track what needs doing.</p>
+<form class="composer" id="task-form"><input id="task-input" aria-label="Task name" placeholder="Add a task" required><button type="submit">Add task</button></form>
+<nav class="filters" aria-label="Task filters"><button type="button" data-filter="all" aria-pressed="true">All</button><button type="button" data-filter="active" aria-pressed="false">Active</button><button type="button" data-filter="completed" aria-pressed="false">Completed</button></nav>
+<ul class="tasks" id="task-list"></ul><p class="summary" id="summary" aria-live="polite">0 tasks · 0 active</p>
+</main>
+<script>
+(() => {
+  let tasks = [];
+  let filter = "all";
+  const list = document.querySelector("#task-list");
+  const summary = document.querySelector("#summary");
+  const input = document.querySelector("#task-input");
+  async function request(method, path, body) {
+    const response = await fetch(path, {method, headers:{"content-type":"application/json"}, body:body ? JSON.stringify(body) : undefined});
+    if (!response.ok) throw new Error("API request failed");
+    return response.json();
+  }
+  function render() {
+    list.replaceChildren();
+    const visible = tasks.filter(task => filter === "all" || (filter === "active" ? !task.completed : task.completed));
+    for (const task of visible) {
+      const item = document.createElement("li"); item.className = "task" + (task.completed ? " done" : "");
+      const toggle = document.createElement("input"); toggle.type = "checkbox"; toggle.checked = task.completed; toggle.setAttribute("aria-label", "Complete " + task.title);
+      toggle.addEventListener("change", async () => { const updated = await request("PATCH", "/api/tasks/" + task.id, {completed:toggle.checked}); tasks = tasks.map(t => t.id === task.id ? updated : t); render(); });
+      const label = document.createElement("span"); label.textContent = task.title;
+      const remove = document.createElement("button"); remove.type = "button"; remove.textContent = "Delete"; remove.setAttribute("aria-label", "Delete " + task.title);
+      remove.addEventListener("click", async () => { await request("DELETE", "/api/tasks/" + task.id); tasks = tasks.filter(t => t.id !== task.id); render(); });
+      item.append(toggle,label,remove); list.append(item);
+    }
+    const active = tasks.filter(t => !t.completed).length;
+    summary.textContent = tasks.length + (tasks.length === 1 ? " task" : " tasks") + " · " + active + " active";
+    document.querySelectorAll("[data-filter]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.filter === filter)));
+  }
+  document.querySelector("#task-form").addEventListener("submit", async event => {
+    event.preventDefault(); const title = input.value.trim(); if (!title) return;
+    const created = await request("POST", "/api/tasks", {title}); tasks.push(created); input.value = ""; render();
+  });
+  document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => { filter = button.dataset.filter; render(); }));
+  render();
+})();
+</script>
+</body></html>

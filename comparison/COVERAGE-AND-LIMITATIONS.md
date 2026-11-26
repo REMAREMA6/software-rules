@@ -54,3 +54,8 @@ High coverage does not prove evidence quality, correct scenario design, or seman
 ## 7. Threats to validity
 
 Common threats include different builds/configurations, environmental drift, different initial states, hidden external dependencies, clocks, locale, actor permissions, data fixtures, unstable IDs, sampling bias, flaky execution, instrumentation effects, lossy normalization, and incomplete evidence retention. Record threats that could materially alter the result.
+
+
+## Replication inventory status accounting
+
+Coverage reports should preserve the distinct inventory states rather than collapsing them into a single observed/not-observed count. In addition to captured/observed units, report partial, not observed, unknown, unavailable, conflicting, source-inferred, not-applicable, and excluded units where present. These counts summarize the inventory; they do not prove that the inventory itself is exhaustive or that its evidence is semantically adequate. A partial unit remains unresolved for replication completeness even when it contains useful observations.

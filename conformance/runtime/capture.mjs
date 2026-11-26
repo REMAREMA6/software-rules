@@ -327,11 +327,96 @@ async function runVariant(name) {
   await save("business-data-probes");
   snapshots["business-data-probes"].probeResults = probeResults;
 
-  // Record failure semantics without pretending that an error UI exists.
+  // Exercise responsive geometry and interaction presentation in the same browser environment.
+  const responsiveResults = [];
+  for (const viewport of [{ width: 320, height: 720 }, { width: 768, height: 900 }, { width: 1920, height: 1080 }]) {
+    await page.setViewportSize(viewport);
+    await save(`responsive-${viewport.width}`);
+    const metrics = await page.evaluate(() => ({
+      viewportWidth: window.innerWidth,
+      documentWidth: document.documentElement.scrollWidth,
+      bodyWidth: document.body.scrollWidth,
+      horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth,
+      appRect: (() => {
+        const rect = document.querySelector("main").getBoundingClientRect();
+        return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+      })(),
+      filterRects: [...document.querySelectorAll("[data-filter]")].map(button => {
+        const rect = button.getBoundingClientRect();
+        return { label: button.textContent.trim(), x: rect.x, y: rect.y, width: rect.width, height: rect.height };
+      })
+    }));
+    responsiveResults.push({ viewport, ...metrics });
+  }
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await input.focus();
+  await save("focus-input");
+  await page.getByRole("button", { name: "Add task" }).hover();
+  await save("hover-add-button");
+  await page.emulateMedia({ colorScheme: "dark" });
+  await save("dark-color-scheme");
+  await page.emulateMedia({ colorScheme: "light" });
+  const interactionPresentation = {
+    focusedInput: await page.locator("#task-input, #title").evaluate(el => el === document.activeElement),
+    hoveredButton: await page.getByRole("button", { name: "Add task" }).evaluate(el => el.matches(":hover")),
+    disabledControlCount: await page.locator("button:disabled, input:disabled").count(),
+    responsiveResults
+  };
+
+  // Additional injection-shaped inputs test the actual DOM result, not only a text snapshot.
+  const svgPayload = '"><svg onload="window.__softwareRulesXss = true"></svg>';
+  const scriptPayload = "<script>window.__softwareRulesXss = true</script>";
+  await createProbeTask(svgPayload);
+  await createProbeTask(scriptPayload);
+  const securityProbeResults = {
+    svgPayloadExactTextCount: await page.getByText(svgPayload, { exact: true }).count(),
+    scriptPayloadExactTextCount: await page.getByText(scriptPayload, { exact: true }).count(),
+    injectedSvgCount: await page.locator("#task-list svg, #items svg").count(),
+    injectedScriptCount: await page.locator("#task-list script, #items script").count(),
+    injectedImageCount: await page.locator("#task-list img, #items img").count(),
+    executedPayload: await page.evaluate(() => window.__softwareRulesXss === true)
+  };
+  if (securityProbeResults.svgPayloadExactTextCount !== 1 || securityProbeResults.scriptPayloadExactTextCount !== 1 ||
+      securityProbeResults.injectedSvgCount !== 0 || securityProbeResults.injectedScriptCount !== 0 ||
+      securityProbeResults.injectedImageCount !== 0 || securityProbeResults.executedPayload) {
+    throw new Error("Injection-shaped task titles were not safely rendered as literal text");
+  }
+
+  // Record failure semantics for create, update, and delete, without implying that a recovery UI exists.
+  const failureProbeStart = apiLog[name].length;
+  const pageErrorStart = pageErrors[name].length;
   failNext = true;
   await input.fill("Failure probe");
   await page.getByRole("button", { name: "Add task" }).click();
-  await page.waitForTimeout(150);
+  await page.waitForTimeout(100);
+  const createFailureObserved = apiLog[name].slice(failureProbeStart).some(event => event.method === "POST" && event.response.status === 503);
+
+  await createProbeTask("Update failure probe");
+  const updateFailureCheckbox = page.getByRole("checkbox", { name: "Complete Update failure probe" });
+  failNext = true;
+  await updateFailureCheckbox.check();
+  await page.waitForTimeout(100);
+  const updateFailureObserved = apiLog[name].slice(failureProbeStart).some(event => event.method === "PATCH" && event.response.status === 503);
+  const updateFailureDomChecked = await updateFailureCheckbox.isChecked();
+  const updateFailureTaskCount = await page.getByText("Update failure probe", { exact: true }).count();
+
+  failNext = true;
+  await page.getByRole("button", { name: "Delete Update failure probe" }).click();
+  await page.waitForTimeout(100);
+  const deleteFailureObserved = apiLog[name].slice(failureProbeStart).some(event => event.method === "DELETE" && event.response.status === 503);
+  const deleteFailureTaskCount = await page.getByText("Update failure probe", { exact: true }).count();
+  const operationFailureProbes = {
+    createFailureObserved,
+    updateFailureObserved,
+    updateFailureDomChecked,
+    updateFailureTaskCount,
+    deleteFailureObserved,
+    deleteFailureTaskCount,
+    pageErrors: pageErrors[name].slice(pageErrorStart)
+  };
+  if (!createFailureObserved || !updateFailureObserved || !deleteFailureObserved || updateFailureTaskCount !== 1 || deleteFailureTaskCount !== 1) {
+    throw new Error("One or more create/update/delete failure outcomes were not observed as expected");
+  }
   await save("api-failure");
   const result = {
     variant: name,
@@ -343,13 +428,27 @@ async function runVariant(name) {
       devicePixelRatio: await page.evaluate(() => window.devicePixelRatio),
       viewport: page.viewportSize(),
       colorScheme: await page.evaluate(() => matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
-      loadedFonts: await page.evaluate(() => [...document.fonts].map(font => ({ family: font.family, status: font.status, weight: font.weight, style: font.style })))
+      loadedFonts: await page.evaluate(() => [...document.fonts].map(font => ({ family: font.family, status: font.status, weight: font.weight, style: font.style }))),
+      performance: await page.evaluate(() => {
+        const navigation = performance.getEntriesByType("navigation")[0];
+        return {
+          navigation: navigation ? {
+            duration: navigation.duration, domContentLoadedEventEnd: navigation.domContentLoadedEventEnd,
+            loadEventEnd: navigation.loadEventEnd, responseStart: navigation.responseStart,
+            transferSize: navigation.transferSize, encodedBodySize: navigation.encodedBodySize
+          } : null,
+          paint: performance.getEntriesByType("paint").map(entry => ({ name: entry.name, startTime: entry.startTime, duration: entry.duration })),
+          resourceCount: performance.getEntriesByType("resource").length
+        };
+      })
     },
-    snapshots, businessDataProbes: snapshots["business-data-probes"]?.probeResults ?? null, apiEvents: apiLog[name], pageErrors: pageErrors[name],
+    snapshots, businessDataProbes: snapshots["business-data-probes"]?.probeResults ?? null,
+    responsiveResults, interactionPresentation, securityProbeResults, operationFailureProbes,
+    apiEvents: apiLog[name], pageErrors: pageErrors[name],
     failureObservation: {
-      failedResponse: apiLog[name].findLast(event => event.response.status === 503) ?? null,
+      failedResponses: apiLog[name].filter(event => event.response.status === 503),
       visibleErrorText: await page.locator('[role="alert"], [aria-live="assertive"]').allInnerTexts(),
-      note: "This implementation does not render a user-facing error or recovery control for a rejected create request; the failed request and page error are retained."
+      note: "The implementation does not render a user-facing error or recovery control for rejected create/update/delete requests; failed requests and resulting DOM/page-error states are retained."
     }
   };
   await fs.writeFile(path.join(output, `${name}.capture.json`), JSON.stringify(result, null, 2));
@@ -367,7 +466,7 @@ try {
   }
 
   const comparison = [];
-  for (const state of ["empty", "one-active", "completed", "active-filter-empty", "completed-filter", "all-filter", "deleted"]) {
+  for (const state of ["empty", "one-active", "completed", "active-filter-empty", "completed-filter", "all-filter", "deleted", "responsive-320", "responsive-768", "responsive-1920", "focus-input", "hover-add-button", "dark-color-scheme"]) {
     const a = PNG.sync.read(await fs.readFile(path.join(output, `reference-${state}.png`)));
     const b = PNG.sync.read(await fs.readFile(path.join(output, `independent-${state}.png`)));
     const diff = new PNG({ width: a.width, height: a.height });

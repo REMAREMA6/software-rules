@@ -21,7 +21,7 @@ This directory contains two independently authored implementations of the same t
 
 Each capture includes `replicationScope.propertyInventory`, which lists the properties required to reproduce the declared Task Board scope. Every item records its facet, subject, dimension, required/optional status, capture state, and evidence references where available.
 
-All three inventories are now **complete for this declared scope**. Each contains 22 entries: 18 captured properties, one explicitly not applicable property (no external media assets), and three optional dimensions explicitly excluded (other responsive viewports, reload/cross-session persistence, and production transport). Every required property has linked runtime observation and evidence; no required property remains unresolved. The comparison reports separately record replication completeness and agreement/difference.
+All three inventories are now explicitly **incomplete**. Each contains 29 entries: 18 captured properties, seven partial properties, one explicitly not-applicable property, and three optional exclusions. The added partial properties cover font rendering, title normalization, initial completion defaults, summary-count rules, task record shape, identifier generation, and PATCH field-preservation semantics. This is intentional: the existing runs contain useful samples but do not establish the full rules or boundary conditions. The comparison reports therefore retain observed agreement/differences while reporting incomplete replication coverage.
 
 ## Captures and comparisons
 
@@ -45,7 +45,7 @@ The baseline reference and independent implementation are compared pixel-for-pix
 
 The successful runtime run is recorded in [GitHub Actions runtime conformance run #45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953). Its [task-board-runtime-captures artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524) contains the screenshots, JSON captures, and pixel-diff outputs. The artifact has a 30-day retention period; rerunning the workflow regenerates it.
 
-**Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior.
+**Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior. The per-property audit also found unresolved font-rendering, business-rule, and data dimensions; all three captures now correctly report `incomplete`.
 
 ## Source-derived rule
 

@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Status:** Planning and specification design  
-**Plan version:** 0.1.2  
+**Plan version:** 0.2.0  
 **Last updated:** 2026-11-26
 
 ## 1. Mission
@@ -63,7 +63,7 @@ All rule records should share a common identity, provenance, condition, and evid
 
 ### Phase 1 — Research existing standards and prior art
 
-Investigate relevant standards and formats before fixing the Software Rules model. Record what each standard solves, what it does not solve, and whether Software Rules should reuse, map to, or deliberately differ from it.
+Investigate relevant standards and formats before fixing the Software Rules model. Record each source's publication status, what it solves, what it does not solve, and whether Software Rules should reuse, map to, or deliberately differ from it.
 
 Research areas include:
 
@@ -85,7 +85,13 @@ Deliverables:
 - `research/REFERENCES.md`
 - `research/DESIGN-DECISIONS.md`
 
-**Exit gate:** Each major design choice is supported by documented research or explicitly marked as a proposal needing validation. Existing standards are not misrepresented as solving the whole problem.
+- [x] Complete comparative review of all listed candidate standards.
+- [x] Record publication status, scope, limitations, and project treatment for each.
+- [x] Collect authoritative primary references.
+- [x] Distinguish declared contracts from actual runtime observations.
+- [x] Revise the working facet taxonomy and record unresolved boundaries.
+
+**Exit gate: satisfied.** The candidate standards have been evaluated, their limits and design implications documented, authoritative references collected, and the facet taxonomy revised as a proposal. No capture schema has been frozen.
 
 ### Phase 2 — Core concepts and common model
 
@@ -93,6 +99,10 @@ Define the language and shared structure before designing facet payloads.
 
 Tasks:
 - Define system, boundary, component, facet, rule, observation, scenario, trigger, condition, outcome, evidence, provenance, and comparison.
+- Define the distinction between declared contracts, runtime observations, and source-derived inferences.
+- Decide whether scenario executions and individual observations are separate entities.
+- Define capture method classes, including external observation, platform inspection, and runtime instrumentation.
+- Define capture coverage and the meaning of incomplete or unavailable dimensions.
 - Define runtime versus source-derived rule classes.
 - Define rule identity and relationships.
 - Define preconditions, inputs, environment, execution context, and time/order.
@@ -118,20 +128,25 @@ Deliverables:
 
 Design each facet as its own specification with explicit scope, observable dimensions, scenario requirements, payload fields, evidence requirements, limitations, and examples.
 
-Planned facets:
+Proposed facets, revised after Phase 1 research:
 
-1. Interface — hierarchy, semantics, resolved visual properties, geometry, stacking, assets, accessibility, and interactive states.
-2. Behaviour — triggers, preconditions, transitions, outputs, and observable side effects.
+1. Interface — web/native hierarchy, visual properties, geometry, stacking, accessibility, assets, and UI states.
+2. Behaviour — triggers, preconditions, transitions, observable outputs, and side effects.
 3. Business rules — domain constraints, decisions, calculations, policies, and rule outcomes.
-4. Data — data shapes, fields, types, constraints, relationships, and transformations.
-5. Persistence — durable state, read/write behaviour, consistency and lifecycle observations.
-6. API — externally observable request/response contracts, status, headers, payloads, and error outcomes.
-7. Messaging — messages, channels, ordering, delivery outcomes, and event-driven interactions.
-8. Security — authentication and security behaviour observable through authorized tests.
-9. Permissions — roles, capabilities, authorization decisions, and access outcomes.
-10. Background processing — jobs, schedules, retries, lifecycle, and externally observable results.
-11. Errors — validation failures, exceptions as exposed to observers, recovery, and failure outcomes.
-12. Integrations — interactions and contracts with external systems.
+4. Data — runtime data shapes, fields, types, relationships, transformations, and validation outcomes.
+5. Persistence — durable state, reads/writes, transactions, consistency, and lifecycle observations.
+6. API — synchronous request/response interfaces and actual runtime exchanges.
+7. Messaging — channels, messages, publishing, receiving, delivery, and processing outcomes.
+8. Identity and authentication — identity context, authentication events, and outcomes.
+9. Authorization and permissions — roles, capabilities, policy decisions, and access outcomes.
+10. Security controls — security-relevant runtime outcomes and authorized test observations.
+11. Background processing — jobs, schedules, retries, lifecycle, and outcomes.
+12. Errors and recovery — validation failures, exposed exceptions, retries, recovery, and failure outcomes.
+13. Integrations — interactions and contracts with external systems.
+14. Configuration — runtime configuration values and changes that affect behaviour.
+15. Performance and resource behaviour — duration, throughput, latency, resource use, and performance outcomes.
+
+This list is a research-informed working proposal, not an accepted taxonomy. Phase 2 and Phase 3 must test boundaries, overlaps, and cross-facet relationships before the facet specifications are treated as stable.
 
 Each facet must be grounded in research and real capture examples. The list may be revised if research shows a better boundary or a missing facet.
 
@@ -220,6 +235,7 @@ software-rules/
 ├── TRACKER.md
 ├── CONTRIBUTING.md
 ├── CHANGELOG.md
+├── CONTRIBUTING.md
 ├── specification/
 │   ├── CORE.md
 │   ├── TERMINOLOGY.md
@@ -296,4 +312,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Begin Phase 1: research and evaluate existing standards and prior art. Transfer and verify previously gathered research, cite authoritative sources, document limitations and design implications, and record decisions. Do not freeze the core schema or facet schemas until the research findings and design decisions have been documented.
+Begin Phase 2: define the core concepts and common model. Start with terminology and the observation model. Test the proposed common envelope against unlike examples, including a web interface observation and an API or background-processing observation. Preserve the distinctions between runtime observation, declared contract, and source-derived inference. Do not create machine-readable capture schemas until the conceptual model has been reviewed.

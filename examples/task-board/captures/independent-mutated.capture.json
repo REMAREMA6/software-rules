@@ -3204,12 +3204,10 @@
         "requirement": "required",
         "status": "captured",
         "observationRefs": [
-          "mut-obs-runtime-behavior",
-          "mut-obs-operation-failure-matrix"
+          "mut-obs-runtime-behavior"
         ],
         "evidenceRefs": [
-          "mut-evidence-runtime-capture",
-          "mut-evidence-ui-security-error-performance"
+          "mut-evidence-runtime-capture"
         ],
         "rationale": "Captured at runtime in the Playwright evidence archive for the declared Task Board scope (https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524)."
       },

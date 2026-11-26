@@ -23,7 +23,7 @@
   const summary = document.getElementById("meta");
   const api = async (method, url, value) => {
     const response = await fetch(url, {method, headers:{"content-type":"application/json"}, body:value === undefined ? undefined : JSON.stringify(value)});
-    if (!response.ok) throw new Error("Request rejected");
+    if (!response.ok) throw new Error("API request failed");
     return response.json();
   };
   const visibleRecords = () => Array.from(records.values()).filter(({completed}) => selectedView === "all" || (selectedView === "active" ? !completed : completed));

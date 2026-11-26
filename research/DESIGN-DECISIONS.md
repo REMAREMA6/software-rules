@@ -306,3 +306,26 @@ Comparison results are dimension-level and traceable to capture records. Semanti
 
 ### Evidence and references
 See comparison/COMPARISON-MODEL.md, comparison/NORMALIZATION.md, comparison/MATCHING-RULES.md, comparison/DIFFERENCE-CLASSIFICATION.md, comparison/COVERAGE-AND-LIMITATIONS.md, and schemas/v1/comparison-report.schema.json.
+
+
+## D-013 — Require replication-sufficient captures for declared scope
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+The project's purpose is to provide a technology- and stack-independent way to express software rules so an independent implementation can reproduce the declared software scope. A capture of only selected convenient properties can produce a successful comparison while omitting information necessary for faithful reproduction. Matching a few interface measurements, for example, does not establish that two screens are the same.
+
+### Options considered
+- Treat agreement among whatever properties happen to have been captured as sufficient.
+- Require explicit replication scope, complete in-scope property inventories, evidence-backed status for each required property, and a separate completeness determination.
+- Require every conceivable property of a system regardless of declared scope.
+
+### Decision
+Adopt the second option. Every replication-oriented capture must declare its scope and account for every relevant property/rule needed to reproduce that scope. Unknown, unobserved, unavailable, conflicting, partially captured, or merely source-inferred required properties remain gaps. Comparison must report observed agreement separately from replication-scope completeness. A capture with unresolved required gaps cannot establish faithful replication or complete equivalence for that scope.
+
+### Rationale
+The first option undermines the purpose of the format: two implementations can match on a small captured subset while differing in uncaptured properties. The third option is not operationally meaningful because completeness must be judged against a declared replication target. Explicit scope makes completeness testable without pretending that one finite capture covers every possible system behaviour.
+
+### Consequences
+The normative rule is specified in `specification/REPLICATION-COMPLETENESS.md`. Phase 7 must propagate it into capture planning, facet property inventories, coverage and completeness reporting, comparison semantics, schemas, examples, and conformance checks. The Phase 6 Task Board baseline result remains bounded to its captured observations and must not be presented as proof of full screen or system replication.

@@ -1,7 +1,7 @@
 {
   "facet": "api",
   "kind": "request-response",
-  "subject": "task-create-api-example",
+  "subject": "task-create-api",
   "protocol": "HTTP",
   "endpoint": "/api/tasks",
   "method": "POST",
@@ -12,7 +12,7 @@
       "content-type": "application/json"
     },
     "body": {
-      "title": "Prepare release notes"
+      "title": "API probe"
     }
   },
   "response": {
@@ -20,19 +20,15 @@
     "contentType": "application/json",
     "body": {
       "id": "task-1",
-      "title": "Prepare release notes",
+      "title": "API probe",
       "completed": false
     }
   },
-  "timing": {
-    "state": "not-observed",
-    "reason": "Request/response timing was not retained by the browser harness."
-  },
   "extensions": {
-    "exampleStatus": "illustrative-schema-example",
-    "notEmpirical": true,
+    "captureStatus": "empirical-at-test-adapter-boundary",
+    "evidence": "reference.capture.json#ref-obs-api-1",
     "limitations": [
-      "Illustrative shape only; exact request/response events were not retained."
+      "This is a test adapter exchange, not production network/server evidence."
     ]
   }
 }

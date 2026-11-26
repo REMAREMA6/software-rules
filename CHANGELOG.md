@@ -51,3 +51,11 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Keep entries concise and describe the effect of the change.
 - Do not use this file as the task tracker; use [TRACKER.md](TRACKER.md) for progress.
 - When a version is released, replace the relevant Unreleased entries with a dated version heading and keep prior release entries unchanged.
+
+## 2026-11-26 — Phase 6 conformance examples
+
+- Added reference, independent, and deliberately mutated Task Board applications.
+- Added empirical interface, behavior, and deterministic adapter API captures, plus raw API events.
+- Added an unverified source-derived rule with retained source excerpt.
+- Added bounded equivalent and actual-mismatch comparison reports.
+- Added schema fixtures and cross-record integrity checks for all captures; documented the in-memory adapter and other test limits.

@@ -210,25 +210,43 @@ Deliverables:
 
 ### Phase 6 — End-to-end examples and conformance
 
-- Create a small interface capture example.
-- Create a behaviour capture example.
-- Create an API capture example.
-- Create a multi-facet system example.
-- Include runtime evidence and a separately labelled source-derived example.
-- Create equivalent and deliberately different implementation captures.
-- Validate every example against its schema.
-- Add cross-record integrity validation for references between scenarios, executions, observations, evidence, rules, targets, and coverage.
-- Test comparison outcomes and coverage reporting.
-- Document how a capture agent should use the format, including evidence retention and explicit uncertainty.
+Build and execute independent applications rather than relying only on hand-authored illustrative records.
+
+**Selected conformance target:** `examples/task-board/`
+
+- Reference application: array-backed state and direct event handlers.
+- Independent baseline: Map-backed state and delegated event handlers.
+- Mutation application: an intentionally defective singular-count label used to verify mismatch reporting.
+
+**Shared scenarios:** initial empty-state render at 1280×800 CSS px; create a task; verify incomplete default; complete it; inspect Active and Completed filters; delete it. API calls are captured at a deterministic in-memory fetch adapter boundary.
+
+Tasks:
+- [x] Implement reference and independent baseline applications.
+- [x] Implement and execute a deliberate mutation build.
+- [x] Capture interface hierarchy, resolved presentation values, and element geometry.
+- [x] Capture behavior triggers, actions, state transitions, and visible outputs.
+- [x] Instrument and retain API request/response events for POST, PATCH, and DELETE at the test adapter boundary.
+- [x] Produce multi-facet captures with evidence, coverage, and limitations.
+- [x] Include a source-derived rule with source artifact evidence and an explicit unverified state.
+- [x] Produce a baseline equivalent comparison report.
+- [x] Produce an empirical mismatch report using the executed mutation build.
+- [x] Validate all capture and comparison fixtures in CI.
+- [x] Validate cross-record references for all captures.
+- [x] Document the capture-agent procedure and example-specific boundaries.
 
 Deliverables:
-- `examples/`
-- `conformance/test-cases/`
-- `conformance/integrity/` for cross-record reference validation.
-- Updated README and usage documentation.
+- `examples/task-board/reference/`
+- `examples/task-board/independent/`
+- `examples/task-board/independent-mutated/`
+- `examples/task-board/captures/`
+- `examples/task-board/api/`
+- `examples/task-board/comparisons/`
+- `schemas/v1/fixtures/valid/task-board-*.json`
+- `comparison/examples/valid/task-board-*.json`
+- `conformance/integrity/` and updated `examples/CAPTURE-AGENT-GUIDE.md`
 
-**Exit gate:** A reader can follow an example from scenario definition through capture, validation, and comparison without guessing missing format rules.
-
+**Exit gate: satisfied (2026-11-26).** The baseline pair matches for the recorded interface, behavior, and adapter API observations. The mutated build produces a real, observed summary-label mismatch that the comparison report classifies as `mismatch`. All three captures and both comparison reports are included in automated validation; cross-record integrity is tested in CI. The API evidence is bounded to an instrumented in-memory adapter and makes no claim about production services or durable persistence.
+ 
 ### Phase 7 — Review, release, and maintenance
 
 - Review the full specification for contradictions and gaps.
@@ -328,4 +346,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6: produce and execute empirical reference/implementation captures, complete facet examples and source-derived separation, and validate cross-record references alongside schema structure. Preserve the distinction between runtime evidence, source-derived inference, and illustrative examples.
+Begin Phase 7: review terminology and common-envelope consistency, verify provenance and schema/example validity, audit comparison claims and limitations, document unresolved issues, and prepare a versioned release. Phase 6's Task Board evidence and boundaries are recorded under `examples/task-board/` and in `TRACKER.md`.

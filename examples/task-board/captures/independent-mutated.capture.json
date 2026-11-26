@@ -1907,7 +1907,7 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ind-obs-runtime-interface"
+          "mut-obs-runtime-interface"
         ],
         "evidenceRefs": [
           "mut-evidence-runtime-capture"

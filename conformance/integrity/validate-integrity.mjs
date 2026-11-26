@@ -45,10 +45,24 @@ export function validateCapture(capture) {
         if (obsRefs.length === 0) errors.push(`${path}: ${property.status} property requires observationRefs`);
         if (evidenceRefs.length === 0) errors.push(`${path}: ${property.status} property requires evidenceRefs`);
       }
+      const linkedObservations = obsRefs.map(id => observations.get(id)).filter(Boolean);
+      const evidenceLinkedByObservations = new Set();
       for (const id of obsRefs) {
         const observation = observations.get(id);
         if (observation && observation.facet !== property.facet) errors.push(`${path}: observation "${id}" belongs to facet "${observation.facet}", not "${property.facet}"`);
+        if (observation) for (const evidenceId of observation.evidenceRefs ?? []) evidenceLinkedByObservations.add(evidenceId);
         if (property.status === "captured" && observation && observation.status !== "observed") errors.push(`${path}: captured property references non-observed observation "${id}"`);
+      }
+      for (const id of evidenceRefs) {
+        if (!evidenceLinkedByObservations.has(id)) errors.push(`${path}: evidence "${id}" is not attached to any observation linked by this property`);
+      }
+      if (property.status === "captured") {
+        const hasAdequateRuntimeObservation = linkedObservations.some(observation =>
+          observation.status === "observed" &&
+          observation.payload?.completeness?.status !== "partial" &&
+          (observation.evidenceRefs ?? []).some(id => evidence.get(id)?.evidenceClass === "runtime")
+        );
+        if (!hasAdequateRuntimeObservation) errors.push(`${path}: captured property requires at least one observed record linked to runtime evidence and not explicitly marked partial`);
       }
       if (property.requirement === "required" && blocking.has(property.status)) unresolvedRequired = true;
       if (property.requirement === "required" && property.status === "excluded") errors.push(`${path}: required property cannot be excluded from the declared replication scope`);

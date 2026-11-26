@@ -172,11 +172,15 @@ async function runVariant(name) {
   // Return to All using keyboard before the pointer-driven visual-state run.
   await tabUntil('[data-filter="all"]');
   await page.keyboard.press("Enter");
-  snapshots["keyboard-workflow"] = {
-    firstFocus, keyboardActiveCount, keyboardCompletedCount, keyboardCompletedSummary,
-    visibleText: await page.locator("body").innerText(), requests: [...apiLog[name]]
-  };
+  if (keyboardActiveCount !== 1) throw new Error("Keyboard Active filter did not show the active task");
+  if (keyboardCompletedCount !== 0) throw new Error("Keyboard Completed filter should be empty before completion");
+  if (keyboardCompletedSummary !== "1 task · 0 active") throw new Error("Keyboard completion did not update the task summary");
   await save("keyboard-workflow");
+  snapshots["keyboard-workflow"].interactionResults = {
+    firstFocus, keyboardActiveCount, keyboardCompletedCount, keyboardCompletedSummary,
+    keyboardDeleteSucceeded: true,
+    requests: [...apiLog[name]]
+  };
 
   // Run pointer workflow separately for full visual-state comparison.
   await input.fill("Prepare release notes");
@@ -227,6 +231,12 @@ async function runVariant(name) {
 
 try {
   for (const name of Object.keys(variants)) captures[name] = await runVariant(name);
+  if (JSON.stringify(apiLog.reference) !== JSON.stringify(apiLog.independent)) {
+    throw new Error("Reference and independent API request/response traces differ");
+  }
+  if (JSON.stringify(pageErrors.reference) !== JSON.stringify(pageErrors.independent)) {
+    throw new Error("Reference and independent runtime error outcomes differ");
+  }
 
   const comparison = [];
   for (const state of ["empty", "one-active", "completed", "active-filter-empty", "completed-filter", "all-filter", "deleted"]) {

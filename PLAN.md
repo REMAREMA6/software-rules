@@ -147,15 +147,15 @@ Proposed facets, revised after Phase 1 research:
 14. Configuration — runtime configuration values and changes that affect behaviour.
 15. Performance and resource behaviour — duration, throughput, latency, resource use, and performance outcomes.
 
-This list is a research-informed working proposal, not an accepted taxonomy. Phase 3 must test boundaries, overlaps, and cross-facet relationships against concrete facet specifications and capture examples before the facet specifications are treated as stable.
-
-Each facet must be grounded in research and real capture examples. The list may be revised if research shows a better boundary or a missing facet.
+The Phase 3 review accepts the 15 facets as the working normative catalogue for this draft. Facets are observation perspectives, may overlap in one execution, and are not required to exist in every system. Their boundaries and cross-facet relationships are documented in `facets/FACET-BOUNDARIES.md`. Each facet specification defines scope, observation unit, conceptual payload dimensions, scenario requirements, evidence, limitations, cross-facet links, and a worked conceptual example.
 
 Deliverables:
-- `facets/<facet>/README.md` for each accepted facet.
-- Facet-specific schemas and examples where appropriate.
+- `facets/README.md` catalogue.
+- `facets/FACET-BOUNDARIES.md` taxonomy and overlap rules.
+- `facets/<facet>/README.md` for each of the 15 facets.
+- Worked conceptual examples in each facet specification.
 
-**Exit gate:** Every accepted facet has a defined boundary, typed representation, evidence model, and at least one reviewed example.
+**Exit gate: satisfied at the facet-specification level.** All 15 facets have defined boundaries, conceptual typed payload inventories, evidence requirements, limitations, cross-facet relationships, and reviewed illustrative examples. These are not empirical captures. Exact machine schemas remain Phase 4; empirical end-to-end captures and conformance fixtures remain Phase 6.
 
 ### Phase 4 — Machine-readable schemas
 
@@ -315,4 +315,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Begin Phase 3: validate the proposed facet taxonomy and define facet boundaries and observable dimensions. Start with the interface facet because its runtime capture requirements are concrete and central to the project's original parity workflow. Use the common observation model in specification/CORE.md and specification/OBSERVATION-MODEL.md. Do not create machine-readable capture schemas until facet payloads have been reviewed.
+Begin Phase 4: define machine-readable schemas from the common model and the 15 facet specifications. Start with the capture manifest, scenario/execution/observation envelope, evidence references, and rule records; then define facet payload schemas. Validate every schema against positive and negative fixtures. Preserve the distinction between conceptual payload inventories and normative serialized fields.

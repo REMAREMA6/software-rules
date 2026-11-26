@@ -38,3 +38,6 @@ The expanded business/data probe sequence has been added to the harness but must
 
 
 The dedicated workflow is defined in .github/workflows/phase6-expanded-conformance.yml. It runs the expanded capture, integrity tests, and schema validation on relevant pushes and pull requests, then uploads the runtime-output directory as a 30-day artifact. The first run must be checked before treating the new probe outputs as verified.
+
+
+The expanded probe suite passed in [run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). The 41-file [runtime evidence artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580) includes probe outputs for reference, independent, and mutated builds. The suite confirmed title trimming, duplicate acceptance, literal HTML-like/Unicode rendering, a 512-character title, mixed-state counts/filters, completion toggle-back, multiple deletion, identifiers, and PATCH samples. These results support the specific properties recorded as captured; the title maximum remains unknown.

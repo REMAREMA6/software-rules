@@ -208,7 +208,7 @@ Deliverables:
 
 **Exit gate: satisfied (2026-11-26).** The illustrative report demonstrates alignment, a matched dimension, an excluded/not-comparable dimension, separate per-capture coverage, and an inconclusive scope-bounded conclusion. GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture fixtures and comparison-report fixtures, including rejection of a universal-equivalence claim. The example is a model demonstration, not an empirical system capture.
 
-### Phase 6 — End-to-end examples and conformance
+### Phase 6 — End-to-end examples and conformance (reopened for replication-completeness redo)
 
 Build and execute independent applications rather than relying only on hand-authored illustrative records.
 
@@ -245,8 +245,21 @@ Deliverables:
 - `comparison/examples/valid/task-board-*.json`
 - `conformance/integrity/` and updated `examples/CAPTURE-AGENT-GUIDE.md`
 
-**Exit gate: satisfied (2026-11-26).** The baseline pair matches for the recorded interface, behavior, and adapter API observations. The mutated build produces a real, observed summary-label mismatch that the comparison report classifies as `mismatch`. All three captures and both Task Board comparison reports passed automated validation; cross-record integrity passed for all three capture graphs in [GitHub Actions run #23](https://github.com/REMAREMA6/software-rules/actions/runs/45841141089). The API evidence is bounded to an instrumented in-memory adapter and makes no claim about production services or durable persistence.
+**Original exit gate withdrawn pending redo.** The original baseline pair matched only its recorded observations. That result did not establish a complete property inventory or replication-sufficient captures. The redo must satisfy the Replication Completeness Rule before Phase 6 can be marked complete.
  
+### Phase 6 redo requirements
+
+- [x] Add a required replication-scope object and property inventory to the capture schema.
+- [x] Add separate replication-completeness status to comparison reports.
+- [x] Add integrity checks that reject false completeness and broken inventory evidence links.
+- [x] Add explicit Task Board property inventories and mark current captures incomplete.
+- [ ] Expand empirical captures to cover every required property in the declared Task Board scope.
+- [ ] Capture complete interface snapshots and retained screenshot/pixel evidence for each required UI state.
+- [ ] Execute missing validation, keyboard, error, recovery, and edge-case behaviour scenarios.
+- [ ] Update comparison reports and run all schema, integrity, and conformance checks.
+
+**Redo exit gate:** Every required property in the declared Task Board replication scope is either captured with adequate runtime evidence or explicitly justified as not applicable; no required property remains partial, unobserved, unknown, unavailable, conflicting, or source-inferred. Reference and independent captures must use equivalent conditions. The mutated build must still produce an observed mismatch. Comparisons must report completeness separately from agreement.
+
 ### Phase 7 — Review, release, and maintenance
 
 - Review the full specification for contradictions and gaps.
@@ -348,4 +361,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Begin Phase 7: review terminology and common-envelope consistency, verify provenance and schema/example validity, audit comparison claims and limitations, document unresolved issues, and prepare a versioned release. Phase 6's Task Board evidence and boundaries are recorded under `examples/task-board/` and in `TRACKER.md`.
+Redo Phase 6. Expand the Task Board's runtime evidence against the explicit replication property inventory, then rerun conformance. Do not begin the final Phase 7 release gate until Phase 6's redo exit criteria are satisfied.

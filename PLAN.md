@@ -159,21 +159,26 @@ Deliverables:
 
 ### Phase 4 — Machine-readable schemas
 
-- Define a versioned common manifest and observation envelope.
-- Define separate runtime-rule and source-rule schemas.
-- Define evidence and provenance structures.
-- Define facet payload schemas.
-- Define comparison report schema.
-- Validate examples against schemas.
+Formalize the serialized capture model without beginning normalization or comparison semantics.
+
+Tasks:
+- Define JSON Schema Draft 2020-12 conventions, schema identifiers, draft version, and extension policy.
+- Define the capture manifest and common target, coverage, scenario, execution, observation, evidence, contract, runtime-rule, and source-rule records.
+- Require runtime method/procedure and evidence references for runtime observations.
+- Keep source-derived rules and declared contracts structurally separate.
+- Define one typed payload schema for each of the 15 facets.
+- Define a structural comparison-report envelope only; defer match classifications and equivalence semantics to Phase 5.
 - Add positive and negative fixtures.
-- Document schema evolution and compatibility.
+- Provide a repeatable automated validation command.
+- Document validation limits, schema evolution, and compatibility.
 
 Deliverables:
-- `schemas/v1/*.schema.json`
-- `conformance/fixtures/`
+- `specification/SCHEMA-DESIGN.md`
+- `schemas/v1/*.schema.json` (draft schema version 0.1.0; not a stable 1.0.0 release)
+- `schemas/v1/fixtures/valid/` and `schemas/v1/fixtures/invalid/`
 - `conformance/validation/`
 
-**Exit gate:** Valid examples pass automated validation; deliberately invalid examples fail for the expected reasons.
+**Exit gate:** All schemas parse and resolve their references; the valid fixture passes; every negative fixture fails for the intended structural reason; validation instructions are reproducible. Cross-record referential integrity and evidence truth are explicitly outside JSON Schema validation.
 
 ### Phase 5 — Canonicalization and comparison
 

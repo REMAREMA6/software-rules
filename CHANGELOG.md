@@ -7,6 +7,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- Phase 4 draft JSON Schema set (0.1.0) with a capture manifest, shared records, 15 typed facet payload schemas, and a structural comparison-report envelope.
+- Positive and negative fixtures plus an Ajv 2020-12 validation runner and instructions.
+- `specification/SCHEMA-DESIGN.md` documenting serialization choices, missingness, provenance, extensions, and validation boundaries.
 - Phase 3 facet catalogue, boundary/overlap matrix, and 15 individual facet specifications with conceptual payload inventories and illustrative worked examples.
 - Design decision D-010 accepting the 15-facet catalogue for the current specification draft.
 - Phase 2 core specification: terminology, principles, rule classification, evidence/provenance, observation model, source-derived rules, and core model.
@@ -16,6 +19,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
+- Phase 4 schema design formalizes the common record envelope; comparison semantics and cross-record conformance remain deferred to Phases 5–6.
 - Completed Phase 3 and moved active work to Phase 4 (machine-readable schemas). The facet examples are illustrative; empirical end-to-end captures remain Phase 6 work.
 - Completed Phase 1 and moved the tracker to Phase 2; subsequently completed Phase 2 and moved active work to Phase 3.
 - Revised the working facet taxonomy to separate identity/authentication from authorization and add configuration and performance/resource behaviour.

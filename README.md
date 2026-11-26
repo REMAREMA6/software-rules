@@ -22,6 +22,9 @@ A technology-independent specification system for capturing, representing, and c
 - [Facet catalogue](facets/README.md)
 - [Facet boundaries](facets/FACET-BOUNDARIES.md)
 - [Interface facet](facets/interface/README.md)
+- [Schema design](specification/SCHEMA-DESIGN.md)
+- [Draft schema index](schemas/v1/README.md)
+- [Validation instructions](conformance/validation/README.md)
 
 When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this introduction. The tracker records the current phase, completed work, blockers, and next action.
 
@@ -65,13 +68,14 @@ This repository is the home of the format specification, schemas, examples, and 
 
 ## Facet specifications
 
-The current draft defines 15 observation facets. See the [facet catalogue](facets/README.md) for the full list and [boundary matrix](facets/FACET-BOUNDARIES.md) for overlap rules. Each facet has its own conceptual payload inventory, scenario requirements, evidence requirements, limitations, and worked illustrative example. These are not yet machine-readable schemas or empirical captures.
+The current draft defines 15 observation facets. See the [facet catalogue](facets/README.md) for the full list and [boundary matrix](facets/FACET-BOUNDARIES.md) for overlap rules. Each facet has its own conceptual payload inventory and a corresponding draft JSON Schema payload under `schemas/v1/facets/`. The schemas formalize structure but are not a stable release or empirical captures.
 
 ## Remaining specification work
 
-- Machine-validation schemas
-- Canonicalization and comparison methodology
-- Empirical end-to-end captures and conformance fixtures
+- Canonicalization and comparison semantics (Phase 5)
+- Empirical end-to-end captures and conformance tests (Phase 6)
+
+The initial schema draft and structural validation fixtures are available under `schemas/v1/` and `conformance/validation/`.
 
 ## Scope boundary
 

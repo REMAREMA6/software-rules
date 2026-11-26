@@ -254,3 +254,29 @@ The boundary matrix distinguishes important questions such as domain decisions v
 
 ### Consequences
 Each facet has an individual conceptual specification. The taxonomy is accepted for this draft but remains revisable through a new decision if empirical captures reveal missing or poorly separated concerns. Worked examples in Phase 3 are illustrative, not empirical. Machine schemas remain Phase 4; empirical end-to-end captures remain Phase 6.
+
+
+## D-011 — Use JSON Schema Draft 2020-12 with a shared capture model and typed facet payloads
+
+- **Date:** 2026-11-26
+- **Status:** Accepted
+
+### Context
+Phase 3 established a common conceptual envelope and 15 facet-specific payload inventories. Phase 4 must serialize them without collapsing distinct evidence classes or prematurely defining comparison semantics.
+
+### Options considered
+- One generic payload schema for all facets.
+- Independent unrelated capture formats for each facet.
+- A common capture/record model with one typed schema per facet and explicit cross-record references.
+
+### Decision
+Use JSON Schema Draft 2020-12. Serialize captures through one manifest schema and shared record definitions, with separate runtime-rule, source-derived-rule, declared-contract, and evidence records. Each facet has its own payload schema. Use versioned URN identifiers under `urn:software-rules:schema:v1:`; the current draft version is 0.1.0. Preserve unknown/absent/redacted distinctions through explicit field-state records and use explicit `extensions` objects rather than silently accepting arbitrary core fields.
+
+### Rationale
+This reuses a reviewed standard for structural validation while retaining the common-envelope/facet-payload separation. Separate record classes make provenance differences machine-visible. Explicit extension points reduce accidental schema drift.
+
+### Consequences
+JSON Schema validates local structure, not reference existence, evidence authenticity, or semantic correctness. Those require additional conformance checks. The comparison-report schema is only a structural envelope; normalization, matching, tolerance, and difference classification remain Phase 5 work. The schema remains Draft and has no compatibility guarantee until stable release.
+
+### Evidence and references
+See `specification/SCHEMA-DESIGN.md`, `schemas/v1/README.md`, and the Phase 1 JSON Schema review in `research/STANDARDS-REVIEW.md`.

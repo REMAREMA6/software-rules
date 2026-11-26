@@ -2,7 +2,7 @@
 
 **Maturity:** Draft, not a stable release  
 **JSON Schema dialect:** Draft 2020-12  
-**Schema line:** 1.0.0 draft identifier; compatibility is not guaranteed before a stable release.
+**Schema draft version:** 0.1.0 (reserved compatibility directory: v1); compatibility is not guaranteed before a stable release.
 
 ## Files
 
@@ -12,7 +12,7 @@
 - `facets/*.schema.json` — 15 typed facet payloads.
 - `comparison-report.schema.json` — structural report envelope only; Phase 5 owns comparison semantics.
 
-All schemas use stable URN identifiers under `urn:software-rules:schema:v1:`. Relative references are resolved from the schema file. These URNs are identifiers, not network retrieval endpoints.
+All schemas use stable URN identifiers under `urn:software-rules:schema:v1:`. The `v1` path/namespace identifies the intended major compatibility family; the current draft version is `0.1.0`, not a stable 1.0.0 release. These URNs are identifiers, not network retrieval endpoints.
 
 ## Normative distinctions
 

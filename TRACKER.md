@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 4 — Machine-readable schemas
-- **Current task:** Define versioned schemas for the common capture model and facet payloads.
-- **Blockers:** Exact serialized field names, types, cardinalities, and compatibility rules remain to be formalized.
-- **Next action:** Design the common capture manifest and typed record schemas from `specification/CORE.md`, `specification/OBSERVATION-MODEL.md`, and the facet specifications.
+- **Current task:** Run and verify the Phase 4 schema validation suite.
+- **Blockers:** Automated validation has not yet been executed; cross-record referential-integrity checks remain future conformance work.
+- **Next action:** Execute `npm install` and `npm run validate --prefix conformance/validation`, resolve any failures, then verify the final Git tree.
 - **Do not do yet:** Start canonicalization/comparison semantics before the record structures and validation fixtures are established.
 
 ## Phase tracking
@@ -32,7 +32,7 @@
 | 1 | Research existing standards and prior art | [x] Complete | Comparative review, authoritative references, limitations, design implications, and revised facet proposal recorded. |
 | 2 | Core concepts and common model | [x] Complete | Core vocabulary, rule/evidence classes, linked observation model, source-derived model, and interface/API conceptual tests completed. Schemas remain deferred. |
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
-| 4 | Machine-readable schemas | [~] In progress | Formalize common and facet-specific schemas; add positive/negative validation fixtures. |
+| 4 | Machine-readable schemas | [~] In progress | Draft v0.1.0 schemas and fixtures created; automated validation still needs execution. |
 | 5 | Canonicalization and comparison | [ ] Not started | Define comparison semantics and limits. |
 | 6 | End-to-end examples and conformance | [ ] Not started | Validate the format in realistic examples. |
 | 7 | Review, release, and maintenance | [ ] Not started | Final consistency review and release. |
@@ -117,16 +117,19 @@
 
 ## Phase 4 — Machine-readable schemas
 
-- [ ] Define schema conventions and versioning.
-- [ ] Manifest schema.
-- [ ] Common observation schema.
-- [ ] Runtime-rule schema.
-- [ ] Source-rule schema.
-- [ ] Evidence schema.
-- [ ] Facet payload schemas.
-- [ ] Comparison report schema.
-- [ ] Positive and negative validation fixtures.
-- [ ] Validate all examples.
+- [x] Define schema conventions, dialect, identifiers, draft version, and extension policy.
+- [x] Capture manifest schema.
+- [x] Common target, coverage, scenario, execution, and observation record schemas.
+- [x] Separate runtime-rule, source-derived-rule, and declared-contract schemas.
+- [x] Evidence/provenance schema.
+- [x] Typed payload schemas for all 15 facets.
+- [x] Structural comparison-report envelope (comparison semantics deferred to Phase 5).
+- [x] Positive and negative validation fixtures.
+- [x] Automated validation runner and instructions.
+- [ ] Execute validation and verify expected fixture outcomes.
+- [x] Document schema evolution and validation boundaries.
+
+**Phase 4 exit gate:** Pending actual validation run. The schemas are draft version 0.1.0 in the v1 compatibility family; they are not a stable release. JSON Schema cannot establish cross-record reference integrity, evidence authenticity, or semantic equivalence.
 
 ## Phase 5 — Canonicalization and comparison
 

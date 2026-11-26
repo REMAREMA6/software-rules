@@ -59,7 +59,7 @@ Do not silently reinterpret an older capture under new semantics. Preserve its d
 
 Schema files must carry an explicit schema identifier and version. Use versioned directories such as schemas/v1/ for a stable major schema line. Draft schema work must be clearly labelled and must not be mistaken for a released stable schema.
 
-The precise schema $id namespace and release publication mechanism will be decided before the first schema release.
+The draft schema identifier namespace is `urn:software-rules:schema:v1:`. These URNs are identifiers, not retrieval URLs. The `schemas/v1/` directory reserves the intended major compatibility family; the current pre-release schema version is `0.1.0`. The release publication mechanism remains undecided.
 
 ## 3. Normative language
 
@@ -81,4 +81,4 @@ Use normative terms only when the requirement is sufficiently defined and testab
 
 ## 5. Current project status
 
-The project is in its initial planning and research stage. The policy itself is accepted as repository governance, but no stable Software Rules capture format or schema has been released. The future format's version and compatibility guarantees remain subject to design and review.
+The project has a draft machine-readable schema set at version `0.1.0` in the intended v1 compatibility family. It is not a stable 1.0.0 release and carries no backward-compatibility guarantee. Validation fixtures and instructions exist; the validation run and cross-record conformance checks remain to be completed.

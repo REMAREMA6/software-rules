@@ -6,7 +6,7 @@
   "description": "Defines report identity and capture references only. Difference classification, matching, normalization, and equivalence semantics are deferred to Phase 5.",
   "properties": {
     "schemaVersion": {
-      "const": "1.0.0"
+      "const": "0.1.0"
     },
     "reportId": {
       "type": "string",

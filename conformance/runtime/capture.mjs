@@ -193,7 +193,12 @@ async function runVariant(name) {
   await page.getByText("Prepare release notes").waitFor();
   await save("one-active");
   const checkbox = page.getByRole("checkbox", { name: "Complete Prepare release notes" });
+  const pointerCompleteResponse = page.waitForResponse(candidate =>
+    candidate.url().includes("/api/tasks/") && candidate.request().method() === "PATCH"
+  );
   await checkbox.check();
+  await pointerCompleteResponse;
+  await page.waitForFunction(() => document.querySelector("#summary, #meta")?.textContent === "1 task · 0 active" || document.querySelector("#summary, #meta")?.textContent === "1 tasks · 0 active");
   await save("completed");
   await page.getByRole("button", { name: "Active", exact: true }).click();
   await save("active-filter-empty");
@@ -201,7 +206,13 @@ async function runVariant(name) {
   await save("completed-filter");
   await page.getByRole("button", { name: "All", exact: true }).click();
   await save("all-filter");
+  const pointerDeleteResponse = page.waitForResponse(candidate =>
+    candidate.url().includes("/api/tasks/") && candidate.request().method() === "DELETE"
+  );
   await page.getByRole("button", { name: "Delete Prepare release notes" }).click();
+  await pointerDeleteResponse;
+  await page.getByText("Prepare release notes", { exact: true }).waitFor({ state: "detached" });
+  await page.waitForFunction(() => document.querySelector("#summary, #meta")?.textContent === "0 tasks · 0 active");
   await save("deleted");
 
   // Probe behaviour, candidate business rules, and runtime data boundaries.

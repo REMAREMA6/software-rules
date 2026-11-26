@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "0.1.0",
+  "reportId": "task-board-equivalent-001",
+  "createdAt": "2026-11-26T15:35:00+01:00",
+  "referenceCapture": {
+    "captureId": "task-board-reference-capture",
+    "schemaVersion": "0.1.0",
+    "artifactRef": "examples/task-board/captures/reference.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "task-board-independent-capture",
+    "schemaVersion": "0.1.0",
+    "artifactRef": "examples/task-board/captures/independent.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Same Task Board initial route and create/complete/filter/delete scenario at 1280x800 CSS px in isolated Chromium with the same deterministic in-memory API adapter.",
+    "facets": [
+      "interface",
+      "behavior"
+    ],
+    "scenarioIds": [
+      "ref-scenario-interface",
+      "ref-scenario-workflow",
+      "ind-scenario-interface",
+      "ind-scenario-workflow"
+    ],
+    "conditions": [
+      "Same browser engine and viewport",
+      "Fresh in-memory task store for each run",
+      "Same input title: Prepare release notes"
+    ],
+    "excludedDimensions": [
+      "Production server behavior",
+      "Durable persistence",
+      "Authentication",
+      "Raw network request/response event details"
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "profile-interface-v1",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "normalize-node-ids",
+        "facet": "interface",
+        "dimension": "rendered-hierarchy",
+        "method": "Map implementation-local node identifiers by parent path and node role",
+        "methodVersion": "1.0",
+        "inputRepresentation": "capture-local node IDs",
+        "outputRepresentation": "aligned node references",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "align-task-board-layout",
+      "facet": "interface",
+      "referenceRecordIds": [
+        "ref-obs-interface"
+      ],
+      "implementationRecordIds": [
+        "ind-obs-interface"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations are initial empty-state snapshots for the same Task Board subject and viewport."
+    },
+    {
+      "alignmentId": "align-task-board-workflow",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "ref-obs-workflow"
+      ],
+      "implementationRecordIds": [
+        "ind-obs-workflow"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations exercise the same create/complete/filter/delete sequence with the same input."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "result-layout-geometry",
+      "alignmentId": "align-task-board-layout",
+      "facet": "interface",
+      "dimension": "main-container.geometry",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-interface"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-interface"
+      ],
+      "referenceValue": {
+        "x": 280,
+        "y": 40,
+        "width": 720,
+        "height": 315
+      },
+      "implementationValue": {
+        "x": 280,
+        "y": 40,
+        "width": 720,
+        "height": 315
+      },
+      "reason": "The captured main container geometry is identical at the shared viewport."
+    },
+    {
+      "resultId": "result-task-lifecycle",
+      "alignmentId": "align-task-board-workflow",
+      "facet": "behavior",
+      "dimension": "task-lifecycle.visible-outcomes",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-workflow"
+      ],
+      "implementationObservationIds": [
+        "ind-obs-workflow"
+      ],
+      "referenceValue": {
+        "afterCreate": "1 task · 1 active",
+        "afterComplete": "1 task · 0 active",
+        "activeFilterCount": 0,
+        "completedFilterCount": 1,
+        "afterDelete": "0 tasks · 0 active"
+      },
+      "implementationValue": {
+        "afterCreate": "1 task · 1 active",
+        "afterComplete": "1 task · 0 active",
+        "activeFilterCount": 0,
+        "completedFilterCount": 1,
+        "afterDelete": "0 tasks · 0 active"
+      },
+      "reason": "Both browser runs produced identical task lifecycle outputs."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 2,
+      "observedUnits": 2,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 1
+    },
+    "implementation": {
+      "declaredUnits": 2,
+      "observedUnits": 2,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 1
+    },
+    "sharedComparableUnits": 2,
+    "incomparableUnits": 1,
+    "limitations": [
+      "API request/response events were not retained; API facet excluded from empirical comparison."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The reference and independent baseline builds agree on the captured initial main-container geometry and tested task lifecycle outputs. This is bounded to the listed scenarios and test environment.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "Captures are empirical for tested UI and interaction scenarios, not every state or facet.",
+    "The deterministic API adapter is in-memory; production backend and persistence behavior are outside scope.",
+    "The deliberate-difference report uses a controlled comparison mutation; it is not evidence that the checked-in baseline differs."
+  ]
+}

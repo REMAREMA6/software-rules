@@ -10,6 +10,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Reframed Phase 6 as an expanded multi-facet empirical capture and conformance programme. The initial Task Board result is retained as bounded baseline evidence; Phase 6 remains in progress until all applicable facets in the selected replication scope have evidence-backed inventories and cross-facet conformance. Phase 7 is blocked.
 
 ### Added
+- Successful expanded Task Board probe evidence from GitHub Actions run #45858743131, including title normalization, duplicate acceptance, literal user-content rendering, long-title boundary, mixed-state counts/filters, bidirectional completion, multiple deletion, identifiers, and PATCH data samples.
 - Dedicated Phase 6 expanded-conformance GitHub Actions workflow to execute the expanded Playwright probes, cross-record/evidence-link tests, schema validation, and runtime artifact upload.
 - Expanded Playwright probes for title trimming, duplicate titles, HTML-like/Unicode and long inputs, mixed task-state/filter truth tables, completion toggling, deletion, and identifier samples; execution and evidence review are pending.
 - Stronger cross-record integrity checks require property evidence references to be attached to linked observations and require captured properties to have observed runtime-class evidence not explicitly marked partial.
@@ -85,3 +86,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ### Correction — Phase 6 status
 
 The initial Task Board completeness result was subsequently re-audited and reclassified. The captures now report incomplete coverage, with seven required properties marked partial across font rendering, business rules, and data. The earlier bounded pixel and workflow comparison results remain valid for the tested conditions, but the earlier claim that the Task Board captures were complete is superseded.
+
+
+### Phase 6 expanded probe result — 2026-11-26
+
+- Corrected the strict-mode filter selector issue and achieved a successful expanded runtime, integrity, and schema-validation run (#45858743131).
+- Updated all three captures and comparison reports with the verified expanded evidence. Inventory counts are now 34 properties per capture: 28 captured, two partial, one not applicable, and three optional exclusions.
+- Retained the expanded 41-file evidence archive as artifact #15136459580. The two remaining partial properties are broader font-rendering conditions and the maximum title-length constraint.

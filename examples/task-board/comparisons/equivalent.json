@@ -1,15 +1,15 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "reportId": "task-board-equivalent-001",
   "createdAt": "2026-11-26T15:35:00+01:00",
   "referenceCapture": {
     "captureId": "task-board-reference-capture",
-    "schemaVersion": "0.1.0",
+    "schemaVersion": "0.2.0",
     "artifactRef": "examples/task-board/captures/reference.capture.json"
   },
   "implementationCapture": {
     "captureId": "task-board-independent-capture",
-    "schemaVersion": "0.1.0",
+    "schemaVersion": "0.2.0",
     "artifactRef": "examples/task-board/captures/independent.capture.json"
   },
   "comparisonScope": {

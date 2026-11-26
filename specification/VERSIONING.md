@@ -59,7 +59,7 @@ Do not silently reinterpret an older capture under new semantics. Preserve its d
 
 Schema files must carry an explicit schema identifier and version. Use versioned directories such as schemas/v1/ for a stable major schema line. Draft schema work must be clearly labelled and must not be mistaken for a released stable schema.
 
-The draft schema identifier namespace is `urn:software-rules:schema:v1:`. These URNs are identifiers, not retrieval URLs. The `schemas/v1/` directory reserves the intended major compatibility family; the current pre-release schema version is `0.1.0`. The release publication mechanism remains undecided.
+The draft schema identifier namespace is `urn:software-rules:schema:v1:`. These URNs are identifiers, not retrieval URLs. The `schemas/v1/` directory reserves the intended major compatibility family; the current pre-release schema version is `0.2.0`. The release publication mechanism remains undecided.
 
 ## 3. Normative language
 

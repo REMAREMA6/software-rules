@@ -8,7 +8,7 @@
 
 ## 1. Mission
 
-Define a technology-independent, machine-readable format for capturing the observable rules of a running software system, then comparing captures from a reference system and an independent implementation.
+Define a technology-independent, machine-readable format for capturing the complete rules needed to reproduce a declared software scope in an independent implementation across technologies and stacks. Capture and comparison are the evidence and conformance process for that replication purpose.
 
 The intended workflow is:
 

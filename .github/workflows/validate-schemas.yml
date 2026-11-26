@@ -6,6 +6,7 @@ on:
     paths:
       - "schemas/**"
       - "conformance/validation/**"
+      - "conformance/integrity/**"
       - "comparison/**"
       - ".github/workflows/validate-schemas.yml"
   pull_request:
@@ -31,3 +32,5 @@ jobs:
         run: npm install --prefix conformance/validation
       - name: Validate schema fixtures
         run: npm run validate --prefix conformance/validation
+      - name: Validate cross-record integrity
+        run: node conformance/integrity/test.mjs

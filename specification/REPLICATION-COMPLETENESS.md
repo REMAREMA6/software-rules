@@ -100,7 +100,7 @@ Conformance MUST test both structural validity and whether the declared replicat
 
 The Phase 6 Task Board result establishes agreement only for the interface properties and scenarios actually captured. In particular, the matching main-container geometry at 1280×800 does not establish that the complete screens were captured or that the applications are visually identical in every detail or state.
 
-The existing baseline comparison MUST therefore not be used as evidence of replication completeness or full interface equivalence. Phase 7 MUST review and, where needed, revise the capture model, completeness reporting, comparison model, schemas, examples, and conformance checks to enforce this rule.
+The existing baseline comparison MUST therefore not be used as evidence of replication completeness or full interface equivalence. Phase 6 MUST expand the empirical captures and conformance checks across the applicable facets, and MUST verify that property inventories and evidence support the declared replication scope. Phase 7 then reviews the resulting specification for release; it is not a substitute for completing Phase 6.
 
 ## 10. Relationship to existing principles
 

@@ -22,6 +22,8 @@ All schemas use stable URN identifiers under `urn:software-rules:schema:v1:`. Th
 - Declared contracts remain separate from both.
 - Expected outcomes are stored on scenario definitions; actual facts are observations; evaluation is not embedded into either.
 - Field-state objects distinguish observed, not observed, unknown, unavailable, not applicable, redacted, conflicting, and partial.
+- Every capture requires `replicationScope`, including a declared property inventory and an explicit completeness assessment. Captured/partial items link to runtime observations and evidence.
+- Replication completeness is separate from schema validity, record integrity, and agreement among compared observations. A structurally valid capture may still be explicitly incomplete.
 - Omission is not equivalent to null, false, zero, or an empty collection.
 - Unknown facet-specific fields belong under `extensions`; core records reject unrecognized sibling properties.
 

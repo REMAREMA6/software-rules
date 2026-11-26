@@ -108,5 +108,44 @@
       "dimension": "rendered-hierarchy",
       "status": "observed"
     }
-  ]
+  ],
+  "replicationScope": {
+    "scopeId": "minimal-capture-scope",
+    "description": "Minimal fixture scope containing one observed hierarchy property and one intentionally unobserved property to demonstrate that partial coverage is not complete.",
+    "facets": [
+      "interface"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "home-hierarchy",
+        "facet": "interface",
+        "subject": "home-root",
+        "dimension": "rendered-hierarchy",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "observation-home-001"
+        ],
+        "evidenceRefs": [
+          "evidence-dom-001"
+        ],
+        "rationale": "The single root hierarchy node is present in the fixture observation."
+      },
+      {
+        "propertyId": "home-resolved-style",
+        "facet": "interface",
+        "subject": "home-root",
+        "dimension": "resolved-presentation-properties",
+        "requirement": "required",
+        "status": "not-observed",
+        "rationale": "The minimal fixture does not capture resolved presentation values."
+      }
+    ],
+    "completeness": {
+      "status": "incomplete",
+      "assessedAt": "2026-11-26T16:00:00Z",
+      "assessmentMethod": "Check every required property against observation and evidence references.",
+      "rationale": "At least one required property remains unobserved."
+    }
+  }
 }

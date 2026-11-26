@@ -3,49 +3,49 @@
   "$id": "urn:software-rules:schema:v1:facet-payloads",
   "oneOf": [
     {
-      "$ref": "urn:software-rules:schema:v1:facets/interface.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/interface"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/behavior.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/behavior"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/business-rules.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/business-rules"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/data.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/data"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/persistence.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/persistence"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/api.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/api"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/messaging.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/messaging"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/identity-authentication.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/identity-authentication"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/authorization-permissions.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/authorization-permissions"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/security-controls.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/security-controls"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/background-processing.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/background-processing"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/errors-recovery.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/errors-recovery"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/integrations.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/integrations"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/configuration.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/configuration"
     },
     {
-      "$ref": "urn:software-rules:schema:v1:facets/performance-resource-behaviour.schema.json"
+      "$ref": "urn:software-rules:schema:v1:facets/performance-resource-behaviour"
     }
   ]
 }

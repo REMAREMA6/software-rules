@@ -110,8 +110,8 @@ Tasks:
 - Define confidence and verification states without conflating them.
 - Define unknown, unavailable, not applicable, and not observed.
 - Define how multiple observations support, qualify, or contradict a rule.
-- Define stable identifiers, units, timestamps, and canonical values.
-- Define schema and specification version compatibility.
+- Define conceptual identity, time/order/correlation, and value/unit provenance; defer identifier syntax and canonicalization mechanics to Phases 4–5.
+- Define the relationship between capture format version and target build/version; defer schema compatibility mechanics to Phase 4.
 
 Deliverables:
 - `specification/TERMINOLOGY.md`

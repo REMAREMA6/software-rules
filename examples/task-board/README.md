@@ -17,6 +17,12 @@ This directory contains two independently authored implementations of the same t
 5. Deleting a task removes it.
 6. Create/update/delete operations use JSON exchanges at `/api/tasks`.
 
+## Replication-scope inventory
+
+Each capture includes `replicationScope.propertyInventory`, which lists the properties required to reproduce the declared Task Board scope. Every item records its facet, subject, dimension, required/optional status, capture state, and evidence references where available.
+
+The current inventories intentionally mark all three captures **incomplete**. The initial DOM/style/geometry snapshots are partial; no retained screenshot or pixel comparison is linked; and keyboard, validation, error/recovery, and other relevant states remain unobserved. The comparison reports separately record agreement among observed properties and replication completeness. Matching selected properties does **not** establish full screen equivalence or faithful replication.
+
 ## Captures and comparisons
 
 - [Reference capture](captures/reference.capture.json)

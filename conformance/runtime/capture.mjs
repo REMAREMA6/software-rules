@@ -202,7 +202,7 @@ async function runVariant(name) {
       language: await page.evaluate(() => navigator.language),
       devicePixelRatio: await page.evaluate(() => window.devicePixelRatio),
       viewport: page.viewportSize(),
-      colorScheme: await page.emulateMedia().then(() => "light"),
+      colorScheme: await page.evaluate(() => matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
       loadedFonts: await page.evaluate(() => [...document.fonts].map(font => ({ family: font.family, status: font.status, weight: font.weight, style: font.style })))
     },
     snapshots, apiEvents: apiLog[name], pageErrors: pageErrors[name],

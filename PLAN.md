@@ -250,6 +250,8 @@ Deliverables:
 ### Phase 7 — Review, release, and maintenance
 
 - Review the full specification for contradictions and gaps.
+- Enforce the [Replication Completeness Rule](specification/REPLICATION-COMPLETENESS.md): define explicit replication scope and required property inventories; prevent incomplete captures from being treated as replication-sufficient.
+- Review and revise capture/comparison models, schemas, examples, and conformance checks so completeness is evaluated separately from agreement among captured properties.
 - Check that facets use the common envelope consistently.
 - Check that source-derived rules cannot be mistaken for runtime evidence.
 - Check that comparison does not claim more than the evidence supports.

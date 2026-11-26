@@ -21,7 +21,7 @@ This directory contains two independently authored implementations of the same t
 
 Each capture includes `replicationScope.propertyInventory`, which lists the properties required to reproduce the declared Task Board scope. Every item records its facet, subject, dimension, required/optional status, capture state, and evidence references where available.
 
-All three inventories are now explicitly **incomplete**. Each contains 29 entries: 18 captured properties, seven partial properties, one explicitly not-applicable property, and three optional exclusions. The added partial properties cover font rendering, title normalization, initial completion defaults, summary-count rules, task record shape, identifier generation, and PATCH field-preservation semantics. This is intentional: the existing runs contain useful samples but do not establish the full rules or boundary conditions. The comparison reports therefore retain observed agreement/differences while reporting incomplete replication coverage.
+All three inventories are now explicitly **incomplete**. Each contains 34 entries: 28 captured properties, two partial properties, one explicitly not-applicable property, and three optional exclusions. The remaining partial properties are font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint. The expanded run also captured title trimming, duplicate-title acceptance, literal rendering of HTML-like/Unicode text, acceptance of a 512-character title, mixed-task counts/filters, bidirectional completion toggling, multiple deletion, task record shape, sequential string identifiers within the adapter session, and PATCH field preservation. The inventories remain incomplete; the comparison reports preserve observed agreement/differences separately.
 
 ## Captures and comparisons
 
@@ -43,9 +43,9 @@ The Playwright harness in [`conformance/runtime/`](../../conformance/runtime/REA
 
 The baseline reference and independent implementation are compared pixel-for-pixel in seven states at 1280×800 CSS px. The deliberate mutation is required to produce a visual difference. The harness also asserts that baseline API traces and runtime error outcomes agree.
 
-The current capture harness now includes an expanded behaviour/business-rule/data probe sequence, but the linked successful run and artifact predate those additions. The new probes have not yet been executed in a successful CI run, so their results are not part of the committed captures and the associated properties remain partial.
+The expanded probes were executed successfully in [GitHub Actions Phase 6 run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). Its [phase6-expanded-runtime-evidence artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580) contains 41 files, including per-variant JSON captures, probe results, screenshots, and pixel-diff outputs. The artifact expires after 30 days; rerunning the workflow regenerates it.
 
-The successful runtime run is recorded in [GitHub Actions runtime conformance run #45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953). Its [task-board-runtime-captures artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524) contains the screenshots, JSON captures, and pixel-diff outputs. The artifact has a 30-day retention period; rerunning the workflow regenerates it.
+The earlier baseline run is [#45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953).
 
 **Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior. The per-property audit also found unresolved font-rendering, business-rule, and data dimensions; all three captures now correctly report `incomplete`.
 

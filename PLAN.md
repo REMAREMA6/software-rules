@@ -2,8 +2,8 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 7 review active; Phases 0–6 complete  
-**Plan version:** 0.2.0  
+**Status:** Phase 6 — expanded multi-facet runtime capture and conformance in progress  
+**Plan version:** 0.3.0  
 **Last updated:** 2026-11-26
 
 ## 1. Mission
@@ -208,60 +208,89 @@ Deliverables:
 
 **Exit gate: satisfied (2026-11-26).** The illustrative report demonstrates alignment, a matched dimension, an excluded/not-comparable dimension, separate per-capture coverage, and an inconclusive scope-bounded conclusion. GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture fixtures and comparison-report fixtures, including rejection of a universal-equivalence claim. The example is a model demonstration, not an empirical system capture.
 
-### Phase 6 — End-to-end examples and conformance
+### Phase 6 — End-to-end multi-facet capture and conformance
 
-Build and execute independent applications, capture their observable rules at runtime, and validate the resulting evidence and comparisons.
+Phase 6 is the empirical implementation of the complete-capture objective across the 15-facet catalogue. It is **not complete** when one facet or one small example is complete. The existing Task Board is an initial conformance fixture, not the project's universal target and not evidence for facets it does not implement.
 
-**Selected conformance target:** `examples/task-board/`
+#### Work sequence
 
-- Reference application: array-backed state and direct event handlers.
-- Independent baseline: Map-backed state and delegated event handlers.
-- Mutation application: deliberately defective singular-count label used to verify mismatch reporting.
+**6A — Audit the existing interface baseline**
+- [x] Build the initial browser runtime capture and pixel-comparison harness.
+- [~] Independently audit the actual retained artifacts against every claimed interface property; distinguish captured evidence from generic facet-level references.
+- [ ] Expand interface scenarios to all relevant states, responsive conditions, focus/hover/disabled/loading/error states, and supported environment variations for the declared fixture.
+- [ ] Keep any untested or unsupported interface dimension unresolved rather than marking it complete.
 
-**Declared replication scope:** Task Board browser application at 1280×800 CSS px, including its rendered interface properties and declared UI states, create/complete/filter/delete workflows, keyboard operation, native input validation, and API success/failure behavior at a deterministic in-memory adapter boundary. Responsive variants, durable/cross-session persistence, production network/server behavior, authentication, and authorization are explicitly excluded.
+**6B — Behaviour and functionality**
+- [ ] Build an explicit operation/trigger inventory from the running target.
+- [ ] Capture preconditions, actors, ordered actions, state before/after, outputs, side effects, timing/order, and termination outcomes.
+- [ ] Exercise normal, boundary, repeated, invalid, interrupted, and failure paths.
+- [ ] Compare independently captured behaviour and ensure every rule is evidence-linked.
 
-Tasks:
-- [x] Implement reference and independent baseline applications.
-- [x] Implement and execute a deliberate mutation build.
-- [x] Define a required per-property replication inventory and completeness gate.
-- [x] Capture the complete DOM hierarchy, every computed CSS property, pseudo-element content, element geometry, accessibility snapshots, semantics, and screenshots for all declared UI states.
-- [x] Compare reference and independent baseline screenshots pixel-for-pixel across seven UI states at 1280×800 CSS px; all seven have zero differing pixels.
-- [x] Execute and capture create, completion, all filters, delete, empty/whitespace validation, keyboard-only operation, and API failure/recovery behavior.
-- [x] Retain POST, PATCH, DELETE, and HTTP 503 request/response evidence at the deterministic in-memory adapter boundary.
-- [x] Verify the reference and independent baseline API traces and runtime error outcomes agree.
-- [x] Verify the deliberately mutated implementation produces an observed mismatch (272 differing pixels in the one-active state).
-- [x] Update all three capture records and schema fixtures with evidence-linked completeness inventories.
-- [x] Update equivalent and deliberate-difference reports with completeness separate from observed agreement.
-- [x] Validate schemas, fixtures, cross-record references, and false-completeness rejection in GitHub Actions.
+**6C — Business rules**
+- [ ] Identify domain decisions, conditions, constraints, calculations, defaults, and branch outcomes.
+- [ ] Design scenario sets that distinguish competing rule hypotheses; do not infer a formula or policy from one example.
+- [ ] Capture boundary values, combinations, precedence, and contradictory/exception cases.
+- [ ] Keep domain rules separate from UI validation, generic behaviour, and authorization.
 
-Deliverables:
-- `examples/task-board/reference/`
-- `examples/task-board/independent/`
-- `examples/task-board/independent-mutated/`
-- `examples/task-board/captures/`
-- `examples/task-board/api/`
-- `examples/task-board/comparisons/`
-- `schemas/v1/fixtures/valid/task-board-*.json`
-- `comparison/examples/valid/task-board-*.json`
-- `conformance/integrity/`
-- `conformance/runtime/`
+**6D — Data**
+- [ ] Capture runtime structures, fields, types, nullability, missing-vs-empty distinctions, relationships, formats, and serialization.
+- [ ] Exercise validation constraints, transformations, defaults, and boundary values.
+- [ ] Record observed values separately from inferred schemas and source declarations.
+- [ ] Link data observations to the operations and API exchanges that produced them.
 
-**Phase 6 exit gate: satisfied for the declared Task Board scope.** All 22 inventory entries are accounted for in each capture: 18 required properties are captured, one required property is explicitly not applicable, and three optional dimensions are explicitly excluded. No required property remains partial, unobserved, unknown, unavailable, conflicting, or source-inferred. The reference and independent baseline match pixel-for-pixel across seven tested UI states; the deliberate mutation remains detectable. Runtime evidence is available in [GitHub Actions run #45855076741](https://github.com/REMAREMA6/software-rules/actions/runs/45855076741) and its [capture artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524). Schema and integrity validation passed in [run #45855135858](https://github.com/REMAREMA6/software-rules/actions/runs/45855135858).
+**6E — Persistence**
+- [ ] Observe durable reads/writes, transaction boundaries, commit/rollback, visibility, consistency, ordering, retention, and deletion.
+- [ ] Test across reloads, sessions, concurrent operations, and failure boundaries where supported.
+- [ ] Do not treat an in-memory test adapter as persistence evidence.
 
-**Boundary:** This is a bounded conformance result for the declared Task Board scope and recorded Chromium/Linux environment. It does not prove universal equivalence across every technology stack, browser, operating system, viewport, or arbitrary software system.
+**6F — API, messaging, and integrations**
+- [ ] Capture real request/response exchanges, protocol details, payloads, status, headers, timing, retries, and transport failures.
+- [ ] Capture asynchronous publication, delivery, acknowledgement, ordering, duplication, and processing where present.
+- [ ] Identify external dependencies and capture their actual interactions and failure outcomes.
+- [ ] Distinguish a test adapter or mock from a real service boundary.
+
+**6G — Identity, authorization, and security**
+- [ ] Capture identity establishment, credentials/session lifecycle, expiry, logout, and failure outcomes.
+- [ ] Exercise role/resource/action combinations and record authorization decisions and enforcement points.
+- [ ] Define authorized security scenarios and capture detection, prevention, limitation, and containment outcomes.
+- [ ] Never infer security properties from the absence of an observed failure.
+
+**6H — Background processing, errors/recovery, configuration, and performance**
+- [ ] Capture queued/scheduled/worker lifecycles, retries, cancellation, and terminal outcomes.
+- [ ] Capture failures, fallbacks, compensation, recovery, and user/system-visible consequences.
+- [ ] Record effective runtime configuration and controlled configuration changes.
+- [ ] Measure performance/resource behaviour under reproducible workloads and declared measurement conditions.
+
+**6I — Cross-facet completeness and replication validation**
+- [ ] Reconcile the facet inventory against the actual system boundary and all relevant workflows/states.
+- [ ] Verify every required property has adequate evidence, not merely a schema-valid record or generic observation reference.
+- [ ] Validate cross-facet links, provenance, uncertainty, exclusions, and conflicting observations.
+- [ ] Compare reference and independent implementations facet by facet.
+- [ ] Report observed agreement separately from replication-scope completeness.
+- [ ] Reject a complete/faithful-replication claim while any required property remains unresolved.
+
+#### Current fixture boundary
+
+The Task Board fixture currently supports empirical work on interface, behaviour, a limited set of domain rules, data, and a deterministic in-memory API adapter. Its adapter does not establish production API, persistence, identity, authorization, security, messaging, integrations, background processing, or performance properties. These facets remain unverified for this fixture; they are not globally declared irrelevant to the Software Rules format.
+
+Where a facet is genuinely absent from a selected target, record the evidence and rationale for not-applicable status. Where a target does not expose enough evidence, record unknown/unavailable/partial. Do not manufacture coverage by adding generic inventory rows.
+
+#### Phase 6 exit gate
+
+Phase 6 exits only when the selected target's complete replication scope is explicit; every applicable facet has a reviewed property inventory; each required property is supported by adequate, traceable evidence; unresolved properties prevent a complete claim; independent captures and comparisons exercise the relevant dimensions; and conformance checks enforce these conditions. Passing CI is necessary for the implemented checks, not proof that the inventory itself is exhaustive.
 
 ### Phase 7 — Review, release, and maintenance
 
-- Review the full specification for contradictions and gaps.
-- Enforce the [Replication Completeness Rule](specification/REPLICATION-COMPLETENESS.md): define explicit replication scope and required property inventories; prevent incomplete captures from being treated as replication-sufficient.
-- Review and revise capture/comparison models, schemas, examples, and conformance checks so completeness is evaluated separately from agreement among captured properties.
-- Check that facets use the common envelope consistently.
-- Check that source-derived rules cannot be mistaken for runtime evidence.
-- Check that comparison does not claim more than the evidence supports.
-- Publish a versioned release and compatibility policy.
-- Record unresolved questions and future extensions.
+Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
 
-**Exit gate:** The release checklist is satisfied, known limitations are documented, and the specification version is clearly identified.
+- [ ] Review the full specification for contradictions and omissions.
+- [ ] Enforce the Replication Completeness Rule across every applicable facet.
+- [ ] Verify schema, examples, conformance checks, and evidence provenance.
+- [ ] Review comparison claims and limitations.
+- [ ] Document unresolved questions and known limitations.
+- [ ] Publish a versioned specification release and maintenance process.
+
+**Exit gate:** The expanded Phase 6 conformance programme is complete, the release checklist is satisfied, known limitations are documented, and the specification version is clearly identified.
 
 ## 4. Target repository layout
 
@@ -351,4 +380,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Redo Phase 6. Expand the Task Board's runtime evidence against the explicit replication property inventory, then rerun conformance. Do not begin the final Phase 7 release gate until Phase 6's redo exit criteria are satisfied.
+Continue Phase 6 in sequence: audit the existing interface artifact claims, then expand the Task Board evidence for behaviour/functionality, business rules, and data. Treat its in-memory API as a test boundary only. After those facets, select or extend a controlled reference target for facets the Task Board does not implement. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

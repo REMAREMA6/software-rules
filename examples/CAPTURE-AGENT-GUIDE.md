@@ -17,6 +17,14 @@ A capture agent records observations; it must not convert guesses, source declar
 9. **Compare only after capture.** Align scenarios/conditions and records using evidence. Preserve raw observations; apply named, versioned normalization; classify unknown or ambiguous results conservatively.
 10. **Conclude within scope.** Report exactly which scenarios, conditions, facets and dimensions were covered. Never claim universal equivalence from finite captures.
 
+## Replication-completeness requirement
+
+Before execution, define the declared replication scope and enumerate every property/rule required to reproduce it. Use the facet specifications as inventories, but do not assume their examples are exhaustive. Include all relevant structures, rendered values, content, states, transitions, conditions, actions, data, constraints, and system dependencies.
+
+Give each required property a stable inventory ID. After capture, assign exactly one explicit state: captured, partial, not observed, unknown, unavailable, conflicting, source-inferred, not applicable, or excluded. Captured/partial entries must link to runtime observations and retained evidence. Explain unresolved entries and exclusions.
+
+A capture is complete only when every required property is established with adequate runtime evidence or explicitly justified as not applicable. Any required partial, not-observed, unknown, unavailable, conflicting, or source-inferred property prevents a complete result. A source-derived inference never substitutes for runtime evidence. Report completeness separately from agreement among captured properties.
+
 ## Minimum capture review
 
 - Can every observation be traced to a target, scenario execution, method and evidence item?
@@ -26,17 +34,21 @@ A capture agent records observations; it must not convert guesses, source declar
 - Are source-derived rules clearly separate from runtime observations?
 - Are screenshot and structured evidence linked to the same execution and time window?
 - Are exclusions and limitations explicit?
+- Does the inventory cover every property required by the declared replication scope?
+- Does every captured property link to runtime observations and evidence?
+- Are completeness and observed agreement reported separately?
 
 This guide is procedural. It does not certify collector trustworthiness or evidence authenticity.
 
 ## Executed Phase 6 example
 
-The Task Board conformance target in `examples/task-board/` demonstrates this procedure end to end:
+The Task Board conformance target in `examples/task-board/` demonstrates the initial capture workflow and explicit completeness-gap reporting:
 
 - Capture the reference and independent baseline with the same 1280×800 viewport and scenario inputs.
 - Retain interface geometry, behavior outputs, and instrumented adapter request/response events as runtime evidence.
 - Keep the source-derived DELETE-call inference in the separate `sourceRules` collection with `verificationState: "unverified"`.
 - Run the deliberately mutated build separately and compare its actual singular-count output against the reference.
 - Validate every capture fixture with the capture schema and cross-record integrity validator; validate both comparison reports with the comparison schema.
+- Keep the Task Board baseline captures marked incomplete until the missing required interface and behaviour properties are captured. Their observed matches do not establish faithful replication.
 
 The adapter is deliberately in-memory. Mark its boundary and do not generalize these API observations to a production server or durable persistence.

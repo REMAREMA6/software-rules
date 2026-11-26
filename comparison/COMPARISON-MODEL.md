@@ -60,14 +60,14 @@ Every result is local to a dimension and its evidence. Overall report status is:
 
 The report MUST set `scopeBounded` true and `universalEquivalenceClaimed` false. Agreement is never a claim that all possible inputs or states are equivalent.
 
-## 7. Repeated and nondeterministic behaviour
+## 8. Repeated and nondeterministic behaviour
 
 Repeated executions MUST remain individually identifiable. A single run MUST NOT be treated as the complete distribution of nondeterministic behaviour. If comparing distributions, define the sampling window, sample count, aggregation/statistical method, confidence or uncertainty treatment, and environmental controls. Otherwise compare executions individually and report variability as unresolved.
 
-## 8. Evidence classes
+## 9. Evidence classes
 
 Primary runtime comparison MUST use runtime observations supported by runtime evidence. Source-derived rules and declared contracts MAY be shown as contextual or secondary comparisons, but MUST be labelled and MUST NOT satisfy runtime coverage. Contract-versus-runtime checks are a separate relationship from reference-runtime versus implementation-runtime comparison.
 
-## 9. Output
+## 10. Output
 
 The report structure is defined by `schemas/v1/comparison-report.schema.json`. The report MUST preserve capture references, normalization profile, record alignments, per-dimension results, coverage, conclusion, and limitations. It MUST remain traceable to original capture records.

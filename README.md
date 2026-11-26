@@ -32,6 +32,7 @@ A technology-independent specification system for capturing, representing, and c
 - [Phase 6 multi-facet capture programme](examples/PHASE-6-FACET-EXPANSION.md)
 - [Phase 6 Task Board conformance system](examples/task-board/README.md)
 - [Phase 6 Task Board evidence audit](examples/task-board/PHASE-6-AUDIT.md)
+- [Task Board 15-facet applicability assessment](examples/task-board/FACET-APPLICABILITY.md)
 - [Empirical reference capture](examples/task-board/captures/reference.capture.json)
 - [Empirical independent capture](examples/task-board/captures/independent.capture.json)
 - [Deliberate-difference capture](examples/task-board/captures/independent-mutated.capture.json)

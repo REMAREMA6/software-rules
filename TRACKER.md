@@ -18,9 +18,9 @@
 
 ## Current position
 
-- **Current phase:** Phase 5 — Canonicalization and comparison
+- **Current phase:** Phase 6 — End-to-end examples and conformance
 - **Current task:** Produce empirical facet captures and cross-record conformance checks.
-- **Blockers:** No Phase 5-specific blockers identified; cross-record referential-integrity checks remain a Phase 6 conformance concern.
+- **Blockers:** Empirical reference/implementation captures and cross-record conformance checks are not yet completed.
 - **Next action:** Build an empirical interface capture pair first, then validate the same scenario against an independent implementation.
 - **Scope note:** Phases 4–5 are complete at draft-specification level. Phase 6 must test the model against real running systems; existing comparison example is illustrative only.
 

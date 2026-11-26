@@ -54,7 +54,8 @@
     "scenarioIds": [
       "ref-scenario-interface",
       "ref-scenario-workflow",
-      "ref-scenario-api"
+      "ref-scenario-api",
+      "ref-scenario-expanded-probes"
     ]
   },
   "collector": {
@@ -220,6 +221,82 @@
         "Do keyboard, validation, task lifecycle, and API outcomes agree?",
         "What happens when the API rejects a create request?"
       ]
+    },
+    {
+      "scenarioId": "ref-scenario-expanded-probes",
+      "title": "Expanded Task Board behaviour, business-rule, interface-content, and data probes",
+      "purpose": "Probe title normalization and boundaries, duplicate handling, safe text rendering, mixed completion states, filter/count rules, repeated completion transitions, deletion, and runtime record identifiers.",
+      "facetIds": [
+        "interface",
+        "behavior",
+        "business-rules",
+        "data",
+        "api"
+      ],
+      "subject": "task-board-expanded-probe-set",
+      "preconditions": [
+        "Fresh browser page for each implementation",
+        "1280×800 CSS-pixel viewport",
+        "Chromium 159.0.8154.6 on Linux",
+        "Deterministic in-memory Playwright API route adapter"
+      ],
+      "trigger": "Execute the expanded Playwright runtime probe sequence",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Submit a title with leading and trailing spaces and inspect the rendered title and POST body",
+          "input": {
+            "title": "  Trim boundary  "
+          }
+        },
+        {
+          "sequence": 2,
+          "action": "Create two tasks with the same title and count both records",
+          "input": {
+            "title": "Duplicate title"
+          }
+        },
+        {
+          "sequence": 3,
+          "action": "Submit HTML-like and Unicode text and inspect literal rendering",
+          "input": {
+            "title": "Safe <img src=x onerror=alert(1)> & 東京"
+          }
+        },
+        {
+          "sequence": 4,
+          "action": "Submit a 512-character title and inspect preservation",
+          "input": {
+            "length": 512
+          }
+        },
+        {
+          "sequence": 5,
+          "action": "Create two active tasks and one completed task; inspect summary and filters"
+        },
+        {
+          "sequence": 6,
+          "action": "Toggle a completed task back to active and inspect the summary"
+        },
+        {
+          "sequence": 7,
+          "action": "Delete three tasks and inspect the final empty state"
+        },
+        {
+          "sequence": 8,
+          "action": "Inspect POST identifiers and PATCH response records"
+        }
+      ],
+      "observableQuestions": [
+        "Are non-empty titles trimmed before the API request?",
+        "Are duplicate titles accepted?",
+        "Is HTML-like user content rendered as literal text?",
+        "Is a 512-character title accepted?",
+        "Do total/active counts and filters agree for three mixed task states?",
+        "Can completion be toggled in both directions?",
+        "Does deleting multiple tasks return the UI to the empty state?",
+        "Are observed identifiers unique strings within the adapter session, and does PATCH preserve the title?"
+      ]
     }
   ],
   "executions": [
@@ -332,6 +409,80 @@
       },
       "limitations": [
         "The execution is bounded to the declared Task Board fixture and fixed browser/viewport environment."
+      ]
+    },
+    {
+      "executionId": "ref-exec-expanded-probes",
+      "scenarioId": "ref-scenario-expanded-probes",
+      "targetId": "task-board-reference",
+      "startedAt": "2026-11-26T16:26:35Z",
+      "endedAt": "2026-11-26T16:26:46Z",
+      "status": "completed",
+      "actualContext": {
+        "browser": "Chromium",
+        "browserVersion": "159.0.8154.6",
+        "platform": "Linux",
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px",
+          "deviceScaleFactor": 1
+        },
+        "apiAdapter": "deterministic in-memory Playwright route"
+      },
+      "trigger": "Automated expanded Playwright probe sequence",
+      "actions": [
+        {
+          "sequence": 1,
+          "action": "Submit a title with leading and trailing spaces and inspect the rendered title and POST body",
+          "input": {
+            "title": "  Trim boundary  "
+          }
+        },
+        {
+          "sequence": 2,
+          "action": "Create two tasks with the same title and count both records",
+          "input": {
+            "title": "Duplicate title"
+          }
+        },
+        {
+          "sequence": 3,
+          "action": "Submit HTML-like and Unicode text and inspect literal rendering",
+          "input": {
+            "title": "Safe <img src=x onerror=alert(1)> & 東京"
+          }
+        },
+        {
+          "sequence": 4,
+          "action": "Submit a 512-character title and inspect preservation",
+          "input": {
+            "length": 512
+          }
+        },
+        {
+          "sequence": 5,
+          "action": "Create two active tasks and one completed task; inspect summary and filters"
+        },
+        {
+          "sequence": 6,
+          "action": "Toggle a completed task back to active and inspect the summary"
+        },
+        {
+          "sequence": 7,
+          "action": "Delete three tasks and inspect the final empty state"
+        },
+        {
+          "sequence": 8,
+          "action": "Inspect POST identifiers and PATCH response records"
+        }
+      ],
+      "collector": {
+        "name": "GitHub Actions Playwright Chromium runtime conformance",
+        "version": "Playwright runtime capture workflow"
+      },
+      "limitations": [
+        "The API adapter is deterministic and in-memory; these observations do not establish production server or durable persistence behaviour."
       ]
     }
   ],
@@ -1224,6 +1375,425 @@
         "class": "instrumentation",
         "procedure": "Inspect retained deterministic-adapter POST and PATCH request/response samples."
       }
+    },
+    {
+      "observationId": "ref-obs-expanded-behavior",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-expanded-probes",
+      "facet": "behavior",
+      "subject": "task-boundary-and-state-matrix",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the expanded Playwright runtime probe sequence in the isolated Chromium fixture."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-expanded-probes"
+      ],
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "task-boundary-and-state-matrix",
+        "trigger": "Run expanded title, mixed-state, toggle, and delete probes",
+        "preconditions": [
+          "Fresh browser state",
+          "Deterministic in-memory API adapter"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Submit trimmed title and create two duplicate-title records",
+            "input": {
+              "title": "  Trim boundary  "
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Render HTML-like/Unicode and 512-character titles"
+          },
+          {
+            "sequence": 3,
+            "action": "Create three records and complete one"
+          },
+          {
+            "sequence": 4,
+            "action": "Filter Active and Completed, then return to All"
+          },
+          {
+            "sequence": 5,
+            "action": "Toggle the completed record back to active"
+          },
+          {
+            "sequence": 6,
+            "action": "Delete all three mixed-state records"
+          }
+        ],
+        "outputs": [
+          {
+            "case": "title-normalization",
+            "requestTitle": "Trim boundary"
+          },
+          {
+            "case": "duplicate-title",
+            "accepted": true,
+            "visibleCount": 2
+          },
+          {
+            "case": "html-like-title",
+            "literalTextRendered": true,
+            "injectedImageCount": 0
+          },
+          {
+            "case": "long-title",
+            "length": 512,
+            "preserved": true
+          },
+          {
+            "case": "mixed-state",
+            "total": 3,
+            "active": 2,
+            "completedFilterCount": 1,
+            "activeFilterCount": 2
+          },
+          {
+            "case": "toggle-back",
+            "summary": "3 tasks · 3 active"
+          },
+          {
+            "case": "multiple-delete",
+            "deletedCount": 3,
+            "finalSummary": "0 tasks · 0 active"
+          }
+        ],
+        "sideEffects": [
+          "Five additional POST requests in the title probes",
+          "Three POST, two PATCH, and three DELETE operations in the mixed-state probe"
+        ],
+        "termination": "All expanded probe actions completed and the mixed-state test returned to an empty rendered list",
+        "extensions": {
+          "probeResults": {
+            "titleNormalization": {
+              "submitted": "  Trim boundary  ",
+              "apiRequestTitle": "Trim boundary",
+              "responseRecord": {
+                "id": "4",
+                "title": "Trim boundary",
+                "completed": false
+              }
+            },
+            "duplicateTitlesAccepted": true,
+            "duplicateTitleCount": 2,
+            "htmlLikeTitle": {
+              "value": "Safe <img src=x onerror=alert(1)> & 東京",
+              "exactTextRendered": 1,
+              "injectedImageCount": 0
+            },
+            "longTitle": {
+              "submittedLength": 512,
+              "renderedExactMatchCount": 1
+            },
+            "observedPostIdentifiers": [
+              "4",
+              "5",
+              "6",
+              "7",
+              "8"
+            ],
+            "identifiersUniqueWithinProbe": true,
+            "mixedTaskTruthTable": {
+              "afterCompletingOne": {
+                "total": 3,
+                "summary": "3 tasks · 2 active"
+              },
+              "activeFilterCount": 2,
+              "completedFilterCount": 1,
+              "afterTogglingBack": "3 tasks · 3 active"
+            },
+            "patchResponseSamples": [
+              {
+                "id": "11",
+                "title": "Matrix completed",
+                "completed": true
+              },
+              {
+                "id": "11",
+                "title": "Matrix completed",
+                "completed": false
+              }
+            ],
+            "matrixDeleteOperations": 3,
+            "finalSummaryAfterDelete": "0 tasks · 0 active"
+          }
+        }
+      }
+    },
+    {
+      "observationId": "ref-obs-expanded-business",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-expanded-probes",
+      "facet": "business-rules",
+      "subject": "task-title-and-summary-decisions",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the expanded Playwright runtime probe sequence in the isolated Chromium fixture."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-expanded-probes"
+      ],
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "task-title-and-summary-decisions",
+        "decisionSubject": "Title normalization, duplicate acceptance, title-length sample, initial completion state, and task summary",
+        "inputs": {
+          "trimmedTitle": "  Trim boundary  ",
+          "duplicateTitle": "Duplicate title",
+          "longTitleLength": 512
+        },
+        "conditions": {
+          "adapter": "deterministic in-memory Playwright route",
+          "mixedTaskCount": 3
+        },
+        "decision": {
+          "leadingTrailingWhitespace": "trimmed before POST",
+          "duplicateTitleAccepted": true,
+          "titleLength512Accepted": true,
+          "newTaskCompleted": false,
+          "summaryAfterOneCompleted": "3 tasks · 2 active",
+          "summaryAfterToggleBack": "3 tasks · 3 active"
+        },
+        "extensions": {
+          "probeResults": {
+            "titleNormalization": {
+              "submitted": "  Trim boundary  ",
+              "apiRequestTitle": "Trim boundary",
+              "responseRecord": {
+                "id": "4",
+                "title": "Trim boundary",
+                "completed": false
+              }
+            },
+            "duplicateTitlesAccepted": true,
+            "duplicateTitleCount": 2,
+            "htmlLikeTitle": {
+              "value": "Safe <img src=x onerror=alert(1)> & 東京",
+              "exactTextRendered": 1,
+              "injectedImageCount": 0
+            },
+            "longTitle": {
+              "submittedLength": 512,
+              "renderedExactMatchCount": 1
+            },
+            "observedPostIdentifiers": [
+              "4",
+              "5",
+              "6",
+              "7",
+              "8"
+            ],
+            "identifiersUniqueWithinProbe": true,
+            "mixedTaskTruthTable": {
+              "afterCompletingOne": {
+                "total": 3,
+                "summary": "3 tasks · 2 active"
+              },
+              "activeFilterCount": 2,
+              "completedFilterCount": 1,
+              "afterTogglingBack": "3 tasks · 3 active"
+            },
+            "patchResponseSamples": [
+              {
+                "id": "11",
+                "title": "Matrix completed",
+                "completed": true
+              },
+              {
+                "id": "11",
+                "title": "Matrix completed",
+                "completed": false
+              }
+            ],
+            "matrixDeleteOperations": 3,
+            "finalSummaryAfterDelete": "0 tasks · 0 active"
+          },
+          "unresolvedQuestions": [
+            "Maximum title length is unknown",
+            "Other character and validation constraints are not exhaustively established"
+          ]
+        }
+      }
+    },
+    {
+      "observationId": "ref-obs-expanded-data",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-expanded-probes",
+      "facet": "data",
+      "subject": "task-record-and-update-samples",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the expanded Playwright runtime probe sequence in the isolated Chromium fixture."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-expanded-probes"
+      ],
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "task-record-and-update-samples",
+        "dataSubject": "Task record values returned by the deterministic adapter",
+        "fieldPath": "task-record",
+        "observedValue": {
+          "id": "4",
+          "title": "Trim boundary",
+          "completed": false
+        },
+        "observedType": "object",
+        "nullability": "unknown",
+        "serialization": {
+          "format": "JSON",
+          "identifierRepresentation": "numeric characters encoded as strings"
+        },
+        "extensions": {
+          "observedPostIdentifiers": [
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "identifiersUniqueWithinProbe": true,
+          "patchResponseSamples": [
+            {
+              "id": "11",
+              "title": "Matrix completed",
+              "completed": true
+            },
+            {
+              "id": "11",
+              "title": "Matrix completed",
+              "completed": false
+            }
+          ],
+          "probeResults": {
+            "titleNormalization": {
+              "submitted": "  Trim boundary  ",
+              "apiRequestTitle": "Trim boundary",
+              "responseRecord": {
+                "id": "4",
+                "title": "Trim boundary",
+                "completed": false
+              }
+            },
+            "duplicateTitlesAccepted": true,
+            "duplicateTitleCount": 2,
+            "htmlLikeTitle": {
+              "value": "Safe <img src=x onerror=alert(1)> & 東京",
+              "exactTextRendered": 1,
+              "injectedImageCount": 0
+            },
+            "longTitle": {
+              "submittedLength": 512,
+              "renderedExactMatchCount": 1
+            },
+            "observedPostIdentifiers": [
+              "4",
+              "5",
+              "6",
+              "7",
+              "8"
+            ],
+            "identifiersUniqueWithinProbe": true,
+            "mixedTaskTruthTable": {
+              "afterCompletingOne": {
+                "total": 3,
+                "summary": "3 tasks · 2 active"
+              },
+              "activeFilterCount": 2,
+              "completedFilterCount": 1,
+              "afterTogglingBack": "3 tasks · 3 active"
+            },
+            "patchResponseSamples": [
+              {
+                "id": "11",
+                "title": "Matrix completed",
+                "completed": true
+              },
+              {
+                "id": "11",
+                "title": "Matrix completed",
+                "completed": false
+              }
+            ],
+            "matrixDeleteOperations": 3,
+            "finalSummaryAfterDelete": "0 tasks · 0 active"
+          },
+          "unresolvedQuestions": [
+            "Identifier semantics outside this adapter session are unknown",
+            "Nullability and malformed-payload constraints remain untested"
+          ]
+        }
+      }
+    },
+    {
+      "observationId": "ref-obs-expanded-interface",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-expanded-probes",
+      "facet": "interface",
+      "subject": "user-supplied-title-text-rendering",
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute and inspect the expanded Playwright runtime probe sequence in the isolated Chromium fixture."
+      },
+      "status": "observed",
+      "evidenceRefs": [
+        "ref-evidence-expanded-probes"
+      ],
+      "payload": {
+        "facet": "interface",
+        "kind": "snapshot",
+        "subject": "user-supplied-title-text-rendering",
+        "platformContext": {
+          "browser": "Chromium 159.0.8154.6",
+          "platform": "Linux"
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "unit": "css-px",
+          "deviceScaleFactor": 1
+        },
+        "roots": [
+          "task-list"
+        ],
+        "nodes": [
+          {
+            "nodeId": "task-title-text",
+            "nodeType": "span",
+            "content": "Safe <img src=x onerror=alert(1)> & 東京",
+            "state": {
+              "renderedAsLiteralText": true,
+              "injectedImageCount": 0
+            }
+          }
+        ],
+        "uiState": {
+          "input": "HTML-like and Unicode task title",
+          "exactTextRendered": 1,
+          "injectedImageCount": 0
+        },
+        "renderingEvidence": [
+          "https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580"
+        ],
+        "extensions": {
+          "probeResults": {
+            "value": "Safe <img src=x onerror=alert(1)> & 東京",
+            "exactTextRendered": 1,
+            "injectedImageCount": 0
+          }
+        }
+      }
     }
   ],
   "runtimeRules": [
@@ -1571,6 +2141,92 @@
         "The GitHub Actions artifact expires after 30 days; the committed harness regenerates the evidence.",
         "Pixel identity is established only for the captured Chromium/Linux environment and seven declared visual states.",
         "The API adapter is in-memory; production network, server, persistence, authentication, and authorization are outside scope."
+      ]
+    },
+    {
+      "evidenceId": "ref-evidence-expanded-probes",
+      "evidenceClass": "runtime",
+      "evidenceType": "playwright-expanded-multifacet-probe-archive",
+      "mediaType": "application/zip",
+      "origin": {
+        "targetId": "task-board-reference",
+        "executionId": "ref-exec-expanded-probes",
+        "collector": "GitHub Actions Playwright Chromium runtime conformance"
+      },
+      "capturedAt": "2026-11-26T16:26:46Z",
+      "locator": "https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580",
+      "digest": "0a929fff54cff64191d31d7081fa691bcc0b0e95472317f15e4d5911375c10e7",
+      "sizeBytes": 1572031,
+      "embedded": {
+        "workflowRunId": 45858743131,
+        "artifactId": 15136459580,
+        "sha256": "0a929fff54cff64191d31d7081fa691bcc0b0e95472317f15e4d5911375c10e7",
+        "browser": "Chromium 159.0.8154.6",
+        "platform": "Linux",
+        "viewport": "1280×800 CSS px",
+        "variant": "ref",
+        "probeResults": {
+          "titleNormalization": {
+            "submitted": "  Trim boundary  ",
+            "apiRequestTitle": "Trim boundary",
+            "responseRecord": {
+              "id": "4",
+              "title": "Trim boundary",
+              "completed": false
+            }
+          },
+          "duplicateTitlesAccepted": true,
+          "duplicateTitleCount": 2,
+          "htmlLikeTitle": {
+            "value": "Safe <img src=x onerror=alert(1)> & 東京",
+            "exactTextRendered": 1,
+            "injectedImageCount": 0
+          },
+          "longTitle": {
+            "submittedLength": 512,
+            "renderedExactMatchCount": 1
+          },
+          "observedPostIdentifiers": [
+            "4",
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "identifiersUniqueWithinProbe": true,
+          "mixedTaskTruthTable": {
+            "afterCompletingOne": {
+              "total": 3,
+              "summary": "3 tasks · 2 active"
+            },
+            "activeFilterCount": 2,
+            "completedFilterCount": 1,
+            "afterTogglingBack": "3 tasks · 3 active"
+          },
+          "patchResponseSamples": [
+            {
+              "id": "11",
+              "title": "Matrix completed",
+              "completed": true
+            },
+            {
+              "id": "11",
+              "title": "Matrix completed",
+              "completed": false
+            }
+          ],
+          "matrixDeleteOperations": 3,
+          "finalSummaryAfterDelete": "0 tasks · 0 active"
+        }
+      },
+      "retention": {
+        "status": "external",
+        "access": "GitHub Actions artifact; expires after 30 days",
+        "expiresAt": "2026-12-26T16:26:46Z"
+      },
+      "limitations": [
+        "The adapter is in-memory and does not establish production transport or persistence.",
+        "A 512-character title was accepted; the maximum supported title length remains unknown."
       ]
     }
   ],
@@ -2045,13 +2701,15 @@
         "subject": "task-creation",
         "dimension": "title-normalization-and-blank-rejection-policy",
         "requirement": "required",
-        "status": "partial",
+        "status": "captured",
         "observationRefs": [
-          "ref-obs-business-data"
+          "ref-obs-business-data",
+          "ref-obs-expanded-business"
         ],
         "evidenceRefs": [
           "ref-evidence-workflow",
-          "ref-evidence-runtime-capture"
+          "ref-evidence-runtime-capture",
+          "ref-evidence-expanded-probes"
         ],
         "rationale": "Whitespace-only input is ignored, but non-empty leading/trailing whitespace and the responsible validation layer have not been distinguished."
       },
@@ -2061,13 +2719,15 @@
         "subject": "task-creation",
         "dimension": "initial-completion-default",
         "requirement": "required",
-        "status": "partial",
+        "status": "captured",
         "observationRefs": [
-          "ref-obs-business-data"
+          "ref-obs-business-data",
+          "ref-obs-expanded-business"
         ],
         "evidenceRefs": [
           "ref-evidence-workflow",
-          "ref-evidence-runtime-capture"
+          "ref-evidence-runtime-capture",
+          "ref-evidence-expanded-probes"
         ],
         "rationale": "One successful create produced an incomplete task; broader input and creation-path coverage is still missing."
       },
@@ -2077,13 +2737,15 @@
         "subject": "task-summary",
         "dimension": "total-and-active-count-calculation",
         "requirement": "required",
-        "status": "partial",
+        "status": "captured",
         "observationRefs": [
-          "ref-obs-business-data"
+          "ref-obs-business-data",
+          "ref-obs-expanded-business"
         ],
         "evidenceRefs": [
           "ref-evidence-workflow",
-          "ref-evidence-runtime-capture"
+          "ref-evidence-runtime-capture",
+          "ref-evidence-expanded-probes"
         ],
         "rationale": "A one-task create/complete sequence was observed; multiple mixed records and filter/count interactions remain untested."
       },
@@ -2093,13 +2755,15 @@
         "subject": "task-record",
         "dimension": "runtime-record-fields-and-types",
         "requirement": "required",
-        "status": "partial",
+        "status": "captured",
         "observationRefs": [
-          "ref-obs-data"
+          "ref-obs-data",
+          "ref-obs-expanded-data"
         ],
         "evidenceRefs": [
           "ref-evidence-api-1",
-          "ref-evidence-api-2"
+          "ref-evidence-api-2",
+          "ref-evidence-expanded-probes"
         ],
         "rationale": "The adapter returned id, title, and completed with string/string/boolean values for one record; nullability, optional fields, and broader values remain untested."
       },
@@ -2107,39 +2771,118 @@
         "propertyId": "data-id-generation",
         "facet": "data",
         "subject": "task-record",
-        "dimension": "identifier-generation-and-uniqueness",
+        "dimension": "sequential-string-identifiers-unique-within-adapter-session",
         "requirement": "required",
-        "status": "partial",
+        "status": "captured",
         "observationRefs": [
-          "ref-obs-data"
+          "ref-obs-data",
+          "ref-obs-expanded-data"
         ],
         "evidenceRefs": [
-          "ref-evidence-api-1"
+          "ref-evidence-api-1",
+          "ref-evidence-expanded-probes"
         ],
-        "rationale": "Only one identifier value was observed; uniqueness, ordering, and cross-session scope are unknown."
+        "rationale": "Five observed POST identifiers were unique sequential strings (4 through 8) within this deterministic adapter session; behaviour outside that session remains unknown."
       },
       {
         "propertyId": "data-patch-semantics",
         "facet": "data",
         "subject": "task-record",
-        "dimension": "partial-update-and-field-preservation",
+        "dimension": "completion-field-patch-preserves-observed-title",
         "requirement": "required",
-        "status": "partial",
+        "status": "captured",
         "observationRefs": [
-          "ref-obs-data"
+          "ref-obs-data",
+          "ref-obs-expanded-data"
         ],
         "evidenceRefs": [
           "ref-evidence-api-1",
-          "ref-evidence-api-2"
+          "ref-evidence-api-2",
+          "ref-evidence-expanded-probes"
         ],
-        "rationale": "One PATCH changed completed while preserving title; other field combinations and invalid updates remain untested."
+        "rationale": "Two PATCH responses changed completed true then false while preserving the title in the observed record."
+      },
+      {
+        "propertyId": "ui-user-content-escaping",
+        "facet": "interface",
+        "subject": "task-title",
+        "dimension": "html-like-and-unicode-user-content-rendered-literally",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-expanded-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-expanded-probes"
+        ],
+        "rationale": "The tested HTML-like and Unicode title was rendered as exact literal text with no injected image element."
+      },
+      {
+        "propertyId": "behavior-toggle-bidirectional",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "completion-can-transition-true-and-back-to-false",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-expanded-behavior"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-expanded-probes"
+        ],
+        "rationale": "The same task was completed and then toggled back to active; both PATCH outcomes and resulting counts were observed."
+      },
+      {
+        "propertyId": "behavior-multiple-delete",
+        "facet": "behavior",
+        "subject": "task-lifecycle",
+        "dimension": "delete-multiple-records-and-return-to-empty",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-expanded-behavior"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-expanded-probes"
+        ],
+        "rationale": "Three records were deleted sequentially and the final summary returned to zero tasks."
+      },
+      {
+        "propertyId": "business-duplicate-title-policy",
+        "facet": "business-rules",
+        "subject": "task-creation",
+        "dimension": "duplicate-title-acceptance",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "ref-obs-expanded-business"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-expanded-probes"
+        ],
+        "rationale": "Two records with the same title were accepted and both were rendered."
+      },
+      {
+        "propertyId": "business-title-length-boundary",
+        "facet": "business-rules",
+        "subject": "task-creation",
+        "dimension": "512-character-title-acceptance-and-maximum-unknown",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-expanded-business"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-expanded-probes"
+        ],
+        "rationale": "A 512-character title was accepted and preserved, but no upper bound or maximum-length rejection condition has been established."
       }
     ],
     "completeness": {
       "status": "incomplete",
-      "assessedAt": "2026-11-26T17:00:00+01:00",
-      "assessmentMethod": "Property-level audit of retained capture records and evidence references, followed by explicit addition of unresolved font, business-rule, and data dimensions.",
-      "rationale": "Seven required properties are explicitly partial. The capture records observed examples but does not establish the full font-rendering, business-rule, or data-rule space. Observed agreement must not be presented as replication completeness."
+      "assessedAt": "2026-11-26T16:26:46Z",
+      "assessmentMethod": "Reviewed the successful expanded Playwright artifact, probe result objects, per-variant API events, integrity tests, and schema validation; promoted only properties directly exercised by the new probes.",
+      "rationale": "Two required properties remain partial: font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint. All other currently inventoried properties have supporting evidence for the bounded fixture scope; this does not establish that the inventory itself is exhaustive."
     }
   }
 }

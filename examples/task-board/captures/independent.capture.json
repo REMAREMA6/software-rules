@@ -3267,12 +3267,10 @@
         "requirement": "required",
         "status": "captured",
         "observationRefs": [
-          "ind-obs-runtime-behavior",
-          "ind-obs-operation-failure-matrix"
+          "ind-obs-runtime-behavior"
         ],
         "evidenceRefs": [
-          "ind-evidence-runtime-capture",
-          "ind-evidence-ui-security-error-performance"
+          "ind-evidence-runtime-capture"
         ],
         "rationale": "Captured at runtime in the Playwright evidence archive for the declared Task Board scope (https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524)."
       },

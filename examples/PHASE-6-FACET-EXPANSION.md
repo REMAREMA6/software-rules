@@ -91,3 +91,8 @@ A stage is not complete because its checklist is populated or a CI job passes. T
 ## Evidence-link integrity improvement
 
 The validator now requires each inventory evidence reference to be attached to at least one of that property's linked observations. A property marked captured must have at least one observed linked record supported by runtime-class evidence and not explicitly marked partial. These checks catch detached or weakly classified evidence links; they do not replace semantic review or prove that a probe set is exhaustive.
+
+
+## Current implementation checkpoint
+
+The initial Task Board audit has been recorded. The capture inventories now report incomplete coverage with seven required properties partial. The Playwright harness includes the first expanded behaviour/business-rule/data probe sequence, but it has not yet been run successfully; its output must be reviewed before the captures are updated or any property is promoted. The integrity validator now checks that inventory evidence references are attached to linked observations and that captured properties have at least one observed runtime-backed record not explicitly marked partial. These checks do not replace semantic evidence review.

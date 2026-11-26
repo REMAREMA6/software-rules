@@ -166,7 +166,7 @@
 ### Phase 6 work log — 2026-11-26
 
 - Added a dependency-free cross-record integrity validator and unit tests. It checks duplicate IDs, scenario/execution/target links, observation/evidence links, runtime-rule observation links, source-rule evidence links, and coverage references.
-- Verified the validator locally against passing and failing graph fixtures. This is additional to JSON Schema validation; it does not authenticate evidence or determine semantic equivalence.
+- Verified the validator locally against passing and failing graph fixtures. GitHub Actions run [#7](https://github.com/REMAREMA6/software-rules/actions/runs/45794950677) passed both schema validation and the new cross-record integrity tests. This is additional to JSON Schema validation; it does not authenticate evidence or determine semantic equivalence.
 - Attempted to execute a local Chromium capture against two independent HTML implementations. The host blocked both localhost and file-based browser navigation (`ERR_BLOCKED_BY_ADMINISTRATOR`); therefore no empirical capture is committed or claimed. The remaining runtime capture work requires a browser environment that permits local test navigation.
 
 ## Phase 7 — Review, release, and maintenance

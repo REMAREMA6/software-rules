@@ -120,9 +120,10 @@ Deliverables:
 - `specification/EVIDENCE-AND-PROVENANCE.md`
 - `specification/OBSERVATION-MODEL.md`
 - `specification/CORE.md`
+- `specification/SOURCE-DERIVED-RULES.md`
 - `specification/VERSIONING.md`
 
-**Exit gate:** The common model can represent a rule and its evidence without relying on a particular programming language or framework.
+**Exit gate: satisfied (conceptual model).** The vocabulary and linked entity model distinguish scenario definitions, executions, observations, evidence, runtime rules, source-derived rules, and declared contracts. The common model has been exercised against two unlike conceptual cases (resolved interface layout and API request/response behaviour) without flattening their facet-specific payloads. This validates the conceptual envelope, not a final serialization, empirical capture, or complete facet taxonomy. Machine schemas and facet payloads remain deferred.
 
 ### Phase 3 — Facet specifications
 
@@ -146,7 +147,7 @@ Proposed facets, revised after Phase 1 research:
 14. Configuration — runtime configuration values and changes that affect behaviour.
 15. Performance and resource behaviour — duration, throughput, latency, resource use, and performance outcomes.
 
-This list is a research-informed working proposal, not an accepted taxonomy. Phase 2 and Phase 3 must test boundaries, overlaps, and cross-facet relationships before the facet specifications are treated as stable.
+This list is a research-informed working proposal, not an accepted taxonomy. Phase 3 must test boundaries, overlaps, and cross-facet relationships against concrete facet specifications and capture examples before the facet specifications are treated as stable.
 
 Each facet must be grounded in research and real capture examples. The list may be revised if research shows a better boundary or a missing facet.
 
@@ -314,4 +315,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Begin Phase 2: define the core concepts and common model. Start with terminology and the observation model. Test the proposed common envelope against unlike examples, including a web interface observation and an API or background-processing observation. Preserve the distinctions between runtime observation, declared contract, and source-derived inference. Do not create machine-readable capture schemas until the conceptual model has been reviewed.
+Begin Phase 3: validate the proposed facet taxonomy and define facet boundaries and observable dimensions. Start with the interface facet because its runtime capture requirements are concrete and central to the project's original parity workflow. Use the common observation model in specification/CORE.md and specification/OBSERVATION-MODEL.md. Do not create machine-readable capture schemas until facet payloads have been reviewed.

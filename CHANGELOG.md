@@ -7,6 +7,8 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- Phase 3 facet catalogue, boundary/overlap matrix, and 15 individual facet specifications with conceptual payload inventories and illustrative worked examples.
+- Design decision D-010 accepting the 15-facet catalogue for the current specification draft.
 - Phase 2 core specification: terminology, principles, rule classification, evidence/provenance, observation model, source-derived rules, and core model.
 - Cross-facet conceptual model tests for interface layout and API request/response observations.
 - Design decisions D-007 through D-009 for scenario/execution/observation separation, rule-versus-observation distinction, and expected-versus-actual outcomes.
@@ -14,6 +16,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
+- Completed Phase 3 and moved active work to Phase 4 (machine-readable schemas). The facet examples are illustrative; empirical end-to-end captures remain Phase 6 work.
 - Completed Phase 1 and moved the tracker to Phase 2; subsequently completed Phase 2 and moved active work to Phase 3.
 - Revised the working facet taxonomy to separate identity/authentication from authorization and add configuration and performance/resource behaviour.
 - Recorded the distinction between declared contracts and actual runtime observations.

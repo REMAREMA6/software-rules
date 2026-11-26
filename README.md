@@ -93,7 +93,7 @@ The current draft defines 15 observation facets. See the [facet catalogue](facet
 
 ## Remaining specification work
 
-- [~] Expanded multi-facet empirical captures and conformance (Phase 6; see [facet expansion programme](examples/PHASE-6-FACET-EXPANSION.md) and [Task Board evidence audit](examples/task-board/PHASE-6-AUDIT.md))
+- [~] Cross-repository, cross-stack replication and conformance (Phase 6; see [cross-repository programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md) and [replication lab](conformance/replication-lab/README.md))
 - [ ] Final review, versioned release, and maintenance process (Phase 7; blocked by Phase 6)
 
 The draft capture schemas, comparison-report schema, structural fixtures, and comparison methodology are available under `schemas/v1/`, `conformance/validation/`, and `comparison/`.

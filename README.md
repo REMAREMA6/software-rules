@@ -10,6 +10,8 @@ A technology-independent specification system for capturing, representing, and c
 - [Changelog](CHANGELOG.md)
 - [Design decisions](research/DESIGN-DECISIONS.md)
 - [Maturity and versioning policy](specification/VERSIONING.md)
+- [Standards and prior-art review](research/STANDARDS-REVIEW.md)
+- [Research references](research/REFERENCES.md)
 
 When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this introduction. The tracker records the current phase, completed work, blockers, and next action.
 
@@ -50,7 +52,7 @@ This repository is the home of the format specification, schemas, examples, and 
 - Core vocabulary and common observation envelope
 - Runtime observation and evidence model
 - Separate source-derived rule model
-- Facet-specific formats, including interface, behaviour, business rules, data, persistence, APIs, messaging, security, permissions, background work, and errors
+- Facet-specific formats, including interface, behaviour, business rules, data, persistence, APIs, messaging, identity, authorization, security, background work, configuration, performance, and errors
 - Machine-validation schemas
 - Canonicalization and comparison methodology
 - Reference examples and conformance fixtures

@@ -8,7 +8,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ### Added
 - Draft schema format bumped to 0.2.0 because replication-scope inventories and separate comparison-completeness reporting are incompatible additions to the 0.1.0 draft.
-- Reopened Phase 6 conformance with required replication-scope property inventories, evidence-linked property states, separate comparison completeness results, and integrity checks against false completeness claims.
+- Added the Playwright runtime conformance harness, retaining full computed CSS properties, DOM hierarchy, pseudo-element content, geometry, accessibility snapshots, UI-state screenshots, keyboard/validation scenarios, API traces, and pixel comparisons.
 - Normative `specification/REPLICATION-COMPLETENESS.md`: replication-scope completeness is a separate requirement from agreement among the properties captured; incomplete captures cannot establish faithful replication.
 - Phase 6 cross-record integrity validator and unit tests for duplicate IDs and unresolved/mismatched references across capture records.
 - Phase 5 comparison specification: matching/alignment, normalization, difference classification, coverage/limitations, and a worked comparison report.
@@ -26,9 +26,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
-- Original Phase 6 completion is withdrawn pending redo; Task Board captures now explicitly report incomplete replication scope despite matching selected observations.
-- Phase 7 started: the replication-completeness requirement is now an explicit review and conformance obligation.
-- Phase 6 now distinguishes completed structural cross-record validation from outstanding empirical runtime captures; no browser evidence is represented as collected.
+- Phase 6 was reopened because the original selected observations were not replication-sufficient. The redo now completes every required property in the declared Task Board scope; all three captures report complete, and comparison completeness remains separate from observed agreement.
+- Phase 6 runtime conformance now verifies seven pixel-identical baseline UI states at 1280×800 in Chromium 159.0.8154.6 on Linux, detects the deliberate 272-pixel mutation, and compares keyboard, validation, API, and HTTP 503 failure outcomes.
+- Phase 6 schema fixtures and cross-record integrity checks pass after updating the validator to require complete Task Board inventories while retaining the incomplete minimal fixture. Phase 7 review is now active.
 - Completed Phase 5 and advanced active work to Phase 6 after GitHub Actions run #4 validated both capture and comparison fixtures.
 - Extended automated validation to run on comparison specification changes and validate comparison-report fixtures alongside capture fixtures.
 - Completed Phase 4 and advanced active work to Phase 5 after the Ajv 2020-12 GitHub Actions validation passed the valid fixture and all three negative fixtures.
@@ -57,10 +57,11 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Do not use this file as the task tracker; use [TRACKER.md](TRACKER.md) for progress.
 - When a version is released, replace the relevant Unreleased entries with a dated version heading and keep prior release entries unchanged.
 
-## 2026-11-26 — Phase 6 conformance examples
+## 2026-11-26 — Phase 6 conformance examples and replication-completeness redo
 
-- Added reference, independent, and deliberately mutated Task Board applications.
-- Added empirical interface, behavior, and deterministic adapter API captures, plus raw API events.
-- Added an unverified source-derived rule with retained source excerpt.
-- Added bounded equivalent and actual-mismatch comparison reports.
-- Added schema fixtures and cross-record integrity checks for all captures; documented the in-memory adapter and other test limits.
+- Added reference, independent, and deliberately mutated Task Board applications, plus evidence-linked per-property replication inventories.
+- Added the Playwright runtime capture harness and retained screenshots, full computed CSS maps, DOM/geometry/accessibility snapshots, keyboard outcomes, validation outcomes, API traces, and HTTP 503 failure evidence.
+- Verified exact pixel identity between reference and independent baseline across seven declared UI states; the deliberate pluralization mutation produces a 272-pixel mismatch.
+- Updated all three capture records and schema fixtures to complete for the declared Task Board scope; updated equivalent and mismatch reports to report completeness separately from agreement.
+- Added runtime and schema/integrity CI. The runtime conformance run and final schema/integrity run passed; the runtime artifact is linked from `examples/task-board/README.md` and expires after 30 days.
+- Retained explicit exclusions for responsive variants, durable persistence, production network/server behavior, authentication, and authorization; no universal cross-stack equivalence claim is made.

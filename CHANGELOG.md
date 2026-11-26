@@ -8,9 +8,12 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ### Added
 - Repository governance documents and conventions.
+- Comparative standards review and authoritative research bibliography.
 
 ### Changed
-- Project navigation and phase tracking are being aligned with the established repository structure.
+- Completed Phase 1 and moved the tracker to Phase 2.
+- Revised the working facet taxonomy to separate identity/authentication from authorization and add configuration and performance/resource behaviour.
+- Recorded the distinction between declared contracts and actual runtime observations.
 
 ### Deprecated
 - None.

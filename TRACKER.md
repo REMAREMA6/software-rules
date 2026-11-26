@@ -3,10 +3,10 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 0 — Repository and project governance  
+**Current phase:** Phase 1 — Research existing standards and prior art  
 **Overall status:** In progress
 
-> This file is the persistent progress record. Update it whenever task status changes. Keep the current task and next action explicit so work can resume in a new chat.
+> This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
 ## Status key
 
@@ -18,17 +18,18 @@
 
 ## Current position
 
-- **Current phase:** Phase 0 — Repository and project governance
-- **Current task:** Establish and review the project roadmap and tracker.
+- **Current phase:** Phase 1 — Research existing standards and prior art
+- **Current task:** Consolidate and verify the standards/prior-art research already started; record findings and design implications in the repository.
 - **Blockers:** None known.
-- **Next action:** Begin Phase 1 research; review the existing standards and prior-art candidates listed in `PLAN.md`, then record findings and design implications.
+- **Next action:** Create `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md`; assess each candidate standard's scope, strengths, limitations, and relevance to the Software Rules capture-and-comparison goal.
+- **Do not do yet:** Freeze the common observation envelope, facet payloads, or JSON schemas before Phase 1 research is documented and reviewed.
 
 ## Phase tracking
 
 | Phase | Name | Status | Notes |
 |---|---|---|---|
-| 0 | Repository and project governance | [~] In progress | Repository and initial README exist; plan and tracker being established. |
-| 1 | Research existing standards and prior art | [ ] Not started | Research before fixing the core model. |
+| 0 | Repository and project governance | [x] Complete | Plan, tracker, changelog, decision log, maturity/versioning policy, and navigation links established. |
+| 1 | Research existing standards and prior art | [~] In progress | Consolidate previous research and verify authoritative sources. |
 | 2 | Core concepts and common model | [ ] Not started | Depends on Phase 1 findings. |
 | 3 | Facet specifications | [ ] Not started | Define facet boundaries and typed payloads. |
 | 4 | Machine-readable schemas | [ ] Not started | Schemas follow the agreed conceptual model. |
@@ -44,9 +45,11 @@
 - [x] Propose and document target repository layout.
 - [x] Create project roadmap in `PLAN.md`.
 - [x] Create persistent progress tracker.
-- [ ] Link plan and tracker from the README.
-- [ ] Establish changelog and design-decision recording conventions.
-- [ ] Define specification maturity labels and versioning policy.
+- [x] Link plan and tracker and governance documents from the README.
+- [x] Establish changelog and design-decision recording conventions.
+- [x] Define specification maturity labels and versioning policy.
+
+**Phase 0 exit gate: satisfied.** A new chat can find the project purpose, roadmap, progress, decisions, change history, and versioning policy in the repository.
 
 ## Phase 1 — Research existing standards and prior art
 
@@ -149,14 +152,15 @@ For every facet, track: scope, observable dimensions, trigger/scenario model, ty
 
 | ID | Decision | Status | Record |
 |---|---|---|---|
-| D-001 | Keep runtime-observed rules distinct from source-derived rules. | Accepted | Project foundation; documented in README and PLAN. |
-| D-002 | Use a shared core envelope with facet-specific typed payloads. | Proposed | Validate during research and core-model design. |
-| D-003 | Treat comparison conclusions as bounded by captured scenarios and evidence. | Accepted | Project foundation; documented in README and PLAN. |
+| D-001 | Keep runtime-observed rules distinct from source-derived rules. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
+| D-002 | Use a shared core envelope with facet-specific typed payloads. | Proposed | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md); validate in Phases 1–2. |
+| D-003 | Bound equivalence claims to captured scenarios and evidence. | Accepted | [DESIGN-DECISIONS.md](research/DESIGN-DECISIONS.md) |
 
 ## Work log
 
 ### 2026-11-26
-- Repository inspected; confirmed the initial README is present.
-- Added the project roadmap and target layout.
-- Established this tracker as the progress and handoff record.
-- Next: begin standards and prior-art research before fixing the format.
+- Inspected the repository and confirmed README, plan, and tracker.
+- Completed Phase 0 governance: added `CHANGELOG.md`, `research/DESIGN-DECISIONS.md`, and `specification/VERSIONING.md`.
+- Updated README navigation and reconciled the plan and tracker.
+- Verified the Phase 0 exit gate and moved the active work to Phase 1.
+- Next: consolidate and verify prior standards research in `research/STANDARDS-REVIEW.md` and `research/REFERENCES.md`.

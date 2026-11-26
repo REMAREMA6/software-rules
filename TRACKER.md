@@ -22,7 +22,7 @@
 - **Current task:** Redo Phase 6 conformance using an explicit, evidence-backed replication property inventory and completeness gate.
 - **Blockers:** Phase 6 cannot pass until required Task Board interface and behaviour properties have runtime evidence. Production-backend, durable-persistence, authentication, and real network transport remain explicitly outside the selected test boundary.
 - **Next action:** Expand runtime capture of the Task Board's missing interface and behaviour properties, then update comparisons and run schema, integrity, and completeness tests.
-- **Phase 6 result:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Interface, behavior, and deterministic adapter API observations were captured; equivalent and actual-difference reports were schema-validated.
+- **Original Phase 6 evidence:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Those captures establish only the recorded observations; the new inventory classifies them as replication-incomplete, so the original result does not satisfy the Phase 6 exit gate.
 
 ## Phase tracking
 
@@ -225,6 +225,7 @@
 - [x] Require comparisons to report replication completeness separately from observed agreement.
 - [x] Add cross-record integrity checks for unique inventory IDs, facet declarations, observation/evidence references, and false complete claims.
 - [x] Add Task Board inventories for interface, behaviour, and API properties; current captures are explicitly incomplete.
+- [x] Bump the incompatible draft capture/report format from 0.1.0 to 0.2.0 and update the valid fixtures.
 - [x] Add tests rejecting a complete status when required properties are partial or unresolved.
 - [ ] Expand reference, independent, and mutated runtime captures to cover all required properties in the declared Task Board scope.
 - [ ] Add retained screenshots/pixel evidence and complete per-state interface snapshots where applicable.

@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Extend the Playwright harness with discriminating behaviour, business-rule, and data probes; strengthen evidence-quality validation.
+- **Current task:** Execute the expanded Playwright probe suite and inspect its outputs; then add any missing scenarios and update the capture evidence.
 - **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
-- **Next action:** Add runtime scenarios for title boundary cases, duplicate titles, mixed task states/counts, repeated toggles/deletes, malformed/unknown-ID API operations, and exact request/response data shapes. Preserve unresolved rules as partial.
+- **Next action:** Run runtime conformance for the new title, duplicate, HTML-like/Unicode, long-title, mixed-state, filter, toggle, deletion, and identifier probes. Inspect all three variant outputs before changing partial statuses.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -164,19 +164,23 @@
 - [ ] Re-run baseline and deliberate-mutation conformance.
 
 ### 6B — Behaviour and functionality
-- [~] Draft the discriminating runtime probe backlog for create, complete, filter, delete, validation, and failure paths.
+- [x] Draft the discriminating runtime probe backlog for create, complete, filter, delete, validation, and failure paths.
+- [x] Add initial runtime probes for title normalization, duplicates, HTML-like/Unicode and long values, mixed-task filters/counts, toggle-back, and deletion.
+- [ ] Execute the expanded probe suite and inspect the output archive.
 - [ ] Enumerate every supported operation, trigger, precondition, transition, output, side effect, and failure path.
 - [ ] Probe normal, boundary, repeated, invalid, interrupted, and failure scenarios.
 - [ ] Capture independent executions and compare rule-level outcomes.
 
 ### 6C — Business rules
-- [~] Record candidate rules and unresolved hypotheses for title normalization, blank rejection, initial completion state, and summary counts.
+- [x] Record candidate rules and unresolved hypotheses for title normalization, blank rejection, initial completion state, and summary counts.
+- [ ] Promote or further qualify these rules only after the expanded probe results are inspected.
 - [ ] Identify domain decisions, constraints, defaults, calculations, and branch conditions.
 - [ ] Probe boundaries and combinations that distinguish competing rule hypotheses.
 - [ ] Keep business policy distinct from interface validation and generic action mechanics.
 
 ### 6D — Data
-- [~] Record partial observed task record samples and their unresolved schema/constraint questions.
+- [x] Record partial observed task record samples and their unresolved schema/constraint questions.
+- [ ] Extend and verify data probes for exact request/response shape, identifier uniqueness, malformed values, and update semantics.
 - [ ] Capture runtime data structures, field types, nullability, relationships, constraints, transformations, defaults, and serialization.
 - [ ] Exercise boundary/invalid values and record what remains unknown.
 - [ ] Link data observations to the operations and API exchanges that produced them.
@@ -280,3 +284,11 @@
 - Updated equivalent and deliberate-difference reports to preserve observed comparison results while reporting incomplete-both.
 - Updated integrity tests to expect the Task Board captures to remain incomplete.
 - Audit finding: the integrity validator checks reference existence, facet labels, and declared statuses; it does not verify that the linked evidence semantically proves the property or that the inventory is exhaustive. This limitation is now explicit. Stronger evidence-quality checks remain active work.
+
+
+### Phase 6B probe implementation — 2026-11-26
+
+- Added an expanded Playwright probe sequence to the runtime harness for leading/trailing whitespace normalization, duplicate titles, HTML-like/Unicode title safety, 512-character titles, mixed active/completed records, filter counts, completion toggle-back, deletion, and identifier samples.
+- Added request/response synchronization and explicit outcome assertions so the test does not mistake a click for a completed asynchronous operation.
+- The harness now retains the probe results in the per-variant runtime output. These probes have been authored but **not yet executed in a successful CI run**; no new property has been promoted to captured on their basis.
+- Next: execute the runtime workflow, inspect all reference/independent/mutated outputs, and then update the capture records with only verified results.

@@ -8,21 +8,24 @@
     "artifactRef": "examples/task-board/captures/reference.capture.json"
   },
   "implementationCapture": {
-    "captureId": "task-board-independent-capture",
+    "captureId": "task-board-independent-mutated-capture",
     "schemaVersion": "0.1.0",
-    "artifactRef": "examples/task-board/captures/independent.capture.json"
+    "artifactRef": "examples/task-board/captures/independent-mutated.capture.json"
   },
   "comparisonScope": {
     "description": "Same Task Board initial route and create/complete/filter/delete scenario at 1280x800 CSS px in isolated Chromium with the same deterministic in-memory API adapter.",
     "facets": [
       "interface",
-      "behavior"
+      "behavior",
+      "api"
     ],
     "scenarioIds": [
       "ref-scenario-interface",
       "ref-scenario-workflow",
-      "ind-scenario-interface",
-      "ind-scenario-workflow"
+      "ref-scenario-api",
+      "mut-scenario-interface",
+      "mut-scenario-workflow",
+      "mut-scenario-api"
     ],
     "conditions": [
       "Same browser engine and viewport",
@@ -60,7 +63,7 @@
         "ref-obs-interface"
       ],
       "implementationRecordIds": [
-        "ind-obs-interface"
+        "mut-obs-interface"
       ],
       "status": "paired",
       "identityBasis": "scenario-subject-facet-condition",
@@ -73,11 +76,24 @@
         "ref-obs-workflow"
       ],
       "implementationRecordIds": [
-        "ind-obs-workflow"
+        "mut-obs-workflow"
       ],
       "status": "paired",
       "identityBasis": "scenario-subject-facet-condition",
       "rationale": "Both observations exercise the same create/complete/filter/delete sequence with the same input."
+    },
+    {
+      "alignmentId": "align-task-api-post",
+      "facet": "api",
+      "referenceRecordIds": [
+        "ref-obs-api-1"
+      ],
+      "implementationRecordIds": [
+        "mut-obs-api-1"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are the POST /api/tasks exchange for the same input at the same deterministic adapter boundary."
     }
   ],
   "results": [
@@ -119,7 +135,7 @@
         "ref-obs-workflow"
       ],
       "implementationObservationIds": [
-        "ind-obs-workflow"
+        "mut-obs-workflow"
       ],
       "referenceValue": {
         "afterCreate": "1 task · 1 active",
@@ -130,44 +146,75 @@
       },
       "implementationValue": {
         "afterCreate": "1 tasks · 1 active",
-        "afterComplete": "1 task · 0 active",
+        "afterComplete": "1 tasks · 0 active",
         "activeFilterCount": 0,
         "completedFilterCount": 1,
         "afterDelete": "0 tasks · 0 active"
       },
-      "reason": "Controlled mutation: independent output pluralizes the singular count incorrectly; this documents a deliberate mutation, not the unmodified baseline."
+      "reason": "The mutated implementation was executed in Chromium and displayed '1 tasks' after creating one task; the reference displayed '1 task'. This is a directly observed mismatch."
+    },
+    {
+      "resultId": "result-task-api-post",
+      "alignmentId": "align-task-api-post",
+      "facet": "api",
+      "dimension": "POST /api/tasks.response",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-api-1"
+      ],
+      "implementationObservationIds": [
+        "mut-obs-api-1"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "Prepare release notes",
+          "completed": false
+        }
+      },
+      "implementationValue": {
+        "status": 200,
+        "body": {
+          "id": "task-1",
+          "title": "Prepare release notes",
+          "completed": false
+        }
+      },
+      "reason": "Both deterministic adapters return HTTP 200 with a newly created incomplete task for the same request."
     }
   ],
   "coverage": {
     "reference": {
-      "declaredUnits": 2,
-      "observedUnits": 2,
+      "declaredUnits": 3,
+      "observedUnits": 3,
       "notObservedUnits": 0,
       "unknownUnits": 0,
-      "unavailableUnits": 1
+      "unavailableUnits": 0
     },
     "implementation": {
-      "declaredUnits": 2,
-      "observedUnits": 2,
+      "declaredUnits": 3,
+      "observedUnits": 3,
       "notObservedUnits": 0,
       "unknownUnits": 0,
-      "unavailableUnits": 1
+      "unavailableUnits": 0
     },
-    "sharedComparableUnits": 2,
+    "sharedComparableUnits": 3,
     "incomparableUnits": 1,
     "limitations": [
-      "API request/response events were not retained; API facet excluded from empirical comparison."
+      "Production server behavior, durable persistence, authentication, and transport-level network behavior are outside the test boundary."
     ]
   },
   "conclusion": {
     "status": "differences-found",
-    "statement": "A controlled mutation that changes the singular summary output is classified as a mismatch. This mutation is not present in the unmodified independent baseline capture.",
+    "statement": "The captured interface geometry and POST API adapter response match. The task summary differs: the reference renders '1 task' while the mutated implementation renders '1 tasks' for a single task. This is a bounded, directly observed mismatch.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
   "limitations": [
-    "Captures are empirical for tested UI and interaction scenarios, not every state or facet.",
-    "The deterministic API adapter is in-memory; production backend and persistence behavior are outside scope.",
-    "The deliberate-difference report uses a controlled comparison mutation; it is not evidence that the checked-in baseline differs."
+    "The mismatch belongs to the explicitly mutated test build, not the baseline independent implementation.",
+    "The API exchanges are observed at the deterministic in-memory adapter boundary, not a production server.",
+    "The report covers only the captured route, viewport, inputs, and task lifecycle."
   ]
 }

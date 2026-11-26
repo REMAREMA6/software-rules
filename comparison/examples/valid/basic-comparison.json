@@ -1,14 +1,14 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "reportId": "comparison-demo-001",
   "createdAt": "2026-11-26T12:00:00Z",
   "referenceCapture": {
     "captureId": "capture-reference-001",
-    "schemaVersion": "0.1.0"
+    "schemaVersion": "0.2.0"
   },
   "implementationCapture": {
     "captureId": "capture-implementation-001",
-    "schemaVersion": "0.1.0"
+    "schemaVersion": "0.2.0"
   },
   "comparisonScope": {
     "description": "Compare the rendered home-root hierarchy for one aligned navigation scenario.",

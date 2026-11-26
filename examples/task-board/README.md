@@ -47,7 +47,7 @@ The expanded probes were executed successfully in [GitHub Actions Phase 6 run #4
 
 The earlier baseline run is [#45854435953](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953).
 
-**Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior. The per-property audit also found unresolved font-rendering, business-rule, and data dimensions; all three captures now correctly report `incomplete`.
+**Interpretation:** pixel identity is established for the seven tested states in the recorded Chromium/Linux environment, not for every possible viewport, operating system, browser, font renderer, or untested application state. The declared scope explicitly fixes the viewport and excludes production network transport, durable persistence, authentication, and server behavior. The remaining unresolved properties are font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint; all three captures correctly report `incomplete`.
 
 ## Source-derived rule
 

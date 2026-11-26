@@ -326,7 +326,7 @@
 - Added the full 15-facet matrix, source register requirements, independent replication layout, rule-level pass criteria, mutation requirement, and Phase 6 exit gate in examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md.
 - Updated PLAN.md, TRACKER.md, and CHANGELOG.md to use the cross-repository strategy.
 - Created conformance/replication-lab with case and source templates, shared layout, and Python test workflow.
-- Registered six source candidates with pinned inspected commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n. They remain candidates, not passed cases.
+- Registered nine source candidates with pinned inspected commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n. They remain candidates, not passed cases.
 - Inspected BullMQ retry/backoff source, guide, and tests at commit 526668f2c5e6de9d5d664df577f09a6bdccac1b4. Added a source-derived Software Rules capture with two unverified rules and an explicitly incomplete scope.
 - Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The corresponding test logic passed an isolated local Python run. Repository CI has been configured; source runtime execution and source/replica capture comparison remain outstanding.
 - No Phase 6 completion claim is made. The current work demonstrates the cross-repository process has begun, not that all 15 facets have passed.

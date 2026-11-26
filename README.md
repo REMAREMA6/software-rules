@@ -27,6 +27,10 @@ A technology-independent specification system for capturing, representing, and c
 - [Validation instructions](conformance/validation/README.md)
 - [Cross-record integrity validation](conformance/integrity/README.md)
 - [Capture-agent guidance](examples/CAPTURE-AGENT-GUIDE.md)
+- [Phase 6 Task Board conformance system](examples/task-board/README.md)
+- [Empirical reference capture](examples/task-board/captures/reference.capture.json)
+- [Empirical independent capture](examples/task-board/captures/independent.capture.json)
+- [Deliberate-difference capture](examples/task-board/captures/independent-mutated.capture.json)
 - [Comparison specification](comparison/README.md)
 - [Comparison model](comparison/COMPARISON-MODEL.md)
 - [Normalization rules](comparison/NORMALIZATION.md)
@@ -80,8 +84,8 @@ The current draft defines 15 observation facets. See the [facet catalogue](facet
 
 ## Remaining specification work
 
-- Empirical end-to-end captures and facet examples (Phase 6; cross-record integrity validator added, runtime capture work remains)
-- Final review, stable release, and maintenance process (Phase 7)
+- [x] Empirical end-to-end captures and conformance examples (Phase 6 complete; see [Task Board test system](examples/task-board/README.md))
+- [ ] Final review, versioned release, and maintenance process (Phase 7)
 
 The draft capture schemas, comparison-report schema, structural fixtures, and comparison methodology are available under `schemas/v1/`, `conformance/validation/`, and `comparison/`.
 

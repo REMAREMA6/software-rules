@@ -157,7 +157,7 @@
       "resultId": "result-task-api-post",
       "alignmentId": "align-task-api-post",
       "facet": "api",
-      "dimension": "POST /api/tasks.response",
+      "dimension": "POST /api/tasks.response.status-and-default-state",
       "classification": "match",
       "comparisonBasis": "exact",
       "referenceObservationIds": [
@@ -168,21 +168,13 @@
       ],
       "referenceValue": {
         "status": 200,
-        "body": {
-          "id": "task-1",
-          "title": "Prepare release notes",
-          "completed": false
-        }
+        "completed": false
       },
       "implementationValue": {
         "status": 200,
-        "body": {
-          "id": "task-1",
-          "title": "Prepare release notes",
-          "completed": false
-        }
+        "completed": false
       },
-      "reason": "Both deterministic adapters return HTTP 200 with a newly created incomplete task for the same request."
+      "reason": "For their respective inputs, both adapters returned HTTP 200 and initialized completed=false. Input-specific title values are excluded from this comparison."
     }
   ],
   "coverage": {

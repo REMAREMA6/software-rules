@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "captureId": "task-board-reference-capture",
   "createdAt": "2026-11-26T15:30:00+01:00",
   "purpose": "Empirical browser capture of the independently authored Task Board reference implementation under the shared Phase 6 scenario set.",

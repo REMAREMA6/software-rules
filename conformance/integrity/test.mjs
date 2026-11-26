@@ -30,4 +30,7 @@ for (const file of ["reference.capture.json", "independent.capture.json", "indep
   assert.deepEqual(validateCapture(capture), [], file + " must have valid cross-record and replication-inventory references");
   assert.equal(capture.replicationScope.completeness.status,"incomplete",file+" must not overclaim completeness");
 }
-console.log("PASS cross-record integrity, replication inventory, completeness guard, and all three Task Board capture graphs");
+const minimal = JSON.parse(fs.readFileSync(path.resolve("schemas/v1/fixtures/valid/minimal-capture.json"), "utf8"));
+assert.deepEqual(validateCapture(minimal), [], "minimal capture fixture must have valid inventory references");
+assert.equal(minimal.replicationScope.completeness.status, "incomplete", "minimal fixture must not claim replication completeness");
+console.log("PASS cross-record integrity, replication inventory, false-completeness guard, minimal fixture, and all three Task Board capture graphs");

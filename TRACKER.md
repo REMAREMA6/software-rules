@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Expand the probe matrix beyond the first successful boundary cases and begin selecting a richer target for persistence, identity, security, integrations, and background-processing facets.
+- **Current task:** Complete the Task Board target's expanded capture review, then establish a richer full-stack reference target for facets absent from the Task Board.
 - **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
-- **Next action:** Probe the maximum title-length boundary, malformed/unknown-ID API cases, update/delete failure behaviour, and additional data constraints. Then decide whether to extend this fixture or introduce a richer reference target for the remaining facets.
+- **Next action:** Review the latest supplemental artifact and update the capture records/comparisons. Then add a richer target that actually implements persistence, messaging, identity/authentication, authorization, security, background jobs, integrations, and application configuration.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -313,3 +313,13 @@
 - The latest documentation/capture validation run #45859552354 also completed successfully.
 
 - Post-update verification: [run #45859279008](https://github.com/REMAREMA6/software-rules/actions/runs/45859279008) passed after the 34-entry capture inventories and comparison reports were updated; [run #45859552354](https://github.com/REMAREMA6/software-rules/actions/runs/45859552354) also passed after the latest documentation/plan updates.
+
+
+### Supplemental Phase 6 probe expansion — 2026-11-26
+
+- Expanded the runtime harness with responsive viewports (320×720, 768×900, 1920×1080), focus/hover/dark-colour-scheme states, SVG/script-shaped input probes, HTTP 503 failures for create/update/delete, and browser navigation/paint/resource measurements.
+- Successful runtime workflow: [#45860499892](https://github.com/REMAREMA6/software-rules/actions/runs/45860499892). All 13 baseline UI screenshot comparisons were pixel-identical; the deliberate mutation remained detectable at 272 differing pixels.
+- Runtime results: no horizontal overflow at the three tested widths; focus and hover states were reached; no disabled controls exist in the fixture; SVG/script-shaped titles were rendered literally with no injected SVG/script/image and no payload execution; all three failed API operations returned 503 and produced unhandled page errors with no user-facing recovery UI.
+- Single-run local performance samples were recorded: navigation load event end 8.1–8.9 ms, first contentful paint 16 ms, and 14 resources per variant. These are CI-host measurements, not performance guarantees.
+- Artifact: [#15137373210](https://github.com/REMAREMA6/software-rules/actions/runs/45860499892/artifacts/15137373210), 65 files, 30-day retention.
+- Added `examples/task-board/FACET-APPLICABILITY.md`. It explicitly separates the five facets exercised by Task Board from facets absent from this fixture. It does not mark the project-wide Phase 6 complete.

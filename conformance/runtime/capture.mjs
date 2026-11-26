@@ -179,7 +179,7 @@ async function runVariant(name) {
   await page.keyboard.press("Enter");
   if (keyboardActiveCount !== 1) throw new Error("Keyboard Active filter did not show the active task");
   if (keyboardCompletedCount !== 0) throw new Error("Keyboard Completed filter should be empty before completion");
-  if (keyboardCompletedSummary !== "1 task · 0 active") throw new Error("Keyboard completion did not update the task summary");
+  if (keyboardCompletedSummary !== expectedKeyboardSummary) throw new Error("Keyboard completion did not update the task summary");
   await save("keyboard-workflow");
   snapshots["keyboard-workflow"].interactionResults = {
     firstFocus, keyboardActiveCount, keyboardCompletedCount, keyboardCompletedSummary,

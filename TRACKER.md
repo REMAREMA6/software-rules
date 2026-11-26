@@ -18,7 +18,7 @@
 
 ## Current position
 
-- **Current phase:** Phase 1 — Research existing standards and prior art
+- **Current phase:** Phase 2 — Core concepts and common model
 - **Current task:** Define canonical terminology and the conceptual observation model.
 - **Blockers:** None known.
 - **Next action:** Create `specification/TERMINOLOGY.md` and `specification/OBSERVATION-MODEL.md`; define scenario execution, observation, expected outcome, actual outcome, capture method, evidence, provenance, and coverage.

@@ -337,23 +337,34 @@
   ],
   "coverage": {
     "reference": {
-      "declaredUnits": 22,
+      "declaredUnits": 29,
       "observedUnits": 18,
       "notObservedUnits": 0,
       "unknownUnits": 0,
-      "unavailableUnits": 0
+      "unavailableUnits": 0,
+      "partialUnits": 7,
+      "notApplicableUnits": 1,
+      "excludedUnits": 3,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0
     },
     "implementation": {
-      "declaredUnits": 22,
+      "declaredUnits": 29,
       "observedUnits": 18,
       "notObservedUnits": 0,
       "unknownUnits": 0,
-      "unavailableUnits": 0
+      "unavailableUnits": 0,
+      "partialUnits": 7,
+      "notApplicableUnits": 1,
+      "excludedUnits": 3,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0
     },
     "sharedComparableUnits": 18,
-    "incomparableUnits": 0,
+    "incomparableUnits": 7,
     "limitations": [
-      "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
+      "Seven required inventory properties remain partial and are not treated as replication-complete.",
+      "Three optional dimensions are explicitly excluded and one external-media property is not applicable to this fixture.",
       "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
       "The API boundary is a deterministic in-memory adapter, not a production service.",
       "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."

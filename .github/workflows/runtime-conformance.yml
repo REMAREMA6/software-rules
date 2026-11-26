@@ -1,0 +1,41 @@
+name: Runtime conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "examples/task-board/**"
+      - "conformance/runtime/**"
+      - ".github/workflows/runtime-conformance.yml"
+  pull_request:
+    paths:
+      - "examples/task-board/**"
+      - "conformance/runtime/**"
+      - ".github/workflows/runtime-conformance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-runtime-conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install runtime test dependencies
+        run: npm install --prefix conformance/runtime
+      - name: Install Chromium
+        run: npx --prefix conformance/runtime playwright install --with-deps chromium
+      - name: Capture runtime properties and compare rendered pixels
+        run: npm run capture --prefix conformance/runtime
+      - name: Upload runtime captures, screenshots, and pixel diffs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: task-board-runtime-captures
+          path: runtime-output/
+          if-no-files-found: warn
+          retention-days: 30

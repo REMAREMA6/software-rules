@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Planning and specification design  
+**Status:** Phase 7 review active; Phases 0–6 complete  
 **Plan version:** 0.2.0  
 **Last updated:** 2026-11-26
 
@@ -208,31 +208,31 @@ Deliverables:
 
 **Exit gate: satisfied (2026-11-26).** The illustrative report demonstrates alignment, a matched dimension, an excluded/not-comparable dimension, separate per-capture coverage, and an inconclusive scope-bounded conclusion. GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture fixtures and comparison-report fixtures, including rejection of a universal-equivalence claim. The example is a model demonstration, not an empirical system capture.
 
-### Phase 6 — End-to-end examples and conformance (reopened for replication-completeness redo)
+### Phase 6 — End-to-end examples and conformance
 
-Build and execute independent applications rather than relying only on hand-authored illustrative records.
+Build and execute independent applications, capture their observable rules at runtime, and validate the resulting evidence and comparisons.
 
 **Selected conformance target:** `examples/task-board/`
 
 - Reference application: array-backed state and direct event handlers.
 - Independent baseline: Map-backed state and delegated event handlers.
-- Mutation application: an intentionally defective singular-count label used to verify mismatch reporting.
+- Mutation application: deliberately defective singular-count label used to verify mismatch reporting.
 
-**Shared scenarios:** initial empty-state render at 1280×800 CSS px; create a task; verify incomplete default; complete it; inspect Active and Completed filters; delete it. API calls are captured at a deterministic in-memory fetch adapter boundary.
+**Declared replication scope:** Task Board browser application at 1280×800 CSS px, including its rendered interface properties and declared UI states, create/complete/filter/delete workflows, keyboard operation, native input validation, and API success/failure behavior at a deterministic in-memory adapter boundary. Responsive variants, durable/cross-session persistence, production network/server behavior, authentication, and authorization are explicitly excluded.
 
 Tasks:
 - [x] Implement reference and independent baseline applications.
 - [x] Implement and execute a deliberate mutation build.
-- [x] Capture interface hierarchy, resolved presentation values, and element geometry.
-- [x] Capture behavior triggers, actions, state transitions, and visible outputs.
-- [x] Instrument and retain API request/response events for POST, PATCH, and DELETE at the test adapter boundary.
-- [x] Produce multi-facet captures with evidence, coverage, and limitations.
-- [x] Include a source-derived rule with source artifact evidence and an explicit unverified state.
-- [x] Produce a baseline equivalent comparison report.
-- [x] Produce an empirical mismatch report using the executed mutation build.
-- [x] Validate all capture and comparison fixtures in CI.
-- [x] Validate cross-record references for all captures.
-- [x] Document the capture-agent procedure and example-specific boundaries.
+- [x] Define a required per-property replication inventory and completeness gate.
+- [x] Capture the complete DOM hierarchy, every computed CSS property, pseudo-element content, element geometry, accessibility snapshots, semantics, and screenshots for all declared UI states.
+- [x] Compare reference and independent baseline screenshots pixel-for-pixel across seven UI states at 1280×800 CSS px; all seven have zero differing pixels.
+- [x] Execute and capture create, completion, all filters, delete, empty/whitespace validation, keyboard-only operation, and API failure/recovery behavior.
+- [x] Retain POST, PATCH, DELETE, and HTTP 503 request/response evidence at the deterministic in-memory adapter boundary.
+- [x] Verify the reference and independent baseline API traces and runtime error outcomes agree.
+- [x] Verify the deliberately mutated implementation produces an observed mismatch (272 differing pixels in the one-active state).
+- [x] Update all three capture records and schema fixtures with evidence-linked completeness inventories.
+- [x] Update equivalent and deliberate-difference reports with completeness separate from observed agreement.
+- [x] Validate schemas, fixtures, cross-record references, and false-completeness rejection in GitHub Actions.
 
 Deliverables:
 - `examples/task-board/reference/`
@@ -243,23 +243,12 @@ Deliverables:
 - `examples/task-board/comparisons/`
 - `schemas/v1/fixtures/valid/task-board-*.json`
 - `comparison/examples/valid/task-board-*.json`
-- `conformance/integrity/` and updated `examples/CAPTURE-AGENT-GUIDE.md`
+- `conformance/integrity/`
+- `conformance/runtime/`
 
-**Original exit gate withdrawn pending redo.** The original baseline pair matched only its recorded observations. That result did not establish a complete property inventory or replication-sufficient captures. The redo must satisfy the Replication Completeness Rule before Phase 6 can be marked complete.
- 
-### Phase 6 redo requirements
+**Phase 6 exit gate: satisfied for the declared Task Board scope.** All 22 inventory entries are accounted for in each capture: 18 required properties are captured, one required property is explicitly not applicable, and three optional dimensions are explicitly excluded. No required property remains partial, unobserved, unknown, unavailable, conflicting, or source-inferred. The reference and independent baseline match pixel-for-pixel across seven tested UI states; the deliberate mutation remains detectable. Runtime evidence is available in [GitHub Actions run #45855076741](https://github.com/REMAREMA6/software-rules/actions/runs/45855076741) and its [capture artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524). Schema and integrity validation passed in [run #45855135858](https://github.com/REMAREMA6/software-rules/actions/runs/45855135858).
 
-- [x] Add a required replication-scope object and property inventory to the capture schema.
-- [x] Add separate replication-completeness status to comparison reports.
-- [x] Add integrity checks that reject false completeness and broken inventory evidence links.
-- [x] Add explicit Task Board property inventories and mark current captures incomplete.
-- [x] Bump the incompatible draft capture/report format from 0.1.0 to 0.2.0.
-- [ ] Expand empirical captures to cover every required property in the declared Task Board scope.
-- [ ] Capture complete interface snapshots and retained screenshot/pixel evidence for each required UI state.
-- [ ] Execute missing validation, keyboard, error, recovery, and edge-case behaviour scenarios.
-- [ ] Update comparison reports and run all schema, integrity, and conformance checks.
-
-**Redo exit gate:** Every required property in the declared Task Board replication scope is either captured with adequate runtime evidence or explicitly justified as not applicable; no required property remains partial, unobserved, unknown, unavailable, conflicting, or source-inferred. Reference and independent captures must use equivalent conditions. The mutated build must still produce an observed mismatch. Comparisons must report completeness separately from agreement.
+**Boundary:** This is a bounded conformance result for the declared Task Board scope and recorded Chromium/Linux environment. It does not prove universal equivalence across every technology stack, browser, operating system, viewport, or arbitrary software system.
 
 ### Phase 7 — Review, release, and maintenance
 

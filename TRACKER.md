@@ -32,7 +32,7 @@
 | 1 | Research existing standards and prior art | [x] Complete | Comparative review, authoritative references, limitations, design implications, and revised facet proposal recorded. |
 | 2 | Core concepts and common model | [x] Complete | Core vocabulary, rule/evidence classes, linked observation model, source-derived model, and interface/API conceptual tests completed. Schemas remain deferred. |
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
-| 4 | Machine-readable schemas | [x] Complete | Draft v0.1.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
+| 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
 | 6 | End-to-end examples and conformance | [~] Redo in progress | Added explicit replication property inventories, separate completeness reporting, schema requirements, and integrity checks. Existing captures correctly remain incomplete; additional runtime evidence and expanded conformance scenarios are still required. |
 | 7 | Review, release, and maintenance | [ ] Pending Phase 6 redo | Resume final consistency review and release only after Phase 6 conformance satisfies the replication-completeness requirements. |

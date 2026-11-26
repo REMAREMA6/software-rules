@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
-- **Current task:** Verify the new Phase 6 GitHub Actions workflow executes successfully, inspect its three-variant runtime artifact, and fix any failures.
+- **Current task:** Expand the probe matrix beyond the first successful boundary cases and begin selecting a richer target for persistence, identity, security, integrations, and background-processing facets.
 - **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
-- **Next action:** Inspect the Phase 6 expanded runtime workflow run and artifact. Do not promote partial inventory properties until the new probes have actually run and their evidence has been reviewed.
+- **Next action:** Probe the maximum title-length boundary, malformed/unknown-ID API cases, update/delete failure behaviour, and additional data constraints. Then decide whether to extend this fixture or introduce a richer reference target for the remaining facets.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -166,21 +166,22 @@
 ### 6B — Behaviour and functionality
 - [x] Draft the discriminating runtime probe backlog for create, complete, filter, delete, validation, and failure paths.
 - [x] Add initial runtime probes for title normalization, duplicates, HTML-like/Unicode and long values, mixed-task filters/counts, toggle-back, and deletion.
-- [~] Execute the expanded probe suite through the new dedicated GitHub Actions workflow and inspect the output archive.
+- [x] Execute the expanded probe suite through the dedicated GitHub Actions workflow and inspect the three-variant output archive.
 - [ ] Enumerate every supported operation, trigger, precondition, transition, output, side effect, and failure path.
 - [ ] Probe normal, boundary, repeated, invalid, interrupted, and failure scenarios.
 - [ ] Capture independent executions and compare rule-level outcomes.
 
 ### 6C — Business rules
 - [x] Record candidate rules and unresolved hypotheses for title normalization, blank rejection, initial completion state, and summary counts.
-- [ ] Promote or further qualify these rules only after the expanded probe results are inspected.
+- [x] Promote only the rules directly supported by the expanded results; retain title maximum length as partial.
 - [ ] Identify domain decisions, constraints, defaults, calculations, and branch conditions.
 - [ ] Probe boundaries and combinations that distinguish competing rule hypotheses.
 - [ ] Keep business policy distinct from interface validation and generic action mechanics.
 
 ### 6D — Data
 - [x] Record partial observed task record samples and their unresolved schema/constraint questions.
-- [ ] Extend and verify data probes for exact request/response shape, identifier uniqueness, malformed values, and update semantics.
+- [x] Extend and verify initial data probes for record shape, identifier uniqueness within the adapter session, and PATCH field preservation.
+- [ ] Probe malformed values, null/missing fields, unknown identifiers, and broader update semantics.
 - [ ] Capture runtime data structures, field types, nullability, relationships, constraints, transformations, defaults, and serialization.
 - [ ] Exercise boundary/invalid values and record what remains unknown.
 - [ ] Link data observations to the operations and API exchanges that produced them.
@@ -295,3 +296,14 @@
 
 
 - Added .github/workflows/phase6-expanded-conformance.yml to run the expanded Playwright capture, evidence-link integrity tests, schema validation, and artifact upload on relevant pushes and pull requests. The workflow has been added; its first execution result still needs verification.
+
+
+### Phase 6 expanded probe execution — 2026-11-26
+
+- Corrected a Playwright strict-mode selector ambiguity found in the first workflow attempt; filter button locators now require exact accessible-name matches.
+- Successful run: [GitHub Actions #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). Runtime capture, cross-record/evidence-link integrity, and JSON Schema/comparison validation all passed.
+- Retained 41 runtime artifact files in [artifact #15136459580](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580), including three variant captures and expanded probe results.
+- All three variants agreed on title trimming, duplicate acceptance, literal HTML-like/Unicode rendering, 512-character title acceptance, mixed-state counts/filters, completion toggle-back, PATCH field preservation, and three-task deletion.
+- Updated all three captures with the new scenario, execution, evidence, and observations. Inventory now has 34 entries per capture: 28 captured, two partial, one not applicable, and three optional exclusions.
+- Updated comparison coverage to 28 observed/captured units and two partial units; all reports remain incomplete-both.
+- Remaining partial properties: font rendering beyond the recorded Chromium/Linux conditions and maximum title-length constraint.

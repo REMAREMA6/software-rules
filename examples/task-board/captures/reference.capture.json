@@ -43,11 +43,13 @@
     }
   },
   "scope": {
-    "description": "Initial render and one task lifecycle: create, complete, filter active/completed, delete.",
+    "description": "Initial render and one task lifecycle: create, complete, filter active/completed, delete. Initial business-rule and data observations are included as partial evidence; their full rule and constraint spaces remain unresolved.",
     "facetIds": [
       "interface",
       "behavior",
-      "api"
+      "api",
+      "business-rules",
+      "data"
     ],
     "scenarioIds": [
       "ref-scenario-interface",
@@ -170,7 +172,9 @@
       "facetIds": [
         "interface",
         "behavior",
-        "api"
+        "api",
+        "business-rules",
+        "data"
       ],
       "subject": "task-board-replication-scope-v2",
       "preconditions": [
@@ -1087,6 +1091,98 @@
       "limitations": [
         "This is an in-memory route adapter, not a production network or server."
       ]
+    },
+    {
+      "observationId": "ref-obs-business-data",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-runtime-completeness",
+      "facet": "business-rules",
+      "status": "observed",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "observed-domain-rule-samples",
+        "subject": "task-create-and-summary",
+        "observedCases": [
+          {
+            "case": "whitespace-only-title",
+            "outcome": "submission ignored; no task created"
+          },
+          {
+            "case": "single-task-created",
+            "outcome": "task begins incomplete; summary shows one active task"
+          },
+          {
+            "case": "single-task-completed",
+            "outcome": "summary shows zero active tasks"
+          }
+        ],
+        "unresolvedQuestions": [
+          "Whether leading/trailing whitespace is normalized for non-empty titles",
+          "Whether duplicate titles are allowed",
+          "Whether additional title constraints exist",
+          "Whether summary-count semantics hold for multiple mixed tasks and all filters"
+        ],
+        "limitations": [
+          "Only the recorded single-task scenarios were exercised; this does not establish the complete business-rule set."
+        ]
+      },
+      "evidenceRefs": [
+        "ref-evidence-workflow",
+        "ref-evidence-runtime-capture"
+      ]
+    },
+    {
+      "observationId": "ref-obs-data",
+      "targetId": "task-board-reference",
+      "executionId": "ref-exec-api",
+      "facet": "data",
+      "status": "observed",
+      "payload": {
+        "facet": "data",
+        "kind": "observed-runtime-record-samples",
+        "subject": "task-record",
+        "samples": [
+          {
+            "operation": "POST",
+            "value": {
+              "id": "task-1",
+              "title": "API probe",
+              "completed": false
+            },
+            "observedTypes": {
+              "id": "string",
+              "title": "string",
+              "completed": "boolean"
+            }
+          },
+          {
+            "operation": "PATCH",
+            "value": {
+              "id": "task-1",
+              "title": "API probe",
+              "completed": true
+            },
+            "observedTypes": {
+              "id": "string",
+              "title": "string",
+              "completed": "boolean"
+            }
+          }
+        ],
+        "unresolvedQuestions": [
+          "Identifier uniqueness and generation across multiple records or sessions",
+          "Nullability, missing fields, unknown fields, and malformed payload handling",
+          "Validation constraints and accepted title lengths/characters",
+          "Complete update/merge semantics for all fields and invalid identifiers"
+        ],
+        "limitations": [
+          "Samples come from the deterministic in-memory adapter and cover one record only."
+        ]
+      },
+      "evidenceRefs": [
+        "ref-evidence-api-1",
+        "ref-evidence-api-2"
+      ]
     }
   ],
   "runtimeRules": [
@@ -1535,11 +1631,13 @@
   ],
   "replicationScope": {
     "scopeId": "task-board-replication-scope-v2",
-    "description": "Task Board browser application at 1280×800 CSS px, including all declared rendered UI properties and states, create/complete/filter/delete workflows, keyboard operation, native input validation, API success/failure outcomes, and the deterministic in-memory API boundary. Responsive variants, durable persistence, production transport, authentication, and authorization are explicitly excluded.",
+    "description": "Task Board browser application at 1280×800 CSS px, including all declared rendered UI properties and states, create/complete/filter/delete workflows, keyboard operation, native input validation, API success/failure outcomes, and the deterministic in-memory API boundary. Responsive variants, durable persistence, production transport, authentication, and authorization are explicitly excluded. The capture also includes partial business-rule and data observations for task creation, summary counts, and task record exchanges; these facets are not complete.",
     "facets": [
       "interface",
       "behavior",
-      "api"
+      "api",
+      "business-rules",
+      "data"
     ],
     "propertyInventory": [
       {
@@ -1884,13 +1982,123 @@
         "evidenceRefs": [],
         "rationale": "The fixture boundary is a deterministic in-memory adapter, not a production network service.",
         "exclusionReason": "The fixture boundary is a deterministic in-memory adapter, not a production network service."
+      },
+      {
+        "propertyId": "ui-font-rendering",
+        "facet": "interface",
+        "subject": "task-board-root",
+        "dimension": "font-loading-fallback-and-glyph-rendering",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-runtime-interface"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-runtime-capture"
+        ],
+        "rationale": "The archive records computed font-family values, loaded-font metadata, and a screenshot in one Chromium/Linux environment, but does not establish fallback/glyph rendering across the declared font conditions."
+      },
+      {
+        "propertyId": "business-title-normalization",
+        "facet": "business-rules",
+        "subject": "task-creation",
+        "dimension": "title-normalization-and-blank-rejection-policy",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-business-data"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow",
+          "ref-evidence-runtime-capture"
+        ],
+        "rationale": "Whitespace-only input is ignored, but non-empty leading/trailing whitespace and the responsible validation layer have not been distinguished."
+      },
+      {
+        "propertyId": "business-create-default-state",
+        "facet": "business-rules",
+        "subject": "task-creation",
+        "dimension": "initial-completion-default",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-business-data"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow",
+          "ref-evidence-runtime-capture"
+        ],
+        "rationale": "One successful create produced an incomplete task; broader input and creation-path coverage is still missing."
+      },
+      {
+        "propertyId": "business-summary-counts",
+        "facet": "business-rules",
+        "subject": "task-summary",
+        "dimension": "total-and-active-count-calculation",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-business-data"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-workflow",
+          "ref-evidence-runtime-capture"
+        ],
+        "rationale": "A one-task create/complete sequence was observed; multiple mixed records and filter/count interactions remain untested."
+      },
+      {
+        "propertyId": "data-task-record-shape",
+        "facet": "data",
+        "subject": "task-record",
+        "dimension": "runtime-record-fields-and-types",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-data"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-api-1",
+          "ref-evidence-api-2"
+        ],
+        "rationale": "The adapter returned id, title, and completed with string/string/boolean values for one record; nullability, optional fields, and broader values remain untested."
+      },
+      {
+        "propertyId": "data-id-generation",
+        "facet": "data",
+        "subject": "task-record",
+        "dimension": "identifier-generation-and-uniqueness",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-data"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-api-1"
+        ],
+        "rationale": "Only one identifier value was observed; uniqueness, ordering, and cross-session scope are unknown."
+      },
+      {
+        "propertyId": "data-patch-semantics",
+        "facet": "data",
+        "subject": "task-record",
+        "dimension": "partial-update-and-field-preservation",
+        "requirement": "required",
+        "status": "partial",
+        "observationRefs": [
+          "ref-obs-data"
+        ],
+        "evidenceRefs": [
+          "ref-evidence-api-1",
+          "ref-evidence-api-2"
+        ],
+        "rationale": "One PATCH changed completed while preserving title; other field combinations and invalid updates remain untested."
       }
     ],
     "completeness": {
-      "status": "complete",
-      "assessedAt": "2026-11-26T16:00:16+01:00",
-      "assessmentMethod": "Review all required property inventory entries against the completed Playwright runtime evidence archive, cross-check the baseline pixel comparison, keyboard and validation outcomes, API traces, and deliberate mutation.",
-      "rationale": "Every required property in the declared Task Board scope is supported by linked runtime observations and retained evidence. Optional responsive, durable persistence, and production transport dimensions are explicitly excluded; the external artifact expiry is recorded and the committed harness can regenerate it."
+      "status": "incomplete",
+      "assessedAt": "2026-11-26T17:00:00+01:00",
+      "assessmentMethod": "Property-level audit of retained capture records and evidence references, followed by explicit addition of unresolved font, business-rule, and data dimensions.",
+      "rationale": "Seven required properties are explicitly partial. The capture records observed examples but does not establish the full font-rendering, business-rule, or data-rule space. Observed agreement must not be presented as replication completeness."
     }
   }
 }

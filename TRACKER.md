@@ -3,8 +3,8 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 7 — Review, release, and maintenance  
-**Overall status:** Phase 6 complete for the declared Task Board scope; Phase 7 review active
+**Current phase:** Phase 6 — Expanded multi-facet capture and conformance  
+**Overall status:** Phase 6 in progress; initial interface/behaviour/API fixture exists, but multi-facet completeness is not established
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -18,11 +18,11 @@
 
 ## Current position
 
-- **Current phase:** Phase 7 — Review, release, and maintenance
-- **Current task:** Perform the final specification consistency review, document remaining limitations, and prepare the draft release.
-- **Blockers:** No Phase 6 blockers. Cross-stack universality, additional browsers/viewports, production network/server behavior, durable persistence, authentication, and authorization remain outside the Task Board conformance demonstration.
-- **Next action:** Review terminology, facet boundaries, provenance, schema/version consistency, and comparison claims before publishing a versioned draft release.
-- **Phase 6 result:** Three runtime captures now account for every required property in the declared Task Board scope. The reference and independent baseline are pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. Keyboard, validation, API success/failure, and cross-record conformance checks pass.
+- **Current phase:** Phase 6 — Expanded multi-facet capture and conformance
+- **Current task:** Audit the existing interface evidence, then extend runtime scenarios and evidence for behaviour/functionality, business rules, and data.
+- **Blockers:** The Task Board is a limited fixture. Its in-memory adapter does not demonstrate durable persistence or production server behaviour; it has no demonstrated identity, authorization, security, messaging, integrations, or background processing.
+- **Next action:** Build evidence-backed property inventories and targeted runtime probes for behaviour, business rules, and data. Do not mark properties complete from generic facet observations.
+- **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
 
@@ -34,8 +34,8 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | End-to-end examples and conformance | [x] Complete | All required properties in the declared Task Board scope have runtime evidence. Seven baseline UI states match pixel-for-pixel; the deliberate mutation is detected. Keyboard, validation, API success/failure, schema, and integrity checks pass. See the runtime evidence artifact linked in `examples/task-board/README.md`. |
-| 7 | Review, release, and maintenance | [~] In progress | Begin final consistency review and prepare the versioned draft release. |
+| 6 | End-to-end multi-facet capture and conformance | [~] In progress | Initial interface/behaviour/API fixture exists. Audit interface evidence, then expand behaviour, business rules, data, and the remaining applicable facets. Phase 6 is not complete. |
+| 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
 
@@ -145,47 +145,63 @@
 
 **Phase 5 exit gate: satisfied.** GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture and comparison fixture suites. The valid comparison example passed; the invalid report claiming universal equivalence was rejected. The example is illustrative, not empirical. Active work moved to Phase 6.
 
-## Phase 6 — End-to-end examples and conformance (reopened for replication-completeness redo)
+## Phase 6 — End-to-end multi-facet capture and conformance
 
-- [x] Interface capture example.
-- [x] Behaviour capture example.
-- [x] API capture example at the deterministic in-memory adapter boundary.
-- [x] Full-system multi-facet example (interface, behaviour, and API).
-- [x] Source-derived rule example with source evidence, clearly separate and explicitly unverified.
-- [x] Equivalent baseline capture pair.
-- [x] Deliberately different empirical pair using an executed mutation build.
-- [x] Cross-record integrity validator for scenario, execution, target, observation, evidence, runtime-rule, source-rule, and coverage references.
-- [x] Unit tests for valid references, unresolved references, duplicate IDs, and target/execution mismatch.
-- [x] Empirical schema-valid reference and independent capture pair.
-- [x] API and multi-facet runtime examples.
-- [x] Source-derived rule example with retained source excerpt and unverified state.
-- [x] Equivalent and deliberately different comparison reports.
-- [x] Automated schema validation of all three captures and both comparison reports.
-- [x] Capture-agent usage guide and end-to-end CI.
+**Status: [~] In progress.** The existing Task Board capture is an initial fixture, not completion of the project's multi-facet objective.
 
-### Phase 6 work log — 2026-11-26
+### Completed baseline (bounded evidence only)
+- [x] Initial interface, behaviour, and deterministic in-memory API examples.
+- [x] Reference, independent, and deliberately mutated Task Board implementations.
+- [x] Playwright capture harness and seven-state pixel comparison at 1280×800.
+- [x] Keyboard, native validation, API success/failure, and cross-record checks.
+- [x] Replication-completeness model, inventory fields, and comparison separation.
 
-- Built three independently runnable HTML applications: reference, independent baseline, and a deliberately mutated independent variant. The baseline uses array state/direct handlers; the independent implementation uses Map state/delegated handlers.
-- Executed both baseline applications in isolated Chromium at 1280×800. Both produced identical main-container geometry (x=280, y=40, width=720, height=315) and identical task lifecycle outcomes: create incomplete, complete, active filter empty, completed filter one item, delete empty.
-- Instrumented the deterministic in-memory fetch adapter and retained POST, PATCH, and DELETE request/response events for both baseline applications. The adapter is a test boundary, not a production API.
-- Executed the mutated implementation through the same create/complete/filter/delete flow. It visibly rendered `1 tasks · 1 active` and `1 tasks · 0 active`, while the reference rendered the grammatically correct singular. The mismatch report links the actual mutated capture.
-- Added a multi-facet capture for interface, behaviour, and API; source-derived DELETE-call inference remains in `sourceRules`, backed by a retained source excerpt and `verificationState: "unverified"`.
-- Added equivalent and deliberately different comparison reports, raw API adapter events, API payload example, and detailed target limitations.
-- Extended schema fixtures to validate all three captures and both comparison reports. Extended integrity tests to validate the cross-record graph for all three captures.
-- GitHub Actions run [#23](https://github.com/REMAREMA6/software-rules/actions/runs/45841141089) passed all three Task Board capture fixtures, both Task Board comparison fixtures, the existing positive/negative fixtures, and cross-record integrity checks for all three empirical capture graphs.
-- Phase boundary: no production server, durable database, authentication, real network transport, or universal equivalence claim is included.
+### 6A — Interface evidence audit
+- [~] Inspect retained runtime artifacts against each claimed interface property.
+- [ ] Correct inventory entries whose evidence is generic, missing, incomplete, or not directly supporting the property.
+- [ ] Add missing UI states, responsive conditions, and interaction states for the declared target.
+- [ ] Re-run baseline and deliberate-mutation conformance.
 
-**Original Phase 6 exit gate: withdrawn pending redo.** The original examples demonstrate bounded observations and a mismatch, but they did not establish a complete property inventory or replication-sufficient captures.
- 
+### 6B — Behaviour and functionality
+- [ ] Enumerate every supported operation, trigger, precondition, transition, output, side effect, and failure path.
+- [ ] Probe normal, boundary, repeated, invalid, interrupted, and failure scenarios.
+- [ ] Capture independent executions and compare rule-level outcomes.
+
+### 6C — Business rules
+- [ ] Identify domain decisions, constraints, defaults, calculations, and branch conditions.
+- [ ] Probe boundaries and combinations that distinguish competing rule hypotheses.
+- [ ] Keep business policy distinct from interface validation and generic action mechanics.
+
+### 6D — Data
+- [ ] Capture runtime data structures, field types, nullability, relationships, constraints, transformations, defaults, and serialization.
+- [ ] Exercise boundary/invalid values and record what remains unknown.
+- [ ] Link data observations to the operations and API exchanges that produced them.
+
+### 6E–6H — Remaining facets
+- [ ] Persistence: durable state, transaction, consistency, retention, and deletion.
+- [ ] API/messaging/integrations: real service boundaries and asynchronous delivery where present; distinguish mocks/adapters.
+- [ ] Identity/authorization/security: authorized tests of principal/session lifecycle, permission decisions, and security controls.
+- [ ] Background processing/errors/configuration/performance: lifecycle, recovery, effective settings, and reproducible measurements.
+
+### 6I — Cross-facet completeness
+- [ ] Review the target boundary and required inventory for omissions.
+- [ ] Require property-specific evidence; a schema-valid record or generic facet reference is insufficient.
+- [ ] Validate cross-facet links, provenance, missingness, exclusions, and conflicting evidence.
+- [ ] Compare reference and independent captures across all applicable facets.
+- [ ] Keep observed agreement separate from replication-scope completeness.
+
+**Current limitation:** The Task Board's API is a deterministic in-memory adapter. The fixture does not establish production persistence, identity, authorization, security, messaging, integrations, background processing, or production performance. These facets are unverified for this fixture, not declared irrelevant to the project.
+
+**Phase 6 exit gate: not satisfied.** Do not move to Phase 7 until the expanded Phase 6 completeness criteria in PLAN.md are met.
+
 ## Phase 7 — Review, release, and maintenance
 
-- [ ] Check terminology consistency.
-- [ ] Check common-envelope consistency across facets.
-- [ ] Check provenance and evidence requirements.
-- [ ] Check schema and example validity.
-- [ ] Check comparison claims and limitations.
+**Status: [ ] Not started — blocked by Phase 6.**
+
+- [ ] Review terminology, facet boundaries, provenance, schemas, and examples.
+- [ ] Verify completeness and comparison claims against evidence.
 - [ ] Document known limitations and unresolved issues.
-- [ ] Publish versioned specification release.
+- [ ] Publish a versioned specification release.
 - [ ] Define maintenance and change process.
 
 ## Decision log
@@ -218,7 +234,7 @@
 
 
 
-### Phase 6 redo — 2026-11-26
+### Phase 6 initial completeness work — 2026-11-26
 
 - [x] Record the Replication Completeness Rule as an accepted project requirement.
 - [x] Require a declared replication scope and per-property inventory in the capture schema.
@@ -239,3 +255,12 @@
 **Phase 6 redo result:** Complete for the declared Task Board replication scope. The three captures each account for all 22 inventory properties: 18 captured, one explicitly not applicable, and three optional dimensions explicitly excluded. The reference and independent baseline are pixel-identical in seven tested UI states at 1280×800 CSS px under Chromium 159.0.8154.6 on Linux. Keyboard, validation, API request/response, and failure outcomes agree. The mutated implementation remains fully captured but comparison correctly reports its deliberate pluralization mismatch. Runtime evidence: [successful Playwright run #45855076741](https://github.com/REMAREMA6/software-rules/actions/runs/45855076741), [capture artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524). Final schema and integrity validation: [run #45855135858](https://github.com/REMAREMA6/software-rules/actions/runs/45855135858).
 
 **Boundary:** This proves completeness and pixel identity only for the declared Task Board scope and captured environment. It does not prove universal equivalence across every stack, browser, operating system, viewport, or arbitrary software system. Phase 7 is now active.
+
+
+### Phase 6 expansion — 2026-11-26
+
+- Reframed Phase 6 as the complete multi-facet empirical capture and conformance programme, rather than treating the initial Task Board fixture as the final scope.
+- Kept the existing interface/behaviour/API runtime work as a bounded baseline. It does not establish complete interface capture or coverage of other software facets.
+- Ordered the remaining work: interface evidence audit; behaviour/functionality; business rules; data; persistence; API/messaging/integrations; identity/authorization/security; background processing/errors/configuration/performance; cross-facet completeness.
+- Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
+- Next action: inspect the retained artifacts property by property, then add evidence-backed runtime probes for behaviour, business rules, and data.

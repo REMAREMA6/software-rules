@@ -13,7 +13,7 @@
     "artifactRef": "examples/task-board/captures/independent-mutated.capture.json"
   },
   "comparisonScope": {
-    "description": "Same Task Board initial route and create/complete/filter/delete scenario at 1280x800 CSS px in isolated Chromium with the same deterministic in-memory API adapter.",
+    "description": "Complete declared Task Board replication scope: fixed 1280×800 CSS-pixel viewport; rendered interface properties and states; create, complete, filter, delete, keyboard, validation, and API success/failure behavior at a deterministic in-memory adapter boundary.",
     "facets": [
       "interface",
       "behavior",
@@ -25,18 +25,28 @@
       "ref-scenario-api",
       "mut-scenario-interface",
       "mut-scenario-workflow",
-      "mut-scenario-api"
+      "mut-scenario-api",
+      "ref-scenario-runtime-completeness",
+      "mut-scenario-runtime-completeness"
     ],
     "conditions": [
       "Same browser engine and viewport",
       "Fresh in-memory task store for each run",
-      "Same input title: Prepare release notes"
+      "Same input title: Prepare release notes",
+      "Chromium 159.0.8154.6 on Linux",
+      "1280×800 CSS px at deviceScaleFactor 1",
+      "Fresh client page and deterministic in-memory API route adapter",
+      "Runtime capture archive: https://github.com/REMAREMA6/software-rules/actions/runs/45854435953/artifacts/15136130524"
     ],
     "excludedDimensions": [
       "Production server behavior",
       "Durable persistence",
       "Authentication",
-      "Raw network request/response event details"
+      "Raw network request/response event details",
+      "Responsive layouts outside 1280×800",
+      "Durable and cross-session persistence",
+      "Production network transport and server behavior",
+      "Authentication and authorization"
     ]
   },
   "normalizationProfile": {
@@ -94,6 +104,45 @@
       "status": "paired",
       "identityBasis": "scenario-subject-facet-condition",
       "rationale": "Both records are the POST /api/tasks exchange for the same input at the same deterministic adapter boundary."
+    },
+    {
+      "alignmentId": "align-runtime-interface",
+      "facet": "interface",
+      "referenceRecordIds": [
+        "ref-obs-runtime-interface"
+      ],
+      "implementationRecordIds": [
+        "mut-obs-runtime-interface"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both captures cover the same declared UI properties and state sequence under the same browser and viewport conditions."
+    },
+    {
+      "alignmentId": "align-runtime-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "ref-obs-runtime-behavior"
+      ],
+      "implementationRecordIds": [
+        "mut-obs-runtime-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both captures execute the same pointer and keyboard workflows, validation cases, and rejected-request scenario."
+    },
+    {
+      "alignmentId": "align-runtime-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "ref-obs-runtime-api"
+      ],
+      "implementationRecordIds": [
+        "mut-obs-runtime-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both captures retain the same eight API events, including successful POST/PATCH/DELETE exchanges and a rejected POST with HTTP 503."
     }
   ],
   "results": [
@@ -175,44 +224,157 @@
         "completed": false
       },
       "reason": "For their respective inputs, both adapters returned HTTP 200 and initialized completed=false. Input-specific title values are excluded from this comparison."
+    },
+    {
+      "resultId": "result-runtime-pixel-mutation",
+      "alignmentId": "align-runtime-interface",
+      "facet": "interface",
+      "dimension": "rendered-pixels.one-active-state",
+      "classification": "mismatch",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-interface"
+      ],
+      "implementationObservationIds": [
+        "mut-obs-runtime-interface"
+      ],
+      "referenceValue": {
+        "summary": "1 task · 1 active"
+      },
+      "implementationValue": {
+        "summary": "1 tasks · 1 active",
+        "differingPixels": 272
+      },
+      "reason": "The deliberately mutated build renders the plural label for a singular task; the retained 1280×800 screenshots differ by 272 pixels."
+    },
+    {
+      "resultId": "result-runtime-keyboard-mutation",
+      "alignmentId": "align-runtime-behavior",
+      "facet": "behavior",
+      "dimension": "keyboard-workflow.task-summary",
+      "classification": "mismatch",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-behavior"
+      ],
+      "implementationObservationIds": [
+        "mut-obs-runtime-behavior"
+      ],
+      "referenceValue": {
+        "activeFilterCount": 1,
+        "completedFilterCount": 0,
+        "afterCompletion": "1 task · 0 active",
+        "deleteSucceeded": true
+      },
+      "implementationValue": {
+        "activeFilterCount": 1,
+        "completedFilterCount": 0,
+        "afterCompletion": "1 tasks · 0 active",
+        "deleteSucceeded": true
+      },
+      "reason": "Keyboard activation and state transitions work, but the deliberate singular/plural mutation is also observable in the keyboard workflow summary."
+    },
+    {
+      "resultId": "result-runtime-validation",
+      "alignmentId": "align-runtime-behavior",
+      "facet": "behavior",
+      "dimension": "native-empty-and-whitespace-validation",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-behavior"
+      ],
+      "implementationObservationIds": [
+        "mut-obs-runtime-behavior"
+      ],
+      "referenceValue": {
+        "emptySubmissionBlocked": true,
+        "whitespaceSubmissionIgnored": true,
+        "apiCallsForInvalidInputs": 0
+      },
+      "implementationValue": {
+        "emptySubmissionBlocked": true,
+        "whitespaceSubmissionIgnored": true,
+        "apiCallsForInvalidInputs": 0
+      },
+      "reason": "Both implementations block empty required input and ignore whitespace-only input without issuing API requests."
+    },
+    {
+      "resultId": "result-runtime-api-trace",
+      "alignmentId": "align-runtime-api",
+      "facet": "api",
+      "dimension": "success-and-failure-request-response-trace",
+      "classification": "match",
+      "comparisonBasis": "exact",
+      "referenceObservationIds": [
+        "ref-obs-runtime-api"
+      ],
+      "implementationObservationIds": [
+        "mut-obs-runtime-api"
+      ],
+      "referenceValue": {
+        "eventCount": 8,
+        "methods": [
+          "POST",
+          "PATCH",
+          "DELETE"
+        ],
+        "failedPostStatus": 503,
+        "runtimeError": "API request failed"
+      },
+      "implementationValue": {
+        "eventCount": 8,
+        "methods": [
+          "POST",
+          "PATCH",
+          "DELETE"
+        ],
+        "failedPostStatus": 503,
+        "runtimeError": "API request failed"
+      },
+      "reason": "The full deterministic adapter request/response traces and rejected-request runtime error outcomes agree."
     }
   ],
   "coverage": {
     "reference": {
-      "declaredUnits": 3,
-      "observedUnits": 3,
+      "declaredUnits": 22,
+      "observedUnits": 18,
       "notObservedUnits": 0,
       "unknownUnits": 0,
       "unavailableUnits": 0
     },
     "implementation": {
-      "declaredUnits": 3,
-      "observedUnits": 3,
+      "declaredUnits": 22,
+      "observedUnits": 18,
       "notObservedUnits": 0,
       "unknownUnits": 0,
       "unavailableUnits": 0
     },
-    "sharedComparableUnits": 3,
-    "incomparableUnits": 1,
+    "sharedComparableUnits": 18,
+    "incomparableUnits": 0,
     "limitations": [
-      "Production server behavior, durable persistence, authentication, and transport-level network behavior are outside the test boundary."
+      "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
+      "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
+      "The API boundary is a deterministic in-memory adapter, not a production service.",
+      "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."
     ]
   },
   "conclusion": {
     "status": "differences-found",
-    "statement": "The captured interface geometry and POST API adapter response match. The task summary differs: the reference renders '1 task' while the mutated implementation renders '1 tasks' for a single task. This is a bounded, directly observed mismatch. Both captures are explicitly replication-incomplete; this agreement/difference result applies only to the observed dimensions and is not evidence of faithful replication.",
+    "statement": "Both captures are complete for the declared scope. The deliberately mutated implementation differs from the reference in the task summary: it renders '1 tasks' instead of '1 task' for one task, producing a 272-pixel screenshot difference in the one-active state. The keyboard workflow exposes the same defect. Other captured API and validation outcomes agree. This is a bounded comparison in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
     "scopeBounded": true,
     "universalEquivalenceClaimed": false
   },
   "limitations": [
-    "The mismatch belongs to the explicitly mutated test build, not the baseline independent implementation.",
-    "The API exchanges are observed at the deterministic in-memory adapter boundary, not a production server.",
-    "The report covers only the captured route, viewport, inputs, and task lifecycle."
+    "Four inventory entries are explicitly excluded or not applicable: responsive variants, external media assets, durable/cross-session persistence, and production transport.",
+    "Pixel identity is established only for seven tested visual states in Chromium 159.0.8154.6 on Linux at 1280×800 CSS px.",
+    "The API boundary is a deterministic in-memory adapter, not a production service.",
+    "Detailed runtime evidence is retained in the linked GitHub Actions artifact, which expires after 30 days; the committed harness regenerates it."
   ],
   "replicationCompleteness": {
-    "referenceStatus": "incomplete",
-    "implementationStatus": "incomplete",
-    "result": "incomplete-both",
-    "statement": "Both captures have required properties marked partial or unresolved in their replication inventories. The report compares only the observations actually captured; it does not establish faithful replication or complete interface equivalence."
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for every required property in the declared Task Board replication scope with linked runtime observations and evidence. Optional responsive, durable persistence, and production transport dimensions are explicitly excluded. Completeness does not imply that the implementations agree; observed agreement and mismatch results are reported separately."
   }
 }

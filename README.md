@@ -2,6 +2,13 @@
 
 A technology-independent specification system for capturing, representing, and comparing software according to its observable behaviour.
 
+## Project navigation
+
+- [Project plan and target repository structure](PLAN.md)
+- [Progress tracker and handoff context](TRACKER.md)
+
+Read the tracker when resuming work in a new chat. It records the current phase, completed work, blockers, and next action.
+
 ## Purpose
 
 Software Rules defines a structured way to describe what a software system does and what can be observed while it runs, independently of the language, framework, platform, or implementation used to build it.

@@ -1,0 +1,61 @@
+name: Phase 6 expanded runtime conformance
+
+on:
+  push:
+    paths:
+      - "conformance/runtime/**"
+      - "conformance/integrity/**"
+      - "conformance/validation/**"
+      - "schemas/v1/**"
+      - "examples/task-board/**"
+      - ".github/workflows/phase6-expanded-conformance.yml"
+  pull_request:
+    paths:
+      - "conformance/runtime/**"
+      - "conformance/integrity/**"
+      - "conformance/validation/**"
+      - "schemas/v1/**"
+      - "examples/task-board/**"
+      - ".github/workflows/phase6-expanded-conformance.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  expanded-conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install runtime dependencies
+        run: npm install --prefix conformance/runtime
+
+      - name: Install schema-validation dependencies
+        run: npm install --prefix conformance/validation
+
+      - name: Install Chromium
+        run: npx --prefix conformance/runtime playwright install --with-deps chromium
+
+      - name: Run expanded browser capture and comparison
+        run: npm run capture --prefix conformance/runtime
+
+      - name: Run cross-record and evidence-link integrity tests
+        run: node conformance/integrity/test.mjs
+
+      - name: Run JSON Schema and comparison validation
+        run: npm run validate --prefix conformance/validation
+
+      - name: Upload runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase6-expanded-runtime-evidence
+          path: runtime-output/
+          if-no-files-found: warn
+          retention-days: 30

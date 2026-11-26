@@ -49,17 +49,19 @@ All three captures now include:
 - partial business-rule observations for title/blank handling, initial completion state, and summary counts;
 - partial data observations for task record shape, identifier generation, and PATCH field-preservation semantics.
 
-Each capture now has 29 inventory entries: 18 captured, seven partial, one not applicable, and three optional exclusions. All three report replication-scope completeness as incomplete.
+After the first audit, each capture had 29 entries with seven partial properties. The successful expanded probe run then supplied evidence for six of those properties and added four captured properties plus one new partial title-length property. Each capture now has 34 entries: 28 captured, two partial, one not applicable, and three optional exclusions. All three still report replication-scope completeness as incomplete.
 
 The equivalent and deliberate-difference comparison reports now use incomplete-both. Their observed agreement or mismatch findings remain useful, but neither report claims replication completeness.
 
-## Probe implementation status
+## Probe execution result
 
-The Playwright harness now contains the first expanded probe sequence for title normalization, duplicate titles, HTML-like/Unicode and long titles, mixed task-state counts, filters, completion toggle-back, deletion, and identifier samples. Request/response synchronization and explicit assertions were added. A dedicated GitHub Actions workflow has been added to execute the suite and validate the captures. Its first successful run and artifact review are still pending; the current capture inventories therefore remain incomplete and the relevant properties remain partial.
+The expanded Playwright probe suite passed in [GitHub Actions run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). It captured title trimming, duplicate-title acceptance, literal HTML-like/Unicode rendering, a 512-character title, five unique sequential string identifiers within the adapter session, a three-task mixed-state count/filter truth table, completion toggle-back, PATCH title preservation, and three deletions returning the UI to empty. The run passed cross-record/evidence-link integrity and JSON Schema/comparison validation. Its [41-file runtime artifact](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131/artifacts/15136459580) is retained for 30 days.
+
+Six previously partial properties were promoted based on the new evidence. Four additional properties were captured, and the 512-character title result was recorded as partial because the maximum length remains unknown. Two required properties remain partial overall.
 
 ## Next probes
 
-1. Execute the newly added Playwright probes in CI and inspect the three variant outputs before changing any inventory status.
+1. Extend title-boundary probes to determine whether and where an upper title-length limit exists.
 2. Title cases: empty, whitespace-only, leading/trailing whitespace, duplicate, long, Unicode, and HTML-like content.
 3. State truth table: zero, one, and multiple tasks with mixed completion states; toggle completion in both directions; compare total/active counts and each filter.
 4. Operation boundaries: repeated delete, unknown ID, malformed payload, invalid field type, unknown fields, repeated PATCH, and request failure for create/update/delete.

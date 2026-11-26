@@ -10,6 +10,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Reframed Phase 6 as an expanded multi-facet empirical capture and conformance programme. The initial Task Board result is retained as bounded baseline evidence; Phase 6 remains in progress until all applicable facets in the selected replication scope have evidence-backed inventories and cross-facet conformance. Phase 7 is blocked.
 
 ### Added
+- Dedicated Phase 6 expanded-conformance GitHub Actions workflow to execute the expanded Playwright probes, cross-record/evidence-link tests, schema validation, and runtime artifact upload.
 - Expanded Playwright probes for title trimming, duplicate titles, HTML-like/Unicode and long inputs, mixed task-state/filter truth tables, completion toggling, deletion, and identifier samples; execution and evidence review are pending.
 - Stronger cross-record integrity checks require property evidence references to be attached to linked observations and require captured properties to have observed runtime-class evidence not explicitly marked partial.
 - Comparison coverage now supports explicit partial, conflicting, source-inferred, and excluded unit counts.

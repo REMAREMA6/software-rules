@@ -1,0 +1,24 @@
+name: Replication Lab — Python rule models
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/projects/**"
+      - ".github/workflows/replication-lab-python.yml"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/projects/**"
+      - ".github/workflows/replication-lab-python.yml"
+  workflow_dispatch:
+
+jobs:
+  python-rule-models:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run independent rule-model tests
+        working-directory: conformance/replication-lab/projects/retry-policy-python
+        run: python -m unittest -v

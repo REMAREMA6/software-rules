@@ -6,6 +6,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
+### Changed
+- Reframed Phase 6 as an expanded multi-facet empirical capture and conformance programme. The initial Task Board result is retained as bounded baseline evidence; Phase 6 remains in progress until all applicable facets in the selected replication scope have evidence-backed inventories and cross-facet conformance. Phase 7 is blocked.
+
 ### Added
 - Draft schema format bumped to 0.2.0 because replication-scope inventories and separate comparison-completeness reporting are incompatible additions to the 0.1.0 draft.
 - Added the Playwright runtime conformance harness, retaining full computed CSS properties, DOM hierarchy, pseudo-element content, geometry, accessibility snapshots, UI-state screenshots, keyboard/validation scenarios, API traces, and pixel comparisons.
@@ -65,3 +68,11 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Updated all three capture records and schema fixtures to complete for the declared Task Board scope; updated equivalent and mismatch reports to report completeness separately from agreement.
 - Added runtime and schema/integrity CI. The runtime conformance run and final schema/integrity run passed; the runtime artifact is linked from `examples/task-board/README.md` and expires after 30 days.
 - Retained explicit exclusions for responsive variants, durable persistence, production network/server behavior, authentication, and authorization; no universal cross-stack equivalence claim is made.
+
+
+## 2026-11-26 — Phase 6 multi-facet expansion
+
+- Updated the roadmap and tracker to make Phase 6 cover the complete multi-facet capture objective, in sequence: interface audit, behaviour/functionality, business rules, data, persistence, API/messaging/integrations, identity/authorization/security, background processing/errors/configuration/performance, and cross-facet validation.
+- Reclassified the existing Task Board result as bounded baseline evidence rather than completion of the overall Phase 6 objective.
+- Explicitly recorded that its deterministic in-memory API adapter does not establish production API or persistence behaviour, and that facets absent from this fixture remain unverified rather than globally not applicable.
+- Blocked Phase 7 release work until the expanded Phase 6 exit gate is satisfied.

@@ -1,9 +1,12 @@
 # Task Board conformance target
 
-This directory contains two independently authored implementations of the same small task-management product.
+This directory contains two independently authored implementations of the same task-management product and one deliberately mutated test build.
 
-- `reference/index.html`: reference implementation. State is held in an array; controls are bound directly to rendered elements.
-- `independent/index.html`: independent implementation. State is held in a Map; interactions use delegated event handling and rendering is derived from the selected view.
+## Applications
+
+- `reference/index.html` — reference implementation; array-backed state and direct event handlers.
+- `independent/index.html` — independent baseline; Map-backed state, derived rendering, and delegated event handling.
+- `independent-mutated/index.html` — mutation build with one intentional defect: the singular task count is rendered as `1 tasks`.
 
 ## Shared observable contract
 
@@ -12,16 +15,26 @@ This directory contains two independently authored implementations of the same s
 3. All, Active, and Completed filters select the corresponding task subset.
 4. Completing a task changes its completed state and active count.
 5. Deleting a task removes it.
-6. Task create/update/delete operations use JSON requests at `/api/tasks`.
+6. Create/update/delete operations use JSON exchanges at `/api/tasks`.
 
-## Intentional difference under test
+## Captures and comparisons
 
-The implementations are deliberately kept equivalent for core task operations. The comparison suite also includes a controlled mutation scenario in which the independent build's task summary uses an intentionally altered pluralization rule. This is a test mutation, not a claim about the baseline build.
+- [Reference capture](captures/reference.capture.json)
+- [Independent baseline capture](captures/independent.capture.json)
+- [Mutated implementation capture](captures/independent-mutated.capture.json)
+- [Equivalent comparison](comparisons/equivalent.json)
+- [Deliberate-difference comparison](comparisons/deliberate-difference.json)
+- [API facet example](api/api-payload.example.json)
+- [Raw adapter events](api/raw-adapter-events.json)
 
-## API boundary
+The baseline pair was run under the same isolated Chromium environment and 1280×800 CSS-pixel viewport. Both produced the same initial main-container geometry and the same create/complete/filter/delete outputs. The API exchanges were instrumented at the deterministic in-memory adapter boundary. They do not establish production network, server, database, authentication, or persistence behavior.
 
-The HTML clients call a JSON API. The browser conformance harness supplies a deterministic in-memory HTTP adapter for `/api/tasks`. API captures therefore describe observed client-to-adapter HTTP exchanges, not a production backend or durable database. Persistence beyond the test session is outside scope.
+The mutation build was run through the same workflow. It actually displayed `1 tasks · 1 active` and `1 tasks · 0 active`, while the reference displayed `1 task · 1 active` and `1 task · 0 active`. The difference report records this observed mismatch.
+
+## Source-derived rule
+
+The reference capture also contains a source-derived DELETE-call rule. It is kept separate from runtime rules, has source-artifact evidence, and remains explicitly `unverified` as runtime behavior.
 
 ## Running locally
 
-Open either HTML file in a modern browser. For complete interaction testing, serve the directory over HTTP and provide the documented JSON API routes. The conformance harness uses a controlled API adapter and a fixed 1280×800 CSS-pixel viewport.
+Open either baseline HTML file in a modern browser. For complete interactions, serve the directory over HTTP and provide the documented JSON API routes. The committed captures were produced with a deterministic in-browser adapter; no production service is required to reproduce the examples.

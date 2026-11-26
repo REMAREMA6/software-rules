@@ -8,7 +8,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ### Added
 - Cross-repository replication lab scaffolding, rule-case and source-repository templates, and a Python rule-model CI workflow.
-- Initial source candidates for BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n, each pinned to an inspected commit with licence/evidence status recorded.
+- Initial source candidates for BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, n8n, Prometheus, Express, and Medusa, each pinned to an inspected commit with licence/evidence status recorded.
 - BullMQ retry-policy source capture and a narrow independent Python retry-decision replica with eight test cases, including an off-by-one mutation check. This case remains incomplete pending source runtime execution and capture comparison.
 
 ### Changed

@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Status:** Planning and specification design  
-**Plan version:** 0.1.1  
+**Plan version:** 0.1.2  
 **Last updated:** 2026-11-26
 
 ## 1. Mission
@@ -59,7 +59,7 @@ All rule records should share a common identity, provenance, condition, and evid
 - [x] Establish changelog and design-decision recording conventions.
 - [x] Define initial specification maturity labels and versioning policy.
 
-**Exit gate:** A new contributor or new chat can understand the mission, current state, next task, and where decisions are recorded. The repository has a maintained roadmap, tracker, changelog, decision log, and explicit maturity/versioning policy.
+**Exit gate:** A new contributor or new chat can understand the mission, current state, next task, and where decisions are recorded. The repository has a maintained roadmap, tracker, contribution guide, changelog, decision log, and explicit maturity/versioning policy.
 
 ### Phase 1 — Research existing standards and prior art
 
@@ -218,6 +218,7 @@ software-rules/
 ├── README.md
 ├── PLAN.md
 ├── TRACKER.md
+├── CONTRIBUTING.md
 ├── CHANGELOG.md
 ├── specification/
 │   ├── CORE.md
@@ -253,10 +254,11 @@ software-rules/
 │   ├── fixtures/
 │   ├── validation/
 │   └── test-cases/
-└── research/
-    ├── STANDARDS-REVIEW.md
-    ├── DESIGN-DECISIONS.md
-    └── REFERENCES.md
+├── research/
+│   ├── STANDARDS-REVIEW.md
+│   ├── DESIGN-DECISIONS.md
+│   └── REFERENCES.md
+└──
 ~~~
 
 This is the target layout, not a statement that every planned file has already been created. Directories will appear in Git when their first tracked file is added.
@@ -277,6 +279,7 @@ This is the target layout, not a statement that every planned file has already b
 12. Record consequential design choices in `research/DESIGN-DECISIONS.md` using permanent decision IDs and explicit statuses.
 13. Keep this plan as the roadmap. If the roadmap changes, update it rather than relying on chat history.
 14. Apply the maturity labels and versioning policy in `specification/VERSIONING.md` to substantial specification and schema documents.
+15. Follow `CONTRIBUTING.md` for the repository change and review workflow.
 
 ## 6. How to resume in a new chat
 

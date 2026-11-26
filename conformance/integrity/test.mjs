@@ -9,7 +9,7 @@ const duplicate=structuredClone(valid); duplicate.scenarios.push({scenarioId:"sc
 const mismatch=structuredClone(valid); mismatch.observations[0].targetId="other-target"; assert.ok(validateCapture(mismatch).some(e=>e.includes("targetId differs")));
 const runtime=structuredClone(valid); runtime.runtimeRules=[{supportingObservationIds:["missing-observation"]}]; assert.ok(validateCapture(runtime).some(e=>e.includes("runtimeRules")));
 const source=structuredClone(valid); source.sourceRules=[{sourceEvidenceRefs:["missing-source"]}]; assert.ok(validateCapture(source).some(e=>e.includes("sourceRules")));
-for (const file of ["reference.capture.json", "independent.capture.json"]) {
+for (const file of ["reference.capture.json", "independent.capture.json", "independent-mutated.capture.json"]) {
   const capture = JSON.parse(fs.readFileSync(path.resolve("examples/task-board/captures", file), "utf8"));
   assert.deepEqual(validateCapture(capture), [], file + " must have valid cross-record references");
 }

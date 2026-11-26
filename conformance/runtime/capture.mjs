@@ -194,7 +194,17 @@ async function runVariant(name) {
   await page.waitForTimeout(150);
   await save("api-failure");
   const result = {
-    variant: name, viewport: { width: 1280, height: 800, deviceScaleFactor: 1 },
+    variant: name,
+    environment: {
+      browser: "Chromium", browserVersion: browser.version(),
+      userAgent: await page.evaluate(() => navigator.userAgent),
+      platform: await page.evaluate(() => navigator.platform),
+      language: await page.evaluate(() => navigator.language),
+      devicePixelRatio: await page.evaluate(() => window.devicePixelRatio),
+      viewport: page.viewportSize(),
+      colorScheme: await page.emulateMedia().then(() => "light"),
+      loadedFonts: await page.evaluate(() => [...document.fonts].map(font => ({ family: font.family, status: font.status, weight: font.weight, style: font.style })))
+    },
     snapshots, apiEvents: apiLog[name], pageErrors: pageErrors[name],
     failureObservation: {
       failedResponse: apiLog[name].findLast(event => event.response.status === 503) ?? null,
@@ -226,7 +236,11 @@ try {
   if (mutationDiff === 0) throw new Error("Expected deliberate mutation to produce a visual mismatch, but screenshots were identical.");
 
   await fs.writeFile(path.join(output, "comparison.json"), JSON.stringify({
-    environment: { browser: "Chromium via Playwright", viewport: "1280x800 CSS px", deviceScaleFactor: 1 },
+    environment: {
+      browser: "Chromium via Playwright", browserVersion: browser.version(),
+      viewport: "1280x800 CSS px", deviceScaleFactor: 1,
+      hostPlatform: process.platform, nodeVersion: process.version
+    },
     baselinePixelComparisons: comparison,
     deliberateMutation: { state: "one-active", differingPixels: mutationDiff, expectedDifference: "singular/plural task summary" },
     scopeLimitations: [

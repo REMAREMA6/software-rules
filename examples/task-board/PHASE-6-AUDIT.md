@@ -55,7 +55,7 @@ The equivalent and deliberate-difference comparison reports now use incomplete-b
 
 ## Probe implementation status
 
-The Playwright harness now contains the first expanded probe sequence for title normalization, duplicate titles, HTML-like/Unicode and long titles, mixed task-state counts, filters, completion toggle-back, deletion, and identifier samples. Request/response synchronization and explicit assertions were added. The suite has not yet been executed successfully in CI; the current capture inventories therefore remain incomplete and the relevant properties remain partial.
+The Playwright harness now contains the first expanded probe sequence for title normalization, duplicate titles, HTML-like/Unicode and long titles, mixed task-state counts, filters, completion toggle-back, deletion, and identifier samples. Request/response synchronization and explicit assertions were added. A dedicated GitHub Actions workflow has been added to execute the suite and validate the captures. Its first successful run and artifact review are still pending; the current capture inventories therefore remain incomplete and the relevant properties remain partial.
 
 ## Next probes
 

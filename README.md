@@ -19,6 +19,9 @@ A technology-independent specification system for capturing, representing, and c
 - [Observation model](specification/OBSERVATION-MODEL.md)
 - [Evidence and provenance](specification/EVIDENCE-AND-PROVENANCE.md)
 - [Source-derived rules](specification/SOURCE-DERIVED-RULES.md)
+- [Facet catalogue](facets/README.md)
+- [Facet boundaries](facets/FACET-BOUNDARIES.md)
+- [Interface facet](facets/interface/README.md)
 
 When resuming work in a new chat, read `PLAN.md` and `TRACKER.md` after this introduction. The tracker records the current phase, completed work, blockers, and next action.
 
@@ -60,15 +63,15 @@ These classes must remain distinguishable in storage and comparison.
 
 This repository is the home of the format specification, schemas, examples, and comparison rules. The format is under development; individual documents must state their version and maturity. See the [maturity and versioning policy](specification/VERSIONING.md).
 
-## Planned specification areas
+## Facet specifications
 
-- Core vocabulary and common observation envelope
-- Runtime observation and evidence model
-- Separate source-derived rule model
-- Facet-specific formats, including interface, behaviour, business rules, data, persistence, APIs, messaging, identity, authorization, security, background work, configuration, performance, and errors
+The current draft defines 15 observation facets. See the [facet catalogue](facets/README.md) for the full list and [boundary matrix](facets/FACET-BOUNDARIES.md) for overlap rules. Each facet has its own conceptual payload inventory, scenario requirements, evidence requirements, limitations, and worked illustrative example. These are not yet machine-readable schemas or empirical captures.
+
+## Remaining specification work
+
 - Machine-validation schemas
 - Canonicalization and comparison methodology
-- Reference examples and conformance fixtures
+- Empirical end-to-end captures and conformance fixtures
 
 ## Scope boundary
 

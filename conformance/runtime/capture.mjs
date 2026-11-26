@@ -204,6 +204,104 @@ async function runVariant(name) {
   await page.getByRole("button", { name: "Delete Prepare release notes" }).click();
   await save("deleted");
 
+  // Probe behaviour, candidate business rules, and runtime data boundaries.
+  // These are observations of this fixture and its deterministic adapter, not production-service claims.
+  await page.reload();
+  const probeStart = apiLog[name].length;
+  async function createProbeTask(value) {
+    await input.fill(value);
+    await page.getByRole("button", { name: "Add task" }).click();
+    await page.getByText(value.trim(), { exact: true }).waitFor();
+  }
+
+  await createProbeTask("  Trim boundary  ");
+  const trimPost = apiLog[name].slice(probeStart).find(event => event.method === "POST" && event.request?.title === "Trim boundary");
+  const trimResult = {
+    submitted: "  Trim boundary  ",
+    renderedText: await page.getByText("Trim boundary", { exact: true }).count(),
+    apiRequestTitle: trimPost?.request?.title ?? null,
+    responseRecord: trimPost?.response?.body ?? null
+  };
+
+  await createProbeTask("Duplicate title");
+  await createProbeTask("Duplicate title");
+  const duplicateCount = await page.getByText("Duplicate title", { exact: true }).count();
+
+  const htmlLikeTitle = "Safe <img src=x onerror=alert(1)> & 東京";
+  await createProbeTask(htmlLikeTitle);
+  const htmlLikeResult = {
+    exactTextRendered: await page.getByText(htmlLikeTitle, { exact: true }).count(),
+    injectedImageCount: await page.locator("#task-list img, #items img").count()
+  };
+
+  const longTitle = "L".repeat(512);
+  await createProbeTask(longTitle);
+  const longTitleResult = {
+    submittedLength: longTitle.length,
+    renderedExactMatchCount: await page.getByText(longTitle, { exact: true }).count()
+  };
+  const initialProbeRecords = apiLog[name].slice(probeStart).filter(event => event.method === "POST");
+  const initialIds = initialProbeRecords.map(event => event.response?.body?.id).filter(Boolean);
+
+  // Reload isolates the state-count truth table from the preceding title probes.
+  await page.reload();
+  const matrixStart = apiLog[name].length;
+  await createProbeTask("Matrix active one");
+  await createProbeTask("Matrix active two");
+  await createProbeTask("Matrix completed");
+  const matrixCheckbox = page.getByRole("checkbox", { name: "Complete Matrix completed" });
+  await matrixCheckbox.check();
+  const afterComplete = {
+    total: await page.locator("li").count(),
+    summary: await page.locator("#summary, #meta").innerText()
+  };
+  await page.getByRole("button", { name: "Active" }).click();
+  const activeFilterCount = await page.locator("li").count();
+  await page.getByRole("button", { name: "Completed" }).click();
+  const completedFilterCount = await page.locator("li").count();
+  await page.getByRole("button", { name: "All" }).click();
+  await matrixCheckbox.uncheck();
+  const afterToggleBack = await page.locator("#summary, #meta").innerText();
+  const matrixPatch = apiLog[name].slice(matrixStart).filter(event => event.method === "PATCH").map(event => event.response?.body);
+  const matrixDeleteResults = [];
+  while (await page.locator('button[aria-label^="Delete Matrix"]').count()) {
+    await page.locator('button[aria-label^="Delete Matrix"]').first().click();
+    matrixDeleteResults.push("deleted");
+  }
+  const matrixFinalSummary = await page.locator("#summary, #meta").innerText();
+
+  const probeResults = {
+    titleNormalization: trimResult,
+    duplicateTitlesAccepted: duplicateCount === 2,
+    duplicateTitleCount: duplicateCount,
+    htmlLikeTitle: htmlLikeResult,
+    longTitle: longTitleResult,
+    observedPostIdentifiers: initialIds,
+    identifiersUniqueWithinProbe: new Set(initialIds).size === initialIds.length,
+    mixedTaskTruthTable: {
+      afterCompletingOne: afterComplete,
+      activeFilterCount,
+      completedFilterCount,
+      afterTogglingBack: afterToggleBack,
+      expectedTotal: 3,
+      expectedActiveAfterComplete: 2,
+      expectedCompletedFilter: 1
+    },
+    patchResponseSamples: matrixPatch,
+    matrixDeleteOperations: matrixDeleteResults.length,
+    finalSummaryAfterDelete: matrixFinalSummary
+  };
+  if (trimResult.apiRequestTitle !== "Trim boundary") throw new Error("Leading/trailing whitespace normalization did not match the observed rule");
+  if (duplicateCount !== 2) throw new Error("Duplicate-title probe did not preserve both records");
+  if (htmlLikeResult.exactTextRendered !== 1 || htmlLikeResult.injectedImageCount !== 0) throw new Error("HTML-like title was not rendered as literal text");
+  if (longTitleResult.renderedExactMatchCount !== 1) throw new Error("Long title was not preserved");
+  if (activeFilterCount !== 2 || completedFilterCount !== 1) throw new Error("Mixed-task filter truth table did not match");
+  if (afterComplete.summary !== "3 tasks · 2 active" && afterComplete.summary !== "3 tasks · 2 active") throw new Error("Unexpected summary after completing one of three tasks");
+  if (afterToggleBack !== "3 tasks · 3 active") throw new Error("Completion toggle-back did not restore active count");
+  if (matrixDeleteResults.length !== 3 || matrixFinalSummary !== "0 tasks · 0 active") throw new Error("Mixed-task deletion did not restore the empty state");
+  await save("business-data-probes");
+  snapshots["business-data-probes"].probeResults = probeResults;
+
   // Record failure semantics without pretending that an error UI exists.
   failNext = true;
   await input.fill("Failure probe");
@@ -222,7 +320,7 @@ async function runVariant(name) {
       colorScheme: await page.evaluate(() => matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
       loadedFonts: await page.evaluate(() => [...document.fonts].map(font => ({ family: font.family, status: font.status, weight: font.weight, style: font.style })))
     },
-    snapshots, apiEvents: apiLog[name], pageErrors: pageErrors[name],
+    snapshots, businessDataProbes: snapshots["business-data-probes"]?.probeResults ?? null, apiEvents: apiLog[name], pageErrors: pageErrors[name],
     failureObservation: {
       failedResponse: apiLog[name].findLast(event => event.response.status === 503) ?? null,
       visibleErrorText: await page.locator('[role="alert"], [aria-live="assertive"]').allInnerTexts(),

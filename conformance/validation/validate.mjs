@@ -19,6 +19,24 @@ function registerTree(dir) {
 }
 registerTree(root);
 
+export function validateComparisonCompleteness(report) {
+  const errors = [];
+  const completeness = report.replicationCompleteness;
+  if (!completeness) return ["replicationCompleteness is required"];
+  const { referenceStatus, implementationStatus, result } = completeness;
+  let expected;
+  if (referenceStatus === "undetermined" || implementationStatus === "undetermined") expected = "undetermined";
+  else if (referenceStatus === "incomplete" && implementationStatus === "incomplete") expected = "incomplete-both";
+  else if (referenceStatus === "incomplete") expected = "incomplete-reference";
+  else if (implementationStatus === "incomplete") expected = "incomplete-implementation";
+  else expected = "complete-both";
+  if (result !== expected) errors.push(`replicationCompleteness.result must be "${expected}" for the two capture statuses, received "${result}"`);
+  if (expected !== "complete-both" && /faithful replication (?:is|has been) (?:established|supported)|complete equivalence (?:is|has been) (?:established|supported)/i.test(report.conclusion?.statement ?? "")) {
+    errors.push("conclusion: cannot claim faithful replication or complete equivalence while either capture is incomplete or undetermined");
+  }
+  return errors;
+}
+
 const suites = [
  {name:"capture",schema:loadJson(path.join(root,"capture.schema.json")),fixtures:path.join(root,"fixtures")},
  {name:"comparison",schema:loadJson(path.join(root,"comparison-report.schema.json")),fixtures:comparisonRoot}
@@ -31,9 +49,16 @@ for(const suite of suites){
   if(!fs.existsSync(dir)) continue;
   for(const name of fs.readdirSync(dir).filter(n=>n.endsWith(".json")).sort()){
    const data=loadJson(path.join(dir,name));
-   const pass=Boolean(validate(data)),expected=category==="valid",ok=pass===expected;
+   const schemaPass=Boolean(validate(data));
+   const semanticErrors=suite.name==="comparison" && schemaPass ? validateComparisonCompleteness(data) : [];
+   const pass=schemaPass && semanticErrors.length===0;
+   const expected=category==="valid",ok=pass===expected;
    console.log(`${ok?"PASS":"FAIL"} ${suite.name}/${category}/${name} (expected ${expected?"valid":"invalid"}, got ${pass?"valid":"invalid"})`);
-   if(!ok){failed=true;for(const error of validate.errors??[])console.error(`  ${error.instancePath||"/"}: ${error.message}`);}
+   if(!ok){
+    failed=true;
+    for(const error of validate.errors??[]) console.error(`  ${error.instancePath||"/"}: ${error.message}`);
+    for(const error of semanticErrors) console.error(`  semantic: ${error}`);
+   }
   }
  }
 }

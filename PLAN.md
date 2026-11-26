@@ -218,7 +218,8 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 - [x] Build the initial browser runtime capture and pixel-comparison harness.
 - [x] Audit the retained capture records and evidence references; distinguish actual property-level observations from generic artifact references.
 - [x] Downgrade unsupported font-rendering coverage and add partial business-rule/data observations rather than asserting complete capture.
-- [ ] Expand interface scenarios to all relevant states, responsive conditions, focus/hover/disabled/loading/error states, and supported environment variations for the declared fixture.
+- [x] Expand interface scenarios to responsive viewports (320, 768, 1920 CSS px), focus, hover, colour-scheme preference, and the available empty/active/completed/filtered/error states for the declared fixture.
+- [ ] Resolve font-rendering coverage beyond the recorded Chromium/Linux environment or explicitly constrain that dimension.
 - [ ] Keep any untested or unsupported interface dimension unresolved rather than marking it complete.
 
 **6B — Behaviour and functionality**
@@ -227,7 +228,8 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 - [ ] Build an explicit operation/trigger inventory from the running target.
 - [ ] Capture preconditions, actors, ordered actions, state before/after, outputs, side effects, timing/order, and termination outcomes.
 - [x] Exercise the initial title, duplicate, mixed-state, toggle, and multiple-delete boundary cases in the Task Board fixture.
-- [ ] Extend probes to malformed, interrupted, repeated, and failure paths.
+- [x] Extend API failure probes to create, update, and delete HTTP 503 outcomes and record their UI/page-error consequences.
+- [ ] Probe malformed, interrupted, repeated, and unknown-identifier paths.
 - [ ] Compare independently captured behaviour and ensure every rule is evidence-linked.
 
 **6C — Business rules**
@@ -264,9 +266,11 @@ Phase 6 is the empirical implementation of the complete-capture objective across
 
 **6H — Background processing, errors/recovery, configuration, and performance**
 - [ ] Capture queued/scheduled/worker lifecycles, retries, cancellation, and terminal outcomes.
-- [ ] Capture failures, fallbacks, compensation, recovery, and user/system-visible consequences.
+- [x] Capture create/update/delete HTTP 503 propagation and the absence of a user-facing recovery path in the Task Board fixture.
+- [ ] Capture retries, fallbacks, compensation, and recovery paths in a richer target that actually implements them.
 - [ ] Record effective runtime configuration and controlled configuration changes.
-- [ ] Measure performance/resource behaviour under reproducible workloads and declared measurement conditions.
+- [x] Record single-navigation timing, paint timing, transfer size, and resource count for the Task Board fixture under the declared CI browser environment.
+- [ ] Measure repeated workloads, throughput, latency distributions, and resource behaviour in a target with meaningful workload semantics.
 
 **6I — Cross-facet completeness and replication validation**
 - [ ] Reconcile the facet inventory against the actual system boundary and all relevant workflows/states.

@@ -101,3 +101,8 @@ The initial Task Board audit has been recorded and the first expanded behaviour/
 ## Current coverage snapshot
 
 The Task Board fixture currently has direct empirical inventories for five facets: interface, behaviour, business rules, data, and its deterministic in-memory API boundary. It does not demonstrate production persistence, identity, authorization, security, messaging, external integrations, background processing, or production performance. Those facets remain unverified for this fixture. Phase 6 continues; this snapshot is not the project's final all-facet result.
+
+
+## Remaining full-stack target dependency
+
+The Task Board now exercises eight facets at a bounded level, but it cannot supply runtime evidence for persistence, messaging, identity/authentication, authorization, background processing, integrations, or application configuration. These are not being marked globally not applicable. A richer reference target must be selected or built and then captured at runtime, independently implemented, and compared. Until that work and the 6I cross-facet completeness review pass, Phase 6 remains active and Phase 7 remains blocked.

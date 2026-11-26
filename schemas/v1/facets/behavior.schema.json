@@ -27,7 +27,7 @@
       "minItems": 0
     },
     "actor": {
-      "$ref": "../records.schema.json#/$defs/fieldState"
+      "$ref": ".urn:software-rules:schema:v1:records#/$defs/fieldState"
     },
     "actions": {
       "type": "array",

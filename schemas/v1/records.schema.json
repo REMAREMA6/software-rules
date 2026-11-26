@@ -548,7 +548,7 @@
           "minLength": 1
         },
         "payload": {
-          "$ref": "./facet-payloads.schema.json"
+          "$ref": "urn:software-rules:schema:v1:facet-payloads"
         },
         "rawValue": {},
         "normalizedValue": {},
@@ -619,7 +619,19 @@
         "evidenceRefs",
         "status"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "executionId"
+          ]
+        },
+        {
+          "required": [
+            "runtimeInterval"
+          ]
+        }
+      ]
     },
     "runtimeRule": {
       "type": "object",

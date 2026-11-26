@@ -20,7 +20,7 @@
       "minLength": 1
     },
     "target": {
-      "$ref": "./records.schema.json#/$defs/target"
+      "$ref": "urn:software-rules:schema:v1:records#/$defs/target"
     },
     "scope": {
       "type": "object",
@@ -85,56 +85,56 @@
     "scenarios": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/scenario"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/scenario"
       },
       "minItems": 0
     },
     "executions": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/execution"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/execution"
       },
       "minItems": 0
     },
     "observations": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/observation"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/observation"
       },
       "minItems": 0
     },
     "runtimeRules": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/runtimeRule"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/runtimeRule"
       },
       "minItems": 0
     },
     "sourceRules": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/sourceRule"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/sourceRule"
       },
       "minItems": 0
     },
     "declaredContracts": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/declaredContract"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/declaredContract"
       },
       "minItems": 0
     },
     "evidence": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/evidence"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/evidence"
       },
       "minItems": 0
     },
     "coverage": {
       "type": "array",
       "items": {
-        "$ref": "./records.schema.json#/$defs/coverageItem"
+        "$ref": "urn:software-rules:schema:v1:records#/$defs/coverageItem"
       },
       "minItems": 1
     },

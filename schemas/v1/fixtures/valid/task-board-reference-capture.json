@@ -1180,13 +1180,9 @@
         "requirement": "required",
         "status": "partial",
         "observationRefs": [
-          "ref-obs-interface",
-          "ref-obs-workflow"
+          "ref-obs-interface"
         ],
-        "evidenceRefs": [
-          "ref-evidence-interface",
-          "ref-evidence-workflow"
-        ],
+        "evidenceRefs": [],
         "rationale": "Initial empty state and workflow outputs are recorded, but full snapshots for every state and transition are absent."
       },
       {

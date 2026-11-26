@@ -210,7 +210,11 @@ async function runVariant(name) {
   const probeStart = apiLog[name].length;
   async function createProbeTask(value) {
     await input.fill(value);
+    const response = page.waitForResponse(candidate =>
+      candidate.url().includes("/api/tasks") && candidate.request().method() === "POST"
+    );
     await page.getByRole("button", { name: "Add task" }).click();
+    await response;
     await page.getByText(value.trim(), { exact: true }).waitFor();
   }
 
@@ -296,7 +300,7 @@ async function runVariant(name) {
   if (htmlLikeResult.exactTextRendered !== 1 || htmlLikeResult.injectedImageCount !== 0) throw new Error("HTML-like title was not rendered as literal text");
   if (longTitleResult.renderedExactMatchCount !== 1) throw new Error("Long title was not preserved");
   if (activeFilterCount !== 2 || completedFilterCount !== 1) throw new Error("Mixed-task filter truth table did not match");
-  if (afterComplete.summary !== "3 tasks · 2 active" && afterComplete.summary !== "3 tasks · 2 active") throw new Error("Unexpected summary after completing one of three tasks");
+  if (afterComplete.summary !== "3 tasks · 2 active") throw new Error("Unexpected summary after completing one of three tasks");
   if (afterToggleBack !== "3 tasks · 3 active") throw new Error("Completion toggle-back did not restore active count");
   if (matrixDeleteResults.length !== 3 || matrixFinalSummary !== "0 tasks · 0 active") throw new Error("Mixed-task deletion did not restore the empty state");
   await save("business-data-probes");

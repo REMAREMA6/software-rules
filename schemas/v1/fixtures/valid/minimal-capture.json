@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1.0",
+  "schemaVersion": "0.2.0",
   "captureId": "capture-reference-001",
   "createdAt": "2026-11-26T10:00:00Z",
   "purpose": "Minimal structural validation fixture",
@@ -27,7 +27,7 @@
   },
   "collector": {
     "name": "fixture-generator",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "scenarios": [
     {

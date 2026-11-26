@@ -3,8 +3,8 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-26  
-**Current phase:** Phase 7 — Review, release, and maintenance  
-**Overall status:** Phase 6 complete; Phase 7 in progress
+**Current phase:** Phase 6 — End-to-end examples and conformance (redo)  
+**Overall status:** Phase 6 reopened; replication-completeness enforcement in progress
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 7 — Review, release, and maintenance
-- **Current task:** Enforce the newly recorded Replication Completeness Rule throughout the specification, then continue the Phase 7 review and release.
+- **Current task:** Redo Phase 6 conformance using an explicit, evidence-backed replication property inventory and completeness gate.
 - **Blockers:** None for Phase 6. Production-backend, durable-persistence, authentication, screenshot retention, and network transport observations are outside the Task Board test boundary and are documented as limitations.
-- **Next action:** Audit capture scope/coverage, required property inventories, completeness status, comparison conclusions, schemas, examples, and conformance against `specification/REPLICATION-COMPLETENESS.md`.
+- **Next action:** Expand runtime capture of the Task Board's missing interface and behaviour properties, then update comparisons and run schema, integrity, and completeness tests.
 - **Phase 6 result:** Two independently authored baseline applications and one deliberately mutated build were executed in isolated Chromium at 1280×800. Interface, behavior, and deterministic adapter API observations were captured; equivalent and actual-difference reports were schema-validated.
 
 ## Phase tracking
@@ -34,8 +34,8 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.1.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | End-to-end examples and conformance | [x] Complete | Task Board reference, independent baseline, and mutated build captured; interface/behavior/API facets, source-derived rule, equivalent and mismatch reports, schema fixtures, cross-record checks, and CI completed. |
-| 7 | Review, release, and maintenance | [~] In progress | Added the normative Replication Completeness Rule. Remaining work: propagate it into capture/comparison models, schemas, conformance, examples, and release review. |
+| 6 | End-to-end examples and conformance | [~] Redo in progress | Added explicit replication property inventories, separate completeness reporting, schema requirements, and integrity checks. Existing captures correctly remain incomplete; additional runtime evidence and expanded conformance scenarios are still required. |
+| 7 | Review, release, and maintenance | [ ] Pending Phase 6 redo | Resume final consistency review and release only after Phase 6 conformance satisfies the replication-completeness requirements. |
 
 ## Phase 0 — Repository and project governance
 
@@ -145,7 +145,7 @@
 
 **Phase 5 exit gate: satisfied.** GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45793398830) passed the capture and comparison fixture suites. The valid comparison example passed; the invalid report claiming universal equivalence was rejected. The example is illustrative, not empirical. Active work moved to Phase 6.
 
-## Phase 6 — End-to-end examples and conformance
+## Phase 6 — End-to-end examples and conformance (reopened for replication-completeness redo)
 
 - [x] Interface capture example.
 - [x] Behaviour capture example.
@@ -216,3 +216,19 @@
 - Accepted D-010, the 15-facet catalogue for this specification draft. Phase 3 examples are illustrative model tests, not empirical captures. Machine schemas remain Phase 4; empirical end-to-end captures remain Phase 6.
 - Verified the Phase 3 files and project navigation on GitHub. Active work moved to Phase 4: machine-readable schemas.
 
+
+
+### Phase 6 redo — 2026-11-26
+
+- [x] Record the Replication Completeness Rule as an accepted project requirement.
+- [x] Require a declared replication scope and per-property inventory in the capture schema.
+- [x] Require comparisons to report replication completeness separately from observed agreement.
+- [x] Add cross-record integrity checks for unique inventory IDs, facet declarations, observation/evidence references, and false complete claims.
+- [x] Add Task Board inventories for interface, behaviour, and API properties; current captures are explicitly incomplete.
+- [x] Add tests rejecting a complete status when required properties are partial or unresolved.
+- [ ] Expand reference, independent, and mutated runtime captures to cover all required properties in the declared Task Board scope.
+- [ ] Add retained screenshots/pixel evidence and complete per-state interface snapshots where applicable.
+- [ ] Add validation, error/recovery, keyboard, and other missing behaviour scenarios.
+- [ ] Re-run the full conformance suite and review final comparison conclusions.
+
+**Current redo status:** In progress. The format and validator now expose completeness gaps rather than allowing selected matching observations to imply replication. The empirical property inventory is not yet complete, so Phase 6 remains open.

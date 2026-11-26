@@ -133,6 +133,20 @@
           "completed": true
         }
       }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "url": "/api/tasks/task-1",
+        "body": null
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "deleted": true,
+          "id": "task-1"
+        }
+      }
     }
   ]
 }

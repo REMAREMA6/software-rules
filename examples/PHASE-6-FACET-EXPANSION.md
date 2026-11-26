@@ -95,7 +95,7 @@ The validator now requires each inventory evidence reference to be attached to a
 
 ## Current implementation checkpoint
 
-The initial Task Board audit has been recorded and the first expanded behaviour/business-rule/data probe suite has passed in [GitHub Actions run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). Its 41-file artifact is linked from the Task Board audit. All three captures now contain 34 inventory entries: 28 captured, two partial, one not applicable, and three optional exclusions. The remaining partial properties are font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint. Updated capture and comparison files also passed the dedicated workflow in [run #45859552354](https://github.com/REMAREMA6/software-rules/actions/runs/45859552354). The integrity validator now checks evidence attachment and runtime-backed support for captured properties; human review is still required to assess semantic sufficiency and inventory exhaustiveness.
+The initial Task Board audit has been recorded and the first expanded behaviour/business-rule/data probe suite has passed in [GitHub Actions run #45858743131](https://github.com/REMAREMA6/software-rules/actions/runs/45858743131). Its 41-file artifact is linked from the Task Board audit. All three captures now contain 38 inventory entries: 33 captured, two partial, one not applicable, and two optional exclusions. The remaining partial properties are font rendering beyond the recorded Chromium/Linux conditions and the maximum title-length constraint. Updated capture and comparison files also passed the dedicated workflow in [run #45859552354](https://github.com/REMAREMA6/software-rules/actions/runs/45859552354). The integrity validator now checks evidence attachment and runtime-backed support for captured properties; human review is still required to assess semantic sufficiency and inventory exhaustiveness.
 
 
 ## Current coverage snapshot
@@ -106,3 +106,8 @@ The Task Board fixture currently has direct empirical inventories for five facet
 ## Remaining full-stack target dependency
 
 The Task Board now exercises eight facets at a bounded level, but it cannot supply runtime evidence for persistence, messaging, identity/authentication, authorization, background processing, integrations, or application configuration. These are not being marked globally not applicable. A richer reference target must be selected or built and then captured at runtime, independently implemented, and compared. Until that work and the 6I cross-facet completeness review pass, Phase 6 remains active and Phase 7 remains blocked.
+
+
+## Latest Task Board capture verification
+
+The pointer-driven completion and deletion steps now wait for their corresponding API responses and resulting DOM state, preventing screenshot races. Corrected [run #45861726449](https://github.com/REMAREMA6/software-rules/actions/runs/45861726449) passed all runtime, integrity, and schema/comparison checks. It retained [artifact #15137768292](https://github.com/REMAREMA6/software-rules/actions/runs/45861726449/artifacts/15137768292). The 13 tested baseline UI states match pixel-for-pixel; the deliberate mutation remains detectable. This closes the supplemental Task Board test cycle, not the project-wide Phase 6 gate.

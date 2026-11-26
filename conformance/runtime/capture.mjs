@@ -147,23 +147,31 @@ async function runVariant(name) {
   await page.keyboard.press("Tab");
   await page.keyboard.press("Enter");
   await page.getByText("Keyboard-created task").waitFor();
-  // Exercise filter selection, completion, and deletion with keyboard activation only.
-  await page.keyboard.press("Tab"); // All
-  await page.keyboard.press("Tab"); // Active
+  // Tab through real focus order; activate every control with keyboard keys only.
+  async function tabUntil(selector) {
+    for (let attempt = 0; attempt < 12; attempt++) {
+      await page.keyboard.press("Tab");
+      if (await page.locator(selector).evaluate(element => element === document.activeElement)) return;
+    }
+    throw new Error(`Keyboard focus did not reach ${selector}`);
+  }
+  await tabUntil('[data-filter="active"]');
   await page.keyboard.press("Enter");
   const keyboardActiveCount = await page.locator("li").count();
-  await page.keyboard.press("Tab"); // Completed
+  await tabUntil('[data-filter="completed"]');
   await page.keyboard.press("Enter");
   const keyboardCompletedCount = await page.locator("li").count();
-  await page.keyboard.press("Tab"); // All
+  await tabUntil('[data-filter="all"]');
   await page.keyboard.press("Enter");
-  await page.keyboard.press("Tab"); // task checkbox
+  await tabUntil('input[type="checkbox"]');
   await page.keyboard.press("Space");
   const keyboardCompletedSummary = await page.locator("#summary, #meta").innerText();
-  // After rerender focus returns to the document; tab through the same controls to Delete.
-  for (let i = 0; i < 7; i++) await page.keyboard.press("Tab");
+  await tabUntil('button[aria-label="Delete Keyboard-created task"]');
   await page.keyboard.press("Enter");
   await page.getByText("Keyboard-created task").waitFor({ state: "detached" });
+  // Return to All using keyboard before the pointer-driven visual-state run.
+  await tabUntil('[data-filter="all"]');
+  await page.keyboard.press("Enter");
   snapshots["keyboard-workflow"] = {
     firstFocus, keyboardActiveCount, keyboardCompletedCount, keyboardCompletedSummary,
     visibleText: await page.locator("body").innerText(), requests: [...apiLog[name]]

@@ -195,11 +195,11 @@ async function runVariant(name) {
   const checkbox = page.getByRole("checkbox", { name: "Complete Prepare release notes" });
   await checkbox.check();
   await save("completed");
-  await page.getByRole("button", { name: "Active" }).click();
+  await page.getByRole("button", { name: "Active", exact: true }).click();
   await save("active-filter-empty");
-  await page.getByRole("button", { name: "Completed" }).click();
+  await page.getByRole("button", { name: "Completed", exact: true }).click();
   await save("completed-filter");
-  await page.getByRole("button", { name: "All" }).click();
+  await page.getByRole("button", { name: "All", exact: true }).click();
   await save("all-filter");
   await page.getByRole("button", { name: "Delete Prepare release notes" }).click();
   await save("deleted");
@@ -269,11 +269,11 @@ async function runVariant(name) {
     total: await page.locator("li").count(),
     summary: await page.locator("#summary, #meta").innerText()
   };
-  await page.getByRole("button", { name: "Active" }).click();
+  await page.getByRole("button", { name: "Active", exact: true }).click();
   const activeFilterCount = await page.locator("li").count();
-  await page.getByRole("button", { name: "Completed" }).click();
+  await page.getByRole("button", { name: "Completed", exact: true }).click();
   const completedFilterCount = await page.locator("li").count();
-  await page.getByRole("button", { name: "All" }).click();
+  await page.getByRole("button", { name: "All", exact: true }).click();
   const uncompleteResponse = page.waitForResponse(candidate =>
     candidate.url().includes("/api/tasks/") && candidate.request().method() === "PATCH"
   );

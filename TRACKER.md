@@ -226,10 +226,11 @@
 - [x] Add cross-record integrity checks for unique inventory IDs, facet declarations, observation/evidence references, and false complete claims.
 - [x] Add Task Board inventories for interface, behaviour, and API properties; current captures are explicitly incomplete.
 - [x] Bump the incompatible draft capture/report format from 0.1.0 to 0.2.0 and update the valid fixtures.
+- [x] Audit all three inventories: 22 properties each, with 13 required properties still unresolved in each capture; no completeness claim is permitted.
 - [x] Add tests rejecting a complete status when required properties are partial or unresolved.
 - [ ] Expand reference, independent, and mutated runtime captures to cover all required properties in the declared Task Board scope.
 - [ ] Add retained screenshots/pixel evidence and complete per-state interface snapshots where applicable.
 - [ ] Add validation, error/recovery, keyboard, and other missing behaviour scenarios.
 - [ ] Re-run the full conformance suite and review final comparison conclusions.
 
-**Current redo status:** In progress. The format and validator now expose completeness gaps rather than allowing selected matching observations to imply replication. The empirical property inventory is not yet complete, so Phase 6 remains open.
+**Current redo status:** In progress. The capture/report schemas and fixtures now require completeness accounting. Each Task Board capture has 22 inventory entries and 13 unresolved required properties; the reports retain observed agreement/difference while explicitly stating that replication is incomplete. Structural reference/status checks were reviewed against the repository files; GitHub Actions validation has not yet been confirmed. The empirical property inventory is not yet complete, so Phase 6 remains open.

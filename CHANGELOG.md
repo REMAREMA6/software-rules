@@ -7,6 +7,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- Reopened Phase 6 conformance with required replication-scope property inventories, evidence-linked property states, separate comparison completeness results, and integrity checks against false completeness claims.
 - Normative `specification/REPLICATION-COMPLETENESS.md`: replication-scope completeness is a separate requirement from agreement among the properties captured; incomplete captures cannot establish faithful replication.
 - Phase 6 cross-record integrity validator and unit tests for duplicate IDs and unresolved/mismatched references across capture records.
 - Phase 5 comparison specification: matching/alignment, normalization, difference classification, coverage/limitations, and a worked comparison report.
@@ -24,6 +25,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Comparative standards review and authoritative research bibliography.
 
 ### Changed
+- Original Phase 6 completion is withdrawn pending redo; Task Board captures now explicitly report incomplete replication scope despite matching selected observations.
 - Phase 7 started: the replication-completeness requirement is now an explicit review and conformance obligation.
 - Phase 6 now distinguishes completed structural cross-record validation from outstanding empirical runtime captures; no browser evidence is represented as collected.
 - Completed Phase 5 and advanced active work to Phase 6 after GitHub Actions run #4 validated both capture and comparison fixtures.

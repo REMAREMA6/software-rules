@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 7 — Review, release, and maintenance  
-**Overall status:** Phase 6 exit approved for the declared 20-case cross-repository validation corpus across all 15 facets and 15 immutable source repositories. No facet is claimed universally complete; all case boundaries, exclusions, future extensions, and limitations are recorded in [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md). Phase 7 is unblocked and not started. Accepted cases include: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions and file-backed durability, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, go-redis/redis-py integration, TASKBOARD-UI-001 (plain HTML/CSS to independent React UI replication), EXP-CONFIG-001 (Express routing configuration to independent Python model), PROM-PERF-001 (Prometheus write workload and independent Python model), CASBIN-ADV-AUTHZ-001 (Casbin domain RBAC, ABAC, deny override, and policy mutation), MEDUSA-PRICE-001 (Medusa calculated/original price selection), MEDUSA-ADJUST-001 (Medusa adjustment/tax allocation), MEDUSA-PROMO-001 (Medusa promotion rule eligibility), AXIOS-HTTP-001 (Axios external HTTP integration), SESSION-EXPRESS-001 (express-session identity/session lifecycle), and VIPER-CONFIG-001 (Viper configuration precedence). No entire facet is complete; several facet inventories and independent replications remain incomplete.
+**Overall status:** Phase 6 exit approved for the declared 20-case cross-repository validation corpus across all 15 facets and 15 immutable source repositories. No facet is claimed universally complete; all case boundaries, exclusions, future extensions, and limitations are recorded in [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md). Phase 7 is unblocked and not started. Accepted cases include: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions and file-backed durability, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, go-redis/redis-py integration, TASKBOARD-UI-001 (plain HTML/CSS to independent React UI replication), EXP-CONFIG-001 (Express routing configuration to independent Python model), PROM-PERF-001 (Prometheus write workload and independent Python model), CASBIN-ADV-AUTHZ-001 (Casbin domain RBAC, ABAC, deny override, and policy mutation), MEDUSA-PRICE-001 (Medusa calculated/original price selection), MEDUSA-ADJUST-001 (Medusa adjustment/tax allocation), MEDUSA-PROMO-001 (Medusa promotion rule eligibility), AXIOS-HTTP-001 (Axios external HTTP integration), SESSION-EXPRESS-001 (express-session identity/session lifecycle), VIPER-CONFIG-001 (Viper configuration precedence), and BMQ-RECOVERY-001 (BullMQ stalled-job recovery). No facet is claimed universally complete; remaining feature classes are explicit future coverage.
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -147,7 +147,7 @@
 
 ## Phase 6 — Cross-repository, cross-stack replication and conformance
 
-**Status: [~] In progress.** Phase 6 uses multiple source repositories and a separate independent replication project. One application is not expected to implement all 15 facets. See [the full programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md).
+**Status: [x] Complete for the declared 20-case validation corpus.** Phase 6 used multiple source repositories and a separate independent replication project. See [the final exit audit](conformance/replication-lab/PHASE6-EXIT-AUDIT.md). One application is not expected to implement all 15 facets. See [the full programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md).
 
 ### Agreed operating model
 - [x] Each facet may use a different source repository.
@@ -203,7 +203,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** twenty bounded cross-stack cases pass, but no entire facet is complete for the full objective. Authorization now covers simple RBAC plus bounded domain RBAC, ABAC, deny override, and policy mutation; broader models remain open. Integrations now cover seven Redis operations and nine Axios/urllib HTTP interactions; TLS, proxies, credentials, retries, cancellation, and provider-specific behaviours remain open. Security covers limited JWT controls and output encoding. PROM-PERF-001 passes a bounded workload case; broader performance properties remain open. The independent UI-stack gap is closed only for the bounded Task Board scope. Business rules now include date validation, price selection, tax/adjustment allocation, and promotion eligibility; discount application, cart totals, campaign budgets, and checkout remain open. Data, persistence, API, messaging, background processing, errors, and configuration have unresolved property inventories. TypeORM now covers top-level transactions and bounded file-backed reopen durability; concurrency, isolation, power-loss, and driver differences remain open. EXP-CONFIG-001 and VIPER-CONFIG-001 cover bounded routing and source-precedence configuration classes; remote providers, reload/watch, secrets, and multi-file merge remain open. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
+**Current blocker:** None for the declared Phase 6 corpus. The exit audit explicitly lists remaining property classes as not applicable to the individual case scopes and as future coverage; no global absence or capture claim is made. Authorization now covers simple RBAC plus bounded domain RBAC, ABAC, deny override, and policy mutation; broader models remain open. Integrations now cover seven Redis operations and nine Axios/urllib HTTP interactions; TLS, proxies, credentials, retries, cancellation, and provider-specific behaviours remain open. Security covers limited JWT controls and output encoding. PROM-PERF-001 passes a bounded workload case; broader performance properties remain open. The independent UI-stack gap is closed only for the bounded Task Board scope. Business rules now include date validation, price selection, tax/adjustment allocation, and promotion eligibility; discount application, cart totals, campaign budgets, and checkout remain open. Data, persistence, API, messaging, background processing, errors, and configuration have unresolved property inventories. TypeORM now covers top-level transactions and bounded file-backed reopen durability; concurrency, isolation, power-loss, and driver differences remain open. EXP-CONFIG-001 and VIPER-CONFIG-001 cover bounded routing and source-precedence configuration classes; remote providers, reload/watch, secrets, and multi-file merge remain open. The Task Board-only approach remains superseded. The Phase 6 exit gate is approved for the declared corpus; do not upgrade this into a universal-equivalence or facet-wide completeness claim.
 
 
 ### 2026-11-27 — JOSE JWT authentication/security case accepted
@@ -303,7 +303,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - Reframed Phase 6 as the complete multi-facet empirical capture and conformance programme, rather than treating the initial Task Board fixture as the final scope.
 - Kept the existing interface/behaviour/API runtime work as a bounded baseline. It does not establish complete interface capture or coverage of other software facets.
 - Ordered the remaining work: interface evidence audit; behaviour/functionality; business rules; data; persistence; API/messaging/integrations; identity/authorization/security; background processing/errors/configuration/performance; cross-facet completeness.
-- Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
+- Phase 7 is unblocked by the approved Phase 6 corpus exit; release review has not started.
 - Next action: extend the Playwright harness with title boundary cases, duplicate titles, mixed-task state/count truth tables, repeated toggles/deletes, malformed/unknown-ID API operations, and exact request/response data-shape capture.
 
 
@@ -380,7 +380,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - Reconfirmed the pinned BullMQ package version at the selected commit is 6.7.10 and its package test command is Vitest. Runtime harness design must use the exact pinned source and Redis-backed test setup, not substitute a current npm release.
 - Corrected the source register count to eleven repositories; individual rule cases must still pass before being accepted.
 - Immediate execution order: (1) make the Python model's test run reproducible and verify its workflow; (2) build a pinned-commit BullMQ+Redis runtime probe and record actual outputs; (3) capture the independent implementation in a genuinely different stack; (4) compare both captures and mutation-test; (5) repeat for every required rule/property across all 15 facets.
-- Phase 6 remains in progress; Phase 7 remains blocked. No completion claim is made.
+- Historical status at the time of this entry: Phase 6 was in progress. Superseded by the approved [Phase 6 exit audit](conformance/replication-lab/PHASE6-EXIT-AUDIT.md).
 
 
 ### 2026-11-27 — Cross-stack case execution progress
@@ -410,7 +410,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Mutation tests detect off-by-one attempt limits, altered processor counts, backoff values, and transition sequences.
 - [x] Generated and validated source/replica Software Rules 0.2.0 captures and the comparison report.
 - [x] Committed six raw/structured evidence files under `conformance/replication-lab/cases/BMQ-ER-002/artifacts/` at commit [513766d](https://github.com/REMAREMA6/software-rules/commit/513766df3b9d4300df4c9297b79f221b54e29e42).
-- [~] Phase 6 remains active: this proves portability only for the declared retry/backoff properties and three scenarios. Continue with Express API and the remaining facets.
+- [x] Historical Phase 6 case accepted: this proves portability only for the declared retry/backoff properties and three scenarios. Continue with Express API and the remaining facets.
 
 
 ### 2026-11-27 — Bounded Express API/routing case accepted
@@ -421,7 +421,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Executable mutations detected incorrect HEAD wire-body handling, OPTIONS method enumeration/precedence, case-sensitive routing, strict trailing-slash matching, and query-path matching.
 - [x] Generated and validated Software Rules 0.2.0 captures and the comparison report.
 - [x] Committed raw/structured captures, comparison, package lock, and dependency tree under `conformance/replication-lab/cases/EXP-API-001/artifacts/` at commit [ad30376](https://github.com/REMAREMA6/software-rules/commit/ad3037693d32221a6d7bdb6b9883c45db7b2be9c).
-- [~] Phase 6 remains active; this case proves only the declared seven-request scope, not complete Express/API coverage.
+- [x] Historical Phase 6 case accepted; this case proves only the declared seven-request scope, not complete Express/API coverage.
 
 
 ### 2026-11-27 — Cross-stack evidence audit and TypeORM case start

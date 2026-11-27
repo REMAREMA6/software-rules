@@ -28,13 +28,15 @@ async function runScenario(label, configure) {
       processed.push(job.data.payload);
       if (job.data.fail) throw new Error('consumer-failed');
       return 'acknowledged';
-    }, { connection: wc, concurrency: 1 });
+    }, { connection: wc, concurrency: 1, autorun: false });
     await worker.waitUntilReady();
-    const terminal = await new Promise((resolve, reject) => {
+    const terminalPromise = new Promise((resolve, reject) => {
       const timer = setTimeout(() => reject(new Error(label + ': worker timed out')), 10000);
       worker.once('completed', (job, result) => { clearTimeout(timer); resolve({ state: 'completed', id: job.id, result }); });
       worker.once('failed', (job, error) => { clearTimeout(timer); resolve({ state: 'failed', id: job && job.id, error: error.message }); });
     });
+    worker.run().catch(error => {});
+    const terminal = await terminalPromise;
     await new Promise(resolve => setTimeout(resolve, 150));
     const counts = await queue.getJobCounts('waiting', 'active', 'completed', 'failed');
     return { label, setup, processed, terminal, eventNames, counts };

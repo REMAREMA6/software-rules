@@ -1,7 +1,7 @@
 # Case — Redis client integration outcomes
 
 **Case ID:** REDIS-INT-001  
-**Status:** Source and independent replica probes prepared; pinned-source runtime and Software Rules validation pending  
+**Status:** PASSED for the declared seven-operation Redis integration scope. Pinned go-redis Go client and independent Python 3.12 / redis-py client matched all seven normalized outcomes against Redis 7; five executable mutations passed; Software Rules 0.2.0 captures, comparison, schema validation, and evidence-integrity checks passed in [workflow run #45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414). Retained CI artifact ID `15168909418` (expires 2026-12-27). This is bounded Redis integration evidence, not complete integrations-facet coverage.  
 **Facet(s):** Integrations; errors and recovery; data  
 **Source:** https://github.com/redis/go-redis  
 **Source commit:** `37d4d98e2ccf59df4973df3e5de9edc87492426b`  

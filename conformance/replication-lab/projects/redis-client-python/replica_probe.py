@@ -58,7 +58,7 @@ def capture(mutations=None):
         unavailable.close()
     if mutations.get("connection_as_success"):
         connection_outcome = "success"
-    add("connection-failure", {"operation": "PING", "endpoint": "unavailable"},
+    add("connection-failure", {"operation": "PING", "logicalKey": "unavailable"},
         "failure" if connection_outcome != "success" else "success", connection_outcome)
     return {"implementation": "Independent Python 3.12 redis-py client", "scenarios": scenarios}
 

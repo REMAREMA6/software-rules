@@ -43,7 +43,7 @@ jobs:
         working-directory: /tmp/typeorm
         run: |
           corepack prepare pnpm@12.22.0 --activate
-          pnpm install --filter typeorm... --frozen-lockfile --ignore-scripts
+          pnpm install --filter typeorm... --include-workspace-root --frozen-lockfile --ignore-scripts
       - name: Compile TypeORM from pinned source
         working-directory: /tmp/typeorm
         run: pnpm --filter typeorm exec tsc -p tsconfig.node.json

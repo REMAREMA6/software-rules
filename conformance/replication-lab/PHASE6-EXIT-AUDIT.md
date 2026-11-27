@@ -2,7 +2,7 @@
 
 **Decision:** EXIT APPROVED for the declared Phase 6 validation corpus.  
 **Date:** 2026-11-27  
-**Corpus:** 20 accepted bounded cross-stack cases; 15 immutable source repositories; all 15 facets represented.  
+**Corpus:** 23 accepted bounded cross-stack cases; 15 immutable source repositories; all 15 facets represented.  
 **Important boundary:** This approves the validation method and declared corpus. It does not claim that every facet is universally complete, that every possible software rule has been catalogued, or that any two arbitrary systems are equivalent.
 
 ## 1. Exit decision
@@ -42,6 +42,9 @@ The Phase 6 exit gate is satisfied for the declared corpus because:
 | 18 | [BMQ-RECOVERY-001](cases/BMQ-RECOVERY-001/CASE.md) | Two BullMQ stalled-job recovery/terminal-limit scenarios matched job counters, events, processed values, and queue counts; four mutations passed in [run #45943469678](https://github.com/REMAREMA6/software-rules/actions/runs/45943469678), artifact `15173607117`. | Runtime capture, comparison, schema/integrity validation. |
 | 19 | [MEDUSA-ADJUST-001](cases/MEDUSA-ADJUST-001/CASE.md) | Nine Medusa adjustment/tax-allocation scenarios matched Python Decimal; six mutations passed in [run #45943612155](https://github.com/REMAREMA6/software-rules/actions/runs/45943612155), artifact `15173389412`. | Runtime capture, comparison, schema/integrity validation. |
 | 20 | [MEDUSA-PROMO-001](cases/MEDUSA-PROMO-001/CASE.md) | Thirty-two Medusa promotion-rule eligibility scenarios matched Python; eight mutations passed in [run #45944011363](https://github.com/REMAREMA6/software-rules/actions/runs/45944011363), artifact `15174046701`. | Runtime capture, comparison, schema/integrity validation. |
+| 21 | [TYPEORM-PERSIST-001](cases/TYPEORM-PERSIST-001/CASE.md) | TypeORM 1.1.3 transaction callback commit/rollback matched independent Python 3.12/sqlite3 across two scenarios and eight projections; rollback/error mutations and Software Rules schema/integrity validation passed in [run #45927631068](https://github.com/REMAREMA6/software-rules/actions/runs/45927631068), artifact `15166753118`. | Runtime capture, comparison, schema/integrity validation; better-sqlite3 driver boundary. |
+| 22 | [BMQ-SCHED-001](cases/BMQ-SCHED-001/CASE.md) | BullMQ 6.7.10 delayed-job rescheduling and cancellation matched the independent Python state machine; six mutations and Software Rules schema/integrity validation passed in [run #45946359808](https://github.com/REMAREMA6/software-rules/actions/runs/45946359808), artifact `15174518117`. | Runtime capture, comparison, schema/integrity validation. |
+| 23 | [MEDUSA-LINE-ITEM-001](cases/MEDUSA-LINE-ITEM-001/CASE.md) | Fourteen Medusa line-item subtotal/tax/discount/total scenarios matched the independent Python Decimal model; six mutations and Software Rules schema/integrity validation passed in [run #45946618440](https://github.com/REMAREMA6/software-rules/actions/runs/45946618440), artifact `15175295192`. | Runtime capture, comparison, schema/integrity validation. |
 
 ## 3. Fifteen-facet result
 
@@ -49,15 +52,15 @@ The Phase 6 exit gate is satisfied for the declared corpus because:
 |---|---|---|
 | Interface | TASKBOARD-UI-001 | Represented; browser UI scope only. |
 | Behaviour | BullMQ, Express, TypeORM, Medusa, JOSE, Casbin, Task Board | Represented across request, state, and lifecycle rules. |
-| Business rules | MEDUSA-BR-001, MEDUSA-PRICE-001, MEDUSA-ADJUST-001, MEDUSA-PROMO-001, Task Board | Represented across temporal validation, price selection, tax/adjustment, eligibility, and title/count rules. |
+| Business rules | MEDUSA-BR-001, MEDUSA-PRICE-001, MEDUSA-ADJUST-001, MEDUSA-PROMO-001, MEDUSA-LINE-ITEM-001, Task Board | Represented across temporal validation, price selection, tax/adjustment, eligibility, and title/count rules. |
 | Data | Task Board, TypeORM, BullMQ, Medusa, JOSE, Redis | Represented across records, payloads, claims, and values. |
-| Persistence | TORM-PERSIST-001, TORM-PERSIST-002 | Represented across transaction atomicity and file-backed reopen durability. |
+| Persistence | TORM-PERSIST-001, TYPEORM-PERSIST-001, TORM-PERSIST-002 | Represented across transaction atomicity and file-backed reopen durability. |
 | API | EXP-API-001, EXP-CONFIG-001, AXIOS-HTTP-001 | Represented across route semantics, configuration activation, and HTTP client outcomes. |
 | Messaging | BMQ-MSG-001, BMQ-RECOVERY-001 | Represented across QueueEvents and stalled redelivery/failure. |
 | Identity and authentication | JOSE-AUTH-001, SESSION-EXPRESS-001 | Represented across token verification and server-side session lifecycle. |
 | Authorization and permissions | CASBIN-AUTHZ-001, CASBIN-ADV-AUTHZ-001 | Represented across simple RBAC, domain RBAC, ABAC, deny override, and policy mutation. |
 | Security controls | JOSE, express-session, Task Board output handling | Represented across signature/algorithm checks, signed-cookie integrity, and output encoding. |
-| Background processing | BMQ-ER-002, BMQ-MSG-001, BMQ-RECOVERY-001 | Represented across retry/backoff, worker lifecycle, and stalled recovery. |
+| Background processing | BMQ-ER-002, BMQ-MSG-001, BMQ-RECOVERY-001, BMQ-SCHED-001 | Represented across retry/backoff, worker lifecycle, and stalled recovery. |
 | Errors and recovery | BullMQ, Express, TypeORM, Medusa, JOSE, Redis, Axios, session cases | Represented across HTTP errors, rollback, rejection, retry, timeout, and recovery. |
 | Integrations | REDIS-INT-001, AXIOS-HTTP-001 | Represented across Redis client operations and HTTP client/service interactions. |
 | Configuration | EXP-CONFIG-001, VIPER-CONFIG-001 | Represented across router initialization settings and multi-source precedence/environment mapping. |
@@ -67,7 +70,7 @@ The Phase 6 exit gate is satisfied for the declared corpus because:
 
 The unresolved properties in [the required-property inventory](PHASE6-REQUIRED-PROPERTY-INVENTORY.md) are not silently marked as captured. They are explicitly outside the declared boundaries of the current cases and therefore **not applicable to those individual case comparisons**. They remain future extensions for broader system coverage; this audit does not claim that they are globally irrelevant.
 
-Examples include native UI platforms and font fallback; concurrent/reordered behaviour; promotion discovery, discount application, campaign budgets and checkout; null/missing data matrices; multi-process persistence concurrency and power-loss durability; full API pagination/rate-limit contracts; messaging DLQs and delivery guarantees; credential login, refresh and MFA; other authorization policy models; TLS, CSRF/CORS and secrets management; job scheduling/cancellation and multiple stalled jobs; compensation and distributed recovery; external-provider resilience; remote configuration/watchers; and performance scaling, latency distributions, saturation and resource budgets.
+Examples include native UI platforms and font fallback; concurrent/reordered behaviour; promotion discovery, discount application/stacking, campaign budgets and checkout; null/missing data matrices; multi-process persistence concurrency and power-loss durability; full API pagination/rate-limit contracts; messaging DLQs and delivery guarantees; credential login, refresh and MFA; other authorization policy models; TLS, CSRF/CORS and secrets management; repeatable/cron scheduling, multiple stalled jobs, and scheduler failover; compensation and distributed recovery; external-provider resilience; remote configuration/watchers; and performance scaling, latency distributions, saturation and resource budgets.
 
 Each listed limitation remains visible in the facet matrix. It must not be promoted to captured without a new source-backed case, independent replica, discriminating probes, mutation detection, and evidence validation.
 
@@ -86,4 +89,4 @@ Most hosted CI artifacts use 30-day retention and show their expiry date in GitH
 
 ## 7. Phase 6 exit decision
 
-**Phase 6 is complete for the declared cross-repository validation corpus.** The exit gate is approved with the explicit exclusions and limitations above. The next phase may review, package, release, and maintain the validated format and evidence process. New feature classes discovered during real-world replication remain eligible for future conformance cases; they do not retroactively convert this bounded exit decision into a universal-equivalence claim.
+**Phase 6 is complete for the declared 23-case cross-repository validation corpus.** The exit gate is approved with the explicit exclusions and limitations above. The next phase may review, package, release, and maintain the validated format and evidence process. New feature classes discovered during real-world replication remain eligible for future conformance cases; they do not retroactively convert this bounded exit decision into a universal-equivalence claim.

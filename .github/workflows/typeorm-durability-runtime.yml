@@ -1,0 +1,107 @@
+name: TypeORM file-backed durability cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/TORM-PERSIST-002/**"
+      - "conformance/replication-lab/projects/typeorm-durability-python/**"
+      - ".github/workflows/typeorm-durability-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/TORM-PERSIST-002/**"
+      - "conformance/replication-lab/projects/typeorm-durability-python/**"
+      - ".github/workflows/typeorm-durability-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: typeorm-durability-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  typeorm-durability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Enable pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@12.22.0 --activate
+          pnpm --version
+      - name: Checkout exact TypeORM source commit
+        env:
+          TYPEORM_SOURCE_COMMIT: "b1e211fc2654d412612a08f8a7fb890f3352614f"
+        run: |
+          git init /tmp/typeorm
+          git -C /tmp/typeorm remote add origin https://github.com/typeorm/typeorm.git
+          git -C /tmp/typeorm fetch --depth=1 origin "$TYPEORM_SOURCE_COMMIT"
+          git -C /tmp/typeorm checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/typeorm rev-parse HEAD)" = "$TYPEORM_SOURCE_COMMIT"
+      - name: Install frozen TypeORM workspace dependencies
+        working-directory: /tmp/typeorm
+        run: |
+          pnpm install --filter typeorm... --filter . --frozen-lockfile
+          pnpm list --depth Infinity --json --filter typeorm... > dependency-tree.json
+      - name: Compile pinned TypeORM Node entrypoint
+        working-directory: /tmp/typeorm
+        run: |
+          pnpm --filter typeorm exec tsc -p tsconfig.node.json
+          test -f packages/typeorm/build/package/index.js
+      - name: Execute pinned TypeORM file-backed durability probe
+        working-directory: /tmp/typeorm/packages/typeorm
+        env:
+          TYPEORM_SOURCE_COMMIT: "b1e211fc2654d412612a08f8a7fb890f3352614f"
+        run: |
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/cases/TORM-PERSIST-002/source_probe.cjs" ./software-rules-durability-probe.cjs
+          node ./software-rules-durability-probe.cjs > "$GITHUB_WORKSPACE/typeorm-durable-source-runtime.json"
+      - name: Execute independent Python file-backed SQLite model
+        run: python conformance/replication-lab/projects/typeorm-durability-python/replica_probe.py > typeorm-durable-python-runtime.json
+      - name: Compare durable post-reopen states
+        run: python conformance/replication-lab/cases/TORM-PERSIST-002/compare.py typeorm-durable-source-runtime.json typeorm-durable-python-runtime.json
+      - name: Run deliberate persistence durability mutations
+        run: python -m unittest discover -s conformance/replication-lab/cases/TORM-PERSIST-002 -p "test_*.py" -v
+      - name: Stage pinned source and dependency evidence
+        run: |
+          evidence_dir="conformance/replication-lab/cases/TORM-PERSIST-002/artifacts"
+          mkdir -p "$evidence_dir"
+          cp typeorm-durable-source-runtime.json "$evidence_dir/typeorm-durable-source-runtime.json"
+          cp typeorm-durable-python-runtime.json "$evidence_dir/typeorm-durable-python-runtime.json"
+          cp /tmp/typeorm/pnpm-lock.yaml "$evidence_dir/pnpm-lock.yaml"
+          cp /tmp/typeorm/dependency-tree.json "$evidence_dir/dependency-tree.json"
+          cp /tmp/typeorm/packages/typeorm/package.json "$evidence_dir/typeorm-package.json"
+          python conformance/replication-lab/cases/TORM-PERSIST-002/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/typeorm-durable-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/typeorm-durable-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/typeorm-durable-software-rules" \
+            --source-files "{\"pnpmLock\":\"$GITHUB_WORKSPACE/$evidence_dir/pnpm-lock.yaml\",\"dependencyTree\":\"$GITHUB_WORKSPACE/$evidence_dir/dependency-tree.json\",\"typeormPackage\":\"$GITHUB_WORKSPACE/$evidence_dir/typeorm-package.json\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            typeorm-durable-software-rules/typeorm-durable-source.capture.json \
+            typeorm-durable-software-rules/typeorm-durable-python-replica.capture.json \
+            typeorm-durable-software-rules/typeorm-durable-comparison.report.json
+      - name: Retain TypeORM source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typeorm-file-backed-durability-cross-stack
+          path: |
+            typeorm-durable-source-runtime.json
+            typeorm-durable-python-runtime.json
+            typeorm-durable-software-rules/*.json
+            conformance/replication-lab/cases/TORM-PERSIST-002/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

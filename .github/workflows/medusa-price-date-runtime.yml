@@ -1,0 +1,117 @@
+name: Medusa business-rule cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/MEDUSA-BR-001/**"
+      - "conformance/replication-lab/projects/medusa-price-date-python/**"
+      - ".github/workflows/medusa-price-date-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/MEDUSA-BR-001/**"
+      - "conformance/replication-lab/projects/medusa-price-date-python/**"
+      - ".github/workflows/medusa-price-date-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: medusa-price-date-runtime
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  price-date-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact Medusa source commit
+        env:
+          MEDUSA_SOURCE_COMMIT: "6e28e10acb9676392315b3ff1a9c7147fce4b5ab"
+        run: |
+          mkdir -p /tmp/medusa
+          git -C /tmp/medusa init
+          git -C /tmp/medusa remote add origin https://github.com/medusajs/medusa.git
+          git -C /tmp/medusa fetch --depth=1 origin "$MEDUSA_SOURCE_COMMIT"
+          git -C /tmp/medusa checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/medusa rev-parse HEAD)" = "$MEDUSA_SOURCE_COMMIT"
+      - name: Install pinned TypeScript transpiler
+        run: |
+          npm install --prefix /tmp/medusa-toolchain --no-audit --no-fund typescript@6.0.2
+          node -e "const ts=require('/tmp/medusa-toolchain/node_modules/typescript'); if (ts.version !== '6.0.2') process.exit(1); console.log(ts.version)"
+      - name: Run pinned Medusa source utility and helper code
+        env:
+          MEDUSA_SOURCE_ROOT: /tmp/medusa
+          MEDUSA_SOURCE_COMMIT: "6e28e10acb9676392315b3ff1a9c7147fce4b5ab"
+          TYPESCRIPT_PATH: /tmp/medusa-toolchain/node_modules/typescript
+        run: |
+          set -o pipefail
+          node conformance/replication-lab/cases/MEDUSA-BR-001/source_probe.cjs | tee medusa-runtime-capture.json
+      - name: Run independent Python date-rule replica
+        run: |
+          python conformance/replication-lab/projects/medusa-price-date-python/replica_probe.py > medusa-replica-capture.json
+      - name: Compare Medusa and Python validation outcomes
+        run: |
+          set -o pipefail
+          python conformance/replication-lab/cases/MEDUSA-BR-001/compare.py medusa-runtime-capture.json medusa-replica-capture.json | tee medusa-comparison-report.json
+      - name: Stage source evidence and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/MEDUSA-BR-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp medusa-runtime-capture.json "$evidence_dir/medusa-runtime-capture.json"
+          cp medusa-replica-capture.json "$evidence_dir/medusa-replica-capture.json"
+          cp medusa-comparison-report.json "$evidence_dir/medusa-raw-comparison-report.json"
+          cp /tmp/medusa/packages/modules/pricing/src/utils/validate-price-list-dates.ts "$evidence_dir/validate-price-list-dates.ts"
+          cp /tmp/medusa/packages/core/utils/src/common/is-date.ts "$evidence_dir/is-date.ts"
+          cp /tmp/medusa/packages/core/utils/src/common/errors.ts "$evidence_dir/errors.ts"
+          cp /tmp/medusa/packages/modules/pricing/src/services/pricing-module.ts "$evidence_dir/pricing-module.ts"
+          cp /tmp/medusa/yarn.lock "$evidence_dir/yarn.lock"
+          cp /tmp/medusa-toolchain/package-lock.json "$evidence_dir/typescript-toolchain-package-lock.json"
+          python conformance/replication-lab/cases/MEDUSA-BR-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/medusa-runtime-capture.json" \
+            --replica "$GITHUB_WORKSPACE/medusa-replica-capture.json" \
+            --output-dir "$GITHUB_WORKSPACE/medusa-software-rules" \
+            --source-artifacts "{\"validator\":\"$GITHUB_WORKSPACE/$evidence_dir/validate-price-list-dates.ts\",\"dateHelper\":\"$GITHUB_WORKSPACE/$evidence_dir/is-date.ts\",\"errorClass\":\"$GITHUB_WORKSPACE/$evidence_dir/errors.ts\",\"serviceUsage\":\"$GITHUB_WORKSPACE/$evidence_dir/pricing-module.ts\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/medusa-software-rules/medusa-source.capture.json" \
+            "$GITHUB_WORKSPACE/medusa-software-rules/medusa-python-replica.capture.json" \
+            "$GITHUB_WORKSPACE/medusa-software-rules/medusa-comparison.report.json"
+      - name: Commit verified Medusa evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          evidence_dir="conformance/replication-lab/cases/MEDUSA-BR-001/artifacts"
+          cp medusa-software-rules/medusa-source.capture.json "$evidence_dir/medusa-source.capture.json"
+          cp medusa-software-rules/medusa-python-replica.capture.json "$evidence_dir/medusa-python-replica.capture.json"
+          cp medusa-software-rules/medusa-comparison.report.json "$evidence_dir/medusa-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified Medusa business-rule evidence"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Retain Medusa source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: medusa-price-date-cross-stack-captures
+          path: |
+            medusa-runtime-capture.json
+            medusa-replica-capture.json
+            medusa-comparison-report.json
+            medusa-software-rules/*.json
+            conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

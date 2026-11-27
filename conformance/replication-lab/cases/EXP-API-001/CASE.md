@@ -14,7 +14,7 @@
 
 A minimal Express application registers GET and PUT handlers for `/widgets`, one explicit OPTIONS handler for `/override`, and a deterministic 404 fallback. The case tests:
 
-1. HEAD falling back to a GET handler, with the response body suppressed and selected headers preserved.
+1. HEAD falling back to a GET handler, with the response body suppressed, zero body bytes on the raw HTTP wire, and selected headers preserved.
 2. Automatic OPTIONS responses listing the unique methods registered for a path, including HEAD for GET.
 3. An explicit OPTIONS route overriding automatic method discovery.
 4. Default case-insensitive routing and optional trailing slashes.
@@ -53,7 +53,7 @@ The Python 3.12 replica uses only the standard-library HTTP server. It does not 
 
 ## Mutation tests
 
-The comparison tests deliberately mutate HEAD body suppression, OPTIONS method enumeration, case-sensitive routing, strict trailing-slash matching, query-path handling, and explicit OPTIONS precedence. Each mutation must produce a mismatch.
+The comparison tests deliberately mutate the executable Python replica's HEAD wire-body suppression, OPTIONS method enumeration, case-sensitive routing, strict trailing-slash matching, query-path handling, and explicit OPTIONS precedence. Each mutation must produce a mismatch.
 
 ## Acceptance gate
 

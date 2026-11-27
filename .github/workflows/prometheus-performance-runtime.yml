@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: prometheus-performance-runtime
+  group: prometheus-performance-runtime-${{ github.event_name }}
   cancel-in-progress: true
 
 permissions:

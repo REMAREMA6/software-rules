@@ -40,8 +40,11 @@ jobs:
         env:
           BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
         run: |
-          git clone https://github.com/taskforcesh/bullmq.git /tmp/bullmq
-          git -C /tmp/bullmq checkout --detach "$BULLMQ_SOURCE_COMMIT"
+          mkdir -p /tmp/bullmq
+          git -C /tmp/bullmq init
+          git -C /tmp/bullmq remote add origin https://github.com/taskforcesh/bullmq.git
+          git -C /tmp/bullmq fetch --depth=1 origin "$BULLMQ_SOURCE_COMMIT"
+          git -C /tmp/bullmq checkout --detach FETCH_HEAD
           test "$(git -C /tmp/bullmq rev-parse HEAD)" = "$BULLMQ_SOURCE_COMMIT"
       - name: Install pinned source dependencies
         working-directory: /tmp/bullmq

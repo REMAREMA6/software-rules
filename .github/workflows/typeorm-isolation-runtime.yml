@@ -1,0 +1,135 @@
+name: TypeORM PostgreSQL transaction isolation cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/TYPEORM-ISOLATION-001/**"
+      - "conformance/replication-lab/projects/typeorm-isolation-python/**"
+      - ".github/workflows/typeorm-isolation-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/TYPEORM-ISOLATION-001/**"
+      - "conformance/replication-lab/projects/typeorm-isolation-python/**"
+      - ".github/workflows/typeorm-isolation-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: typeorm-isolation-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  typeorm-isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install psycopg runtime
+        run: pip install "psycopg[binary]==3.2.4"
+      - name: Enable pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@12.22.0 --activate
+          pnpm --version
+      - name: Checkout exact TypeORM source commit
+        env:
+          TYPEORM_SOURCE_COMMIT: "b1e211fc2654d412612a08f8a7fb890f3352614f"
+        run: |
+          git init /tmp/typeorm
+          git -C /tmp/typeorm remote add origin https://github.com/typeorm/typeorm.git
+          git -C /tmp/typeorm fetch --depth=1 origin "$TYPEORM_SOURCE_COMMIT"
+          git -C /tmp/typeorm checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/typeorm rev-parse HEAD)" = "$TYPEORM_SOURCE_COMMIT"
+      - name: Install frozen TypeORM workspace dependencies and compile source
+        working-directory: /tmp/typeorm
+        run: |
+          pnpm install --filter typeorm... --filter . --frozen-lockfile
+          pnpm --filter typeorm exec tsc -p tsconfig.node.json
+          test -f packages/typeorm/build/package/index.js
+      - name: Install pinned PostgreSQL Node driver
+        run: |
+          npm install --prefix /tmp/typeorm-toolchain --no-audit --no-fund pg@8.16.3
+      - name: Execute TypeORM QueryRunner isolation probe
+        working-directory: /tmp/typeorm/packages/typeorm
+        env:
+          TYPEORM_SOURCE_COMMIT: "b1e211fc2654d412612a08f8a7fb890f3352614f"
+          NODE_PATH: /tmp/typeorm-toolchain/node_modules
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: postgres
+        run: |
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/cases/TYPEORM-ISOLATION-001/source_probe.cjs" ./software-rules-isolation-probe.cjs
+          node ./software-rules-isolation-probe.cjs > "$GITHUB_WORKSPACE/typeorm-isolation-source-runtime.json"
+      - name: Execute independent Python psycopg runtime replica
+        env:
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: postgres
+        run: python conformance/replication-lab/projects/typeorm-isolation-python/replica_probe.py > typeorm-isolation-python-runtime.json
+      - name: Compare TypeORM and Python isolation outcomes
+        run: python conformance/replication-lab/cases/TYPEORM-ISOLATION-001/compare.py typeorm-isolation-source-runtime.json typeorm-isolation-python-runtime.json
+      - name: Run six deliberate isolation mutations
+        run: python -m unittest discover -s conformance/replication-lab/cases/TYPEORM-ISOLATION-001 -p "test_*.py" -v
+      - name: Stage pinned TypeORM source and runtime evidence
+        run: |
+          evidence_dir="conformance/replication-lab/cases/TYPEORM-ISOLATION-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp typeorm-isolation-source-runtime.json "$evidence_dir/typeorm-isolation-source-runtime.json"
+          cp typeorm-isolation-python-runtime.json "$evidence_dir/typeorm-isolation-python-runtime.json"
+          cp /tmp/typeorm/pnpm-lock.yaml "$evidence_dir/pnpm-lock.yaml"
+          cp /tmp/typeorm/packages/typeorm/src/query-runner/QueryRunner.ts "$evidence_dir/QueryRunner.ts"
+          cp /tmp/typeorm/packages/typeorm/src/driver/postgres/PostgresQueryRunner.ts "$evidence_dir/PostgresQueryRunner.ts"
+          cp /tmp/typeorm/packages/typeorm/src/driver/postgres/PostgresDriver.ts "$evidence_dir/PostgresDriver.ts"
+          cp /tmp/typeorm-toolchain/package-lock.json "$evidence_dir/postgres-driver-package-lock.json"
+          python conformance/replication-lab/cases/TYPEORM-ISOLATION-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/typeorm-isolation-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/typeorm-isolation-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/typeorm-isolation-software-rules" \
+            --source-artifacts "{\"queryRunner\":\"$GITHUB_WORKSPACE/$evidence_dir/QueryRunner.ts\",\"postgresQueryRunner\":\"$GITHUB_WORKSPACE/$evidence_dir/PostgresQueryRunner.ts\",\"postgresDriver\":\"$GITHUB_WORKSPACE/$evidence_dir/PostgresDriver.ts\",\"sourceLockfile\":\"$GITHUB_WORKSPACE/$evidence_dir/pnpm-lock.yaml\",\"driverLockfile\":\"$GITHUB_WORKSPACE/$evidence_dir/postgres-driver-package-lock.json\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            typeorm-isolation-software-rules/typeorm-isolation-source.capture.json \
+            typeorm-isolation-software-rules/typeorm-isolation-python-replica.capture.json \
+            typeorm-isolation-software-rules/typeorm-isolation-comparison.report.json
+      - name: Retain TypeORM and PostgreSQL isolation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typeorm-postgres-isolation-cross-stack
+          path: |
+            typeorm-isolation-source-runtime.json
+            typeorm-isolation-python-runtime.json
+            typeorm-isolation-software-rules/*.json
+            conformance/replication-lab/cases/TYPEORM-ISOLATION-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

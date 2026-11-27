@@ -23,6 +23,7 @@ async function runScenario(label, configure) {
     for (const eventName of ['waiting', 'active', 'completed', 'failed']) {
       events.on(eventName, () => eventNames.push(eventName));
     }
+    await new Promise(resolve => setTimeout(resolve, 100));
     const setup = await configure(queue);
     worker = new Worker(name, async job => {
       processed.push(job.data.payload);

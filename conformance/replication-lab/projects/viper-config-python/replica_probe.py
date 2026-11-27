@@ -9,7 +9,7 @@ def capture(mutation=None):
  values=[
   ("default",lookup(default=8000)),
   ("yaml-file-case-insensitive",lookup(default=8000,file=9000)),
-  ("environment-over-file",lookup(default=8000,file=9000,env="7000")),
+  ("environment-over-file",int(lookup(default=8000,file=9000,env="7000"))),
   ("changed-flag-over-environment",lookup(default=8000,file=9000,env="7000",flag=6000)),
   ("runtime-override-highest-precedence",lookup(default=8000,file=9000,env="7000",flag=6000,override=5000)),
   ("allow-empty-environment-value",lookup(default="fallback",env="",allow_empty=not m.get("ignore_empty_env"))),

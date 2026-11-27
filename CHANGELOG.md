@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- SESSION-EXPRESS-001 passed nine express-session 1.19.0/Python session lifecycle transitions; five deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45941194819, artifact #15172927152. This is bounded MemoryStore session lifecycle evidence, not a full identity provider or complete authentication facet.
+
+
+### Verified
 - AXIOS-HTTP-001 passed nine pinned Axios 1.21.1/Python urllib HTTP interaction scenarios; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45940398493, artifact #15172188627. TLS, proxies, credentials, cookies, streaming, cancellation, retries and provider-specific behaviours remain excluded.
 
 

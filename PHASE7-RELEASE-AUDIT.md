@@ -59,7 +59,7 @@ Phase 6's exit approval applies only to the declared 24-case validation corpus. 
 - [x] A versioned 0.3.0 draft snapshot and maintenance policy are committed in the repository.
 - [x] Schema version 0.2.0 is clearly distinguished from specification version 0.3.0.
 - [x] Stable 1.0.0 is explicitly deferred until the criteria in `specification/VERSIONING.md` are met.
-- [ ] Full schema/fixture and cross-record integrity workflow passes on the final release-candidate commit.
+- [ ] Full schema/fixture, completeness-unit, and cross-record integrity workflow passes on the final release-candidate commit.
 - [ ] Final release commit SHA and CI run URLs are recorded after merge.
 
 The Phase 7 draft review can be accepted when all review changes are merged and the final release-candidate validation passes. Do not mark Phase 7 complete while the final CI gate is pending or failing.

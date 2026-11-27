@@ -24,6 +24,7 @@ Phase 7 review is complete for a versioned **draft** release. It is not a stable
 - [x] Capture and comparison schemas declare draft schema version 0.2.0; the schema family path/URN remains `v1` and is not represented as stable 1.0.0.
 - [x] Validation workflow installs its dependencies from `conformance/validation/`; documentation now gives the same reproducible command.
 - [x] Cross-record integrity checks enforce unique IDs, reference resolution, evidence class, inventory links, and completeness-status consistency.
+- [x] Shared comparison-completeness logic is used by both report validation and case-artifact validation; all nine complete/incomplete/undetermined status combinations and incomplete-claim guards pass the new unit test.
 - [x] The validator's boundary is explicit: it cannot prove that the human-declared property inventory is exhaustive or that evidence semantically proves a property.
 - [x] Positive/negative fixture and integrity workflows are required release checks.
 
@@ -59,7 +60,7 @@ Phase 6's exit approval applies only to the declared 24-case validation corpus. 
 - [x] A versioned 0.3.0 draft snapshot and maintenance policy are committed in the repository.
 - [x] Schema version 0.2.0 is clearly distinguished from specification version 0.3.0.
 - [x] Stable 1.0.0 is explicitly deferred until the criteria in `specification/VERSIONING.md` are met.
-- [ ] Full schema/fixture, completeness-unit, and cross-record integrity workflow passes on the final release-candidate commit.
+- [x] Full schema/fixture, completeness-unit, and cross-record integrity workflow passed on release-candidate head `334e277e1ee295e497d3f4b37ed6332056d99b66` in [workflow run #45961356155](https://github.com/REMAREMA6/software-rules/actions/runs/45961356155), including the new completeness status matrix and cross-record integrity tests.
 - [ ] Final release commit SHA and CI run URLs are recorded after merge.
 
 The Phase 7 draft review can be accepted when all review changes are merged and the final release-candidate validation passes. Do not mark Phase 7 complete while the final CI gate is pending or failing.

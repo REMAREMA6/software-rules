@@ -62,12 +62,3 @@ print(json.dumps(report, indent=2))
 if errors:
     raise SystemExit(1)
 
-
-def field_value(source_scenario, field):
-    if field == "backoffResults":
-        return [
-            event["delayMs"]
-            for event in source_scenario["trace"]
-            if event["event"] == "backoff-result"
-        ]
-    return source_scenario[field]

@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- MEDUSA-PRICE-001 passed nine pinned Medusa calculated/original price-selection scenarios against an independent Python model; five deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45939713683, artifact #15172460158. The case explicitly excludes SQL candidate filtering, quantity tiers, tax, currency normalization, cart totals and discounts.
+
+
+### Verified
 - TASKBOARD-UI-001 passed independent plain HTML/CSS/browser JavaScript to React 19/Vite replication: nine viewport/state comparisons, zero differing pixels, matching semantic snapshots and API traces, deliberate mutation detected, Software Rules 0.2.0 captures/report, schema validation, and cross-record integrity. GitHub Actions run #45934802401; evidence artifact #15170370565 retained through 2026-12-27. This is bounded interface evidence, not facet-wide completion.
 
 ### Fixed

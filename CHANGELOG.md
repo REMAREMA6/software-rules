@@ -7,7 +7,8 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
-- Pinned BullMQ source-runtime probe using the exact inspected commit and Redis, plus an independent Python scenario simulator, capture comparator, and mutation-detection tests.
+- Pinned BullMQ source-runtime probe using the exact inspected commit and Redis, plus an independent Python scenario simulator, capture comparator, mutation-detection tests, schema-native source/replica captures, and a comparison report.
+- Committed six raw/structured BullMQ evidence artifacts for a bounded three-scenario cross-stack case. The case covers four facets and 12 semantic projections; it does not complete any entire facet.
 
 ### Fixed
 - Cross-record integrity now accepts direct source-artifact evidence for explicitly source-inferred inventory properties while keeping runtime observations separate; added a BullMQ source capture fixture and regression tests.

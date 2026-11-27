@@ -54,7 +54,9 @@ def transitions(scenario):
             "queue:waiting",
             "queue:failed",
             "queue:completed",
-        }
+        } and not (
+            event.get("event") == "queue:waiting" and not event.get("data", {}).get("prev")
+        )
     ] if "trace" in scenario else scenario["stateTransitions"]
 
 
@@ -86,6 +88,8 @@ def transition_objects(scenario):
                 continue
             state = name.removeprefix("queue:")
             if state not in {"delayed", "waiting", "failed", "completed"}:
+                continue
+            if state == "waiting" and not event.get("data", {}).get("prev"):
                 continue
             previous = event.get("data", {}).get("prev")
             if state == "delayed":

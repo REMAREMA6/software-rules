@@ -4,7 +4,7 @@ Create one Markdown record per selected source repository using SOURCE-TEMPLATE.
 
 Do not mark a facet covered merely because a repository has a feature with a similar name. Link the specific source evidence and rule-level replication cases.
 
-**Current register:** 14 immutable source repositories. A repository may support more than one bounded case; a passing case does not complete its entire facet.
+**Current register:** 15 immutable source repositories. A repository may support more than one bounded case; a passing case does not complete its entire facet.
 
 ## Source register
 
@@ -24,5 +24,6 @@ Do not mark a facet covered merely because a repository has a feature with a sim
 | [jose](https://github.com/panva/jose) | Identity/authentication; security; behaviour; data; errors/recovery | `f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0` | MIT verified | JOSE-AUTH-001 matches 11 JWT verification scenarios/55 projections with eight mutations and Software Rules validation; full identity/session lifecycle remains uncovered. |
 | [Axios](https://github.com/axios/axios) | Integrations; API; behaviour; errors/recovery | `71c87d506567e2fe37ba9f6fae6a4fc9411583d0` | MIT verified | AXIOS-HTTP-001 matches nine pinned Axios/Python urllib HTTP interactions; six mutations and Software Rules schema/integrity pass in [run #45940398493](https://github.com/REMAREMA6/software-rules/actions/runs/45940398493). |
 | [express-session](https://github.com/expressjs/session) | Identity/authentication; security; behaviour; data; errors/recovery | `8947e169ae838b22cc1af198e50e370e6fc09f96` | MIT verified | SESSION-EXPRESS-001 matches nine sequential session lifecycle transitions with five mutations and Software Rules schema/integrity validation in [run #45941194819](https://github.com/REMAREMA6/software-rules/actions/runs/45941194819). |
+| [Viper](https://github.com/spf13/viper) | Configuration; behaviour; data | `394040caccbdf5821fa6839386a35f0fb1b1ee9e` | MIT verified | VIPER-CONFIG-001 matches nine default/file/env/flag/override/environment-mapping scenarios with six mutations and Software Rules schema/integrity validation in [run #45941776949](https://github.com/REMAREMA6/software-rules/actions/runs/45941776949). |
 
 A source record is not a facet completion claim. An immutable commit and a relevant source hit do not replace a property-level evidence review, runtime capture, independent replica, mutation test, or comparison.

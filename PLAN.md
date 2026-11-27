@@ -217,14 +217,14 @@ The operating model, 15-facet matrix, source register, replication-lab layout, r
 **Required loop:** source repository and immutable commit → observe/inspect → extract technology-independent rule → capture in Software Rules → independent implementation in a different stack → equivalent probes → capture and compare → mutation test → evidence-backed result.
 
 **Work sequence**
-- [ ] Establish the independent replication-lab structure, case manifests, evidence layout, runners, and reports.
-- [ ] Preserve Task Board as bounded evidence and finish its outstanding property-level audit without turning it into an artificial full-stack target.
-- [ ] Select and inspect multiple source repositories; record immutable commits, licences, boundaries, stacks, and facet suitability.
-- [ ] Extract and capture underlying rules for all 15 facets using facet-specific payloads.
-- [ ] Implement each rule independently in the replication project, using a different stack for cross-stack claims.
-- [ ] Execute semantically equivalent normal, boundary, negative, repeated, ordering, concurrency, and failure probes where relevant.
-- [ ] Compare source and replica captures and run meaningful mutation tests.
-- [ ] Validate evidence provenance, property-level links, cross-facet relationships, and coverage.
+- [x] Establish the independent replication-lab structure, case manifests, evidence layout, and initial runners; reports are generated per case as evidence becomes available.
+- [x] Re-audit Task Board and preserve it as bounded evidence; unresolved properties remain partial/incomplete rather than being promoted to complete.
+- [~] Register nine candidate repositories and inspect BullMQ at a pinned commit; continue property-level inspection and selection across the remaining facets.
+- [~] Begin extracting and capturing source-derived rules; BullMQ retry eligibility and backoff routing are recorded but remain unverified at runtime.
+- [~] Begin independent replication with a Python decision model for BullMQ retry policy; broaden to additional languages, runtimes, persistence and UI stacks.
+- [~] Add a pinned BullMQ+Redis runtime probe and a Python-generated replica capture; runtime and comparison workflow execution is pending.
+- [~] Add capture comparison and mutation-detection tests; source-versus-replica comparison awaits a successful pinned-source runtime run.
+- [~] Validate the source-derived BullMQ capture against the capture schema and cross-record integrity rules; continue evidence-quality and coverage validation case by case.
 - [ ] Publish the 15-facet evidence matrix and review every remaining gap.
 
 **Exit gate:** all 15 facets have reviewed property inventories and suitable source/independent-replica cases; each required rule class and claimed property passes the source→technology-independent rule→independent replica→equivalent probes→capture→comparison→mutation loop; replication cases span materially different stacks and architectures; no required unknown or partial property is silently passed; stack-specific assumptions are explicit; schema and cross-record validation pass; and the final report bounds conclusions to evidence. A finite conformance suite supports a bounded portability claim for the tested rules and stacks, not a universal guarantee for every possible technology. A green CI run alone cannot satisfy this gate.
@@ -331,4 +331,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by probing the remaining title-length boundary and API/data edge cases (malformed payloads, unknown identifiers, null/missing fields, repeated operations, and update/delete failures). Continue the interface state/viewport audit. Then select or extend a richer controlled target for persistence, identity, authorization, security, integrations, and background processing. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by obtaining a successful pinned BullMQ source-runtime run, reviewing the source/replica capture comparison, and mutation-testing the comparison. Then expand the case programme across the remaining facets using additional pinned repositories and genuinely different implementation stacks. Continue the interface state/viewport audit. Then select or extend a richer controlled target for persistence, identity, authorization, security, integrations, and background processing. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

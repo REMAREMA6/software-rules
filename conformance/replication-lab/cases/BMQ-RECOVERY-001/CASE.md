@@ -1,7 +1,7 @@
 # Case — BullMQ stalled-job recovery and stalled-limit failure
 
 **Case ID:** BMQ-RECOVERY-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED in [run #45943469678](https://github.com/REMAREMA6/software-rules/actions/runs/45943469678). The pinned BullMQ runtime and independent Python model matched both stalled-job outcomes, including attemptsStarted/attemptsMade/stalledCounter, events, processed values, and final queue counts. Four deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema, cross-record integrity, and comparison completeness validation. Artifact `15173607117` retained through 2026-12-27. This is bounded stalled-job recovery evidence, not complete BullMQ background-processing or messaging coverage.  
 **Facets:** Background processing; messaging; errors and recovery; behaviour; data  
 **Source:** https://github.com/taskforcesh/bullmq  
 **Immutable source commit:** `526668f2c5e6de9d5d664df577f09a6bdccac1b4`  

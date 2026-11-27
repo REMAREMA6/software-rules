@@ -1,6 +1,6 @@
 {
-  "capturedAt": "2026-11-27T01:59:01.878Z",
-  "completedAt": "2026-11-27T01:59:02.481Z",
+  "capturedAt": "2026-11-27T02:36:29.997Z",
+  "completedAt": "2026-11-27T02:36:30.556Z",
   "source": "BullMQ pinned source checkout",
   "sourceCommit": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
   "packageVersion": "6.7.10",
@@ -36,7 +36,7 @@
           "event": "processor",
           "attempt": 1,
           "attemptsMade": 0,
-          "atMs": 23
+          "atMs": 22
         },
         {
           "event": "backoff",
@@ -44,21 +44,21 @@
           "type": "software-rules-custom",
           "error": "transient",
           "jobId": "1",
-          "atMs": 23
+          "atMs": 22
         },
         {
           "event": "backoff-result",
           "attemptsMade": 1,
           "delayMs": 40,
-          "atMs": 23
+          "atMs": 22
         },
         {
           "event": "queue:delayed",
           "data": {
             "jobId": "1",
-            "delay": 1795744741945
+            "delay": 1795746990062
           },
-          "atMs": 25
+          "atMs": 24
         },
         {
           "event": "queue:waiting",
@@ -66,13 +66,13 @@
             "jobId": "1",
             "prev": "delayed"
           },
-          "atMs": 83
+          "atMs": 123
         },
         {
           "event": "processor",
           "attempt": 2,
           "attemptsMade": 1,
-          "atMs": 83
+          "atMs": 123
         },
         {
           "event": "backoff",
@@ -80,21 +80,21 @@
           "type": "software-rules-custom",
           "error": "transient",
           "jobId": "1",
-          "atMs": 83
+          "atMs": 123
         },
         {
           "event": "backoff-result",
           "attemptsMade": 2,
           "delayMs": 80,
-          "atMs": 83
+          "atMs": 123
         },
         {
           "event": "queue:delayed",
           "data": {
             "jobId": "1",
-            "delay": 1795744742044
+            "delay": 1795746990202
           },
-          "atMs": 84
+          "atMs": 124
         },
         {
           "event": "queue:waiting",
@@ -102,13 +102,13 @@
             "jobId": "1",
             "prev": "delayed"
           },
-          "atMs": 264
+          "atMs": 224
         },
         {
           "event": "processor",
           "attempt": 3,
           "attemptsMade": 2,
-          "atMs": 264
+          "atMs": 224
         },
         {
           "event": "queue:completed",
@@ -117,7 +117,7 @@
             "returnvalue": "ok",
             "prev": "active"
           },
-          "atMs": 266
+          "atMs": 226
         }
       ]
     },
@@ -143,7 +143,7 @@
           "event": "processor",
           "attempt": 1,
           "attemptsMade": 0,
-          "atMs": 9
+          "atMs": 7
         },
         {
           "event": "backoff",
@@ -151,13 +151,13 @@
           "type": "software-rules-custom",
           "error": "stop",
           "jobId": "1",
-          "atMs": 9
+          "atMs": 7
         },
         {
           "event": "backoff-result",
           "attemptsMade": 1,
           "delayMs": -1,
-          "atMs": 9
+          "atMs": 7
         },
         {
           "event": "queue:failed",
@@ -166,7 +166,7 @@
             "failedReason": "stop",
             "prev": "active"
           },
-          "atMs": 9
+          "atMs": 8
         }
       ]
     },
@@ -192,7 +192,7 @@
           "event": "processor",
           "attempt": 1,
           "attemptsMade": 0,
-          "atMs": 9
+          "atMs": 8
         },
         {
           "event": "backoff",
@@ -214,13 +214,13 @@
             "jobId": "1",
             "prev": "active"
           },
-          "atMs": 10
+          "atMs": 9
         },
         {
           "event": "processor",
           "attempt": 2,
           "attemptsMade": 1,
-          "atMs": 11
+          "atMs": 10
         },
         {
           "event": "queue:failed",
@@ -229,7 +229,7 @@
             "failedReason": "always-fails",
             "prev": "active"
           },
-          "atMs": 11
+          "atMs": 10
         }
       ]
     }

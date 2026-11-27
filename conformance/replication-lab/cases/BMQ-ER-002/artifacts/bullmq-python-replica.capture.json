@@ -1,14 +1,14 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "bullmq-python-replica-capture",
-  "createdAt": "2026-11-27T01:59:02.799396Z",
+  "createdAt": "2026-11-27T02:36:31.475862Z",
   "purpose": "Capture the declared three-scenario BullMQ retry/backoff conformance scope in the Software Rules format.",
   "target": {
     "targetId": "bullmq-python-replica",
     "systemName": "Independent Python retry-policy model",
     "systemVersion": "Python 3.12 model",
     "build": {
-      "revision": "8f53067c7e9cbcccd4b9c20d18c8f917524f3133"
+      "revision": "d1e8376c0e7ac69b4c2ceab5de56e0e22f9780a5"
     },
     "boundary": {
       "description": "A bounded retry/backoff decision and terminal-state probe; not a complete capture of BullMQ or a full queue implementation.",
@@ -151,8 +151,8 @@
       "executionId": "bmq-exec-replica-positive",
       "scenarioId": "bmq-scenario-positive",
       "targetId": "bullmq-python-replica",
-      "startedAt": "2026-11-27T01:59:02.706461Z",
-      "endedAt": "2026-11-27T01:59:02.706471Z",
+      "startedAt": "2026-11-27T02:36:31.247489Z",
+      "endedAt": "2026-11-27T02:36:31.247504Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
@@ -180,8 +180,8 @@
       "executionId": "bmq-exec-replica-minus-one",
       "scenarioId": "bmq-scenario-minus-one",
       "targetId": "bullmq-python-replica",
-      "startedAt": "2026-11-27T01:59:02.706461Z",
-      "endedAt": "2026-11-27T01:59:02.706471Z",
+      "startedAt": "2026-11-27T02:36:31.247489Z",
+      "endedAt": "2026-11-27T02:36:31.247504Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
@@ -208,8 +208,8 @@
       "executionId": "bmq-exec-replica-zero-delay",
       "scenarioId": "bmq-scenario-zero-delay",
       "targetId": "bullmq-python-replica",
-      "startedAt": "2026-11-27T01:59:02.706461Z",
-      "endedAt": "2026-11-27T01:59:02.706471Z",
+      "startedAt": "2026-11-27T02:36:31.247489Z",
+      "endedAt": "2026-11-27T02:36:31.247504Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
@@ -240,7 +240,7 @@
       "executionId": "bmq-exec-replica-positive",
       "facet": "background-processing",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -370,7 +370,7 @@
       "executionId": "bmq-exec-replica-positive",
       "facet": "errors-recovery",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -465,7 +465,7 @@
       "executionId": "bmq-exec-replica-positive",
       "facet": "data",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -547,7 +547,7 @@
       "executionId": "bmq-exec-replica-positive",
       "facet": "behavior",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -678,7 +678,7 @@
       "executionId": "bmq-exec-replica-minus-one",
       "facet": "background-processing",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -778,7 +778,7 @@
       "executionId": "bmq-exec-replica-minus-one",
       "facet": "errors-recovery",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -856,7 +856,7 @@
       "executionId": "bmq-exec-replica-minus-one",
       "facet": "data",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -926,7 +926,7 @@
       "executionId": "bmq-exec-replica-minus-one",
       "facet": "behavior",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1013,7 +1013,7 @@
       "executionId": "bmq-exec-replica-zero-delay",
       "facet": "background-processing",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1119,7 +1119,7 @@
       "executionId": "bmq-exec-replica-zero-delay",
       "facet": "errors-recovery",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1200,7 +1200,7 @@
       "executionId": "bmq-exec-replica-zero-delay",
       "facet": "data",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1274,7 +1274,7 @@
       "executionId": "bmq-exec-replica-zero-delay",
       "facet": "behavior",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "observedAt": "2026-11-27T02:36:31.247504Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1430,20 +1430,20 @@
       "origin": {
         "targetId": "bullmq-python-replica",
         "collector": "Independent Python retry-policy model execution",
-        "sourceRevision": "8f53067c7e9cbcccd4b9c20d18c8f917524f3133",
+        "sourceRevision": "d1e8376c0e7ac69b4c2ceab5de56e0e22f9780a5",
         "location": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-replica-capture.json"
       },
-      "capturedAt": "2026-11-27T01:59:02.706471Z",
+      "capturedAt": "2026-11-27T02:36:31.247504Z",
       "embedded": {
         "scenarioLabels": [
           "positive-backoff-completes",
           "minus-one-suppresses-retry",
           "zero-delay-respects-attempt-limit"
         ],
-        "rawCaptureDigest": "4a8d936aa5346600e48a7090e1b8aa4581d8e6498ba8e0f2987c3bdc65de47db"
+        "rawCaptureDigest": "75634701444aab91152783e9e6c27532e31147cc6aed185e853e2df4689257d1"
       },
       "locator": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-replica-capture.json",
-      "digest": "4a8d936aa5346600e48a7090e1b8aa4581d8e6498ba8e0f2987c3bdc65de47db",
+      "digest": "75634701444aab91152783e9e6c27532e31147cc6aed185e853e2df4689257d1",
       "sizeBytes": 1739,
       "retention": {
         "status": "retained",
@@ -1636,7 +1636,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T01:59:02.799396Z",
+      "assessedAt": "2026-11-27T02:36:31.475862Z",
       "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence for all three declared scenarios.",
       "rationale": "All six required properties in this bounded case scope were observed in every declared scenario. This does not imply complete coverage of BullMQ retry behaviour or any entire facet."
     }

@@ -28,7 +28,7 @@ def duplicate_case():
         "setup": {"firstId": first_id, "secondId": second_id, "storedPayload": stored_payload, "storedState": "waiting"},
         "processed": processed,
         "terminal": {"state": "completed", "id": job["id"], "result": "acknowledged"},
-        "eventNames": ["active", "completed"],
+        "eventNames": ["waiting", "active", "completed"],
         "counts": {"waiting": 0, "active": 0, "completed": 1, "failed": 0},
     }
 
@@ -43,7 +43,7 @@ def failure_case():
         "setup": {"firstId": job["id"], "storedState": "waiting"},
         "processed": [job["payload"]],
         "terminal": {"state": "failed", "id": job["id"], "error": error},
-        "eventNames": ["active", "failed"],
+        "eventNames": ["waiting", "active", "failed"],
         "counts": {"waiting": 0, "active": 0, "completed": 0, "failed": 1},
     }
 

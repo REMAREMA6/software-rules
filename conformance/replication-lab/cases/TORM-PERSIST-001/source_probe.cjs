@@ -7,10 +7,12 @@ async function main() {
     await ds.query('CREATE TABLE records (id INTEGER PRIMARY KEY, value TEXT NOT NULL)');
     let rollbackError = null;
     let rollbackCallbackResult = null;
+    let rowsInsideCallback = [];
     try {
       rollbackCallbackResult = await ds.manager.transaction(async manager => {
         await manager.query('INSERT INTO records(value) VALUES (?)', ['rolled-back']);
-        const inside = await manager.query('SELECT value FROM records ORDER BY id');
+        const inside = await manager.query('SELECT id, value FROM records ORDER BY id');
+        rowsInsideCallback = inside;
         if (inside.length !== 1 || inside[0].value !== 'rolled-back') throw new Error('transaction-read-your-write-failed');
         throw new Error('forced-transaction-failure');
       });
@@ -27,7 +29,7 @@ async function main() {
       typeormVersion: require('/tmp/typeorm/packages/typeorm/package.json').version,
       driver: 'sqljs',
       scenarios: {
-        rollback: { error: rollbackError, callbackResult: rollbackCallbackResult, rowsAfterRollback: afterRollback },
+        rollback: { error: rollbackError, callbackResult: rollbackCallbackResult, rowsInsideCallback, rowsAfterRollback: afterRollback },
         commit: { callbackReturn: committedReturn, rowsAfterCommit: afterCommit }
       }
     };

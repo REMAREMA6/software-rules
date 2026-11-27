@@ -1,0 +1,89 @@
+name: BullMQ messaging cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/BMQ-MSG-001/**"
+      - "conformance/replication-lab/probes/bullmq-messaging-runtime.cjs"
+      - "conformance/replication-lab/projects/messaging-python/**"
+      - ".github/workflows/bullmq-messaging-runtime.yml"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/BMQ-MSG-001/**"
+      - "conformance/replication-lab/probes/bullmq-messaging-runtime.cjs"
+      - "conformance/replication-lab/projects/messaging-python/**"
+      - ".github/workflows/bullmq-messaging-runtime.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: bullmq-messaging
+  cancel-in-progress: true
+
+jobs:
+  messaging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Checkout exact BullMQ source commit
+        env:
+          BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+        run: |
+          mkdir -p /tmp/bullmq
+          git -C /tmp/bullmq init
+          git -C /tmp/bullmq remote add origin https://github.com/taskforcesh/bullmq.git
+          git -C /tmp/bullmq fetch --depth=1 origin "$BULLMQ_SOURCE_COMMIT"
+          git -C /tmp/bullmq checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/bullmq rev-parse HEAD)" = "$BULLMQ_SOURCE_COMMIT"
+      - name: Install and build pinned BullMQ source
+        working-directory: /tmp/bullmq
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          yarn install --frozen-lockfile --non-interactive
+          yarn build
+      - name: Run pinned BullMQ messaging probe
+        working-directory: /tmp/bullmq
+        env:
+          BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: "6379"
+        run: |
+          set -o pipefail
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/probes/bullmq-messaging-runtime.cjs" ./software-rules-messaging-probe.cjs
+          node ./software-rules-messaging-probe.cjs | tee "$GITHUB_WORKSPACE/bullmq-messaging-source.json"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run independent Python messaging replica
+        run: python conformance/replication-lab/projects/messaging-python/replica_probe.py > bullmq-messaging-replica.json
+      - name: Compare source and replica
+        run: |
+          set -o pipefail
+          python conformance/replication-lab/cases/BMQ-MSG-001/compare.py bullmq-messaging-source.json bullmq-messaging-replica.json | tee bullmq-messaging-comparison.json
+      - name: Run mutation tests
+        run: python -m unittest discover -s conformance/replication-lab/cases/BMQ-MSG-001 -p "test_*.py" -v
+      - name: Retain source and replica evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bullmq-messaging-cross-stack-captures
+          path: |
+            bullmq-messaging-source.json
+            bullmq-messaging-replica.json
+            bullmq-messaging-comparison.json
+          if-no-files-found: warn
+          retention-days: 30

@@ -443,3 +443,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] BMQ-MSG-001: six mutation tests passed in run [#45928721261](https://github.com/REMAREMA6/software-rules/actions/runs/45928721261). Artifact ID `15167806675`, retained until 2026-12-27.
 - [~] BMQ-MSG-001 schema-native capture builder, comparison report, and evidence validation workflow have been added; CI validation pending.
 - [ ] Continue with identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and cross-UI-stack replication. No facet-wide completion claim.
+
+
+### 2026-11-27 — Bounded BullMQ messaging case accepted
+
+- [x] Executed two pinned BullMQ/Redis scenarios: duplicate custom job ID and terminal consumer failure.
+- [x] Compared queue event order, processed payload, terminal acknowledgement/failure state, and job counts against an independent Python model.
+- [x] Matched ten facet/scenario projections across messaging, background processing, behaviour, errors/recovery, and data.
+- [x] Detected five executable replica mutations: duplicate delivery, payload overwrite, missing completion acknowledgement, event reordering, and failed-to-completed state mutation.
+- [x] Generated and validated Software Rules 0.2.0 captures and comparison report.
+- [x] Committed raw/structured captures and comparison under `conformance/replication-lab/cases/BMQ-MSG-001/artifacts/` at [ce9d0e1](https://github.com/REMAREMA6/software-rules/commit/ce9d0e1a0c62830418daa912c1a798561c897a3a).
+- [~] Phase 6 remains active; the case does not establish exactly-once delivery or all messaging semantics.

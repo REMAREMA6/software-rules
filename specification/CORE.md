@@ -1,6 +1,6 @@
 # Software Rules Core Model
 
-**Status:** Draft — Phase 2 conceptual model.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 ## 1. Purpose
 

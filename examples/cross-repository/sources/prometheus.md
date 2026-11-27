@@ -17,4 +17,4 @@
 
 Select one benchmarkable query or ingestion workload. Record dataset, cardinality, concurrency, warm/cold state, hardware/runtime, measurement method, latency distribution, throughput, allocations, and resource use. Compare only under equivalent workload/environment conditions.
 
-**Status:** candidate only; benchmark target and runtime capture pending.
+**Selected Phase 6 case:** [PROM-PERF-001](../../conformance/replication-lab/cases/PROM-PERF-001/CASE.md). The immutable source boundary is `cmd/promtool/tsdb.go` at the pinned commit, specifically `promtool tsdb bench write`. CI builds the exact source commit and runs a deterministic 200-series × 100-scrape workload three times. The independent Python implementation models the workload-accounting contract; it does not replicate the Prometheus TSDB engine. The case is pending runtime execution and Software Rules evidence validation; no performance-facet pass is claimed.

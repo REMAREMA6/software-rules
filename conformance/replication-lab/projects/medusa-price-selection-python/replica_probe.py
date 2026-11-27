@@ -1,19 +1,19 @@
 from copy import deepcopy
 
-def price(pid,amount,list_id=None,list_type=None):
- return {"id":pid,"amount":str(amount),"raw_amount":{"value":str(amount),"precision":20},
+def price(pid,set_id,amount,list_id=None,list_type=None):
+ return {"id":pid,"price_set_id":set_id,"amount":str(amount),"raw_amount":{"value":str(amount),"precision":20},
   "currency_code":"eur","price_list_id":list_id,"price_list_type":list_type,
   "min_quantity":None,"max_quantity":None}
 FIXTURES=[
- ("default-only",["ps-default"],[price("default-100",100)]),
- ("sale-below-default",["ps-sale-low"],[price("sale-80",80,"pl-sale","sale"),price("default-100",100)]),
- ("sale-above-default",["ps-sale-high"],[price("default-100",100),price("sale-120",120,"pl-sale","sale")]),
- ("sale-equal-default",["ps-sale-equal"],[price("sale-100",100,"pl-sale","sale"),price("default-100",100)]),
- ("override-only",["ps-override"],[price("override-90",90,"pl-override","override"),price("default-100",100)]),
- ("sale-below-override",["ps-sale-under-override"],[price("sale-80",80,"pl-sale","sale"),price("override-90",90,"pl-override","override"),price("default-100",100)]),
- ("override-below-sale",["ps-override-under-sale"],[price("override-90",90,"pl-override","override"),price("sale-95",95,"pl-sale","sale"),price("default-100",100)]),
- ("multiple-overrides-lowest-first",["ps-multiple-overrides"],[price("override-80",80,"pl-override-low","override"),price("override-90",90,"pl-override-high","override"),price("default-100",100)]),
- ("sale-only-no-original-and-missing-set",["ps-sale-only","ps-missing"],[price("sale-75",75,"pl-sale","sale")]),
+ ("default-only",["ps-default"],[price("default-100","ps-default",100)]),
+ ("sale-below-default",["ps-sale-low"],[price("sale-80","ps-sale-under-override",80,"pl-sale","sale"),price("default-100","ps-default",100)]),
+ ("sale-above-default",["ps-sale-high"],[price("default-100","ps-default",100),price("sale-120","ps-sale-high",120,"pl-sale","sale")]),
+ ("sale-equal-default",["ps-sale-equal"],[price("sale-100","ps-sale-equal",100,"pl-sale","sale"),price("default-100","ps-default",100)]),
+ ("override-only",["ps-override"],[price("override-90","ps-override-under-sale",90,"pl-override","override"),price("default-100","ps-default",100)]),
+ ("sale-below-override",["ps-sale-under-override"],[price("sale-80","ps-sale-under-override",80,"pl-sale","sale"),price("override-90","ps-override-under-sale",90,"pl-override","override"),price("default-100","ps-default",100)]),
+ ("override-below-sale",["ps-override-under-sale"],[price("override-90","ps-override-under-sale",90,"pl-override","override"),price("sale-95","ps-override-under-sale",95,"pl-sale","sale"),price("default-100","ps-default",100)]),
+ ("multiple-overrides-lowest-first",["ps-multiple-overrides"],[price("override-80","ps-multiple-overrides",80,"pl-override-low","override"),price("override-90","ps-multiple-overrides",90,"pl-override-high","override"),price("default-100","ps-default",100)]),
+ ("sale-only-no-original-and-missing-set",["ps-sale-only","ps-missing"],[price("sale-75","ps-sale-only",75,"pl-sale","sale")]),
 ]
 def select(rows,ids,mutation=None):
  mutation=mutation or {}
@@ -57,6 +57,8 @@ def select(rows,ids,mutation=None):
    "raw_original_amount":original["raw_amount"] if original else None,
    "currency_code":calculated["currency_code"] if calculated else None,
    "calculated_price":details(calculated),"original_price":details(original)})
+ if mutation.get("include_missing_set"):
+  output.append({"id":"ps-missing","calculated_amount":0})
  return output
 
 def capture(mutation=None):

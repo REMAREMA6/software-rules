@@ -1,0 +1,137 @@
+name: JOSE JWT identity-authentication cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/JOSE-AUTH-001/**"
+      - "conformance/replication-lab/projects/jwt-auth-python/**"
+      - ".github/workflows/jose-jwt-auth-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/JOSE-AUTH-001/**"
+      - "conformance/replication-lab/projects/jwt-auth-python/**"
+      - ".github/workflows/jose-jwt-auth-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: jose-jwt-auth-runtime
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  jwt-authentication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact jose source commit
+        env:
+          JOSE_SOURCE_COMMIT: "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0"
+        run: |
+          mkdir -p /tmp/jose
+          git -C /tmp/jose init
+          git -C /tmp/jose remote add origin https://github.com/panva/jose.git
+          git -C /tmp/jose fetch --depth=1 origin "$JOSE_SOURCE_COMMIT"
+          git -C /tmp/jose checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/jose rev-parse HEAD)" = "$JOSE_SOURCE_COMMIT"
+      - name: Install pinned TypeScript compiler
+        run: |
+          npm install --prefix /tmp/jose-toolchain --no-audit --no-fund typescript@6.0.2
+          node -e "const ts=require('/tmp/jose-toolchain/node_modules/typescript'); if (ts.version !== '6.0.2') process.exit(1); console.log(ts.version)"
+      - name: Compile pinned jose source
+        run: |
+          node /tmp/jose-toolchain/node_modules/typescript/bin/tsc -p /tmp/jose/tsconfig.json
+          test -f /tmp/jose/dist/webapi/index.js
+      - name: Run pinned jose JWT verification probes
+        env:
+          JOSE_SOURCE_ROOT: /tmp/jose
+          JOSE_SOURCE_COMMIT: "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0"
+        run: |
+          set -o pipefail
+          node conformance/replication-lab/cases/JOSE-AUTH-001/source_probe.mjs | tee jose-runtime-capture.json
+      - name: Run independent Python verifier on identical source tokens
+        run: |
+          python conformance/replication-lab/projects/jwt-auth-python/replica_probe.py jose-runtime-capture.json > jose-replica-capture.json
+      - name: Compare jose and Python authentication outcomes
+        run: |
+          set -o pipefail
+          python conformance/replication-lab/cases/JOSE-AUTH-001/compare.py jose-runtime-capture.json jose-replica-capture.json | tee jose-comparison-report.json
+      - name: Run executable Python verifier mutation tests
+        run: python -m unittest discover -s conformance/replication-lab/cases/JOSE-AUTH-001 -p "test_*.py" -v
+      - name: Stage pinned source evidence and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/JOSE-AUTH-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp jose-runtime-capture.json "$evidence_dir/jose-runtime-capture.json"
+          cp jose-replica-capture.json "$evidence_dir/jose-replica-capture.json"
+          cp jose-comparison-report.json "$evidence_dir/jose-raw-comparison-report.json"
+          cp /tmp/jose/src/jwt/verify.ts "$evidence_dir/jwt-verify.ts"
+          cp /tmp/jose/src/lib/jwt_claims_set.ts "$evidence_dir/jwt-claims-set.ts"
+          cp /tmp/jose/src/lib/jws_verify.ts "$evidence_dir/jws-verify.ts"
+          cp /tmp/jose/test/jwt/verify.test.ts "$evidence_dir/jwt-verify.test.ts"
+          cp /tmp/jose/package.json "$evidence_dir/package.json"
+          cp /tmp/jose/LICENSE.md "$evidence_dir/LICENSE.md"
+          cp /tmp/jose/tsconfig.json "$evidence_dir/tsconfig.json"
+          cp /tmp/jose-toolchain/package-lock.json "$evidence_dir/typescript-toolchain-package-lock.json"
+          python conformance/replication-lab/cases/JOSE-AUTH-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/jose-runtime-capture.json" \
+            --replica "$GITHUB_WORKSPACE/jose-replica-capture.json" \
+            --output-dir "$GITHUB_WORKSPACE/jose-software-rules" \
+            --source-artifacts "{\"jwtVerify\":\"$GITHUB_WORKSPACE/$evidence_dir/jwt-verify.ts\",\"claimsValidation\":\"$GITHUB_WORKSPACE/$evidence_dir/jwt-claims-set.ts\",\"signatureVerification\":\"$GITHUB_WORKSPACE/$evidence_dir/jws-verify.ts\",\"upstreamTests\":\"$GITHUB_WORKSPACE/$evidence_dir/jwt-verify.test.ts\",\"packageManifest\":\"$GITHUB_WORKSPACE/$evidence_dir/package.json\",\"licence\":\"$GITHUB_WORKSPACE/$evidence_dir/LICENSE.md\",\"compilerConfig\":\"$GITHUB_WORKSPACE/$evidence_dir/tsconfig.json\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/jose-software-rules/jose-source.capture.json" \
+            "$GITHUB_WORKSPACE/jose-software-rules/jose-python-replica.capture.json" \
+            "$GITHUB_WORKSPACE/jose-software-rules/jose-comparison.report.json"
+      - name: Commit verified JOSE evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          evidence_dir="conformance/replication-lab/cases/JOSE-AUTH-001/artifacts"
+          test -f "$GITHUB_WORKSPACE/jose-software-rules/jose-source.capture.json"
+          cp "$GITHUB_WORKSPACE/jose-software-rules/jose-source.capture.json" "$GITHUB_WORKSPACE/$evidence_dir/jose-source.capture.json"
+          cp "$GITHUB_WORKSPACE/jose-software-rules/jose-python-replica.capture.json" "$GITHUB_WORKSPACE/$evidence_dir/jose-python-replica.capture.json"
+          cp "$GITHUB_WORKSPACE/jose-software-rules/jose-comparison.report.json" "$GITHUB_WORKSPACE/$evidence_dir/jose-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified jose JWT authentication evidence"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin "$GITHUB_REF_NAME"
+              if ! git rebase "origin/$GITHUB_REF_NAME"; then
+                git rebase --abort || true
+                exit 1
+              fi
+              if git push origin "HEAD:$GITHUB_REF_NAME"; then
+                exit 0
+              fi
+              sleep "$attempt"
+            done
+            exit 1
+          fi
+      - name: Retain jose source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jose-jwt-auth-cross-stack-captures
+          path: |
+            jose-runtime-capture.json
+            jose-replica-capture.json
+            jose-comparison-report.json
+            jose-software-rules/*.json
+            conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

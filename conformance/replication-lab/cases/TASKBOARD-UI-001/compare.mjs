@@ -75,9 +75,11 @@ try{
  await a.page.close();await b.page.close();
  const m=await open("http://127.0.0.1:4174",{width:1280,height:800});
  await m.page.locator("#task-input").fill("One");await m.page.getByRole("button",{name:"Add task"}).click();
+ await m.page.locator("#task-list li").nth(0).waitFor();
  await m.page.locator("#task-input").fill("Two");await m.page.getByRole("button",{name:"Add task"}).click();
+ await m.page.locator("#task-list li").nth(1).waitFor();
  await m.page.getByRole("checkbox",{name:"Complete One"}).click();
- await m.page.waitForFunction(()=>document.querySelector("#summary")?.textContent==="2 tasks · 2 active");
+ await m.page.waitForFunction(()=>document.querySelector("#task-list input[type=checkbox]")?.checked===true);
  const mutatedSummary=await m.page.locator("#summary").innerText();
  output.mutationDetected=mutatedSummary==="2 tasks · 2 active";
  output.mutatedSummary=mutatedSummary;assert(output.mutationDetected,"Deliberate active-count mutation was not detected");

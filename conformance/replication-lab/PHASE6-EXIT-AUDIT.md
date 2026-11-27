@@ -60,7 +60,7 @@ The Phase 6 exit gate is satisfied for the declared corpus because:
 | Identity and authentication | JOSE-AUTH-001, SESSION-EXPRESS-001 | Represented across token verification and server-side session lifecycle. |
 | Authorization and permissions | CASBIN-AUTHZ-001, CASBIN-ADV-AUTHZ-001 | Represented across simple RBAC, domain RBAC, ABAC, deny override, and policy mutation. |
 | Security controls | JOSE, express-session, Task Board output handling | Represented across signature/algorithm checks, signed-cookie integrity, and output encoding. |
-| Background processing | BMQ-ER-002, BMQ-MSG-001, BMQ-RECOVERY-001, BMQ-SCHED-001, BMQ-SCHED-001 | Represented across retry/backoff, worker lifecycle, stalled recovery, and delayed-job rescheduling/cancellation. |
+| Background processing | BMQ-ER-002, BMQ-MSG-001, BMQ-RECOVERY-001, BMQ-SCHED-001 | Represented across retry/backoff, worker lifecycle, stalled recovery, and delayed-job rescheduling/cancellation. |
 | Errors and recovery | BullMQ, Express, TypeORM, Medusa, JOSE, Redis, Axios, session cases | Represented across HTTP errors, rollback, rejection, retry, timeout, and recovery. |
 | Integrations | REDIS-INT-001, AXIOS-HTTP-001 | Represented across Redis client operations and HTTP client/service interactions. |
 | Configuration | EXP-CONFIG-001, VIPER-CONFIG-001 | Represented across router initialization settings and multi-source precedence/environment mapping. |

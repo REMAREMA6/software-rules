@@ -6,7 +6,13 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
-### Phase 6 exit
+### Phase 6 closeout — 2026-11-27
+- Added TYPEORM-ISOLATION-001: pinned TypeORM 1.1.3/PostgreSQL 16 transaction isolation (READ COMMITTED, REPEATABLE READ, SERIALIZABLE) independently replicated with Python 3.12/psycopg. Six mutations and Software Rules 0.2.0 capture/comparison/evidence-integrity validation passed in [run #45946586890](https://github.com/REMAREMA6/software-rules/actions/runs/45946586890), artifact `15175051244`.
+- Closed duplicate PR #37 and merged validated PR #36. Both contained identical eight-file changes; the successful runtime workflow was tied to PR #36's exact head SHA.
+- Reconciled PLAN.md, TRACKER.md, the 15-facet inventory, evidence matrix, replication-lab index, exit audit, and README to the 24-case corpus. PostgreSQL 16 isolation is now represented, but other engines, multi-process concurrency, deadlocks, pool exhaustion, distributed transactions, and crash/power-loss durability remain explicit limitations.
+- Phase 6 exit remains bounded to its declared validation corpus; no facet-wide completeness or universal-equivalence claim is made. Phase 7 is unblocked.
+
+### Earlier Phase 6 exit (historical)
 - Approved Phase 6 for the declared 20-case cross-repository validation corpus across all 15 facets and 15 immutable source repositories. Added [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md) with case-level evidence, facet outcomes, explicit case-scope exclusions/future coverage, retention notes, and non-claims. This does not assert universal equivalence or facet-wide completeness. Phase 7 is unblocked.
 
 

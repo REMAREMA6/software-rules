@@ -1,0 +1,96 @@
+name: Casbin advanced authorization policy-class conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/**"
+      - "conformance/replication-lab/projects/casbin-advanced-python/**"
+      - ".github/workflows/casbin-advanced-authz-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/**"
+      - "conformance/replication-lab/projects/casbin-advanced-python/**"
+      - ".github/workflows/casbin-advanced-authz-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: casbin-advanced-authz-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  casbin-advanced-authorization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.0"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact Casbin source commit
+        env:
+          CASBIN_SOURCE_COMMIT: "fa4023fd7d02d9b7d023515e76b19b3be637f613"
+        run: |
+          git clone https://github.com/apache/casbin.git /tmp/casbin
+          git -C /tmp/casbin checkout --detach "$CASBIN_SOURCE_COMMIT"
+          test "$(git -C /tmp/casbin rev-parse HEAD)" = "$CASBIN_SOURCE_COMMIT"
+      - name: Build and run pinned Casbin Go source probe
+        env:
+          CASBIN_SOURCE_ROOT: /tmp/casbin
+          CASBIN_SOURCE_COMMIT: "fa4023fd7d02d9b7d023515e76b19b3be637f613"
+        run: |
+          mkdir -p /tmp/casbin-advanced-probe
+          cp conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/source_probe.go /tmp/casbin-advanced-probe/main.go
+          cd /tmp/casbin-advanced-probe
+          go mod init casbin-advanced-probe
+          go mod edit -require=github.com/casbin/casbin/v3@v3.11.0
+          go mod edit -replace=github.com/casbin/casbin/v3=/tmp/casbin
+          go mod tidy
+          go run . > "$GITHUB_WORKSPACE/casbin-advanced-source-runtime.json"
+      - name: Run independent Python authorization model
+        run: python conformance/replication-lab/projects/casbin-advanced-python/replica_probe.py > casbin-advanced-python-runtime.json
+      - name: Compare source and replica decisions
+        run: python conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/compare.py casbin-advanced-source-runtime.json casbin-advanced-python-runtime.json
+      - name: Run executable authorization mutation tests
+        run: python -m unittest discover -s conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          mkdir -p conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts
+          cp casbin-advanced-source-runtime.json conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/casbin-advanced-source-runtime.json
+          cp casbin-advanced-python-runtime.json conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/casbin-advanced-python-runtime.json
+          for file in rbac_with_domains_model.conf rbac_with_domains_policy.csv abac_model.conf rbac_with_deny_model.conf rbac_with_deny_policy.csv; do
+            cp "/tmp/casbin/examples/$file" "conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/$file"
+          done
+          cp /tmp/casbin/go.mod conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/go.mod
+          cp /tmp/casbin/LICENSE conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/LICENSE
+          python conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/build_software_rules_artifacts.py \
+            --source conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/casbin-advanced-source-runtime.json \
+            --replica conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/casbin-advanced-python-runtime.json \
+            --output-dir casbin-advanced-software-rules
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            casbin-advanced-software-rules/casbin-advanced-source.capture.json \
+            casbin-advanced-software-rules/casbin-advanced-python-replica.capture.json \
+            casbin-advanced-software-rules/casbin-advanced-comparison.report.json
+      - name: Retain source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: casbin-advanced-authorization-cross-stack
+          path: |
+            casbin-advanced-source-runtime.json
+            casbin-advanced-python-runtime.json
+            casbin-advanced-software-rules/*.json
+            conformance/replication-lab/cases/CASBIN-ADV-AUTHZ-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

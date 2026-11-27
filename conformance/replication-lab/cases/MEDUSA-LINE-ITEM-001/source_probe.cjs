@@ -1,7 +1,7 @@
 const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm"),crypto=require("node:crypto");
 const ts=require(process.env.TYPESCRIPT_PATH),root=process.env.MEDUSA_SOURCE_ROOT;
 const files=[
- ["line","packages/core/utils/src/totals/line-item/index.ts",["getLineItemTotals"]],
+ ["line","packages/core/utils/src/totals/line-item/index.ts",["getLineItemTotals","setRefundableTotal"]],
  ["adjustment","packages/core/utils/src/totals/adjustment/index.ts",["calculateAdjustmentTotal"]],
  ["tax","packages/core/utils/src/totals/tax/index.ts",["calculateTaxTotal"]]
 ];

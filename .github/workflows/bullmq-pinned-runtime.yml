@@ -57,11 +57,23 @@ jobs:
         run: |
           cp "$GITHUB_WORKSPACE/conformance/replication-lab/probes/bullmq-retry-runtime.cjs" ./software-rules-retry-probe.cjs
           node ./software-rules-retry-probe.cjs | tee "$GITHUB_WORKSPACE/bullmq-runtime-capture.json"
-      - name: Retain source runtime capture
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate independent Python replica capture
+        run: |
+          python "$GITHUB_WORKSPACE/conformance/replication-lab/projects/retry-policy-python/replicate_retry_probe.py" > "$GITHUB_WORKSPACE/bullmq-replica-capture.json"
+      - name: Compare source and independent replica captures
+        run: |
+          python "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-ER-002/compare_retry_probe.py" "$GITHUB_WORKSPACE/bullmq-runtime-capture.json" "$GITHUB_WORKSPACE/bullmq-replica-capture.json" | tee "$GITHUB_WORKSPACE/bullmq-comparison-report.json"
+      - name: Retain source, replica, and comparison captures
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bullmq-pinned-runtime-capture
-          path: bullmq-runtime-capture.json
+          name: bullmq-cross-stack-captures
+          path: |
+            bullmq-runtime-capture.json
+            bullmq-replica-capture.json
+            bullmq-comparison-report.json
           if-no-files-found: warn
           retention-days: 30

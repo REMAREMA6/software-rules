@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Six bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, and JOSE JWT verification. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Seven bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, and Casbin simple-RBAC authorization. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 

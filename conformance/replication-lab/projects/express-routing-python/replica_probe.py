@@ -6,7 +6,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 
 
-def make_handler(case_sensitive=False, strict_routing=False):
+def make_handler(case_sensitive=False, strict_routing=False, suppress_head_body=True, options_includes_head=True, explicit_options_override=True):
     def route_matches(path):
         pathname = urlsplit(path).path
         expected = "/widgets"
@@ -46,7 +46,7 @@ def make_handler(case_sensitive=False, strict_routing=False):
 
         def do_HEAD(self):
             if route_matches(self.path):
-                self.send_result(200, "get", suppress_body=True)
+                self.send_result(200, "get", suppress_body=suppress_head_body)
             else:
                 self.send_result(404, "not found", suppress_body=True)
 
@@ -58,20 +58,22 @@ def make_handler(case_sensitive=False, strict_routing=False):
 
         def do_OPTIONS(self):
             pathname = urlsplit(self.path).path
-            if pathname == "/override":
+            if pathname == "/override" and explicit_options_override:
                 self.send_result(200, "GET", allow="GET")
             elif route_matches(self.path):
-                self.send_result(200, "GET, HEAD, PUT", allow="GET, HEAD, PUT")
+                methods = "GET, HEAD, PUT" if options_includes_head else "GET, PUT"
+                self.send_result(200, methods, allow=methods)
             else:
                 self.send_result(404, "not found")
 
     return Handler
 
 
-def capture():
-    case_sensitive = False
-    strict_routing = False
-    server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(case_sensitive, strict_routing))
+def capture(case_sensitive=False, strict_routing=False, suppress_head_body=True, options_includes_head=True, explicit_options_override=True):
+    server = ThreadingHTTPServer(
+        ("127.0.0.1", 0),
+        make_handler(case_sensitive, strict_routing, suppress_head_body, options_includes_head, explicit_options_override),
+    )
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     host, port = server.server_address

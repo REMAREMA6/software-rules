@@ -417,7 +417,7 @@
 - [x] Detected the executable commit-on-error mutation.
 - [x] Generated and validated Software Rules 0.2.0 captures and the comparison report.
 - [x] Committed raw/structured captures, frozen pnpm lockfile, and dependency tree under `conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/` at commit [fabf45a](https://github.com/REMAREMA6/software-rules/commit/fabf45ae466d2b68bcc49f6596f6c6bb220ddef3).
-- [~] Phase 6 remains active; this case proves only the declared two-scenario transaction scope.
+- [x] Accepted bounded Phase 6 case; this case proves only the declared two-scenario transaction scope.
 
 
 ### 2026-11-27 — TypeORM persistence and BullMQ messaging case preparation
@@ -439,7 +439,7 @@
 - [x] Detected four executable mutations: empty-string rejection, skipped end-date validation, added chronology enforcement, and reversed validation order.
 - [x] Generated and validated Software Rules 0.2.0 captures and comparison report.
 - [x] Committed source files, raw/structured captures, comparison, and TypeScript toolchain lock under `conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/` at [dd0ad76](https://github.com/REMAREMA6/software-rules/commit/dd0ad76f0ec9557a41250c5fcc3efa14dc5aa1a2).
-- [~] Phase 6 remains active; this case does not cover full Medusa pricing or the entire business-rules facet.
+- [x] Accepted bounded Phase 6 case; this case does not cover full Medusa pricing or the entire business-rules facet.
 
 
 ### 2026-11-27 — TypeORM and BullMQ messaging runtime verification
@@ -460,4 +460,4 @@
 - [x] Detected five executable replica mutations: duplicate delivery, payload overwrite, missing completion acknowledgement, event reordering, and failed-to-completed state mutation.
 - [x] Generated and validated Software Rules 0.2.0 captures and comparison report.
 - [x] Committed raw/structured captures and comparison under `conformance/replication-lab/cases/BMQ-MSG-001/artifacts/` at [ce9d0e1](https://github.com/REMAREMA6/software-rules/commit/ce9d0e1a0c62830418daa912c1a798561c897a3a).
-- [~] Phase 6 remains active; the case does not establish exactly-once delivery or all messaging semantics.
+- [x] Accepted bounded Phase 6 case; the case does not establish exactly-once delivery or all messaging semantics.

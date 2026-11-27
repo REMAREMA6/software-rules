@@ -1,6 +1,6 @@
 # Comparison Model
 
-**Status:** Draft — Phase 5  
+**Maturity:** Draft — Software Rules specification 0.3.0  
 **Normative terms:** MUST, MUST NOT, SHOULD, MAY are used in their ordinary specification sense.
 
 ## 1. Purpose

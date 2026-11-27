@@ -3,6 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
+import { validateComparisonCompleteness } from "./completeness.mjs";
 
 const root = path.resolve("../../schemas/v1");
 const comparisonRoot = path.resolve("../../comparison/examples");
@@ -19,23 +20,6 @@ function registerTree(dir) {
 }
 registerTree(root);
 
-export function validateComparisonCompleteness(report) {
-  const errors = [];
-  const completeness = report.replicationCompleteness;
-  if (!completeness) return ["replicationCompleteness is required"];
-  const { referenceStatus, implementationStatus, result } = completeness;
-  let expected;
-  if (referenceStatus === "undetermined" || implementationStatus === "undetermined") expected = "undetermined";
-  else if (referenceStatus === "incomplete" && implementationStatus === "incomplete") expected = "incomplete-both";
-  else if (referenceStatus === "incomplete") expected = "incomplete-reference";
-  else if (implementationStatus === "incomplete") expected = "incomplete-implementation";
-  else expected = "complete-both";
-  if (result !== expected) errors.push(`replicationCompleteness.result must be "${expected}" for the two capture statuses, received "${result}"`);
-  if (expected !== "complete-both" && /faithful replication (?:is|has been) (?:established|supported)|complete equivalence (?:is|has been) (?:established|supported)/i.test(report.conclusion?.statement ?? "")) {
-    errors.push("conclusion: cannot claim faithful replication or complete equivalence while either capture is incomplete or undetermined");
-  }
-  return errors;
-}
 
 const suites = [
  {name:"capture",schema:loadJson(path.join(root,"capture.schema.json")),fixtures:path.join(root,"fixtures")},

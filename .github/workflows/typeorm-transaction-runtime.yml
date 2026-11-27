@@ -107,7 +107,18 @@ jobs:
           git add "$evidence_dir"
           if ! git diff --cached --quiet; then
             git commit -m "test: retain verified TypeORM transaction evidence"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin "$GITHUB_REF_NAME"
+              if ! git rebase "origin/$GITHUB_REF_NAME"; then
+                git rebase --abort || true
+                exit 1
+              fi
+              if git push origin "HEAD:$GITHUB_REF_NAME"; then
+                exit 0
+              fi
+              sleep "$attempt"
+            done
+            exit 1
           fi
       - name: Retain TypeORM source, replica, and Software Rules evidence
         if: always()

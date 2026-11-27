@@ -8,6 +8,6 @@
 - **Candidate facets:** Authorization and permissions; behaviour; data; configuration
 - **Selected bounded rule:** RBAC permission decision using subject, resource, action, direct policy assignments, and one user-to-role link.
 - **Inspected files:** `examples/rbac_model.conf`, `examples/rbac_policy.csv`, `rbac_api_test.go`, `go.mod`, and `LICENSE`.
-- **Runtime verification:** Pending. The source runtime probe must execute the pinned commit; this source record alone is not an accepted conformance result.
+- **Runtime verification:** The pinned Go runtime probe executed successfully in CI run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753). Ten request decisions matched an independent Python implementation; four executable mutations, Software Rules schema validation, and evidence-integrity checks passed.
 
 The model grants a request when the subject is directly named in a policy or is linked to the policy subject by the role relation, and the resource and action both match. The selected case does not cover domains, deny-override policies, ABAC, role inheritance, policy adapters, or mutation APIs.

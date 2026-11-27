@@ -1,12 +1,12 @@
 # Case — Cross-stack Task Board interface and workflow replication
 
 **Case ID:** TASKBOARD-UI-001  
-**Status:** Implementation prepared; runtime comparison and mutation verification pending  
+**Status:** Runtime comparison passed in [run #45934299299](https://github.com/REMAREMA6/software-rules/actions/runs/45934299299): zero differing pixels across three viewport sizes and six workflow states; semantic snapshots matched; deliberate active-count mutation detected. Schema-native capture generation and validation are being added before acceptance.  
 **Source:** `examples/task-board/reference/index.html` on the repository's pinned commit  
 **Source stack:** HTML, CSS, browser-native JavaScript  
 **Replica stack:** React 19.1.1, JSX, Vite 7.1.7  
 **Replica runtime:** Chromium, served as a production Vite build  
-**Facets:** Interface; behaviour; data; API boundary; errors/recovery
+**Facet:** Interface (behavioural workflows are used as state-transition probes; API traces are test controls, not claims of full API-facet coverage)
 
 ## Declared boundary
 
@@ -22,6 +22,10 @@ The replica is independently implemented in React. It does not import the source
 - Accessible names, filter pressed state, native required-field semantics, and live summary.
 - Equivalent POST, PATCH, and DELETE adapter requests and resulting visible state.
 - Deterministic failed-request propagation where exercised.
+
+## Captured interface properties
+
+The accepted capture scope is limited to six required properties: viewport geometry, responsive layout at 1280/768/320 CSS px, exact visual presentation, semantic hierarchy, accessible control state, and workflow-state presentation. It explicitly excludes other browsers/operating systems, unprobed hover/focus/colour-scheme states, font fallback across environments, production APIs, persistence, and other software facets.
 
 ## Required discriminating probes
 

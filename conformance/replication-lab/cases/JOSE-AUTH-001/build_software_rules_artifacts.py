@@ -84,7 +84,7 @@ def payload(scenario, facet, evidence_refs):
     header = scenario.get("protectedHeader") or {}
     if facet == "identity-authentication":
         expiry = claims.get("exp")
-        return {
+        result = {
             "facet": "identity-authentication",
             "kind": "authentication-event",
             "subject": "compact-jwt-bearer-verification",
@@ -96,9 +96,11 @@ def payload(scenario, facet, evidence_refs):
             "audience": options.get("audience", ""),
             "outcome": "success" if accepted else "failure",
             "claims": claims,
-            "expiry": datetime.fromtimestamp(expiry, timezone.utc).isoformat().replace("+00:00", "Z") if expiry else None,
             "extensions": {"scenarioLabel": label, "algorithm": header.get("alg"), "errorCategory": category},
         }
+        if expiry is not None:
+            result["expiry"] = datetime.fromtimestamp(expiry, timezone.utc).isoformat().replace("+00:00", "Z")
+        return result
     if facet == "security-controls":
         return {
             "facet": "security-controls",

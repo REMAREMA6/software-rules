@@ -41,7 +41,7 @@ def calculate(item,mutation=None):
   "original_subtotal":r8(original_sub),"original_total":r8(original_total),
   "discount_subtotal":r8(current_discount_sub),"discount_tax_total":r8(original_tax-tax),
   "discount_total":r8(current_discount_sub+original_tax-tax),"tax_total":r8(tax),"original_tax_total":r8(original_tax),
-  "adjustments":rows}
+  "refundable_total":None,"refundable_total_per_unit":None,"adjustments":rows}
  if any(k in detail for k in ("return_requested_quantity","return_received_quantity","return_dismissed_quantity")):
   discount=adj_total if inclusive else adj_sub
   discount_per_unit=discount/q if q!=0 else Decimal(0)

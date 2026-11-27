@@ -11,4 +11,5 @@ class AdjustmentRuleMutations(unittest.TestCase):
  def test_missing_amount_filter_mutation(self):self.assertEqual(compare(SOURCE,capture({"include_missing_amount":True}))["result"],"mismatch")
  def test_adjustment_own_total_mutation(self):self.assertEqual(compare(SOURCE,capture({"cumulative_adjustment_values":True}))["result"],"mismatch")
  def test_quantity_allocation_mutation(self):self.assertEqual(compare(SOURCE,capture({"skip_per_item_allocation":True}))["result"],"mismatch")
+ def test_zero_quantity_fallback_mutation(self):self.assertEqual(compare(SOURCE,capture({"zero_quantity_no_fallback":True}))["result"],"mismatch")
 if __name__=="__main__":unittest.main()

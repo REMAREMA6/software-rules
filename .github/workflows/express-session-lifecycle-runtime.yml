@@ -1,0 +1,100 @@
+name: Express session identity lifecycle cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/SESSION-EXPRESS-001/**"
+      - "conformance/replication-lab/projects/express-session-python/**"
+      - ".github/workflows/express-session-lifecycle-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/SESSION-EXPRESS-001/**"
+      - "conformance/replication-lab/projects/express-session-python/**"
+      - ".github/workflows/express-session-lifecycle-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: express-session-lifecycle-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  session-lifecycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout immutable express-session source commit
+        env:
+          SESSION_SOURCE_COMMIT: "8947e169ae838b22cc1af198e50e370e6fc09f96"
+        run: |
+          git init /tmp/express-session
+          git -C /tmp/express-session remote add origin https://github.com/expressjs/session.git
+          git -C /tmp/express-session fetch --depth=1 origin "$SESSION_SOURCE_COMMIT"
+          git -C /tmp/express-session checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/express-session rev-parse HEAD)" = "$SESSION_SOURCE_COMMIT"
+          node -e "const p=require('/tmp/express-session/package.json'); if(p.version!=='1.19.0') process.exit(1); console.log(p.version)"
+      - name: Install pinned express-session production dependencies
+        working-directory: /tmp/express-session
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Install Express HTTP host separately
+        run: npm install --prefix /tmp/express-host --no-audit --no-fund express@5.3.0
+      - name: Execute pinned express-session middleware
+        env:
+          SESSION_SOURCE_ROOT: /tmp/express-session
+          EXPRESS_SOURCE_ROOT: /tmp/express-host/node_modules/express
+          SESSION_SOURCE_COMMIT: "8947e169ae838b22cc1af198e50e370e6fc09f96"
+        run: node conformance/replication-lab/cases/SESSION-EXPRESS-001/source_probe.cjs > express-session-source-runtime.json
+      - name: Execute independent Python session/cookie model
+        run: python conformance/replication-lab/projects/express-session-python/replica_probe.py > express-session-python-runtime.json
+      - name: Compare session lifecycle outcomes
+        run: python conformance/replication-lab/cases/SESSION-EXPRESS-001/compare.py express-session-source-runtime.json express-session-python-runtime.json
+      - name: Run deliberate session lifecycle mutations
+        run: python -m unittest discover -s conformance/replication-lab/cases/SESSION-EXPRESS-001 -p "test_*.py" -v
+      - name: Stage pinned source files and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/SESSION-EXPRESS-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp express-session-source-runtime.json "$evidence_dir/express-session-source-runtime.json"
+          cp express-session-python-runtime.json "$evidence_dir/express-session-python-runtime.json"
+          cp /tmp/express-session/index.js "$evidence_dir/index.js"
+          cp /tmp/express-session/session/store.js "$evidence_dir/store.js"
+          cp /tmp/express-session/session/memory.js "$evidence_dir/memory.js"
+          cp /tmp/express-session/package.json "$evidence_dir/package.json"
+          cp /tmp/express-session/package-lock.json "$evidence_dir/package-lock.json"
+          cp /tmp/express-host/node_modules/express/package.json "$evidence_dir/express-package.json"
+          python conformance/replication-lab/cases/SESSION-EXPRESS-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/express-session-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/express-session-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/express-session-software-rules" \
+            --source-artifacts "{\"sessionIndex\":\"$GITHUB_WORKSPACE/$evidence_dir/index.js\",\"store\":\"$GITHUB_WORKSPACE/$evidence_dir/store.js\",\"memoryStore\":\"$GITHUB_WORKSPACE/$evidence_dir/memory.js\",\"sessionPackage\":\"$GITHUB_WORKSPACE/$evidence_dir/package.json\",\"dependencyLock\":\"$GITHUB_WORKSPACE/$evidence_dir/package-lock.json\",\"expressPackage\":\"$GITHUB_WORKSPACE/$evidence_dir/express-package.json\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            express-session-software-rules/express-session-source.capture.json \
+            express-session-software-rules/express-session-python-replica.capture.json \
+            express-session-software-rules/express-session-comparison.report.json
+      - name: Retain session source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: express-session-identity-lifecycle
+          path: |
+            express-session-source-runtime.json
+            express-session-python-runtime.json
+            express-session-software-rules/*.json
+            conformance/replication-lab/cases/SESSION-EXPRESS-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

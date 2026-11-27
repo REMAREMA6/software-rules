@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- TORM-PERSIST-002 passed four TypeORM 1.1.3/Python sqlite3 file-backed post-reopen scenarios covering commit durability, rollback durability, update durability and constraint-failure atomicity; four deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45942572930, artifact #15172764857. Multi-process concurrency, isolation levels and power-loss durability remain excluded.
+
+
+### Verified
 - VIPER-CONFIG-001 passed nine Viper v1.21.0/Python configuration precedence and environment mapping scenarios; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45941776949, artifact #15172438139. Remote providers, reload/watch, secret managers and multi-file merge remain excluded.
 
 

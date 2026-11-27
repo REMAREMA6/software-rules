@@ -30,7 +30,8 @@
     "description": "Source-derived retry eligibility and retry routing rules for a queued job after processor failure.",
     "facetIds": [
       "background-processing",
-      "errors-recovery"
+      "errors-recovery",
+      "data"
     ],
     "subjects": [
       "job-retry-policy"
@@ -77,6 +78,24 @@
       "limitations": [
         "Custom strategy error/rejection behaviour and negative values other than -1 have not been established by this capture."
       ]
+    },
+    {
+      "ruleId": "BMQ-ER-003",
+      "facet": "data",
+      "subject": "job-attempt-counter",
+      "proposition": "BullMQ increments attemptsMade after a failed attempt and also after successful completion; at the start of a processor attempt, the observed value is the number of prior failed attempts.",
+      "reasoning": "The pinned Job implementation increments attemptsMade after moveToCompleted (line 683) and after moveToFailed (line 824). The separate runtime probe observed processor-start values 0, 1, 2 and a final attemptsMade value of 3 after two failures followed by success. This source-derived record itself remains unverified because it contains no runtime observations.",
+      "sourceEvidenceRefs": [
+        "bmq-evidence-job-retry"
+      ],
+      "reachability": "established",
+      "buildInclusion": "established",
+      "deployment": "unknown",
+      "execution": "not-established",
+      "verificationState": "unverified",
+      "limitations": [
+        "The separate runtime probe covers only the three declared scenarios; other job lifecycle and counter-update paths remain unverified."
+      ]
     }
   ],
   "evidence": [
@@ -88,7 +107,7 @@
       "origin": {
         "sourceUri": "https://github.com/taskforcesh/bullmq/blob/526668f2c5e6de9d5d664df577f09a6bdccac1b4/src/classes/job.ts",
         "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
-        "location": "shouldRetryJob and moveToFailed, source lines 700–830"
+        "location": "moveToCompleted (line 652; attemptsMade increment at line 683), shouldRetryJob (line 706), and moveToFailed (attemptsMade increment at line 824)"
       },
       "capturedAt": "2026-11-26T17:51:00+01:00",
       "embedded": {
@@ -98,7 +117,8 @@
           "maxStartedAttempts suppresses retry",
           "-1 backoff suppresses retry",
           "positive delay calls moveToDelayed",
-          "zero/no delay calls retryJob"
+          "zero/no delay calls retryJob",
+          "attemptsMade increments after successful completion and after failure"
         ]
       },
       "retention": {
@@ -140,24 +160,30 @@
     {
       "facet": "background-processing",
       "status": "partial",
-      "reason": "Worker lifecycle is only inspected enough to establish the retry-policy context."
+      "reason": "Worker lifecycle is only inspected enough to establish the retry-policy context; the separate runtime case covers three bounded retry/backoff scenarios."
     },
     {
       "facet": "errors-recovery",
       "status": "partial",
-      "reason": "Retry eligibility and routing are source-derived; source runtime and edge-case probes are outstanding."
+      "reason": "Retry eligibility and routing are source-derived; three selected runtime branches have separate bounded confirmation, while other error and recovery paths remain unverified."
+    },
+    {
+      "facet": "data",
+      "status": "partial",
+      "reason": "The attemptsMade counter update is source-derived and has bounded runtime confirmation in a separate three-scenario case; the wider job data model remains unverified."
     }
   ],
   "limitations": [
-    "No BullMQ runtime scenario has been executed for this case.",
-    "No independent implementation comparison has been completed."
+    "This source-derived capture contains no runtime observations; selected runtime evidence is retained separately.",
+    "A separate bounded Python comparison exists, but this source-derived capture remains incomplete."
   ],
   "replicationScope": {
     "scopeId": "bullmq-retry-rule-scope",
     "description": "Two source-derived retry-policy rules only; this is not a complete capture of BullMQ or its background-processing facet.",
     "facets": [
       "background-processing",
-      "errors-recovery"
+      "errors-recovery",
+      "data"
     ],
     "propertyInventory": [
       {
@@ -184,13 +210,25 @@
           "bmq-evidence-backoff"
         ],
         "rationale": "Derived from pinned implementation and inspected tests; runtime verification remains outstanding."
+      },
+      {
+        "propertyId": "BMQ-ER-003",
+        "facet": "data",
+        "subject": "job-attempt-counter",
+        "dimension": "attemptsMade increments on failure and successful completion",
+        "requirement": "required",
+        "status": "source-inferred",
+        "evidenceRefs": [
+          "bmq-evidence-job-retry"
+        ],
+        "rationale": "Derived from moveToCompleted and moveToFailed at the pinned source commit. Separate runtime evidence confirms only the declared three scenarios; this source-derived record is not a runtime capture."
       }
     ],
     "completeness": {
       "status": "incomplete",
       "assessedAt": "2026-11-26T17:51:00+01:00",
       "assessmentMethod": "Source-file inspection and manual property inventory.",
-      "rationale": "The selected source rules are identified but not runtime verified, independently replicated, or compared."
+      "rationale": "The source-derived capture identifies three rules but does not contain runtime observations or independent replica records. A separate bounded runtime comparison covers selected branches only and does not complete the broader source-rule inventory."
     }
   }
 }

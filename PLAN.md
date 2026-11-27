@@ -280,16 +280,25 @@ software-rules/
 │   └── v1/
 ├── comparison/
 ├── examples/
-│   ├── PHASE-6-FACET-EXPANSION.md
+│   ├── CROSS-REPOSITORY-REPLICATION-PROGRAM.md
+│   ├── cross-repository/
+│   │   ├── sources/
+│   │   └── captures/
 │   ├── interface/
 │   ├── behavior/
-│   ├── api/
-│   └── full-system/
+│   └── api/
 ├── conformance/
-│   ├── fixtures/
+│   ├── integrity/
 │   ├── validation/
-│   └── test-cases/
-├── research/
+│   └── replication-lab/
+│       ├── cases/
+│       ├── projects/
+│       ├── probes/
+│       ├── runners/
+│       └── reports/
+├── .github/
+│   └── workflows/
+└── research/
 │   ├── STANDARDS-REVIEW.md
 │   ├── DESIGN-DECISIONS.md
 │   └── REFERENCES.md

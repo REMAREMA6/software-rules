@@ -5,7 +5,7 @@ The suite uses Ajv 8 with JSON Schema Draft 2020-12 and `ajv-formats`.
 From the repository root:
 
 ```sh
-npm install
+npm install --prefix conformance/validation
 npm run validate --prefix conformance/validation
 ```
 

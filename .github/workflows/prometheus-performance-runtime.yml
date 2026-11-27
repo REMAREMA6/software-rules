@@ -61,6 +61,20 @@ jobs:
       - name: Run mutation tests
         run: |
           python -m unittest discover -s conformance/replication-lab/cases/PROM-PERF-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          mkdir -p prometheus-software-rules
+          python conformance/replication-lab/cases/PROM-PERF-001/build_software_rules_artifacts.py \
+            --source prometheus-source.json \
+            --replica prometheus-python.json \
+            --output-dir prometheus-software-rules
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            prometheus-software-rules/prometheus-source.capture.json \
+            prometheus-software-rules/prometheus-python-replica.capture.json \
+            prometheus-software-rules/prometheus-comparison.report.json
       - name: Retain raw source, replica, and comparison evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -71,5 +85,6 @@ jobs:
             prometheus-source.json
             prometheus-python.json
             prometheus-comparison.json
+            prometheus-software-rules/*.json
           if-no-files-found: warn
           retention-days: 30

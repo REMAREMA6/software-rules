@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; two bounded cases passed, TypeORM persistence case active  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; BullMQ and Express bounded cases passed; TypeORM persistence and BullMQ messaging cases prepared and awaiting runtime verification  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 
@@ -221,14 +221,17 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 - [x] Re-audit Task Board and preserve it as bounded evidence; unresolved properties remain partial/incomplete rather than being promoted to complete.
 - [x] Register nine immutable source candidates and inspect the selected source implementations.
 - [x] Accept BMQ-ER-002 (BullMQ retry/backoff) and EXP-API-001 (Express routing/API) after successful pinned-source runtime, independent Python replica, comparison, mutation, schema/integrity, and artifact-retention runs.
-- [~] Execute TORM-PERSIST-001 (TypeORM commit/rollback) using compiled pinned source and independent Python/sqlite3.
+- [~] Execute TORM-PERSIST-001 (TypeORM commit/rollback) using compiled pinned source and independent Python/sqlite3; runtime result pending.
+- [~] Execute BMQ-MSG-001 (BullMQ message deduplication, event order, and consumer outcome) using pinned source + Redis and independent Python model; runtime result pending.
 - [x] Extract and validate the bounded runtime rules in the accepted BullMQ and Express cases; source-derived inferences remain distinct where runtime evidence is absent.
 - [~] Extract TypeORM top-level transaction rules; runtime comparison pending.
 - [x] Independently replicate BullMQ retry decisions and Express HTTP routing in Python 3.12.
-- [~] Independently replicate TypeORM transaction outcomes in Python sqlite3; broaden to further stacks and UI technologies.
+- [~] Independently replicate TypeORM transaction outcomes in Python sqlite3; runtime verification pending.
+- [~] Independently replicate BullMQ message delivery and terminal outcomes in a Python queue model; runtime verification pending.
 - [x] Run and retain the pinned BullMQ+Redis runtime probe and Python replica capture; 12 semantic projections matched.
 - [x] Run and retain the pinned Express runtime probe and Python HTTP replica capture; 28 semantic projections matched.
 - [~] Run TypeORM source and replica probes; workflow result pending.
+- [~] Run BullMQ messaging source and replica probes; workflow result pending.
 - [x] Accept BullMQ and Express comparison/mutation results after reviewing successful GitHub Actions runs.
 - [~] Execute TypeORM comparison and mutation tests in CI.
 - [x] Validate accepted BullMQ and Express Software Rules captures and comparison reports against schemas and cross-record integrity checks.
@@ -350,4 +353,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by executing TORM-PERSIST-001 and validating its source/replica captures. Then build and execute distinct cases for messaging, identity/authentication, authorization, dedicated security, business rules, integrations, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by verifying TORM-PERSIST-001 and BMQ-MSG-001, then generating and validating schema-native captures. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, business rules, integrations, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

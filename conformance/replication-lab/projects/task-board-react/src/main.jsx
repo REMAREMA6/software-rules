@@ -62,7 +62,7 @@ function TaskBoard() {
         <button type="button" aria-label={"Delete " + task.title} onClick={() => deleteTask(task)}>Delete</button>
       </li>)}
     </ul>
-    <p className="summary" id="summary" aria-live="polite">{tasks.length}{tasks.length === 1 ? " task" : " tasks"} · {active} active</p>
+    <p className="summary" id="summary" aria-live="polite">{`${tasks.length}${tasks.length === 1 ? " task" : " tasks"} · ${active} active`}</p>
   </main>;
 }
 

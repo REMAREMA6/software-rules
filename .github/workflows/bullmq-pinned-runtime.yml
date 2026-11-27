@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - "conformance/replication-lab/cases/BMQ-ER-002/compare_retry_probe.py"
+      - "conformance/replication-lab/cases/BMQ-ER-002/build_software_rules_artifacts.py"
+      - "conformance/replication-lab/projects/retry-policy-python/replicate_retry_probe.py"
+      - "conformance/validation/validate-case-artifacts.mjs"
       - "conformance/replication-lab/probes/bullmq-retry-runtime.cjs"
       - ".github/workflows/bullmq-pinned-runtime.yml"
   pull_request:

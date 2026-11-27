@@ -2,6 +2,7 @@ import copy
 import unittest
 
 from compare import compare
+from replica_probe import capture
 
 
 def captures():
@@ -20,7 +21,7 @@ def captures():
         item = {
             "label": label,
             "request": {"method": method, "path": path},
-            "response": {"status": status, "body": body, "headers": copy.deepcopy(headers)},
+            "response": {"status": status, "body": body, "headers": copy.deepcopy(headers), "wireBodyBytes": 0},
         }
         source["scenarios"].append(copy.deepcopy(item))
         replica["scenarios"].append(copy.deepcopy(item))
@@ -57,6 +58,37 @@ class ExpressApiComparisonTests(unittest.TestCase):
         source, replica = captures()
         replica["scenarios"][6]["response"]["status"] = 404
         self.assertEqual(compare(source, replica)["result"], "mismatch")
+
+
+    def test_actual_head_body_mutation_is_detected(self):
+        source, _ = captures()
+        mutant = capture(suppress_head_body=False)
+        self.assertEqual(compare(source, mutant)["result"], "mismatch")
+
+    def test_actual_case_sensitive_mutation_is_detected(self):
+        source, _ = captures()
+        mutant = capture(case_sensitive=True)
+        self.assertEqual(compare(source, mutant)["result"], "mismatch")
+
+    def test_actual_strict_routing_mutation_is_detected(self):
+        source, _ = captures()
+        mutant = capture(strict_routing=True)
+        self.assertEqual(compare(source, mutant)["result"], "mismatch")
+
+    def test_actual_options_method_mutation_is_detected(self):
+        source, _ = captures()
+        mutant = capture(options_includes_head=False)
+        self.assertEqual(compare(source, mutant)["result"], "mismatch")
+
+    def test_actual_options_override_mutation_is_detected(self):
+        source, _ = captures()
+        mutant = capture(explicit_options_override=False)
+        self.assertEqual(compare(source, mutant)["result"], "mismatch")
+
+    def test_actual_query_matching_mutation_is_detected(self):
+        source, _ = captures()
+        mutant = capture(query_in_path=True)
+        self.assertEqual(compare(source, mutant)["result"], "mismatch")
 
     def test_explicit_options_override_mutation_is_detected(self):
         source, replica = captures()

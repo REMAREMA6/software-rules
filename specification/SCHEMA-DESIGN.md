@@ -1,6 +1,6 @@
 # Machine-Readable Schema Design
 
-**Status:** Draft — Phase 4  
+**Maturity:** Draft — Software Rules specification 0.3.0; machine-readable schema version 0.2.0  
 **Dialect:** JSON Schema Draft 2020-12  
 **Scope:** Serialized record structure and validation boundaries for schema line v1.
 

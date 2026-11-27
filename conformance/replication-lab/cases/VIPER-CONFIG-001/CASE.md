@@ -1,7 +1,7 @@
 # Case — Viper configuration source precedence and environment mapping
 
 **Case ID:** VIPER-CONFIG-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all nine declared configuration scenarios in [run #45941776949](https://github.com/REMAREMA6/software-rules/actions/runs/45941776949). Pinned Viper v1.21.0 and independent Python matched all nine effective values; six precedence/environment mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and cross-record integrity validation. Artifact `15172438139` retained through 2026-12-27. This is bounded source-precedence evidence, not full Viper or configuration-facet coverage.  
 **Facet(s):** Configuration; behaviour; data; errors and recovery  
 **Source:** https://github.com/spf13/viper  
 **Immutable source commit:** `394040caccbdf5821fa6839386a35f0fb1b1ee9e`  

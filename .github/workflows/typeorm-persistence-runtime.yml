@@ -13,6 +13,9 @@ on:
       - ".github/workflows/typeorm-persistence-runtime.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: typeorm-persistence
   cancel-in-progress: true
@@ -61,7 +64,40 @@ jobs:
           python conformance/replication-lab/cases/TORM-PERSIST-001/compare.py typeorm-source-capture.json typeorm-replica-capture.json | tee typeorm-comparison.json
       - name: Run comparator mutation tests
         run: python -m unittest discover -s conformance/replication-lab/cases/TORM-PERSIST-001 -p "test_*.py" -v
-      - name: Retain TypeORM source and replica evidence
+      - name: Stage runtime evidence and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/TORM-PERSIST-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp typeorm-source-capture.json "$evidence_dir/typeorm-source-runtime.json"
+          cp typeorm-replica-capture.json "$evidence_dir/typeorm-python-runtime.json"
+          cp /tmp/typeorm/pnpm-lock.yaml "$evidence_dir/pnpm-lock.yaml"
+          python conformance/replication-lab/cases/TORM-PERSIST-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/$evidence_dir/typeorm-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/$evidence_dir/typeorm-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/typeorm-software-rules" \
+            --lockfile "$GITHUB_WORKSPACE/$evidence_dir/pnpm-lock.yaml"
+      - name: Validate Software Rules captures and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/typeorm-software-rules/typeorm-source.capture.json" \
+            "$GITHUB_WORKSPACE/typeorm-software-rules/typeorm-python-replica.capture.json" \
+            "$GITHUB_WORKSPACE/typeorm-software-rules/typeorm-comparison.report.json"
+      - name: Commit verified TypeORM evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          evidence_dir="conformance/replication-lab/cases/TORM-PERSIST-001/artifacts"
+          cp typeorm-software-rules/typeorm-source.capture.json "$evidence_dir/typeorm-source.capture.json"
+          cp typeorm-software-rules/typeorm-python-replica.capture.json "$evidence_dir/typeorm-python-replica.capture.json"
+          cp typeorm-software-rules/typeorm-comparison.report.json "$evidence_dir/typeorm-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified TypeORM cross-stack evidence"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Retain TypeORM source, replica, and Software Rules evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -70,5 +106,8 @@ jobs:
             typeorm-source-capture.json
             typeorm-replica-capture.json
             typeorm-comparison.json
+            typeorm-software-rules/*.json
+            conformance/replication-lab/cases/TORM-PERSIST-001/artifacts/*.json
+            conformance/replication-lab/cases/TORM-PERSIST-001/artifacts/pnpm-lock.yaml
           if-no-files-found: warn
           retention-days: 30

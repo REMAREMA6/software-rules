@@ -1,7 +1,7 @@
 # Case — Medusa price-list date validation
 
 **Case ID:** MEDUSA-BR-001  
-**Status:** Pinned source utility and helpers inspected; independent Python model prepared; runtime comparison pending  
+**Status:** PASSED for the declared ten-probe scope. Pinned Medusa source utility and independent Python replica match across 40 facet/scenario projections; executable mutation tests, Software Rules schema validation, cross-record evidence integrity, and artifact persistence all pass.  
 **Facet(s):** Business rules; Data; Behaviour; Errors and recovery  
 **Source:** https://github.com/medusajs/medusa  
 **Source commit:** 6e28e10acb9676392315b3ff1a9c7147fce4b5ab  
@@ -41,6 +41,6 @@ The Python 3.12 implementation uses ISO-8601 parsing and the same declared optio
 
 The Python replica is deliberately mutated to reject empty strings, skip end-date validation, enforce chronological ordering, or validate end dates before start dates. Each mutation must produce a comparison mismatch.
 
-## Acceptance gate
+## Result
 
-Accept only after the pinned source utility runtime and independent Python implementation match all ten probes, executable mutation tests detect each incorrect variant, and Software Rules 0.2.0 captures plus comparison report pass schema and cross-record evidence validation.
+**Passed for the declared bounded scope.** The pinned Medusa pricing utility, `isDate` helper, and `MedusaError` class match the independent Python ISO-8601 model across all ten inputs and 40 facet/scenario projections. Executable mutations detect empty-string rejection, omitted end-date validation, an added chronology check, and reversed validation order. The Software Rules 0.2.0 source/replica captures and comparison report passed schema and cross-record evidence validation in [workflow run #2](https://github.com/REMAREMA6/software-rules/actions/runs/45928653117). Source code, helper implementations, raw captures, structured captures, comparison, and the TypeScript toolchain lock are committed under `artifacts/` at [commit dd0ad76](https://github.com/REMAREMA6/software-rules/commit/dd0ad76f0ec9557a41250c5fcc3efa14dc5aa1a2). This is not full Medusa pricing or full business-rules facet coverage.

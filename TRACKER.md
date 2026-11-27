@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; replication-lab scaffolding exists, nine source candidates are registered, and the first source-derived rule has an independent Python model; no facet has passed the complete cross-stack evidence loop
+**Overall status:** Phase 6 in progress; nine source candidates are registered; the BullMQ source capture passes schema/integrity checks; the independent Python model, simulator, and mutation-comparison tests pass CI; the pinned BullMQ runtime-to-replica comparison is still pending
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 

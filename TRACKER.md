@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; four bounded cases are accepted in the 15-facet matrix (BullMQ retry/backoff, Express routing, TypeORM transactions, Medusa date validation); BullMQ messaging source/replica runtime and mutation tests pass, with schema-native validation pending; remaining facets are incomplete
+**Overall status:** Phase 6 in progress; six bounded cross-stack cases are accepted (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, and JOSE JWT verification). No entire facet is complete; several facet inventories and independent replications remain incomplete.
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Complete BMQ-MSG-001 schema-native captures, comparison report, schema/integrity validation, and retained evidence; then build the missing identity/authentication, authorization, security, integrations, business-rule, performance/resource, and cross-UI-stack cases.
-- **Blockers:** No entire facet is complete. BMQ-MSG-001 still needs schema-native capture validation. Identity/authentication, authorization, dedicated security, integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered.
-- **Next action:** Finish BMQ-MSG-001 schema validation and evidence retention. Then create and run cross-stack cases for identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and a UI framework/stack pair.
+- **Current task:** Expand the cross-repository evidence matrix beyond the six accepted bounded cases, starting with authorization and integration cases, then broader business rules, performance/resources, and cross-UI-stack replication.
+- **Blockers:** No entire facet is complete. JWT verification is only a bounded authentication/security case, not a full identity provider or authorization model. Authorization, external integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
+- **Next action:** Build a source/replica authorization case with an actor/resource/action policy matrix, then an external-integration case. Keep each bounded case separate and update the facet inventory only after source runtime, independent replica, mutation, schema, and evidence checks pass.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | BullMQ retry, Express API, TypeORM persistence, and Medusa date-validation cases are recorded as bounded passes. BullMQ messaging runtime and mutation tests also pass; schema capture validation is active. Remaining facets and property inventories are incomplete. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Six bounded cases pass, including JOSE JWT authentication/security and schema-native BullMQ messaging captures. No facet-wide completeness claim is justified; the remaining property inventories and several facet cases are incomplete. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
@@ -158,8 +158,8 @@
 - [x] Register and inspect nine immutable source candidates; candidates remain distinct from accepted cases.
 - [x] Accept bounded BullMQ retry/backoff and Express routing/API cross-stack cases after reviewing successful runtime runs and retained artifacts.
 - [x] TORM-PERSIST-001: TypeORM 1.1.3 pinned source + SQL.js versus Python 3.12 sqlite3; two scenarios, eight semantic projections, six mutations, schema 0.2.0 capture/report validation, and evidence integrity passed.
-- [~] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations passed; schema-native capture/report validation pending.
-- [ ] Add distinct cases for identity/authentication, authorization, security, integrations, broader business rules, performance/resources, and cross-UI-stack replication.
+- [x] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations, Software Rules 0.2.0 capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
+- [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto versus Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight mutations, schema/report validation, and evidence integrity passed in run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
 - [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
 
@@ -179,12 +179,12 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] 4. Data — shapes, types, nullability, relationships, transformations, and serialization.
 - [~] 5. Persistence — bounded TypeORM top-level commit/rollback case passed; durability/restart/concurrency and other drivers remain uncovered.
 - [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.
-- [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer runtime comparison and mutations passed; schema-native captures pending; delivery guarantees and idempotency breadth remain uncovered.
-- [ ] 8. Identity/authentication — principal, credential/session lifecycle, expiry, and logout.
+- [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer runtime comparison, six mutations, schema-native captures, and evidence validation passed; delivery guarantees and idempotency breadth remain uncovered.
+- [~] 8. Identity/authentication — bounded JWT signature/claims verification passes; principal establishment, credential/session lifecycle, refresh, revocation, and logout remain uncovered.
 - [ ] 9. Authorization — actor/resource/action policy matrix and enforcement.
-- [ ] 10. Security — authorized control, bypass, and containment scenarios.
+- [~] 10. Security — bounded JWT signature-integrity and algorithm-allowlist controls pass; broader authorized bypass, containment, and security-control cases remain uncovered.
 - [~] 11. Background processing — BullMQ retry/backoff case passed; scheduling/cancellation/duplicate/stalled-worker lifecycle remain uncovered.
-- [~] 12. Errors/recovery — bounded BullMQ retry/suppression, Express 404, TypeORM rollback, and Medusa invalid-date cases passed; broader failure/recovery classes remain uncovered.
+- [~] 12. Errors/recovery — bounded BullMQ retry/suppression, Express 404, TypeORM rollback, Medusa invalid-date, and JOSE semantic JWT rejection cases passed; broader failure/recovery classes remain uncovered.
 - [ ] 13. Integrations — external dependency contracts and controlled failure outcomes.
 - [~] 14. Configuration — Express routing defaults passed; precedence/invalid values/runtime changes remain uncovered.
 - [ ] 15. Performance/resources — repeatable workload, latency distributions, throughput, and resource behaviour.
@@ -199,7 +199,17 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** several bounded cross-stack cases pass, but no entire facet is complete for the full objective. BMQ-MSG-001 needs schema-native capture validation; identity/authentication, authorization, dedicated security, integrations, performance/resources, and cross-UI-stack replication still lack accepted cases. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
+**Current blocker:** six bounded cross-stack cases pass, but no entire facet is complete for the full objective. Authorization, integrations, broad security, performance/resources, and cross-UI-stack replication still lack accepted cases; other facets have incomplete property inventories. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
+
+
+### 2026-11-27 — JOSE JWT authentication/security case accepted
+
+- [x] Pinned `panva/jose` source commit `f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0` (jose 6.2.18), compiled with TypeScript 6.0.2, and executed the source runtime on Node.js 22.
+- [x] Compared eleven source-generated compact JWT scenarios against an independent Python 3.12 standard-library HMAC/JWT verifier; all 55 facet/scenario projections matched.
+- [x] Detected eight executable verifier mutations covering signature, expiration, not-before, issuer, audience, algorithm allowlist, and required-claim checks.
+- [x] Generated Software Rules 0.2.0 source/replica captures and comparison report; schema validation, comparison validation, and evidence-integrity validation passed in [run #45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
+- [x] Committed source/replica captures, comparison, pinned source excerpts, licence, and toolchain metadata under `conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/` at commit [21334ff](https://github.com/REMAREMA6/software-rules/commit/21334ff55fe9ef5b29adc846ea8a49dfe849a80f); retained CI artifact ID `15168682159`.
+- [~] This is bounded JWT verification evidence, not complete identity-provider, session, authorization, or security-facet coverage.
 
 ## Phase 7 — Review, release, and maintenance
 
@@ -421,7 +431,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Added BMQ-MSG-001 using pinned BullMQ source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4`: duplicate custom job ID suppression, stored-payload precedence, queue event sequence, successful completion, and terminal consumer failure.
 - [x] Added independent Python queue model, comparator mutation tests, and Redis-backed pinned-source workflow for BMQ-MSG-001.
 - [x] Ran the Python messaging model logic locally in the analysis environment; duplicate suppression, one processing outcome, completion acknowledgement, and failed-consumer terminal state assertions passed. This does not establish BullMQ source-runtime equivalence.
-- [~] Actual TypeORM and messaging GitHub Actions outputs and Software Rules schema-native captures are still unverified. Do not promote either case to passed.
+- [x] At the time of this entry, TypeORM and BullMQ messaging runtime/schema results were still unverified; this historical status was superseded by the successful runs recorded below.
 
 
 ### 2026-11-27 — Bounded Medusa date-validation case accepted
@@ -441,7 +451,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] TORM-PERSIST-001: six mutation tests passed; Software Rules 0.2.0 source/replica captures and comparison report passed schema and evidence-integrity validation in run [#45928766010](https://github.com/REMAREMA6/software-rules/actions/runs/45928766010). Artifact ID `15167104492`, retained until 2026-12-27.
 - [x] BMQ-MSG-001: pinned BullMQ 6.7.10 source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4` + Redis 7 matched an independent Python queue model across duplicate-ID and consumer-failure scenarios; ten semantic projections matched.
 - [x] BMQ-MSG-001: six mutation tests passed in run [#45928721261](https://github.com/REMAREMA6/software-rules/actions/runs/45928721261). Artifact ID `15167806675`, retained until 2026-12-27.
-- [~] BMQ-MSG-001 schema-native capture builder, comparison report, and evidence validation workflow have been added; CI validation pending.
+- [x] BMQ-MSG-001 schema-native captures, comparison report, schema validation, and evidence-integrity validation passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126); committed evidence is recorded below.
 - [ ] Continue with identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and cross-UI-stack replication. No facet-wide completion claim.
 
 

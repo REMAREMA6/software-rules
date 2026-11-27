@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; seven bounded cross-stack cases are accepted (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, and Casbin RBAC authorization). No entire facet is complete; several facet inventories and independent replications remain incomplete.
+**Overall status:** Phase 6 in progress; eight bounded cross-stack cases are accepted (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and go-redis/redis-py integration). No entire facet is complete; several facet inventories and independent replications remain incomplete.
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Expand the cross-repository evidence matrix beyond the seven accepted bounded cases, starting with external integrations, then broader business rules, performance/resources, and cross-UI-stack replication.
+- **Current task:** Expand the cross-repository evidence matrix beyond the eight accepted bounded cases, prioritizing broader business rules, repeatable performance/resource behaviour, and independent UI-stack replication.
 - **Blockers:** No entire facet is complete. Casbin covers only simple RBAC; domains, role hierarchy, ABAC, deny policies, and policy mutation remain untested. JWT verification is only bounded authentication/security evidence, not a full identity provider or authorization lifecycle. External integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
-- **Next action:** Build an external-integration case with deterministic success/failure outcomes. Then expand business-rule, performance/resource, and UI-stack coverage, while continuing property-inventory audits.
+- **Next action:** Build the next bounded business-rule or performance/resource case and extend the independent UI-stack replication harness. Continue the property-inventory audit; do not infer facet completion from case counts.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -161,6 +161,7 @@
 - [x] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations, Software Rules 0.2.0 capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
 - [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto versus Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight mutations, schema/report validation, and evidence integrity passed in run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
 - [x] CASBIN-AUTHZ-001: pinned Apache Casbin Go source versus independent Python simple-RBAC evaluator; ten authorization requests, four executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753). Retained artifact ID `15168623669`.
+- [x] REDIS-INT-001: pinned go-redis Go client versus independent Python redis-py against Redis 7; seven operations, five executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414). Retained artifact ID `15168909418`.
 - [ ] Add distinct cross-stack cases for external integrations, broader business rules, repeatable performance/resources, and independent UI-stack replication; expand incomplete property inventories for all facets.
 - [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
@@ -222,6 +223,16 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Generated Software Rules 0.2.0 captures and comparison; schema validation, cross-record integrity, and ten matching comparison results passed in [run #45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753).
 - [x] Retained source, replica, and Software Rules evidence in CI artifact `15168623669` (expires 2026-12-27).
 - [~] This proves only the declared simple-RBAC scope; it does not complete the authorization facet.
+
+
+### 2026-11-27 — Redis client integration case accepted
+
+- [x] Pinned `redis/go-redis` commit `37d4d98e2ccf59df4973df3e5de9edc87492426b` and executed the Go client against an isolated Redis 7 service.
+- [x] Compared seven normalized interactions with an independent Python 3.12 / redis-py client: PING, SET/GET, missing key, EXISTS, PTTL, WRONGTYPE, and connection failure.
+- [x] Detected five executable mutations: skipped write, missing-value substitution, wrong-type suppression, zero TTL, and connection-failure suppression.
+- [x] Generated Software Rules 0.2.0 source/replica captures and comparison; schema validation, cross-record integrity, and seven matching results passed in [run #45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414).
+- [x] Retained source, replica, and Software Rules evidence in CI artifact `15168909418` (expires 2026-12-27).
+- [~] This proves only the declared seven-operation Redis boundary; it does not complete the integrations facet.
 
 ## Phase 7 — Review, release, and maintenance
 

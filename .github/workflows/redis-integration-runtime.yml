@@ -1,0 +1,113 @@
+name: Redis client integration cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/REDIS-INT-001/**"
+      - "conformance/replication-lab/projects/redis-client-python/**"
+      - ".github/workflows/redis-integration-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/REDIS-INT-001/**"
+      - "conformance/replication-lab/projects/redis-client-python/**"
+      - ".github/workflows/redis-integration-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  redis-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      redis:
+        image: redis:7.4-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.0"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Python Redis client
+        run: pip install redis==6.0.0
+      - name: Checkout exact go-redis source commit
+        env:
+          REDIS_SOURCE_COMMIT: "37d4d98e2ccf59df4973df3e5de9edc87492426b"
+        run: |
+          git init /tmp/go-redis
+          git -C /tmp/go-redis remote add origin https://github.com/redis/go-redis.git
+          for attempt in 1 2 3 4 5; do
+            if git -C /tmp/go-redis fetch --depth=1 origin "$REDIS_SOURCE_COMMIT"; then break; fi
+            sleep "$attempt"
+          done
+          git -C /tmp/go-redis checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/go-redis rev-parse HEAD)" = "$REDIS_SOURCE_COMMIT"
+      - name: Build and run pinned go-redis integration probe
+        env:
+          REDIS_SOURCE_ROOT: /tmp/go-redis
+          REDIS_SOURCE_COMMIT: "37d4d98e2ccf59df4973df3e5de9edc87492426b"
+          REDIS_ADDR: "127.0.0.1:6379"
+        run: |
+          mkdir -p /tmp/redis-probe
+          cp conformance/replication-lab/cases/REDIS-INT-001/source_probe.go /tmp/redis-probe/main.go
+          cd /tmp/redis-probe
+          go mod init redis-integration-probe
+          go mod edit -require=github.com/redis/go-redis/v9@v9.24.0
+          go mod edit -replace=github.com/redis/go-redis/v9=/tmp/go-redis
+          go mod tidy
+          go run . > "$GITHUB_WORKSPACE/redis-source-runtime.json"
+      - name: Run independent Python Redis client
+        env:
+          REDIS_HOST: "127.0.0.1"
+          REDIS_PORT: "6379"
+        run: |
+          python conformance/replication-lab/projects/redis-client-python/replica_probe.py > redis-python-runtime.json
+      - name: Compare integration outcomes
+        run: python conformance/replication-lab/cases/REDIS-INT-001/compare.py redis-source-runtime.json redis-python-runtime.json
+      - name: Run executable integration mutation tests
+        env:
+          REDIS_HOST: "127.0.0.1"
+          REDIS_PORT: "6379"
+        run: python -m unittest discover -s conformance/replication-lab/cases/REDIS-INT-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          mkdir -p conformance/replication-lab/cases/REDIS-INT-001/artifacts
+          cp redis-source-runtime.json conformance/replication-lab/cases/REDIS-INT-001/artifacts/redis-source-runtime.json
+          cp redis-python-runtime.json conformance/replication-lab/cases/REDIS-INT-001/artifacts/redis-python-runtime.json
+          cp /tmp/go-redis/go.mod conformance/replication-lab/cases/REDIS-INT-001/artifacts/go.mod
+          cp /tmp/go-redis/LICENSE conformance/replication-lab/cases/REDIS-INT-001/artifacts/LICENSE
+          python conformance/replication-lab/cases/REDIS-INT-001/build_software_rules_artifacts.py \
+            --source conformance/replication-lab/cases/REDIS-INT-001/artifacts/redis-source-runtime.json \
+            --replica conformance/replication-lab/cases/REDIS-INT-001/artifacts/redis-python-runtime.json \
+            --output-dir redis-software-rules
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            redis-software-rules/redis-source.capture.json \
+            redis-software-rules/redis-python-replica.capture.json \
+            redis-software-rules/redis-comparison.report.json
+      - name: Retain source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: redis-client-integration-cross-stack
+          path: |
+            redis-source-runtime.json
+            redis-python-runtime.json
+            redis-software-rules/*.json
+            conformance/replication-lab/cases/REDIS-INT-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

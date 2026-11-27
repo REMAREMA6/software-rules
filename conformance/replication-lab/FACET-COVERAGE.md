@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Seven bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, and Casbin simple-RBAC authorization. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Eight bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, Casbin simple-RBAC authorization, and go-redis/redis-py integration. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 
@@ -20,7 +20,7 @@ This matrix distinguishes a facet having some validated evidence from a facet be
 | 10 | Security controls | JOSE HMAC signature integrity and algorithm allowlisting match across the declared synthetic-token cases; eight mutations and schema/integrity validation passed. Broader security controls remain untested. | Python 3.12 HMAC/JWT verifier | In progress |
 | 11 | Background processing | BullMQ retry/backoff and message lifecycle cases pass bounded source/replica probes. Scheduling, cancellation, concurrency, stalled jobs, and full lifecycle remain uncovered. | Python retry-decision model | In progress |
 | 12 | Errors and recovery | BullMQ retry suppression/consumer failure, Express 404 fallback, TypeORM rollback, Medusa invalid_data, and JOSE semantic JWT rejection categories pass bounded cases; broader failure classes remain uncovered. | Python retry, queue, HTTP, SQLite, date, and JWT models | In progress |
-| 13 | Integrations | Grafana, n8n, and Medusa are candidates; no external-system integration contract has passed an independent replica case. | None yet | Not started |
+| 13 | Integrations | REDIS-INT-001 matches pinned go-redis Go client and Python redis-py across seven normalized operations against Redis 7; five executable mutations, Software Rules 0.2.0 schema validation, comparison validation, and evidence integrity passed in run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414). Other integration protocols, authentication, TLS, clustering, and broader dependency behaviour remain untested. | Python 3.12 / redis-py | In progress |
 | 14 | Configuration | Express default case-sensitive/strict routing settings pass in the seven-request case. Effective configuration precedence in Grafana/Keycloak remains untested. | Python HTTP server | In progress |
 | 15 | Performance and resource behaviour | Prometheus is a registered candidate; no reproducible source workload and independent measurement case has passed. | None yet | Not started |
 
@@ -37,6 +37,7 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [BMQ-MSG-001](cases/BMQ-MSG-001/CASE.md) | Messaging; background processing; behaviour; errors/recovery; data | Two message scenarios, ten matching projections, six executable mutations, Software Rules 0.2.0 captures, schema/integrity validation, and committed evidence; run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126) |
 | [JOSE-AUTH-001](cases/JOSE-AUTH-001/CASE.md) | Identity/authentication; security controls; data; behaviour; errors/recovery | Eleven JWT scenarios, 55 facet/scenario projections, eight executable mutations, Software Rules 0.2.0 captures, schema/integrity validation, committed evidence, and retained artifact; run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956) |
 | [CASBIN-AUTHZ-001](cases/CASBIN-AUTHZ-001/CASE.md) | Authorization and permissions; behaviour; data | Ten RBAC requests, four executable mutations, Software Rules 0.2.0 captures, comparison, schema validation, evidence integrity, and retained CI artifact; run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753) |
+| [REDIS-INT-001](cases/REDIS-INT-001/CASE.md) | Integrations; errors/recovery; data | Seven Redis interactions, five executable mutations, Software Rules 0.2.0 captures, comparison, schema validation, evidence integrity, and retained CI artifact; run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414) |
 
 
 ## Completion rule

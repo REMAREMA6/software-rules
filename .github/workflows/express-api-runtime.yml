@@ -1,0 +1,120 @@
+name: Express API routing cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/EXP-API-001/**"
+      - "conformance/replication-lab/projects/express-routing-python/**"
+      - ".github/workflows/express-api-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/EXP-API-001/**"
+      - "conformance/replication-lab/projects/express-routing-python/**"
+      - ".github/workflows/express-api-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: express-api-runtime
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  express-routing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact Express source commit
+        env:
+          EXPRESS_SOURCE_COMMIT: "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
+        run: |
+          mkdir -p /tmp/express
+          git -C /tmp/express init
+          git -C /tmp/express remote add origin https://github.com/expressjs/express.git
+          git -C /tmp/express fetch --depth=1 origin "$EXPRESS_SOURCE_COMMIT"
+          git -C /tmp/express checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/express rev-parse HEAD)" = "$EXPRESS_SOURCE_COMMIT"
+      - name: Install and lock exact source dependency graph
+        working-directory: /tmp/express
+        run: |
+          lockfile="$GITHUB_WORKSPACE/conformance/replication-lab/cases/EXP-API-001/artifacts/package-lock.json"
+          if [ -f "$lockfile" ]; then
+            cp "$lockfile" ./package-lock.json
+            npm ci --omit=dev --ignore-scripts --no-audit --no-fund
+          else
+            npm install --omit=dev --ignore-scripts --no-audit --no-fund
+          fi
+          npm ls --all --json > dependency-tree.json
+      - name: Run pinned Express runtime probe
+        working-directory: /tmp/express
+        env:
+          EXPRESS_SOURCE_COMMIT: "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
+        run: |
+          set -o pipefail
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/cases/EXP-API-001/source_probe.cjs" ./software-rules-express-probe.cjs
+          node ./software-rules-express-probe.cjs | tee "$GITHUB_WORKSPACE/express-runtime-capture.json"
+      - name: Run independent Python HTTP replica
+        run: |
+          python conformance/replication-lab/projects/express-routing-python/replica_probe.py > express-replica-capture.json
+      - name: Compare Express and Python observations
+        run: |
+          set -o pipefail
+          python conformance/replication-lab/cases/EXP-API-001/compare.py express-runtime-capture.json express-replica-capture.json | tee express-comparison-report.json
+      - name: Stage raw Express evidence and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/EXP-API-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp express-runtime-capture.json "$evidence_dir/express-runtime-capture.json"
+          cp express-replica-capture.json "$evidence_dir/express-replica-capture.json"
+          cp express-comparison-report.json "$evidence_dir/express-raw-comparison-report.json"
+          cp /tmp/express/package-lock.json "$evidence_dir/package-lock.json"
+          cp /tmp/express/dependency-tree.json "$evidence_dir/dependency-tree.json"
+          python conformance/replication-lab/cases/EXP-API-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/express-runtime-capture.json" \
+            --replica "$GITHUB_WORKSPACE/express-replica-capture.json" \
+            --output-dir "$GITHUB_WORKSPACE/express-software-rules" \
+            --lockfile "$GITHUB_WORKSPACE/$evidence_dir/package-lock.json"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/express-software-rules/express-source.capture.json" \
+            "$GITHUB_WORKSPACE/express-software-rules/express-python-replica.capture.json" \
+            "$GITHUB_WORKSPACE/express-software-rules/express-comparison.report.json"
+      - name: Commit verified Express evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          evidence_dir="conformance/replication-lab/cases/EXP-API-001/artifacts"
+          cp express-software-rules/express-source.capture.json "$evidence_dir/express-source.capture.json"
+          cp express-software-rules/express-python-replica.capture.json "$evidence_dir/express-python-replica.capture.json"
+          cp express-software-rules/express-comparison.report.json "$evidence_dir/express-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified Express API cross-stack evidence"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Retain Express source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: express-api-cross-stack-captures
+          path: |
+            express-runtime-capture.json
+            express-replica-capture.json
+            express-comparison-report.json
+            express-software-rules/*.json
+            conformance/replication-lab/cases/EXP-API-001/artifacts/*.json
+          if-no-files-found: warn
+          retention-days: 30

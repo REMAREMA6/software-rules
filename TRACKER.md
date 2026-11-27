@@ -179,19 +179,19 @@
 See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVERAGE.md) for source candidates, current evidence, replica status, and blockers per facet.
 - [ ] 1. Interface — screen/state capture and independent UI-stack replication.
 - [ ] 2. Behaviour — triggers, transitions, side effects, ordering, and failure replication.
-- [ ] 3. Business rules — conditions, constraints, calculations, precedence, and boundary replication.
+- [~] 3. Business rules — date validation, calculated/original price selection, and Task Board title/count rules pass; cart totals, discounts, tax, quantity tiers, and eligibility remain open.
 - [ ] 4. Data — shapes, types, nullability, relationships, transformations, and serialization.
 - [~] 5. Persistence — bounded TypeORM top-level commit/rollback case passed; durability/restart/concurrency and other drivers remain uncovered.
 - [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.
 - [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer runtime comparison, six mutations, schema-native captures, and evidence validation passed; delivery guarantees and idempotency breadth remain uncovered.
 - [~] 8. Identity/authentication — bounded JWT signature/claims verification passes; principal establishment, credential/session lifecycle, refresh, revocation, and logout remain uncovered.
-- [~] 9. Authorization — simple Casbin RBAC actor/resource/action matrix passes; domains, role hierarchy, ABAC, deny policies, and policy mutation remain uncovered.
+- [~] 9. Authorization — simple RBAC plus bounded domain RBAC, ABAC, deny override, and policy mutation pass; other role hierarchies, priorities, resource-role models, and policy adapters remain open.
 - [~] 10. Security — bounded JWT signature-integrity and algorithm-allowlist controls pass; broader authorized bypass, containment, and security-control cases remain uncovered.
 - [~] 11. Background processing — BullMQ retry/backoff case passed; scheduling/cancellation/duplicate/stalled-worker lifecycle remain uncovered.
 - [~] 12. Errors/recovery — bounded BullMQ retry/suppression, Express 404, TypeORM rollback, Medusa invalid-date, and JOSE semantic JWT rejection cases passed; broader failure/recovery classes remain uncovered.
-- [ ] 13. Integrations — external dependency contracts and controlled failure outcomes.
+- [~] 13. Integrations — seven Redis operations and nine Axios HTTP interactions pass; TLS, proxies, credentials, retries, cancellation, and provider variability remain open.
 - [~] 14. Configuration — Express routing defaults passed; precedence/invalid values/runtime changes remain uncovered.
-- [ ] 15. Performance/resources — repeatable workload, latency distributions, throughput, and resource behaviour.
+- [~] 15. Performance/resources — three repeated Prometheus workload runs and independent model comparison pass; scaling, concurrency, latency distributions, saturation, and resource budgets remain open.
 
 ### Rule-level completion checklist
 - [ ] Source repository, immutable commit, licence, runtime, and system boundary recorded.

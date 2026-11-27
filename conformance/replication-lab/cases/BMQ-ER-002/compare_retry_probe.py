@@ -6,6 +6,16 @@ source_path, replica_path = map(Path, sys.argv[1:3])
 source = json.loads(source_path.read_text())
 replica = json.loads(replica_path.read_text())
 
+def field_value(source_scenario, field):
+    if field == "backoffResults":
+        return [
+            event["delayMs"]
+            for event in source_scenario["trace"]
+            if event["event"] == "backoff-result"
+        ]
+    return source_scenario[field]
+
+
 source_by_label = {item["label"]: item for item in source["scenarios"]}
 replica_by_label = {item["label"]: item for item in replica["scenarios"]}
 fields = (

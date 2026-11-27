@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; BullMQ and Express bounded cases passed; TypeORM persistence and BullMQ messaging cases prepared and awaiting runtime verification  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; BullMQ retry/backoff and Express routing bounded cases passed; TypeORM transaction case passed schema validation; BullMQ messaging runtime comparison and mutations pass, but its capture-generation workflow was cancelled before validation  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 

@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- AXIOS-HTTP-001 passed nine pinned Axios 1.21.1/Python urllib HTTP interaction scenarios; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45940398493, artifact #15172188627. TLS, proxies, credentials, cookies, streaming, cancellation, retries and provider-specific behaviours remain excluded.
+
+
+### Verified
 - EXP-CONFIG-001 passed five Express routing-configuration profiles and 18 route observations, including lazy-router configuration snapshot behaviour; three mutations and Software Rules 0.2.0 schema/integrity validation passed in run #45937990537, artifact #15171850580.
 - PROM-PERF-001 passed three pinned Prometheus TSDB workload runs and three independent Python workload-model runs; sample-accounting comparisons matched, repeat/drop-scrape mutations were detected, and Software Rules schema/integrity passed in run #45938387274, artifact #15171587211.
 - CASBIN-ADV-AUTHZ-001 passed 19 domain-RBAC, ABAC, deny-override and policy-mutation decisions; four mutations and Software Rules schema/integrity passed in run #45938792630, artifact #15172101161.

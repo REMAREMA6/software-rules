@@ -1,7 +1,7 @@
 # Case — BullMQ custom retry/backoff semantics
 
 **Case ID:** BMQ-ER-002  
-**Status:** pinned-source runtime and independent Python comparison match for three scenarios in run #18; Software Rules schema-native captures and evidence-integrity validation are pending; broader retry cases remain untested  
+**Status:** PASSED for the declared three-scenario scope. Pinned-source runtime, independent Python replica, 12 semantic comparisons, mutation tests, Software Rules schema validation, and cross-record evidence integrity all pass; broader BullMQ retry behaviour remains out of scope.  
 **Facet(s):** Background processing; Errors and recovery  
 **Source:** https://github.com/taskforcesh/bullmq  
 **Source commit:** 526668f2c5e6de9d5d664df577f09a6bdccac1b4  
@@ -11,7 +11,7 @@
 
 ## Declared scope
 
-A queued job is processed by a worker. The processor fails and the configured custom backoff strategy determines whether and when the job is retried. This case does not yet cover the full BullMQ lifecycle or all queue semantics.
+A single queued job is processed by a BullMQ worker under a deterministic custom backoff strategy. This case covers exactly three scenarios: (1) two failures with positive delays followed by success; (2) a custom backoff result of -1 suppressing retry; and (3) zero-delay retry followed by failure at an attempts=2 limit. It validates processor-start and terminal attemptsMade values, backoff inputs/results, ordered queue state events, and terminal job state. It does not cover the full BullMQ retry policy or worker lifecycle.
 
 ## Current source-derived rule hypothesis
 
@@ -28,23 +28,17 @@ This is a source-derived hypothesis, not yet an established runtime rule in this
 
 Source code and tests are pinned to the immutable commit above. See the associated source record for limitations and unresolved questions.
 
-## Required source probe matrix
+## In-scope runtime probe matrix
 
-| Scenario | Purpose | Status |
+| Scenario | Purpose | Result |
 |---|---|---|
-| No attempts option; processor fails | Establish default failure/no-retry behaviour | Not run |
-| attempts=1; processor fails | Establish minimum attempt boundary | Not run |
-| attempts=3; processor always fails | Establish total attempts and terminal state | Not run |
-| attempts=3; succeeds after two failures | Establish retry transition, completion, and final attemptsMade count | Passed in [run #18](https://github.com/REMAREMA6/software-rules/actions/runs/45924520050) |
-| Fixed backoff | Establish delay semantics | Not run |
-| Exponential backoff | Establish exact delay sequence and resolve documentation ambiguity | Not run |
-| Custom strategy returns positive delay | Establish delayed retry | Passed in run #18 |
-| Custom strategy returns 0; attempts=2 and processor always fails | Establish immediate retry and attempt-limit boundary | Passed in run #18 |
-| Custom strategy returns -1 | Establish no-retry terminal outcome | Passed in run #18 |
-| Custom strategy varies by error/job data | Establish strategy inputs | Not run |
-| Custom strategy is asynchronous | Establish awaited strategy semantics | Not run |
-| Strategy throws/rejects/returns invalid value | Establish error path | Not run |
-| Worker closes during delay | Establish shutdown interaction | Not run |
+| attempts=3; two failures with positive delays, then success | Delayed retries, one-based strategy attempts, successful terminal state, and final attemptsMade | Pass — run [#25](https://github.com/REMAREMA6/software-rules/actions/runs/45925568609) |
+| attempts=3; custom strategy returns -1 | Retry suppression and terminal failed state | Pass — run #25 |
+| attempts=2; custom strategy returns 0; processor always fails | Immediate requeue and attempt-limit boundary | Pass — run #25 |
+
+## Explicitly out-of-scope extensions
+
+These are not required for this bounded case and remain unverified: no attempts option; attempts=1; attempts=3 with permanent failure; fixed backoff; exponential backoff (including the guide's wording ambiguity); strategy decisions based on error/job data; asynchronous custom strategy; strategy throws/rejections/invalid values; worker shutdown during delay; unrecoverable errors; maxStartedAttempts; stalled-job recovery; and other worker lifecycle paths.
 
 ## Independent replica
 
@@ -56,8 +50,8 @@ Source-derived capture: examples/cross-repository/captures/bullmq-source.capture
 
 ## Comparison and mutation
 
-The Python suite detects an off-by-one attempt-limit mutation. Comparator tests also detect changed processor-attempt counts, backoff sequences, and state transitions. The pinned BullMQ runtime and independent Python model matched all three scenarios in [run #18](https://github.com/REMAREMA6/software-rules/actions/runs/45924520050). The comparison includes processor-start attemptsMade values and the terminal attemptsMade counter. The follow-up workflow generates Software Rules 0.2.0 source/replica captures and a comparison report, then validates schemas and cross-record evidence integrity. Further case completion still requires broader mutations and additional probes for attempts omitted/1, fixed/exponential strategies, custom strategy failures, asynchronous behaviour, and worker shutdown.
+The Python suite detects an off-by-one attempt-limit mutation. Comparator tests detect changed processor-attempt counts, backoff sequences, and state transitions. The pinned BullMQ runtime and independent Python model matched all three scenarios in run #25. The comparison includes processor-start attemptsMade values, terminal attemptsMade, state transitions, and backoff results. The generated Software Rules 0.2.0 captures and comparison report passed schema and cross-record evidence validation. Additional retry modes and worker lifecycle paths are explicitly out of scope for this case.
 
 ## Current conclusion
 
-The three-scenario raw runtime-to-replica comparison passes. This is a bounded result, not a full BullMQ retry-policy pass. The formal Software Rules captures and comparison report must still pass schema and cross-record validation before this case is accepted. The broader retry probe matrix and mutation set remain incomplete.
+**Passed for the declared bounded scope.** The pinned BullMQ source runtime and independent Python model match across three scenarios and 12 facet/scenario projections. The source and replica Software Rules 0.2.0 captures each contain 12 observations across four facets, three supported runtime rules, and six captured inventory properties. The comparison report records agreement within scope and complete-both completeness for this case. Schema and cross-record evidence validation passed in [workflow run #25](https://github.com/REMAREMA6/software-rules/actions/runs/45925568609), and all six raw/structured evidence artifacts were committed at [commit 513766d](https://github.com/REMAREMA6/software-rules/commit/513766df3b9d4300df4c9297b79f221b54e29e42). The wider BullMQ retry policy remains incomplete and must not be inferred from this result.

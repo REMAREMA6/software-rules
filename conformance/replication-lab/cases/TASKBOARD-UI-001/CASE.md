@@ -1,7 +1,7 @@
 # Case — Cross-stack Task Board interface and workflow replication
 
 **Case ID:** TASKBOARD-UI-001  
-**Status:** Runtime comparison passed in [run #45934299299](https://github.com/REMAREMA6/software-rules/actions/runs/45934299299): zero differing pixels across three viewport sizes and six workflow states; semantic snapshots matched; deliberate active-count mutation detected. Schema-native capture generation and validation are being added before acceptance.  
+**Status:** **PASSED for the declared nine-observation interface scope** in [run #45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401). Three viewport comparisons and six workflow-state comparisons produced zero differing pixels; semantic snapshots and API traces matched; the deliberate active-count mutation was detected. Source/replica Software Rules 0.2.0 captures and comparison report were generated; schema validation, cross-record integrity, and comparison validation passed. Retained evidence artifact: [15170370565](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401/artifacts/15170370565) (expires 2026-12-27).  
 **Source:** `examples/task-board/reference/index.html` on the repository's pinned commit  
 **Source stack:** HTML, CSS, browser-native JavaScript  
 **Replica stack:** React 19.1.1, JSX, Vite 7.1.7  
@@ -37,7 +37,7 @@ The accepted capture scope is limited to six required properties: viewport geome
 
 ## Acceptance gate
 
-This case passes only after the pinned source and React production build execute in CI; all declared probes are captured; source/replica observations are compared; the intentional mutation is detected; and Software Rules captures, schema validation, and evidence-integrity checks pass. Matching CSS declarations alone are not acceptance evidence.
+Acceptance criteria satisfied in run #45934802401: the pinned source and React production build executed in CI; all nine declared observations were captured; source/replica observations matched; the intentional mutation was detected; and Software Rules captures, schema validation, comparison validation, and evidence-integrity checks passed. Matching CSS declarations alone are not acceptance evidence.
 
 ## Limitations
 

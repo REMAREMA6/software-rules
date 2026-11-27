@@ -57,7 +57,7 @@ async function runCase(label, payload, options = {}, alg = 'HS256', key = secret
   if (tamper) {
     const parts = token.split('.')
     const last = parts[2].at(-1)
-    parts[2] = parts[2].slice(0, -1) + (last === 'A' ? 'B' : 'A')
+    parts[2] = (parts[2][0] === 'A' ? 'B' : 'A') + parts[2].slice(1)
     token = parts.join('.')
   }
   const verifyOptions = {

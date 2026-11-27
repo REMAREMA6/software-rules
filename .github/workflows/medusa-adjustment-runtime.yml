@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: medusa-adjustment-runtime
+  group: medusa-adjustment-runtime-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 permissions:

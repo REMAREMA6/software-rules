@@ -425,7 +425,7 @@ def build_capture(raw, prefix, is_source, raw_path, replica_revision):
         "sizeBytes": len(raw_bytes),
         "retention": {
             "status": "retained",
-            "access": "GitHub Actions artifact bullmq-cross-stack-captures",
+            "access": "Version-controlled repository artifact path",
         },
     }]
 
@@ -552,12 +552,12 @@ def build_report(source_capture, replica_capture):
         "referenceCapture": {
             "captureId": source_capture["captureId"],
             "schemaVersion": "0.2.0",
-            "artifactRef": "bullmq-source.capture.json",
+            "artifactRef": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-source.capture.json",
         },
         "implementationCapture": {
             "captureId": replica_capture["captureId"],
             "schemaVersion": "0.2.0",
-            "artifactRef": "bullmq-python-replica.capture.json",
+            "artifactRef": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-python-replica.capture.json",
         },
         "comparisonScope": {
             "description": "Compare the retry decision, attempt counters, ordered state transitions, and terminal outcomes for the three declared scenarios.",
@@ -629,8 +629,8 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     source_raw = read_json(args.source)
     replica_raw = read_json(args.replica)
-    source_capture = build_capture(source_raw, "source", True, "bullmq-runtime-capture.json", os.getenv("BULLMQ_SOURCE_COMMIT", source_raw.get("sourceCommit", "pinned")))
-    replica_capture = build_capture(replica_raw, "replica", False, "bullmq-replica-capture.json", os.getenv("GITHUB_SHA", "working-tree"))
+    source_capture = build_capture(source_raw, "source", True, "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-runtime-capture.json", os.getenv("BULLMQ_SOURCE_COMMIT", source_raw.get("sourceCommit", "pinned")))
+    replica_capture = build_capture(replica_raw, "replica", False, "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-replica-capture.json", os.getenv("GITHUB_SHA", "working-tree"))
     report = build_report(source_capture, replica_capture)
     write_json(output / "bullmq-source.capture.json", source_capture)
     write_json(output / "bullmq-python-replica.capture.json", replica_capture)

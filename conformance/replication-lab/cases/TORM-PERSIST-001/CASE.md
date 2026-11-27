@@ -1,7 +1,7 @@
 # Case — TypeORM transaction commit and rollback
 
 **Case ID:** TORM-PERSIST-001  
-**Status:** Source implementation inspected; CI verification is running; not passed until pinned source execution, Python comparison, mutation tests, and Software Rules validation succeed.  
+**Status:** Source implementation inspected; CI retry pending after package-manager setup fix; not passed until pinned source execution, Python comparison, mutation tests, and Software Rules validation succeed.  
 **Facets:** Persistence; Data; Behaviour; Errors and recovery  
 **Source:** https://github.com/typeorm/typeorm  
 **Source commit:** b1e211fc2654d412612a08f8a7fb890f3352614f  

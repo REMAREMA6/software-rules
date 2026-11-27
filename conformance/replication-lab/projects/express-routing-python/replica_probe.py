@@ -26,10 +26,10 @@ def make_handler(case_sensitive=False, strict_routing=False, suppress_head_body=
         def log_message(self, *_args):
             pass
 
-        def send_result(self, status, body, allow=None, suppress_body=False):
+        def send_result(self, status, body, allow=None, suppress_body=False, content_type="text/html; charset=utf-8"):
             encoded = body.encode("utf-8")
             self.send_response(status)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(encoded)))
             if allow is not None:
                 self.send_header("Allow", allow)
@@ -63,7 +63,7 @@ def make_handler(case_sensitive=False, strict_routing=False, suppress_head_body=
                 self.send_result(200, "GET", allow="GET")
             elif route_matches(self.path):
                 methods = "GET, HEAD, PUT" if options_includes_head else "GET, PUT"
-                self.send_result(200, methods, allow=methods)
+                self.send_result(200, methods, allow=methods, content_type="text/plain")
             else:
                 self.send_result(404, "not found")
 

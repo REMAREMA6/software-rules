@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Execute the first cross-repository case end to end, beginning with BullMQ retry/backoff: verify source runtime, run the Python replica tests in CI, capture both sides, compare, and mutation-test.
+- **Current task:** Finish the BullMQ pinned-source runtime → Python replica → capture comparison loop; inspect the active workflow and resolve any source-build, probe, or comparison failures.
 - **Blockers:** The Task Board is only one fixture. The cross-repository case set is incomplete; BullMQ source runtime and capture comparison are pending; the other source candidates still require property-level inspection and suitable independent replicas.
-- **Next action:** Complete the BullMQ retry-policy source/replica case, then proceed facet by facet using the registered source candidates and add more repositories where coverage requires them.
+- **Next action:** Obtain and review the BullMQ runtime and comparison artifacts; only then mark this rule case passed or document the specific unresolved blocker. Expand to further facet cases after this discriminating cross-stack proof.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -328,7 +328,7 @@
 - Created conformance/replication-lab with case and source templates, shared layout, and Python test workflow.
 - Registered nine source candidates with pinned inspected commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n. They remain candidates, not passed cases.
 - Inspected BullMQ retry/backoff source, guide, and tests at commit 526668f2c5e6de9d5d664df577f09a6bdccac1b4. Added a source-derived Software Rules capture with two unverified rules and an explicitly incomplete scope.
-- Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The test logic passed an isolated local Python run. The repository workflow is configured, but no successful run has yet been verified. Source runtime execution and source/replica capture comparison remain outstanding.
+- Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The Python rule-model, replica-simulation, and comparison mutation tests passed in GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45923895261). The BullMQ source runtime workflow now checks out the exact source commit, starts Redis, builds BullMQ, captures three retry scenarios, generates the independent Python capture, and compares the results. The runtime workflow is still running; no source/replica pass is claimed.
 - No Phase 6 completion claim is made. The current work demonstrates the cross-repository process has begun, not that all 15 facets have passed.
 
 
@@ -341,3 +341,14 @@
 - Corrected the source register count to nine candidates. All remain candidates until individual rule cases pass.
 - Immediate execution order: (1) make the Python model's test run reproducible and verify its workflow; (2) build a pinned-commit BullMQ+Redis runtime probe and record actual outputs; (3) capture the independent implementation in a genuinely different stack; (4) compare both captures and mutation-test; (5) repeat for every required rule/property across all 15 facets.
 - Phase 6 remains in progress; Phase 7 remains blocked. No completion claim is made.
+
+
+### 2026-11-27 — Cross-stack case execution progress
+
+- [x] Added a BullMQ pinned-commit runtime workflow with a Redis 7 service and an assertion-bearing probe for positive backoff, -1 suppression, zero-delay retry, attempt limits, terminal states, and observed event traces.
+- [x] Fixed the workflow's unsupported `setup-node cache: none` configuration after the first two attempts failed before source checkout. Those failures were infrastructure/configuration failures, not BullMQ test failures.
+- [x] Confirmed the Python rule-model workflow passes; the latest run also executes the independent scenario simulator and comparison mutation tests (run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45923895261)).
+- [x] Added the BullMQ source-derived capture as a schema-valid fixture.
+- [x] Corrected the cross-record validator so source-inferred properties may link directly to source-artifact evidence without fabricating runtime observations; it rejects runtime evidence misclassified as source-only evidence.
+- [x] Schema and cross-record validation passed after that correction (run [#87](https://github.com/REMAREMA6/software-rules/actions/runs/45923807641)).
+- [~] Pinned BullMQ runtime build/probe and Python-vs-source comparison are still executing in GitHub Actions. Do not count this case as passed until the workflow and artifacts are reviewed.

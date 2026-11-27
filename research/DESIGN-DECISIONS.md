@@ -276,7 +276,7 @@ Use JSON Schema Draft 2020-12. Serialize captures through one manifest schema an
 This reuses a reviewed standard for structural validation while retaining the common-envelope/facet-payload separation. Separate record classes make provenance differences machine-visible. Explicit extension points reduce accidental schema drift.
 
 ### Consequences
-JSON Schema validates local structure, not reference existence, evidence authenticity, or semantic correctness. Those require additional conformance checks. The comparison-report schema is only a structural envelope; normalization, matching, tolerance, and difference classification remain Phase 5 work. The schema remains Draft at version 0.2.0 and has no compatibility guarantee until a stable release.
+JSON Schema validates local structure, not reference existence, evidence authenticity, or semantic correctness. Those require additional conformance checks. The comparison-report schema is a structural envelope; normalization, matching, tolerance, and difference classification were subsequently defined in Phase 5. The report schema still does not recalculate comparison results or prove their semantic correctness. The schema remains Draft at version 0.2.0 and has no compatibility guarantee until a stable release.
 
 ### Evidence and references
 See `specification/SCHEMA-DESIGN.md`, `schemas/v1/README.md`, and the Phase 1 JSON Schema review in `research/STANDARDS-REVIEW.md`.

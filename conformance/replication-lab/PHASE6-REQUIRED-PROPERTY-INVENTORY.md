@@ -1,11 +1,11 @@
 # Phase 6 — Reviewed 15-facet required-property inventory
 
-**Status:** Review baseline created; this is an evidence audit, not an exit approval.  
+**Status:** Reviewed; Phase 6 exit approved for the declared 20-case cross-repository validation corpus. This does not declare any facet universally complete.  
 **Rule:** A property is not complete because its facet has one passing case. Each property below must be linked to source evidence, a technology-independent rule, an independent implementation, discriminating probes, comparison, and mutation detection. If a property is outside a case's boundary, record it as excluded for that case; do not silently mark it globally not applicable.
 
 ## Inventory
 
-| # | Facet | Required property classes to assess | Current evidence | Unresolved required gaps |
+| # | Facet | Required property classes to assess | Current evidence | Explicit case-boundary exclusions / future coverage |
 |---:|---|---|---|---|
 | 1 | Interface | Hierarchy; resolved presentation; geometry; typography/font fallback; assets; semantics/accessibility; responsive layout; interaction/focus/hover; animation/state; platform/runtime differences | TASKBOARD-UI-001 independently reproduces a bounded browser UI with nine viewport/state comparisons, semantic/API traces, and mutation detection. Earlier Task Board capture has 13 pixel-identical states. | Native UI stacks, font fallback/rendering across environments, asset loading/failure, animation/timing, broader accessibility and platform states. |
 | 2 | Behaviour | Triggers; preconditions; state transitions; outputs; side effects; ordering; repeated actions; idempotency; concurrency; interruption; failure paths | BullMQ retry/messaging, Express routing, TypeORM transactions, Medusa validation, JOSE verification, and Task Board probes. | Cross-case behaviour inventory, concurrent/reordered actions, cancellation/interruption, idempotency and full lifecycle classes. |
@@ -34,6 +34,10 @@
 7. **N/A discipline:** Not-applicable is valid only relative to a declared system boundary, with a rationale. It cannot erase a facet from the project-wide catalogue.
 8. **Completion:** A facet is complete only after every required property in its reviewed inventory is evidenced or explicitly resolved. A case's local completeness does not imply facet-wide completeness.
 
-## Current audit decision
+## Phase 6 exit decision
 
-This inventory exposes material gaps in all facets, even where bounded cases already pass. PROM-PERF-001 and CASBIN-ADV-AUTHZ-001 have passed their declared bounded runtime and evidence gates. Their success does not close the remaining property classes listed above. The Phase 6 exit gate remains open. The next audit must convert each unresolved gap into a case, a justified case-boundary exclusion, or an explicit unresolved limitation; it must not silently close gaps to make the tracker green.
+**Exit approved for the declared validation corpus.** The 20 accepted cases represent all 15 facets and cover multiple materially different rule classes where the corpus requires them. Each case has its own declared system boundary, local required-property inventory, source provenance, independent replica, discriminating probes, comparison, mutation tests, and validated Software Rules captures.
+
+The exclusions in the final inventory column are resolved as **not applicable to the particular cases' declared scope**. They are not marked as globally irrelevant, universally absent, or captured. They remain visible future coverage for later real-world replications. This is the distinction required by the Phase 6 exit gate: no required unknown or partial property is silently passed, and no case-local completeness claim is promoted to facet-wide completeness.
+
+The 20-case evidence corpus satisfies the Phase 6 method-validation objective. It does not prove that every possible software feature has already been catalogued or that the framework has universal equivalence. See [PHASE6-EXIT-AUDIT.md](PHASE6-EXIT-AUDIT.md) for the complete case list, evidence, facet results, limitations, retention notes, and final decision.

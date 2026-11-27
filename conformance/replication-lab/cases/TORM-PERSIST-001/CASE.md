@@ -1,7 +1,7 @@
 # Case — TypeORM transaction commit and rollback
 
 **Case ID:** TORM-PERSIST-001  
-**Status:** Source implementation inspected; CI schema capture retry queued after fixture correction; not passed until pinned source execution, Python comparison, mutation tests, and Software Rules validation succeed.  
+**Status:** Bounded case passed. Pinned source execution, independent Python replica comparison, six mutation tests, Software Rules 0.2.0 schema validation, and evidence-integrity validation all passed. Generated captures and comparison report are retained in CI artifact 15167104492; they are not yet committed as repository artifacts.  
 **Facets:** Persistence; Data; Behaviour; Errors and recovery  
 **Source:** https://github.com/typeorm/typeorm  
 **Source commit:** b1e211fc2654d412612a08f8a7fb890f3352614f  

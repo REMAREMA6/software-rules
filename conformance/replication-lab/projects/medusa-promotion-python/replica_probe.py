@@ -34,21 +34,28 @@ def pick(path,context):
 def are_rules_valid(rules,context,scope,mutation=None):
  mutation=mutation or {}
  if not rules:return True
+ decisions=[]
  for rule in rules:
   attribute=rule.get("attribute")
   values=rule.get("values")
-  if not attribute or not values:return False
+  if not attribute or not values:
+   decisions.append(False)
+   continue
   valid=[v.get("value") for v in values if isinstance(v.get("value"),str)]
   if mutation.get("keep_non_string_values"):
    valid=[stringify(v.get("value")) for v in values]
-  if not valid:return False
+  if not valid:
+   decisions.append(False)
+   continue
   path=attribute
   if scope=="items" and not mutation.get("skip_scope_strip"):path=path.replace("items.","",1)
   elif scope=="shipping_methods" and not mutation.get("skip_scope_strip"):path=path.replace("shipping_methods.","",1)
   found=pick(path,context)
-  if found is MISSING and mutation.get("missing_context_fails_ne"):return False
-  if not evaluate(valid,rule.get("operator",""),found):return False
- return True
+  if found is MISSING and mutation.get("missing_context_fails_ne"):
+   decisions.append(False)
+   continue
+  decisions.append(evaluate(valid,rule.get("operator",""),found))
+ return any(decisions) if mutation.get("any_rule_passes") else all(decisions)
 CASES=[
  ("eq-scalar-string","condition",["red"],"eq","red"),
  ("eq-number-coercion","condition",["42"],"eq",42),

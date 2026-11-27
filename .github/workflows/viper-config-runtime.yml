@@ -1,0 +1,98 @@
+name: Viper configuration precedence cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/VIPER-CONFIG-001/**"
+      - "conformance/replication-lab/projects/viper-config-python/**"
+      - ".github/workflows/viper-config-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/VIPER-CONFIG-001/**"
+      - "conformance/replication-lab/projects/viper-config-python/**"
+      - ".github/workflows/viper-config-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: viper-config-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  viper-configuration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.0"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout immutable Viper source commit
+        env:
+          VIPER_SOURCE_COMMIT: "394040caccbdf5821fa6839386a35f0fb1b1ee9e"
+        run: |
+          git init /tmp/viper
+          git -C /tmp/viper remote add origin https://github.com/spf13/viper.git
+          git -C /tmp/viper fetch --depth=1 origin "$VIPER_SOURCE_COMMIT"
+          git -C /tmp/viper checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/viper rev-parse HEAD)" = "$VIPER_SOURCE_COMMIT"
+      - name: Build and run pinned Viper Go probe
+        env:
+          VIPER_SOURCE_COMMIT: "394040caccbdf5821fa6839386a35f0fb1b1ee9e"
+        run: |
+          mkdir -p /tmp/viper-probe
+          cp conformance/replication-lab/cases/VIPER-CONFIG-001/source_probe.go /tmp/viper-probe/main.go
+          cd /tmp/viper-probe
+          go mod init viper-config-probe
+          go mod edit -require=github.com/spf13/viper@v1.21.0
+          go mod edit -replace=github.com/spf13/viper=/tmp/viper
+          go mod tidy
+          go run . > "$GITHUB_WORKSPACE/viper-source-runtime.json"
+      - name: Execute independent Python configuration model
+        run: python conformance/replication-lab/projects/viper-config-python/replica_probe.py > viper-python-runtime.json
+      - name: Compare effective configuration values
+        run: python conformance/replication-lab/cases/VIPER-CONFIG-001/compare.py viper-source-runtime.json viper-python-runtime.json
+      - name: Run deliberate configuration mutations
+        run: python -m unittest discover -s conformance/replication-lab/cases/VIPER-CONFIG-001 -p "test_*.py" -v
+      - name: Stage pinned source files and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/VIPER-CONFIG-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp viper-source-runtime.json "$evidence_dir/viper-source-runtime.json"
+          cp viper-python-runtime.json "$evidence_dir/viper-python-runtime.json"
+          cp /tmp/viper/viper.go "$evidence_dir/viper.go"
+          cp /tmp/viper/go.mod "$evidence_dir/go.mod"
+          cp /tmp/viper/go.sum "$evidence_dir/go.sum"
+          cp /tmp/viper/LICENSE "$evidence_dir/LICENSE"
+          python conformance/replication-lab/cases/VIPER-CONFIG-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/viper-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/viper-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/viper-software-rules" \
+            --source-files "{\"viperModule\":\"$GITHUB_WORKSPACE/$evidence_dir/viper.go\",\"goMod\":\"$GITHUB_WORKSPACE/$evidence_dir/go.mod\",\"goSum\":\"$GITHUB_WORKSPACE/$evidence_dir/go.sum\",\"license\":\"$GITHUB_WORKSPACE/$evidence_dir/LICENSE\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            viper-software-rules/viper-source.capture.json \
+            viper-software-rules/viper-python-replica.capture.json \
+            viper-software-rules/viper-comparison.report.json
+      - name: Retain Viper source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viper-configuration-cross-stack
+          path: |
+            viper-source-runtime.json
+            viper-python-runtime.json
+            viper-software-rules/*.json
+            conformance/replication-lab/cases/VIPER-CONFIG-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

@@ -5,11 +5,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "projects" / "jwt-auth-python"))
 
 from compare import compare
-from replica_probe import capture, b64url_encode, sign_token_fixture
+from replica_probe import capture, sign_token_fixture_capture
 
 
 def source_fixture():
-    return sign_token_fixture()
+    return sign_token_fixture_capture()
 
 
 class JoseJwtAuthenticationTests(unittest.TestCase):

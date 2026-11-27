@@ -54,9 +54,9 @@ jobs:
         run: |
           pnpm install --filter typeorm... --filter . --frozen-lockfile
           pnpm list --depth Infinity --json --filter typeorm... > dependency-tree.json
-      - name: Compile pinned TypeORM source
+      - name: Compile pinned TypeORM Node entrypoint
         working-directory: /tmp/typeorm
-        run: pnpm --filter typeorm run compile
+        run: pnpm --filter typeorm exec tsc -p tsconfig.node.json
       - name: Run pinned TypeORM transaction probe
         working-directory: /tmp/typeorm/packages/typeorm
         env:

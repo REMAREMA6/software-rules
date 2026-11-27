@@ -3,34 +3,25 @@
 **Repository:** typeorm/typeorm  
 **URL:** https://github.com/typeorm/typeorm  
 **Immutable inspected commit:** b1e211fc2654d412612a08f8a7fb890f3352614f  
-**Version at commit:** 1.1.3  
+**Source package version:** 1.1.3  
 **Licence:** MIT  
-**Primary stack:** TypeScript / Node.js ORM  
-**Candidate facets:** Persistence; data; behaviour; errors and recovery.
+**Primary stack:** TypeScript / JavaScript ORM; multiple database drivers.  
+**Investigated facets:** Persistence; data; behaviour; errors and recovery.
 
-## Evidence inspected
+## Evidence inspected at the pinned commit
 
-- `packages/typeorm/src/entity-manager/EntityManager.ts` lines 109 onward: `transaction(callback)` creates or reuses a QueryRunner, starts the transaction, invokes the callback with `queryRunner.manager`, commits and returns the callback result on success, attempts rollback on failure, rethrows the original error, and releases a newly created QueryRunner in `finally`.
-- `packages/typeorm/src/driver/sqlite-abstract/AbstractSqliteQueryRunner.ts`: SQLite-specific transaction start, commit, and rollback operations.
-- `packages/typeorm/test/functional/transaction/transaction-in-entity-manager/transaction-in-entity-manager.test.ts` lines 23–63: successful transaction operations persist after completion.
-- The same test file from line 65 onward: if a later operation fails, earlier writes are not saved.
+- `packages/typeorm/src/entity-manager/EntityManager.ts`, `transaction` overload and implementation: starts a transaction, invokes the callback with the query runner's manager, commits and returns the callback result; on error it attempts rollback and rethrows the original error; it releases a query runner created by the method in `finally`.
+- `packages/typeorm/src/driver/sqlite-abstract/AbstractSqliteQueryRunner.ts`: top-level SQLite-compatible transactions use `BEGIN TRANSACTION`, `COMMIT`, and `ROLLBACK`; nested transaction depth uses savepoints.
+- `packages/typeorm/src/driver/sqljs/SqljsDriver.ts`: SQL.js is an implemented SQLite-compatible driver suitable for a deterministic in-memory probe.
 
-The source commit contains a frozen `pnpm-lock.yaml`. The case workflow uses pnpm 12.22.0 with `--frozen-lockfile`, compiles the pinned source, and uses the better-sqlite3 driver.
+## Selected case
 
-## Selected bounded rule
+`TORM-PERSIST-001` exercises one rollback and one commit against the pinned source checkout using the SQL.js driver. The independent replica uses Python 3.12 sqlite3. It checks read-your-writes inside the callback, rollback visibility, original error propagation, commit visibility, and callback return propagation.
 
-With a fresh in-memory SQLite database and two entities with required fields:
-1. A successful `EntityManager.transaction(callback)` commits both writes and returns the callback result.
-2. If a later callback operation violates a NOT NULL constraint, the error propagates and all earlier writes in that transaction are rolled back.
+## Boundaries
 
-## Independent replica
-
-A Python 3.12 `sqlite3` implementation is prepared under `conformance/replication-lab/projects/typeorm-transaction-python/`. It uses an explicit SQLite transaction and imports no TypeORM or Node.js code.
-
-## Boundary
-
-The case covers only better-sqlite3, an in-memory database, and the two declared scenarios. It does not establish behaviour for other drivers, isolation levels, nested transactions, savepoints, concurrency, or distributed transactions.
+This is a single-driver, top-level transaction case. It does not establish identical semantics for every TypeORM driver, nested/savepoint behaviour, concurrent transactions, isolation levels, crash recovery, or durable storage across process restarts.
 
 ## Status
 
-Source implementation and tests have been inspected; the independent Python replica, mutation tests, capture generator, and pinned-source workflow are prepared. Runtime comparison and Software Rules evidence validation are pending.
+Source implementation and driver paths are inspected. A pinned-source compile/runtime workflow and independent Python replica have been added. No case pass is claimed until the workflow, comparison, mutation tests, and Software Rules artifact validation are verified.

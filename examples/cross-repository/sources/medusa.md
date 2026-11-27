@@ -34,4 +34,4 @@ The case covers ten inputs: omitted, null, empty, valid/invalid ISO values, Date
 
 ## Status
 
-Pinned source logic and helper implementations are inspected; the independent Python model, executable mutation tests, source harness, capture generator, and workflow are prepared. Runtime comparison and Software Rules evidence validation are pending.
+One bounded ten-input case now passes: the pinned Medusa utility and independent Python model match across 40 facet/scenario projections; executable mutations are detected; Software Rules captures and comparison pass schema/integrity validation. Source/helper code, raw and structured captures, comparison, and toolchain lock are committed under `conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/` at [commit dd0ad76](https://github.com/REMAREMA6/software-rules/commit/dd0ad76f0ec9557a41250c5fcc3efa14dc5aa1a2). This does not cover full Medusa pricing or all business rules.

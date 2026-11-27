@@ -58,12 +58,12 @@ try{
  await Promise.all([a.page.getByRole("button",{name:"Add task"}).click(),b.page.getByRole("button",{name:"Add task"}).click()]);
  await Promise.all([a.page.locator("#task-list li").nth(1).waitFor(),b.page.locator("#task-list li").nth(1).waitFor()]);
  await compareState("populated");
- await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).click(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).check()]);
+ await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).click(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).click()]);
  await Promise.all([a.page.locator(".task.done").waitFor(),b.page.locator(".task.done").waitFor()]);
  await compareState("completed");
  await Promise.all([a.page.getByRole("button",{name:"Active",exact:true}).click(),b.page.getByRole("button",{name:"Active",exact:true}).click()]);await compareState("active-filter");
  await Promise.all([a.page.getByRole("button",{name:"Completed",exact:true}).click(),b.page.getByRole("button",{name:"Completed",exact:true}).click()]);await compareState("completed-filter");
- await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).click(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).uncheck()]);
+ await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).click(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).click()]);
  await Promise.all([a.page.locator("#task-list li").waitFor({state:"detached"}),b.page.locator("#task-list li").waitFor({state:"detached"})]);
  await compareState("toggle-back");
  await Promise.all([a.page.getByRole("button",{name:"Active",exact:true}).click(),b.page.getByRole("button",{name:"Active",exact:true}).click()]);

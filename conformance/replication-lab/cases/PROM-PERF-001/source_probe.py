@@ -16,7 +16,7 @@ for index in range(3):
     text = proc.stdout + "\n" + proc.stderr
     samples = int(re.search(r"total samples:\s*(\d+)", text).group(1))
     rate = float(re.search(r"samples/sec:\s*([0-9.eE+-]+)", text).group(1))
-    rss = int(re.search(r'MAX_RSS_KB=(\\d+)', Path(rss_file).read_text()).group(1))
+    rss = int(re.search(r'MAX_RSS_KB=(\d+)', Path(rss_file).read_text()).group(1))
     profiles = {p.name: p.stat().st_size for p in profile_dir.glob("*.prof")}
     out.append({"run": index + 1, "startedAt": started_at, "endedAt": ended_at, "uniqueSeries": 200, "scrapes": 100, "totalSamples": samples,
                 "wallSeconds": wall, "samplesPerSecond": rate, "maxChildRssKb": rss,

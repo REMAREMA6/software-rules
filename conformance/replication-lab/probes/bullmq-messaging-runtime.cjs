@@ -59,20 +59,25 @@ async function runScenario(label, configure) {
       firstId: first.id,
       secondId: second.id,
       storedPayload: stored && stored.data.payload,
+      storedState: stored ? await stored.getState() : 'missing',
     };
   });
   const failure = await runScenario('consumer-failure', async queue => {
     const job = await queue.add('deliver', { payload: 'failure-case', fail: true }, { jobId: 'failure-message-id', attempts: 1 });
-    return { firstId: job.id };
+    return { firstId: job.id, storedState: await job.getState() };
   });
   const checks = [
     duplicate.setup.firstId === duplicate.setup.secondId,
     duplicate.setup.storedPayload === 'first',
+    duplicate.setup.storedState === 'waiting',
+    duplicate.eventNames.join(',') === 'active,completed',
     JSON.stringify(duplicate.processed) === JSON.stringify(['first']),
     duplicate.terminal.state === 'completed',
     duplicate.counts.completed === 1,
     failure.terminal.state === 'failed',
     failure.terminal.error === 'consumer-failed',
+    failure.setup.storedState === 'waiting',
+    failure.eventNames.join(',') === 'active,failed',
     failure.counts.failed === 1,
   ];
   const report = {

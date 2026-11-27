@@ -74,6 +74,8 @@ jobs:
           mkdir -p "$evidence_dir"
           cp jose-runtime-capture.json "$evidence_dir/jose-runtime-capture.json"
           cp jose-replica-capture.json "$evidence_dir/jose-replica-capture.json"
+          cp jose-runtime-capture.json "$evidence_dir/jose-source-runtime.json"
+          cp jose-replica-capture.json "$evidence_dir/jose-python-runtime.json"
           cp jose-comparison-report.json "$evidence_dir/jose-raw-comparison-report.json"
           cp /tmp/jose/src/jwt/verify.ts "$evidence_dir/jwt-verify.ts"
           cp /tmp/jose/src/lib/jwt_claims_set.ts "$evidence_dir/jwt-claims-set.ts"

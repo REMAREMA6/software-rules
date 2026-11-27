@@ -54,6 +54,8 @@ jobs:
           else
             npm install --omit=dev --ignore-scripts --no-audit --no-fund
           fi
+          npm install --package-lock-only --package-lock=true --omit=dev --ignore-scripts --no-audit --no-fund
+          test -f package-lock.json
           npm ls --omit=dev --all --json > dependency-tree.json
       - name: Run pinned Express runtime probe
         working-directory: /tmp/express

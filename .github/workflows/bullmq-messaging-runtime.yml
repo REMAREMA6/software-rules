@@ -15,6 +15,9 @@ on:
       - ".github/workflows/bullmq-messaging-runtime.yml"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: bullmq-messaging
   cancel-in-progress: true
@@ -76,7 +79,38 @@ jobs:
           python conformance/replication-lab/cases/BMQ-MSG-001/compare.py bullmq-messaging-source.json bullmq-messaging-replica.json | tee bullmq-messaging-comparison.json
       - name: Run mutation tests
         run: python -m unittest discover -s conformance/replication-lab/cases/BMQ-MSG-001 -p "test_*.py" -v
-      - name: Retain source and replica evidence
+      - name: Stage runtime evidence and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/BMQ-MSG-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp bullmq-messaging-source.json "$evidence_dir/bullmq-messaging-source-runtime.json"
+          cp bullmq-messaging-replica.json "$evidence_dir/bullmq-messaging-python-runtime.json"
+          python conformance/replication-lab/cases/BMQ-MSG-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/$evidence_dir/bullmq-messaging-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/$evidence_dir/bullmq-messaging-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/bullmq-messaging-software-rules"
+      - name: Validate Software Rules captures and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/bullmq-messaging-software-rules/bullmq-messaging-source.capture.json" \
+            "$GITHUB_WORKSPACE/bullmq-messaging-software-rules/bullmq-messaging-python.capture.json" \
+            "$GITHUB_WORKSPACE/bullmq-messaging-software-rules/bullmq-messaging-comparison.report.json"
+      - name: Commit verified messaging evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          evidence_dir="conformance/replication-lab/cases/BMQ-MSG-001/artifacts"
+          cp bullmq-messaging-software-rules/bullmq-messaging-source.capture.json "$evidence_dir/bullmq-messaging-source.capture.json"
+          cp bullmq-messaging-software-rules/bullmq-messaging-python.capture.json "$evidence_dir/bullmq-messaging-python.capture.json"
+          cp bullmq-messaging-software-rules/bullmq-messaging-comparison.report.json "$evidence_dir/bullmq-messaging-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified BullMQ messaging evidence"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Retain source, replica, and Software Rules evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -85,5 +119,7 @@ jobs:
             bullmq-messaging-source.json
             bullmq-messaging-replica.json
             bullmq-messaging-comparison.json
+            bullmq-messaging-software-rules/*.json
+            conformance/replication-lab/cases/BMQ-MSG-001/artifacts/*.json
           if-no-files-found: warn
           retention-days: 30

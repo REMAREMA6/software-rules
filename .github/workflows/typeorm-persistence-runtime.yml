@@ -1,4 +1,4 @@
-name: TypeORM persistence cross-stack conformance
+name: TypeORM persistence cross-stack conformance (verification)
 
 on:
   push:

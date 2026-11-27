@@ -1,6 +1,6 @@
 # Observation Model
 
-**Status:** Draft — Phase 2 conceptual model.  
+**Maturity:** Draft — Software Rules specification 0.3.0.  
 **Purpose:** Define the shared conceptual structure for capturing rules and supporting observations across unlike facets.  
 **Important:** This is not a finalized JSON/YAML schema. Serialized field names, cardinalities, and requiredness remain open.
 

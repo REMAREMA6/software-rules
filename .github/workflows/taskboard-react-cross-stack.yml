@@ -45,6 +45,12 @@ jobs:
           cp -a conformance/replication-lab/projects/task-board-react/dist conformance/replication-lab/projects/task-board-react/dist-mutated
       - name: Compare source and independent React replica
         run: node conformance/replication-lab/cases/TASKBOARD-UI-001/compare.mjs
+      - name: Build Software Rules captures and comparison report
+        run: python3 conformance/replication-lab/cases/TASKBOARD-UI-001/build_software_rules_artifacts.py
+      - name: Run cross-record and evidence-link integrity tests
+        run: node conformance/integrity/test.mjs
+      - name: Run Software Rules schema and comparison validation
+        run: npm run validate --prefix conformance/validation
       - name: Upload runtime evidence
         if: always()
         uses: actions/upload-artifact@v4

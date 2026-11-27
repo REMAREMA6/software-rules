@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Finish the BullMQ pinned-source runtime → Python replica → capture comparison loop; inspect the active workflow and resolve any source-build, probe, or comparison failures.
+- **Current task:** Begin the next independent source/replica case for the API facet using the pinned Express repository; preserve the same source → technology-independent rule → different-stack replica → equivalent probes → comparison → mutation → Software Rules capture loop.
 - **Blockers:** The Task Board is only one fixture. The cross-repository case set is incomplete; BullMQ source runtime and capture comparison are pending; the other source candidates still require property-level inspection and suitable independent replicas.
-- **Next action:** Obtain and review the BullMQ runtime and comparison artifacts; only then mark this rule case passed or document the specific unresolved blocker. Expand to further facet cases after this discriminating cross-stack proof.
+- **Next action:** Inspect Express routing/API rules at the registered immutable commit, choose a bounded rule set, and build an independent Python HTTP implementation with discriminating probes. Continue until every required facet/property has adequate cases.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -362,3 +362,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Found that the source runtime capture and comparison report were empty. The -1 scenario timed out because the probe checked the recorded attempt number instead of the backoff result; shell pipelines also lacked `pipefail`, masking the failed Node/Python commands behind successful `tee` processes.
 - [x] Corrected the suppression assertion to inspect the returned backoff value, added explicit Redis/worker cleanup, and enabled `pipefail` for source-probe and comparison pipelines.
 - [~] Re-run the pinned-source workflow and inspect non-empty source, replica, and comparison artifacts. Previous green runs are explicitly not counted as conformance evidence.
+
+
+### 2026-11-27 — Bounded BullMQ cross-stack case accepted
+
+- [x] Pinned BullMQ 6.7.10 to commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4` and executed three scenarios with Redis 7.
+- [x] Independently reproduced the retry decision model in Python 3.12.
+- [x] Matched 12 semantic projections across background-processing, errors-recovery, data, and behavior.
+- [x] Mutation tests detect off-by-one attempt limits, altered processor counts, backoff values, and transition sequences.
+- [x] Generated and validated source/replica Software Rules 0.2.0 captures and the comparison report.
+- [x] Committed six raw/structured evidence files under `conformance/replication-lab/cases/BMQ-ER-002/artifacts/` at commit [513766d](https://github.com/REMAREMA6/software-rules/commit/513766df3b9d4300df4c9297b79f221b54e29e42).
+- [~] Phase 6 remains active: this proves portability only for the declared retry/backoff properties and three scenarios. Continue with Express API and the remaining facets.

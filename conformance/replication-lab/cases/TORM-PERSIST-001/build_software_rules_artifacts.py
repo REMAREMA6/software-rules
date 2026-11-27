@@ -111,13 +111,19 @@ def payload(scenario_name, scenario, facet):
             "termination": "original-error-rethrown" if rollback else "callback-result-returned",
         }
     rollback = scenario_name == "rollback"
+    raw_error = scenario.get("error")
+    error_value = {
+        "category": "application-error" if raw_error else "none",
+        "code": raw_error.get("name", "") if raw_error else "",
+        "message": raw_error.get("message", "") if raw_error else "",
+    }
     return {
         "facet": "errors-recovery",
         "kind": "failure-recovery-event",
         "subject": subject,
         "trigger": "The transaction callback throws an error." if rollback else "The transaction callback succeeds.",
         "operationRef": sid(scenario_name),
-        "error": scenario.get("error") or {"category": "none", "code": "", "message": ""},
+        "error": error_value,
         "origin": "transaction callback" if rollback else "none",
         "propagationBoundary": "EntityManager.transaction",
         "recoveryActions": [{"action": "ROLLBACK"}] if rollback else [],

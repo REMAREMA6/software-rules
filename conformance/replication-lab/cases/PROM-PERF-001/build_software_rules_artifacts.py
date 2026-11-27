@@ -25,7 +25,7 @@ def build_capture(raw,side,raw_path):
           "inputs":{"uniqueSeries":200,"scrapes":100},
           "observableQuestions":["How many samples were appended?","What throughput and resource measurements were recorded?"]})
         executions.append({"executionId":eid,"scenarioId":sid,"targetId":target_id,
-          "startedAt":created,"endedAt":created,"status":"completed",
+          "startedAt":item["startedAt"],"endedAt":item["endedAt"],"status":"completed",
           "actualContext":{"runtime":runtime_name,"sourceRevision":raw.get("sourceCommit","independent-replica"),
                            "environment":raw.get("environment",{})},
           "actualInputs":{"uniqueSeries":200,"scrapes":100},"trigger":"Run deterministic write workload",
@@ -39,7 +39,7 @@ def build_capture(raw,side,raw_path):
             "metric":"samples-per-second","definition":"Total successfully appended samples divided by measured ingestion duration.",
             "value":item["samplesPerSecond"],"unit":"samples/second","statistic":"rate",
             "measurementBoundary":"TSDB append workload; source includes storage initialization separately and reports ingest stage.",
-            "startedAt":created,"endedAt":created,"workload":{"uniqueSeries":200,"scrapes":100,"expectedSamples":20000},
+            "startedAt":item["startedAt"],"endedAt":item["endedAt"],"workload":{"uniqueSeries":200,"scrapes":100,"expectedSamples":20000},
             "concurrency":1,"sampleCount":item["totalSamples"],"warmState":"cold",
             "hardware":raw.get("environment",{}),"runtime":{"implementation":runtime_name},
             "resourceScope":"Process resident memory and generated runtime profile files.",

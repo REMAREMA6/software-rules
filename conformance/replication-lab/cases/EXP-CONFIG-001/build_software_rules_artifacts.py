@@ -7,7 +7,7 @@ def read(p): return json.loads(Path(p).read_text())
 def write(p,v): Path(p).write_text(json.dumps(v,indent=2)+"\n")
 def scenario_id(label): return "express-config-scenario-"+label
 def exec_id(side,label): return "express-config-exec-"+side+"-"+label
-def obs_id(side,label,path): return "express-config-obs-"+side+"-"+label+"-"+str(abs(hash(path))%100000000)
+def obs_id(side,label,path): return "express-config-obs-"+side+"-"+label+"-"+hashlib.sha256(path.encode()).hexdigest()[:12]
 def flatten(raw):
  return [(s,d) for s in raw["scenarios"] for d in s["decisions"]]
 def build_capture(raw,side,raw_path):
@@ -93,7 +93,7 @@ def build_report(source,replica):
  right={(x["normalizedValue"]["scenario"],x["normalizedValue"]["path"]):x for x in replica["observations"]}
  align=[]; results=[]
  for key,a in left.items():
-  b=right[key]; aid="express-config-alignment-"+key[0]+"-"+str(abs(hash(key[1]))%100000000)
+  b=right[key]; aid="express-config-alignment-"+key[0]+"-"+hashlib.sha256(key[1].encode()).hexdigest()[:12]
   align.append({"alignmentId":aid,"facet":FACET,"referenceRecordIds":[a["observationId"]],
    "implementationRecordIds":[b["observationId"]],"status":"paired","identityBasis":"scenario-and-request-path",
    "rationale":"Same configuration profile and HTTP request path."})

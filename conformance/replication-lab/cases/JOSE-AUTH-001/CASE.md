@@ -1,7 +1,7 @@
 # Case — JOSE JWT signature and claim verification
 
 **Case ID:** JOSE-AUTH-001  
-**Status:** Pinned jose source and tests inspected; source runtime and independent Python HMAC/JWT model prepared; CI pending  
+**Status:** PASSED for the declared eleven-scenario HMAC JWT scope. Pinned jose 6.2.18 runtime and independent Python 3.12 verifier matched; eight executable mutation tests, Software Rules 0.2.0 schema validation, comparison validation, and evidence-integrity checks passed in [workflow run #45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956). Source/replica captures, comparison, source files, and build metadata are committed under `artifacts/`; CI artifact ID `15168682159` is retained until 2026-12-27. This is not complete identity-provider, authorization, or whole-library coverage.  
 **Facet(s):** Identity and authentication; Security controls; Data; Behaviour; Errors and recovery  
 **Source:** https://github.com/panva/jose  
 **Source commit:** f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0  

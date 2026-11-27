@@ -33,5 +33,7 @@ jobs:
         run: npm install --prefix conformance/validation
       - name: Validate schema fixtures
         run: npm run validate --prefix conformance/validation
+      - name: Test comparison completeness semantics
+        run: npm run test:completeness --prefix conformance/validation
       - name: Validate cross-record integrity
         run: node conformance/integrity/test.mjs

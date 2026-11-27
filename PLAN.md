@@ -222,20 +222,21 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 - [x] Register nine immutable source candidates and inspect the selected source implementations.
 - [x] Accept BMQ-ER-002 (BullMQ retry/backoff) and EXP-API-001 (Express routing/API) after successful pinned-source runtime, independent Python replica, comparison, mutation, schema/integrity, and artifact-retention runs.
 - [x] TORM-PERSIST-001: pinned TypeORM source + SQL.js vs Python sqlite3; two scenarios, eight semantic projections, six mutation tests, schema 0.2.0 capture/report and evidence-integrity validation passed.
-- [~] BMQ-MSG-001: pinned BullMQ source + Redis vs Python queue model; two scenarios, ten semantic projections, six mutation tests passed; schema-native capture/report validation pending.
+- [x] BMQ-MSG-001: pinned BullMQ source + Redis vs Python queue model; two scenarios, ten semantic projections, six mutation tests, schema-native capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
+- [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto vs independent Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight executable mutations, Software Rules 0.2.0 schema/report validation, and evidence integrity passed in [run #45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
 - [x] Extract and validate the bounded runtime rules in the accepted BullMQ and Express cases; source-derived inferences remain distinct where runtime evidence is absent.
-- [~] Extract TypeORM top-level transaction rules; runtime comparison pending.
+- [x] Extracted and compared bounded TypeORM top-level transaction rules; broader transaction/durability semantics remain outside the case.
 - [x] Independently replicate BullMQ retry decisions and Express HTTP routing in Python 3.12.
 - [x] Independently replicate TypeORM top-level transaction outcomes in Python sqlite3; bounded source/replica comparison passed.
 - [x] Independently replicate BullMQ duplicate-ID and consumer terminal outcomes in a Python queue model; bounded source/replica comparison passed.
 - [x] Run and retain the pinned BullMQ+Redis runtime probe and Python replica capture; 12 semantic projections matched.
 - [x] Run and retain the pinned Express runtime probe and Python HTTP replica capture; 28 semantic projections matched.
 - [x] TypeORM source and replica probes, comparison, mutations, schema capture/report validation, and evidence integrity passed.
-- [x] BullMQ messaging source and replica probes, comparison, and mutations passed; schema capture/report validation pending.
+- [x] BullMQ messaging source and replica probes, comparison, six mutations, schema capture/report validation, and evidence integrity passed.
 - [x] Accept BullMQ and Express comparison/mutation results after reviewing successful GitHub Actions runs.
-- [~] Execute TypeORM comparison and mutation tests in CI.
+- [x] Execute TypeORM source/replica comparison, mutation tests, schema validation, and evidence-integrity checks in CI.
 - [x] Validate accepted BullMQ and Express Software Rules captures and comparison reports against schemas and cross-record integrity checks.
-- [~] Add and validate schema-native TypeORM captures; continue evidence-quality audit case by case.
+- [x] Validate TypeORM schema-native captures and comparison; evidence is retained in CI artifact `15167104492` (not committed to repository). Continue evidence-quality audit case by case.
 - [x] Publish and update the living 15-facet evidence matrix.
 - [ ] Review every remaining property gap and complete all facet-specific cross-stack cases.
 

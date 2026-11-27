@@ -23,12 +23,11 @@ jobs:
           python-version: "3.12"
       - name: Run independent rule-model and comparison tests
         run: |
+          find conformance/replication-lab/cases -name "test_*.py" -type f -print0 | sort -z | while IFS= read -r -d '' test_file; do
+            echo "Running $test_file"
+            python "$test_file"
+          done
           python -m unittest discover -s conformance/replication-lab/projects/retry-policy-python -v
-          python -m unittest discover -s conformance/replication-lab/cases/BMQ-ER-002 -p "test_*.py" -v
-          python -m unittest discover -s conformance/replication-lab/cases/EXP-API-001 -p "test_*.py" -v
-          python -m unittest discover -s conformance/replication-lab/cases/TYPEORM-PERSIST-001 -p "test_*.py" -v
-          python -m unittest discover -s conformance/replication-lab/cases/MEDUSA-BR-001 -p "test_*.py" -v
-          python -m unittest discover -s conformance/replication-lab/cases/JOSE-AUTH-001 -p "test_*.py" -v
           python conformance/replication-lab/projects/retry-policy-python/replicate_retry_probe.py > /tmp/bullmq-replica-capture.json
           python conformance/replication-lab/projects/express-routing-python/replica_probe.py > /tmp/express-replica-capture.json
           python conformance/replication-lab/projects/typeorm-transaction-python/replica_probe.py > /tmp/typeorm-replica-capture.json

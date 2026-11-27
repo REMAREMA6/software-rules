@@ -221,17 +221,17 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 - [x] Re-audit Task Board and preserve it as bounded evidence; unresolved properties remain partial/incomplete rather than being promoted to complete.
 - [x] Register nine immutable source candidates and inspect the selected source implementations.
 - [x] Accept BMQ-ER-002 (BullMQ retry/backoff) and EXP-API-001 (Express routing/API) after successful pinned-source runtime, independent Python replica, comparison, mutation, schema/integrity, and artifact-retention runs.
-- [~] Execute TORM-PERSIST-001 (TypeORM commit/rollback) using compiled pinned source and independent Python/sqlite3; runtime result pending.
-- [~] Execute BMQ-MSG-001 (BullMQ message deduplication, event order, and consumer outcome) using pinned source + Redis and independent Python model; runtime result pending.
+- [x] TORM-PERSIST-001: pinned TypeORM source + SQL.js vs Python sqlite3; two scenarios, eight semantic projections, six mutation tests, schema 0.2.0 capture/report and evidence-integrity validation passed.
+- [~] BMQ-MSG-001: pinned BullMQ source + Redis vs Python queue model; two scenarios, ten semantic projections, six mutation tests passed; schema-native capture/report validation pending.
 - [x] Extract and validate the bounded runtime rules in the accepted BullMQ and Express cases; source-derived inferences remain distinct where runtime evidence is absent.
 - [~] Extract TypeORM top-level transaction rules; runtime comparison pending.
 - [x] Independently replicate BullMQ retry decisions and Express HTTP routing in Python 3.12.
-- [~] Independently replicate TypeORM transaction outcomes in Python sqlite3; runtime verification pending.
-- [~] Independently replicate BullMQ message delivery and terminal outcomes in a Python queue model; runtime verification pending.
+- [x] Independently replicate TypeORM top-level transaction outcomes in Python sqlite3; bounded source/replica comparison passed.
+- [x] Independently replicate BullMQ duplicate-ID and consumer terminal outcomes in a Python queue model; bounded source/replica comparison passed.
 - [x] Run and retain the pinned BullMQ+Redis runtime probe and Python replica capture; 12 semantic projections matched.
 - [x] Run and retain the pinned Express runtime probe and Python HTTP replica capture; 28 semantic projections matched.
-- [~] Run TypeORM source and replica probes; workflow result pending.
-- [~] Run BullMQ messaging source and replica probes; workflow result pending.
+- [x] TypeORM source and replica probes, comparison, mutations, schema capture/report validation, and evidence integrity passed.
+- [x] BullMQ messaging source and replica probes, comparison, and mutations passed; schema capture/report validation pending.
 - [x] Accept BullMQ and Express comparison/mutation results after reviewing successful GitHub Actions runs.
 - [~] Execute TypeORM comparison and mutation tests in CI.
 - [x] Validate accepted BullMQ and Express Software Rules captures and comparison reports against schemas and cross-record integrity checks.
@@ -353,4 +353,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by verifying TORM-PERSIST-001 and BMQ-MSG-001, then generating and validating schema-native captures. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, business rules, integrations, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by completing BMQ-MSG-001 schema-native capture validation and retaining the validated evidence. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, external integrations, broader business rules, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Keep the 15-facet inventory explicit and do not mark a facet complete from a single bounded case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

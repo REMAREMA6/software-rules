@@ -1,6 +1,6 @@
 # Replication Completeness Rule
 
-**Status:** Draft — accepted project requirement; Phase 6 conformance implementation in progress.  
+**Status:** Accepted normative project requirement; draft specification 0.3.0. Phase 6 validated the implementation against its declared 24-case corpus; inventory exhaustiveness still requires scope/domain review.  
 **Applies to:** Capture planning, facet specifications, capture records, conformance, and comparison.
 
 ## 1. Purpose
@@ -96,11 +96,13 @@ A capture MUST NOT pass a replication-completeness check merely because its sche
 
 Conformance MUST test both structural validity and whether the declared replication scope has a sufficiently complete, evidence-backed property inventory. Automated validation may check required metadata, references, status accounting, and declared coverage; expert review or additional runtime inspection may still be needed to determine whether the inventory itself omits relevant properties.
 
-## 9. Phase 6 Task Board qualification
+## 9. Phase 6 Task Board qualification and current status
 
-The Phase 6 Task Board result establishes agreement only for the interface properties and scenarios actually captured. In particular, the matching main-container geometry at 1280×800 does not establish that the complete screens were captured or that the applications are visually identical in every detail or state.
+The Phase 6 Task Board result establishes agreement only for the interface properties and scenarios actually captured. In particular, matching container geometry or a finite set of screenshots does not establish that the complete screens were captured or that the applications are visually identical in every detail, state, viewport, or platform.
 
-The existing baseline comparison MUST therefore not be used as evidence of replication completeness or full interface equivalence. Phase 6 MUST expand the empirical captures and conformance checks across the applicable facets, and MUST verify that property inventories and evidence support the declared replication scope. Phase 7 then reviews the resulting specification for release; it is not a substitute for completing Phase 6.
+The Task Board case is accepted only for its explicitly declared bounded interface inventory. Its completeness result applies to that local inventory; it does not establish whole-application or all-facet completeness. The 24-case Phase 6 exit decision validates the declared cross-repository corpus and conformance method, not every possible property of the 15 facets.
+
+This rule remains controlling in Phase 7 and later releases: every new replication scope must independently define and review its required property inventory. Future feature classes require new source-backed cases and must not be treated as captured merely because all existing cases pass.
 
 ## 10. Relationship to existing principles
 

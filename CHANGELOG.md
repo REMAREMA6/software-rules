@@ -11,6 +11,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ### Fixed
 - Cross-record integrity now accepts direct source-artifact evidence for explicitly source-inferred inventory properties while keeping runtime observations separate; added a BullMQ source capture fixture and regression tests.
+- Corrected BullMQ runtime probe suppression detection and enabled shell pipeline failure propagation after artifact review exposed empty captures behind falsely green workflow results.
 
 ### Changed
 - Corrected the Phase 6 handoff and source-candidate count; explicitly separated the Python model workflow from BullMQ runtime execution and retained the source capture as unverified/incomplete. Added a pinned-source runtime-to-replica execution order and bounded cross-stack portability language.

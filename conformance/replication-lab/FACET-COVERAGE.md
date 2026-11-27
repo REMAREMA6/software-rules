@@ -8,17 +8,17 @@ This is an evidence-status register, not a list of technologies that happen to c
 | # | Facet | Candidate source(s) | Current evidence | Independent replica | Status |
 |---|---|---|---|---|---|
 | 1 | Interface | Task Board fixture; OWASP Juice Shop candidate | Task Board has bounded multi-state visual/runtime evidence; two font/UI properties remain partial and full platform coverage is not established | Task Board independent variant; cross-repository replica case not yet accepted | Partial baseline only |
-| 2 | Behaviour | Task Board; BullMQ; Express | Task Board has bounded workflow probes; BullMQ has one passed three-scenario cross-stack case, with formal captures and evidence committed; broader behaviour remains untested | Python retry decision model; source/runtime comparison pending | In progress |
+| 2 | Behaviour | Task Board; BullMQ; Express | Task Board has bounded workflow probes; BullMQ has one passed bounded case; Express routing case is prepared, runtime comparison pending | Python retry decision model; source/runtime comparison pending | In progress |
 | 3 | Business rules | Medusa candidate; Task Board | Task Board has partial title/duplicate/count rules; Medusa pricing/cart source paths identified but not yet verified | None accepted yet | Candidate / partial baseline |
 | 4 | Data | TypeORM; Medusa; Task Board | Task Board has partial entity/identifier/PATCH samples; BullMQ attemptsMade counter semantics passed in one bounded case; TypeORM transaction/model implementation not yet case-reviewed | None accepted yet | Candidate / partial baseline |
 | 5 | Persistence | TypeORM; Prometheus | No source/replica persistence case completed | None | Not started |
-| 6 | API | Express; Task Board | Task Board only tests a deterministic in-memory adapter; Express route/error contract not yet selected | None accepted yet | Candidate / partial baseline |
+| 6 | API | Express; Task Board | Task Board only tests a deterministic in-memory adapter; Express seven-request routing/API case is prepared with source evidence and a Python HTTP replica; pinned runtime comparison pending | None accepted yet | Candidate / partial baseline |
 | 7 | Messaging | BullMQ | BullMQ queue retry case is not yet a message-delivery/acknowledgement case | None | Not started |
 | 8 | Identity and authentication | Keycloak; OWASP Juice Shop | Candidate repositories registered; no runtime capture | None | Not started |
 | 9 | Authorization and permissions | Keycloak; OWASP Juice Shop; Grafana | Candidate repositories registered; no policy-matrix capture | None | Not started |
 | 10 | Security controls | OWASP Juice Shop; Grafana | Task Board has limited literal-content output probes only; no comprehensive security-control case | None | Partial baseline only |
 | 11 | Background processing | BullMQ | Source-derived retry rules and Python decision-model simulation exist; pinned BullMQ+Redis runtime comparison is pending | Python 3.12 model | In progress |
-| 12 | Errors and recovery | BullMQ; Express; TypeORM | Task Board has bounded HTTP 503/no-recovery observations; BullMQ retry suppression and attempt limits passed for three scenarios; broader error/recovery paths remain untested | Python 3.12 model | In progress |
+| 12 | Errors and recovery | BullMQ; Express; TypeORM | Task Board has bounded HTTP 503/no-recovery observations; BullMQ retry suppression and attempt limits passed for three scenarios; Express 404 fallback case prepared; broader error/recovery paths remain untested | Python 3.12 model | In progress |
 | 13 | Integrations | n8n; Grafana; Medusa | Candidates only; n8n licence restrictions require per-file review | None | Not started |
 | 14 | Configuration | Grafana; Keycloak | Candidate source settings identified; runtime precedence not verified | None | Not started |
 | 15 | Performance and resource behaviour | Prometheus; Grafana | Task Board has single-run navigation/paint/resource samples only; no repeatable load/throughput case | None | Partial baseline only |

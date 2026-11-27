@@ -1,7 +1,7 @@
 # Case — Medusa adjustment, discount, and tax allocation rules
 
 **Case ID:** MEDUSA-ADJUST-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED in [run #45943612155](https://github.com/REMAREMA6/software-rules/actions/runs/45943612155). The exact pinned Medusa `calculateAdjustmentTotal` function matched an independent Python Decimal model across nine scenarios covering empty, exclusive/inclusive tax, multiple/mixed adjustments, missing amount, zero/fractional quantity, and absent tax context. Six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema, cross-record integrity, and comparison completeness validation. Artifact `15173389412` retained through 2026-12-27. This is bounded adjustment/tax allocation evidence, not full cart/checkout coverage.  
 **Facets:** Business rules; data; behaviour  
 **Source:** https://github.com/medusajs/medusa  
 **Immutable source commit:** `6e28e10acb9676392315b3ff1a9c7147fce4b5ab`  

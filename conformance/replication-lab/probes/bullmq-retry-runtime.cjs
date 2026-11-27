@@ -10,6 +10,15 @@ const redisOptions = {
   maxRetriesPerRequest: null,
 };
 
+async function closeClient(client) {
+  if (client.status === 'end') return;
+  try {
+    await client.quit();
+  } catch {
+    client.disconnect();
+  }
+}
+
 async function runScenario(label, { attempts, backoffStrategy, processor }) {
   const queueName = `software-rules-${label}-${randomUUID()}`;
   const queueConnection = new IORedis(redisOptions);
@@ -21,68 +30,74 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
   const startedAt = Date.now();
   let processorAttempts = 0;
   const strategyAttempts = [];
+  let worker;
 
-  const worker = new Worker(queueName, async job => {
-    processorAttempts += 1;
-    trace.push({ event: 'processor', attempt: processorAttempts, attemptsMade: job.attemptsMade, atMs: Date.now() - startedAt });
-    return processor(job);
-  }, {
-    connection: workerConnection,
-    settings: {
-      backoffStrategy: (attemptsMade, type, error, job) => {
-        strategyAttempts.push(attemptsMade);
-        const delayMs = backoffStrategy(attemptsMade, type, error, job);
-        trace.push({ event: 'backoff', attemptsMade, type, error: error.message, jobId: job.id, atMs: Date.now() - startedAt });
-        trace.push({ event: 'backoff-result', attemptsMade, delayMs, atMs: Date.now() - startedAt });
-        return delayMs;
+  try {
+    worker = new Worker(queueName, async job => {
+      processorAttempts += 1;
+      trace.push({ event: 'processor', attempt: processorAttempts, attemptsMade: job.attemptsMade, atMs: Date.now() - startedAt });
+      return processor(job);
+    }, {
+      connection: workerConnection,
+      settings: {
+        backoffStrategy: (attemptsMade, type, error, job) => {
+          strategyAttempts.push(attemptsMade);
+          const delayMs = backoffStrategy(attemptsMade, type, error, job);
+          trace.push({ event: 'backoff', attemptsMade, type, error: error.message, jobId: job.id, atMs: Date.now() - startedAt });
+          trace.push({ event: 'backoff-result', attemptsMade, delayMs, atMs: Date.now() - startedAt });
+          return delayMs;
+        },
       },
-    },
-  });
-
-  for (const eventName of ['waiting', 'delayed', 'failed', 'completed']) {
-    events.on(eventName, data => trace.push({ event: `queue:${eventName}`, data, atMs: Date.now() - startedAt }));
-  }
-
-  await Promise.all([queue.waitUntilReady(), worker.waitUntilReady(), events.waitUntilReady()]);
-
-  const outcome = await new Promise((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error(`${label}: timed out`)), 12000);
-    worker.once('completed', (job, result) => {
-      clearTimeout(timer);
-      resolve({ terminal: 'completed', jobId: job.id, attemptsMade: job.attemptsMade, result });
     });
-    worker.on('failed', (job, error) => {
-      if (job && job.attemptsMade >= attempts || error.name === 'UnrecoverableError' || strategyAttempts.at(-1) === -1) {
+
+    for (const eventName of ['waiting', 'delayed', 'failed', 'completed']) {
+      events.on(eventName, data => trace.push({ event: `queue:${eventName}`, data, atMs: Date.now() - startedAt }));
+    }
+
+    await Promise.all([queue.waitUntilReady(), worker.waitUntilReady(), events.waitUntilReady()]);
+
+    const outcome = await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error(`${label}: timed out after 12 seconds`)), 12000);
+      worker.once('completed', (job, result) => {
         clearTimeout(timer);
-        resolve({ terminal: 'failed', jobId: job.id, attemptsMade: job.attemptsMade, error: error.message });
-      }
-    });
-    queue.add('probe', { label }, { attempts, backoff: { type: 'software-rules-custom' } })
-      .catch(error => {
-        clearTimeout(timer);
-        reject(error);
+        resolve({ terminal: 'completed', jobId: job.id, attemptsMade: job.attemptsMade, result });
       });
-  });
+      worker.on('failed', (job, error) => {
+        if (job && (job.attemptsMade >= attempts || error.name === 'UnrecoverableError' || strategyAttempts.at(-1) === -1)) {
+          clearTimeout(timer);
+          resolve({ terminal: 'failed', jobId: job.id, attemptsMade: job.attemptsMade, error: error.message });
+        }
+      });
+      queue.add('probe', { label }, { attempts, backoff: { type: 'software-rules-custom' } })
+        .catch(error => {
+          clearTimeout(timer);
+          reject(error);
+        });
+    });
 
-  await new Promise(resolve => setTimeout(resolve, 100));
-  const job = await queue.getJob(outcome.jobId);
-  const finalState = job ? await job.getState() : 'missing';
-  const result = {
-    label,
-    configuredAttempts: attempts,
-    processorAttempts,
-    strategyAttempts,
-    outcome,
-    finalState,
-    trace,
-  };
-
-  await worker.close();
-  await events.close();
-  await queue.obliterate({ force: true });
-  await queue.close();
-  // BullMQ close() owns and closes each supplied Redis connection.
-  return result;
+    await new Promise(resolve => setTimeout(resolve, 100));
+    const job = await queue.getJob(outcome.jobId);
+    const finalState = job ? await job.getState() : 'missing';
+    return {
+      label,
+      configuredAttempts: attempts,
+      processorAttempts,
+      strategyAttempts,
+      outcome,
+      finalState,
+      trace,
+    };
+  } finally {
+    if (worker) await worker.close(true).catch(() => {});
+    await events.close().catch(() => {});
+    await queue.obliterate({ force: true }).catch(() => {});
+    await queue.close().catch(() => {});
+    await Promise.all([
+      closeClient(queueConnection),
+      closeClient(workerConnection),
+      closeClient(eventsConnection),
+    ]);
+  }
 }
 
 (async () => {
@@ -134,5 +149,5 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
   if (!report.passed) process.exitCode = 1;
 })().catch(error => {
   process.stderr.write(error.stack + '\n');
-  process.exitCode = 1;
+  process.exit(1);
 });

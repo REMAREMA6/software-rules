@@ -1,0 +1,98 @@
+name: Medusa price-selection business-rule cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/MEDUSA-PRICE-001/**"
+      - "conformance/replication-lab/projects/medusa-price-selection-python/**"
+      - ".github/workflows/medusa-price-selection-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/MEDUSA-PRICE-001/**"
+      - "conformance/replication-lab/projects/medusa-price-selection-python/**"
+      - ".github/workflows/medusa-price-selection-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: medusa-price-selection-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  medusa-price-selection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact Medusa source commit
+        env:
+          MEDUSA_SOURCE_COMMIT: "6e28e10acb9676392315b3ff1a9c7147fce4b5ab"
+        run: |
+          mkdir -p /tmp/medusa
+          git -C /tmp/medusa init
+          git -C /tmp/medusa remote add origin https://github.com/medusajs/medusa.git
+          git -C /tmp/medusa fetch --depth=1 origin "$MEDUSA_SOURCE_COMMIT"
+          git -C /tmp/medusa checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/medusa rev-parse HEAD)" = "$MEDUSA_SOURCE_COMMIT"
+      - name: Install pinned TypeScript compiler API
+        run: |
+          npm install --prefix /tmp/medusa-toolchain --no-audit --no-fund typescript@6.0.2
+          node -e "const ts=require('/tmp/medusa-toolchain/node_modules/typescript'); if (ts.version !== '6.0.2') process.exit(1); console.log(ts.version)"
+      - name: Execute exact pinned Medusa service method body
+        env:
+          MEDUSA_SOURCE_ROOT: /tmp/medusa
+          MEDUSA_SOURCE_COMMIT: "6e28e10acb9676392315b3ff1a9c7147fce4b5ab"
+          TYPESCRIPT_PATH: /tmp/medusa-toolchain/node_modules/typescript
+        run: node conformance/replication-lab/cases/MEDUSA-PRICE-001/source_probe.cjs > medusa-price-source-runtime.json
+      - name: Execute independent Python price-selection model
+        run: python conformance/replication-lab/projects/medusa-price-selection-python/replica_probe.py > medusa-price-python-runtime.json
+      - name: Compare source and replica returned-price objects
+        run: python conformance/replication-lab/cases/MEDUSA-PRICE-001/compare.py medusa-price-source-runtime.json medusa-price-python-runtime.json
+      - name: Run deliberate pricing-rule mutation tests
+        run: |
+          python -m unittest discover -s conformance/replication-lab/cases/MEDUSA-PRICE-001 -p "test_*.py" -v
+      - name: Stage pinned source files and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/MEDUSA-PRICE-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp medusa-price-source-runtime.json "$evidence_dir/medusa-price-source-runtime.json"
+          cp medusa-price-python-runtime.json "$evidence_dir/medusa-price-python-runtime.json"
+          cp /tmp/medusa/packages/modules/pricing/src/services/pricing-module.ts "$evidence_dir/pricing-module.ts"
+          cp /tmp/medusa/packages/modules/pricing/integration-tests/__tests__/services/pricing-module/calculate-price.spec.ts "$evidence_dir/calculate-price.spec.ts"
+          cp /tmp/medusa/yarn.lock "$evidence_dir/yarn.lock"
+          cp /tmp/medusa-toolchain/package-lock.json "$evidence_dir/typescript-toolchain-package-lock.json"
+          python conformance/replication-lab/cases/MEDUSA-PRICE-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/medusa-price-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/medusa-price-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/medusa-price-software-rules" \
+            --source-artifacts "{\"pricingModule\":\"$GITHUB_WORKSPACE/$evidence_dir/pricing-module.ts\",\"integrationTest\":\"$GITHUB_WORKSPACE/$evidence_dir/calculate-price.spec.ts\",\"yarnLock\":\"$GITHUB_WORKSPACE/$evidence_dir/yarn.lock\",\"typescriptToolchainLock\":\"$GITHUB_WORKSPACE/$evidence_dir/typescript-toolchain-package-lock.json\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            medusa-price-software-rules/medusa-price-source.capture.json \
+            medusa-price-software-rules/medusa-price-python-replica.capture.json \
+            medusa-price-software-rules/medusa-price-comparison.report.json
+      - name: Retain Medusa source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: medusa-price-selection-cross-stack
+          path: |
+            medusa-price-source-runtime.json
+            medusa-price-python-runtime.json
+            medusa-price-software-rules/*.json
+            conformance/replication-lab/cases/MEDUSA-PRICE-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

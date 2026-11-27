@@ -30,6 +30,7 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
   const startedAt = Date.now();
   let processorAttempts = 0;
   const strategyAttempts = [];
+  const backoffResults = [];
   let worker;
 
   try {
@@ -43,6 +44,7 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
         backoffStrategy: (attemptsMade, type, error, job) => {
           strategyAttempts.push(attemptsMade);
           const delayMs = backoffStrategy(attemptsMade, type, error, job);
+          backoffResults.push(delayMs);
           trace.push({ event: 'backoff', attemptsMade, type, error: error.message, jobId: job.id, atMs: Date.now() - startedAt });
           trace.push({ event: 'backoff-result', attemptsMade, delayMs, atMs: Date.now() - startedAt });
           return delayMs;
@@ -63,7 +65,7 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
         resolve({ terminal: 'completed', jobId: job.id, attemptsMade: job.attemptsMade, result });
       });
       worker.on('failed', (job, error) => {
-        if (job && (job.attemptsMade >= attempts || error.name === 'UnrecoverableError' || strategyAttempts.at(-1) === -1)) {
+        if (job && (job.attemptsMade >= attempts || error.name === 'UnrecoverableError' || backoffResults.at(-1) === -1)) {
           clearTimeout(timer);
           resolve({ terminal: 'failed', jobId: job.id, attemptsMade: job.attemptsMade, error: error.message });
         }
@@ -83,6 +85,7 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
       configuredAttempts: attempts,
       processorAttempts,
       strategyAttempts,
+      backoffResults,
       outcome,
       finalState,
       trace,

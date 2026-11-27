@@ -1,6 +1,6 @@
 # Phase 6 — Cross-repository, cross-stack replication programme
 
-**Status:** Active
+**Status:** Completed for the declared 20-case cross-repository validation corpus; see [PHASE6-EXIT-AUDIT.md](../conformance/replication-lab/PHASE6-EXIT-AUDIT.md).
 
 ## Purpose
 
@@ -116,4 +116,4 @@ Phase 6 is complete only when:
 
 ## Current status
 
-This programme defines the corrected strategy; it does not claim that new cross-repository cases have already passed. The next task is to create the replication-lab skeleton and case manifest, then select and inspect the first source repository for a facet not adequately represented by Task Board.
+The Phase 6 programme has an approved exit decision for the declared 20-case validation corpus, spanning all 15 facets and 15 immutable source repositories. The final evidence matrix, case-level outcomes, explicit scope exclusions, future coverage, and non-claims are recorded in [PHASE6-EXIT-AUDIT.md](../conformance/replication-lab/PHASE6-EXIT-AUDIT.md). This is not a universal-equivalence claim and does not declare any facet universally complete. Phase 7 review, release, and maintenance is now unblocked.

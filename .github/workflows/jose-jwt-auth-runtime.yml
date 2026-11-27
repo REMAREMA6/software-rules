@@ -5,14 +5,14 @@ on:
     paths:
       - "conformance/replication-lab/cases/JOSE-AUTH-001/**"
       - "conformance/replication-lab/projects/jwt-auth-python/**"
-      - ".github/workflows/jose-jwt-auth-runtime.yml"
+
       - "conformance/validation/validate-case-artifacts.mjs"
       - "!conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/**"
   pull_request:
     paths:
       - "conformance/replication-lab/cases/JOSE-AUTH-001/**"
       - "conformance/replication-lab/projects/jwt-auth-python/**"
-      - ".github/workflows/jose-jwt-auth-runtime.yml"
+
       - "conformance/validation/validate-case-artifacts.mjs"
       - "!conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/**"
   workflow_dispatch:
@@ -99,33 +99,6 @@ jobs:
             "$GITHUB_WORKSPACE/jose-software-rules/jose-source.capture.json" \
             "$GITHUB_WORKSPACE/jose-software-rules/jose-python-replica.capture.json" \
             "$GITHUB_WORKSPACE/jose-software-rules/jose-comparison.report.json"
-      - name: Commit verified JOSE evidence to the repository
-        if: success() && github.event_name != 'pull_request'
-        run: |
-          cd "$GITHUB_WORKSPACE"
-          evidence_dir="conformance/replication-lab/cases/JOSE-AUTH-001/artifacts"
-          test -f "$GITHUB_WORKSPACE/jose-software-rules/jose-source.capture.json"
-          cp "$GITHUB_WORKSPACE/jose-software-rules/jose-source.capture.json" "$GITHUB_WORKSPACE/$evidence_dir/jose-source.capture.json"
-          cp "$GITHUB_WORKSPACE/jose-software-rules/jose-python-replica.capture.json" "$GITHUB_WORKSPACE/$evidence_dir/jose-python-replica.capture.json"
-          cp "$GITHUB_WORKSPACE/jose-software-rules/jose-comparison.report.json" "$GITHUB_WORKSPACE/$evidence_dir/jose-comparison.report.json"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "$evidence_dir"
-          if ! git diff --cached --quiet; then
-            git commit -m "test: retain verified jose JWT authentication evidence"
-            for attempt in 1 2 3 4 5; do
-              git fetch origin "$GITHUB_REF_NAME"
-              if ! git rebase "origin/$GITHUB_REF_NAME"; then
-                git rebase --abort || true
-                exit 1
-              fi
-              if git push origin "HEAD:$GITHUB_REF_NAME"; then
-                exit 0
-              fi
-              sleep "$attempt"
-            done
-            exit 1
-          fi
       - name: Retain jose source, replica, and Software Rules evidence
         if: always()
         uses: actions/upload-artifact@v4

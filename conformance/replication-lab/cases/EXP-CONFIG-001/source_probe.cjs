@@ -18,7 +18,7 @@ async function runProfile(label, caseSensitive, strict) {
   const decisions = [];
   for (const path of paths) decisions.push(await request(port, path));
   await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
-  return { label, config: { caseSensitive, strict, activation: "before-first-request" }, decisions };
+  return { label, config: { caseSensitive: caseSensitive ?? false, strict: strict ?? false, activation: "before-first-request" }, decisions };
 }
 
 async function runLateMutation() {
@@ -31,7 +31,7 @@ async function runLateMutation() {
   app.set("case sensitive routing", true);
   decisions.push(await request(port, "/report"));
   await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
-  return { label: "late-case-sensitive-change", config: { caseSensitive: "changed-to-true-after-first-request", strict: false, activation: "after-router-initialization" }, decisions };
+  return { label: "late-case-sensitive-change", config: { caseSensitive: false, strict: false, settingAfterInitialization: true, activation: "after-router-initialization" }, decisions };
 }
 
 (async () => {

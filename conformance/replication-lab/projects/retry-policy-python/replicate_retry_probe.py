@@ -1,21 +1,27 @@
 import json
+
 from retry_policy import decide_retry
 
 
 def simulate(label, attempts, backoff, success_after_failures=None):
     processor_attempts = 0
+    processor_attempts_made = []
     failures = 0
     strategy_attempts = []
     backoff_results = []
+    state_transitions = []
 
     while True:
         processor_attempts += 1
+        processor_attempts_made.append(failures)
         if success_after_failures is not None and failures >= success_after_failures:
             outcome = {
                 "terminal": "completed",
-                "attemptsMade": failures,
+                # BullMQ increments attemptsMade after a successful completion too.
+                "attemptsMade": failures + 1,
                 "result": "ok",
             }
+            state_transitions.append("completed")
             final_state = "completed"
             break
 
@@ -35,15 +41,22 @@ def simulate(label, attempts, backoff, success_after_failures=None):
                 "attemptsMade": failures,
                 "error": "processor failure",
             }
+            state_transitions.append("failed")
             final_state = "failed"
             break
+
+        if decision.state == "delayed":
+            state_transitions.append("delayed")
+        state_transitions.append("waiting")
 
     return {
         "label": label,
         "configuredAttempts": attempts,
         "processorAttempts": processor_attempts,
+        "processorAttemptsMade": processor_attempts_made,
         "strategyAttempts": strategy_attempts,
         "backoffResults": backoff_results,
+        "stateTransitions": state_transitions,
         "outcome": outcome,
         "finalState": final_state,
     }

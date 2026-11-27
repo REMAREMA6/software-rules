@@ -41,3 +41,17 @@ Python sqlite3 implements the same declared transaction contract without importi
 ## Acceptance gate
 
 Do not mark this case passed until the pinned source commit compiles and runs, source and replica captures match, mutation tests pass, schema/integrity validation passes, and evidence artifacts are retained. Driver-specific and nested transaction behaviour remain explicitly out of scope.
+
+
+## Verified run
+
+- GitHub Actions run: [#45928766010](https://github.com/REMAREMA6/software-rules/actions/runs/45928766010)
+- Source: TypeORM 1.1.3, commit `b1e211fc2654d412612a08f8a7fb890f3352614f`, SQL.js driver.
+- Replica: Python 3.12 sqlite3.
+- Scenarios: rollback and commit.
+- Compared projections: 8 across persistence, data, behaviour, and errors/recovery.
+- Mutation tests: 6 passed.
+- Software Rules schema version: 0.2.0; both captures, comparison report, and evidence integrity passed validation.
+- Retained workflow artifact: `typeorm-persistence-cross-stack-captures` (artifact ID 15167104492; expires 2026-12-27).
+
+The case is complete only for its declared top-level SQL.js transaction scope. Nested transactions, other database drivers, concurrent transactions, isolation levels, and crash durability remain out of scope.

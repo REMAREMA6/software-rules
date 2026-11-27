@@ -12,9 +12,6 @@ class PromotionRuleMutations(unittest.TestCase):
  def test_numeric_lexical_mutation(self):self.assertEqual(compare(SOURCE,capture({"lexical_numeric":True}))["result"],"mismatch")
  def test_scope_prefix_mutation(self):self.assertEqual(compare(SOURCE,capture({"skip_scope_strip":True}))["result"],"mismatch")
  def test_all_rules_conjunction_mutation(self):
-  altered=capture()
-  altered["scenarios"]=[dict(x) for x in altered["scenarios"]]
-  altered["scenarios"][24]["output"]=True
-  self.assertEqual(compare(SOURCE,altered)["result"],"mismatch")
+  self.assertEqual(compare(SOURCE,capture({"any_rule_passes":True}))["result"],"mismatch")
  def test_missing_string_value_mutation(self):self.assertEqual(compare(SOURCE,capture({"keep_non_string_values":True}))["result"],"mismatch")
 if __name__=="__main__":unittest.main()

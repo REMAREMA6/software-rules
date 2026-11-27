@@ -13,8 +13,11 @@ def source_capture():
                 "label": "retry",
                 "configuredAttempts": 3,
                 "processorAttempts": 3,
+                "processorAttemptsMade": [0, 1, 2],
                 "strategyAttempts": [1, 2],
-                "outcome": {"terminal": "completed", "attemptsMade": 2, "result": "ok"},
+                "backoffResults": [40, 80],
+                "stateTransitions": ["delayed", "waiting", "delayed", "waiting", "completed"],
+                "outcome": {"terminal": "completed", "attemptsMade": 3, "result": "ok"},
                 "finalState": "completed",
                 "trace": [
                     {"event": "backoff-result", "delayMs": 40},
@@ -33,8 +36,10 @@ def replica_capture():
                 "label": "retry",
                 "configuredAttempts": 3,
                 "processorAttempts": 3,
+                "processorAttemptsMade": [0, 1, 2],
                 "strategyAttempts": [1, 2],
                 "backoffResults": [40, 80],
+                "stateTransitions": ["delayed", "waiting", "delayed", "waiting", "completed"],
                 "outcome": {"terminal": "completed", "attemptsMade": 2, "result": "ok"},
                 "finalState": "completed",
             }
@@ -54,6 +59,13 @@ class CaptureComparisonTests(unittest.TestCase):
         report = compare_captures(source_capture(), mutant)
         self.assertEqual(report["result"], "mismatch")
         self.assertTrue(any("processorAttempts" in error for error in report["errors"]))
+
+    def test_mutated_state_transition_is_detected(self):
+        mutant = replica_capture()
+        mutant["scenarios"][0]["stateTransitions"] = ["waiting", "waiting", "completed"]
+        report = compare_captures(source_capture(), mutant)
+        self.assertEqual(report["result"], "mismatch")
+        self.assertTrue(any("stateTransitions" in error for error in report["errors"]))
 
     def test_mutated_backoff_sequence_is_detected(self):
         mutant = replica_capture()

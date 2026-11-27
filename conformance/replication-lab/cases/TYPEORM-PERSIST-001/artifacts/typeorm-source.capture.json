@@ -1,0 +1,1076 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "typeorm-source-capture",
+  "createdAt": "2026-11-27T02:19:50.747892Z",
+  "purpose": "Capture the declared two-scenario TypeORM transaction conformance scope.",
+  "target": {
+    "targetId": "typeorm-source-runtime",
+    "systemName": "TypeORM 1.1.3",
+    "systemVersion": "1.1.3",
+    "build": {
+      "revision": "b1e211fc2654d412612a08f8a7fb890f3352614f"
+    },
+    "boundary": {
+      "description": "EntityManager transaction commit/rollback using one in-memory SQLite database.",
+      "included": [
+        "Commit of two writes after successful callback",
+        "Visibility of writes inside the transaction callback",
+        "Rollback of earlier writes after a NOT NULL constraint failure",
+        "Propagation of the callback error"
+      ],
+      "excluded": [
+        "Other database drivers and persistent on-disk databases",
+        "Isolation levels, nested transactions, savepoints, and concurrency",
+        "QueryRunner release failures and rollback failures",
+        "Distributed transactions and external side effects"
+      ]
+    },
+    "environment": {
+      "platform": "CI runner",
+      "os": "Ubuntu Linux",
+      "runtime": "Node.js 22",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "database": "SQLite :memory:",
+          "driver": "better-sqlite3",
+          "pnpmVersion": "12.22.0",
+          "pnpmLockDigest": "c50b6de85334c8cc1de138693e180eb5c6d32f66dc72f0c5f6a5fd76c52c0485"
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Two declared transaction scenarios using required Post and Category fields.",
+    "facetIds": [
+      "persistence",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "subjects": [
+      "typeorm-entity-manager-transaction",
+      "Post",
+      "Category"
+    ],
+    "scenarioIds": [
+      "typeorm-scenario-commit-success",
+      "typeorm-scenario-rollback-on-invalid-post"
+    ]
+  },
+  "collector": {
+    "name": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3",
+    "methodDescription": "Execute each transaction scenario, retain callback outcomes/errors, and query entity rows after transaction completion."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "typeorm-scenario-commit-success",
+      "title": "Commit Success",
+      "purpose": "Establish commit-on-success or rollback-on-callback-error semantics for one transaction.",
+      "facetIds": [
+        "persistence",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "typeorm-entity-manager-transaction",
+      "preconditions": [
+        "Post.title and Category.name are NOT NULL.",
+        "The database is a fresh in-memory SQLite database."
+      ],
+      "trigger": "Call EntityManager.transaction with the declared callback.",
+      "inputs": {
+        "scenario": "commit-success"
+      },
+      "observableQuestions": [
+        "Are writes committed after callback success?",
+        "Are earlier writes removed after a later callback operation fails?",
+        "Does the callback error propagate?",
+        "Are writes visible to reads inside the transaction?"
+      ]
+    },
+    {
+      "scenarioId": "typeorm-scenario-rollback-on-invalid-post",
+      "title": "Rollback On Invalid Post",
+      "purpose": "Establish commit-on-success or rollback-on-callback-error semantics for one transaction.",
+      "facetIds": [
+        "persistence",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "typeorm-entity-manager-transaction",
+      "preconditions": [
+        "Post.title and Category.name are NOT NULL.",
+        "The database is a fresh in-memory SQLite database."
+      ],
+      "trigger": "Call EntityManager.transaction with the declared callback.",
+      "inputs": {
+        "scenario": "rollback-on-invalid-post"
+      },
+      "observableQuestions": [
+        "Are writes committed after callback success?",
+        "Are earlier writes removed after a later callback operation fails?",
+        "Does the callback error propagate?",
+        "Are writes visible to reads inside the transaction?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "typeorm-exec-source-commit-success",
+      "scenarioId": "typeorm-scenario-commit-success",
+      "targetId": "typeorm-source-runtime",
+      "startedAt": "2026-11-27T02:19:50.196Z",
+      "endedAt": "2026-11-27T02:19:50.239Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3",
+        "sourceRevision": "b1e211fc2654d412612a08f8a7fb890f3352614f",
+        "database": "SQLite :memory:",
+        "driver": "better-sqlite3",
+        "pnpmLockDigest": "c50b6de85334c8cc1de138693e180eb5c6d32f66dc72f0c5f6a5fd76c52c0485"
+      },
+      "actualInputs": {
+        "scenario": "commit-success"
+      },
+      "trigger": "Run one transaction scenario and inspect rows after completion.",
+      "collector": {
+        "name": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3"
+      },
+      "limitations": [
+        "Only one in-memory SQLite database and the declared transaction scenarios are covered."
+      ]
+    },
+    {
+      "executionId": "typeorm-exec-source-rollback-on-invalid-post",
+      "scenarioId": "typeorm-scenario-rollback-on-invalid-post",
+      "targetId": "typeorm-source-runtime",
+      "startedAt": "2026-11-27T02:19:50.196Z",
+      "endedAt": "2026-11-27T02:19:50.239Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3",
+        "sourceRevision": "b1e211fc2654d412612a08f8a7fb890f3352614f",
+        "database": "SQLite :memory:",
+        "driver": "better-sqlite3",
+        "pnpmLockDigest": "c50b6de85334c8cc1de138693e180eb5c6d32f66dc72f0c5f6a5fd76c52c0485"
+      },
+      "actualInputs": {
+        "scenario": "rollback-on-invalid-post"
+      },
+      "trigger": "Run one transaction scenario and inspect rows after completion.",
+      "collector": {
+        "name": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3"
+      },
+      "limitations": [
+        "Only one in-memory SQLite database and the declared transaction scenarios are covered."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "typeorm-obs-source-commit-success-persistence",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-commit-success",
+      "facet": "persistence",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 0,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "commit-success"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "persistence",
+        "kind": "state-operation",
+        "subject": "typeorm-entity-manager-transaction",
+        "store": "in-memory SQLite database",
+        "operation": "transaction",
+        "beforeState": {
+          "post": [],
+          "category": []
+        },
+        "afterState": {
+          "post": [
+            {
+              "id": 1,
+              "title": "Post #1"
+            }
+          ],
+          "category": [
+            {
+              "id": 1,
+              "name": "Category #1"
+            }
+          ]
+        },
+        "transaction": {
+          "terminal": "committed",
+          "errorPropagated": false
+        },
+        "commitResult": "committed",
+        "consistency": {
+          "atomic": true,
+          "observedAfterTransaction": true
+        }
+      },
+      "rawValue": {
+        "label": "commit-success",
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "normalizedValue": {
+        "terminal": "committed",
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-commit-success-data",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-commit-success",
+      "facet": "data",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "commit-success"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Post and Category entities",
+        "dataSubject": "transactional entity rows",
+        "fieldPath": "Post.title / Category.name",
+        "observedValue": {
+          "postRows": [
+            {
+              "id": 1,
+              "title": "Post #1"
+            }
+          ],
+          "categoryRows": [
+            {
+              "id": 1,
+              "name": "Category #1"
+            }
+          ],
+          "readsVisibleBeforeFailure": null
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "constraints": [
+          {
+            "field": "Post.title",
+            "constraint": "NOT NULL"
+          },
+          {
+            "field": "Category.name",
+            "constraint": "NOT NULL"
+          }
+        ],
+        "validation": {
+          "result": "valid",
+          "errorCategory": "none"
+        },
+        "serialization": {
+          "representation": "JSON entity snapshots"
+        }
+      },
+      "rawValue": {
+        "label": "commit-success",
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "normalizedValue": {
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1,
+        "readsVisibleBeforeFailure": null
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-commit-success-behavior",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-commit-success",
+      "facet": "behavior",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "commit-success"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "typeorm-entity-manager-transaction",
+        "trigger": "Application invokes EntityManager.transaction(callback).",
+        "preconditions": [
+          "A Post entity has a required title field.",
+          "A Category entity has a required name field.",
+          "Both entities use the same in-memory SQLite DataSource."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Save a Post and Category through the callback manager."
+          },
+          {
+            "sequence": 2,
+            "action": "Return the inserted entity identifiers from the callback."
+          },
+          {
+            "sequence": 3,
+            "action": "Commit the transaction."
+          }
+        ],
+        "outputs": [
+          {
+            "terminal": "committed",
+            "callbackResult": {
+              "postId": 1,
+              "categoryId": 1
+            },
+            "readsVisibleBeforeFailure": null
+          }
+        ],
+        "termination": "callback-result-returned-after-commit"
+      },
+      "rawValue": {
+        "label": "commit-success",
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "normalizedValue": {
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "readsVisibleBeforeFailure": null
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-commit-success-errors-recovery",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-commit-success",
+      "facet": "errors-recovery",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "commit-success"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "typeorm-transaction-rollback",
+        "trigger": "No failure occurs in the transaction callback.",
+        "operationRef": "typeorm-scenario-commit-success",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "SQLite NOT NULL constraint",
+        "propagationBoundary": "EntityManager.transaction callback",
+        "recoveryActions": [],
+        "recoveryState": "transaction committed",
+        "terminalOutcome": "committed",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "commit-success",
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "normalizedValue": {
+        "errorPropagated": false,
+        "errorCategory": "none",
+        "terminal": "committed",
+        "postCountAfter": 1,
+        "categoryCountAfter": 1
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-rollback-on-invalid-post-persistence",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-rollback-on-invalid-post",
+      "facet": "persistence",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 4,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "rollback-on-invalid-post"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "persistence",
+        "kind": "state-operation",
+        "subject": "typeorm-entity-manager-transaction",
+        "store": "in-memory SQLite database",
+        "operation": "transaction",
+        "beforeState": {
+          "post": [],
+          "category": []
+        },
+        "afterState": {
+          "post": [],
+          "category": []
+        },
+        "transaction": {
+          "terminal": "rolled-back",
+          "errorPropagated": true
+        },
+        "commitResult": "rolled-back",
+        "consistency": {
+          "atomic": true,
+          "observedAfterTransaction": true
+        }
+      },
+      "rawValue": {
+        "label": "rollback-on-invalid-post",
+        "terminal": "rolled-back",
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "readsVisibleBeforeFailure": true,
+        "postRowsAfter": [],
+        "categoryRowsAfter": [],
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "normalizedValue": {
+        "terminal": "rolled-back",
+        "postRows": [],
+        "categoryRows": [],
+        "postCount": 0,
+        "categoryCount": 0
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-rollback-on-invalid-post-data",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-rollback-on-invalid-post",
+      "facet": "data",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 5,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "rollback-on-invalid-post"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Post and Category entities",
+        "dataSubject": "transactional entity rows",
+        "fieldPath": "Post.title / Category.name",
+        "observedValue": {
+          "postRows": [],
+          "categoryRows": [],
+          "readsVisibleBeforeFailure": true
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "constraints": [
+          {
+            "field": "Post.title",
+            "constraint": "NOT NULL"
+          },
+          {
+            "field": "Category.name",
+            "constraint": "NOT NULL"
+          }
+        ],
+        "validation": {
+          "result": "integrity-constraint-rejected",
+          "errorCategory": "integrity-constraint"
+        },
+        "serialization": {
+          "representation": "JSON entity snapshots"
+        }
+      },
+      "rawValue": {
+        "label": "rollback-on-invalid-post",
+        "terminal": "rolled-back",
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "readsVisibleBeforeFailure": true,
+        "postRowsAfter": [],
+        "categoryRowsAfter": [],
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "normalizedValue": {
+        "postRows": [],
+        "categoryRows": [],
+        "postCount": 0,
+        "categoryCount": 0,
+        "readsVisibleBeforeFailure": true
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-rollback-on-invalid-post-behavior",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-rollback-on-invalid-post",
+      "facet": "behavior",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 6,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "rollback-on-invalid-post"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "typeorm-entity-manager-transaction",
+        "trigger": "Application invokes EntityManager.transaction(callback).",
+        "preconditions": [
+          "A Post entity has a required title field.",
+          "A Category entity has a required name field.",
+          "Both entities use the same in-memory SQLite DataSource."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Save a Post and Category through the callback manager."
+          },
+          {
+            "sequence": 2,
+            "action": "Read both rows through the callback manager."
+          },
+          {
+            "sequence": 3,
+            "action": "Attempt an invalid Post insert."
+          }
+        ],
+        "outputs": [
+          {
+            "terminal": "rolled-back",
+            "callbackResult": null,
+            "readsVisibleBeforeFailure": true
+          }
+        ],
+        "termination": "callback-error-propagated-after-rollback"
+      },
+      "rawValue": {
+        "label": "rollback-on-invalid-post",
+        "terminal": "rolled-back",
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "readsVisibleBeforeFailure": true,
+        "postRowsAfter": [],
+        "categoryRowsAfter": [],
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "normalizedValue": {
+        "terminal": "rolled-back",
+        "callbackResult": null,
+        "readsVisibleBeforeFailure": true
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "typeorm-obs-source-rollback-on-invalid-post-errors-recovery",
+      "targetId": "typeorm-source-runtime",
+      "executionId": "typeorm-exec-source-rollback-on-invalid-post",
+      "facet": "errors-recovery",
+      "subject": "typeorm-entity-manager-transaction",
+      "observedAt": "2026-11-27T02:19:50.239Z",
+      "sequence": 7,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute a transaction callback, record its outcome, then query entity rows outside the transaction.",
+        "tool": "TypeORM DataSource / better-sqlite3"
+      },
+      "conditions": {
+        "scenario": "rollback-on-invalid-post"
+      },
+      "trigger": "EntityManager.transaction(callback)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "typeorm-transaction-rollback",
+        "trigger": "The callback attempts to insert a Post with a missing required title.",
+        "operationRef": "typeorm-scenario-rollback-on-invalid-post",
+        "error": {
+          "category": "integrity-constraint",
+          "code": "SQLITE_CONSTRAINT_NOTNULL",
+          "message": ""
+        },
+        "origin": "SQLite NOT NULL constraint",
+        "propagationBoundary": "EntityManager.transaction callback",
+        "recoveryActions": [
+          {
+            "action": "rollback-transaction"
+          }
+        ],
+        "recoveryState": "all prior writes removed",
+        "terminalOutcome": "rolled-back",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "rollback-on-invalid-post",
+        "terminal": "rolled-back",
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "readsVisibleBeforeFailure": true,
+        "postRowsAfter": [],
+        "categoryRowsAfter": [],
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "normalizedValue": {
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "terminal": "rolled-back",
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "evidenceRefs": [
+        "typeorm-source-runtime-json"
+      ],
+      "status": "observed"
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "TYPEORM-PER-001",
+      "facet": "persistence",
+      "subject": "successful transaction",
+      "proposition": "When the transaction callback completes successfully, all writes performed through the callback manager are committed and the callback result is returned.",
+      "trigger": "EntityManager.transaction callback returns successfully.",
+      "applicability": {
+        "scope": "The commit-success scenario with one Post and one Category."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "typeorm-obs-source-commit-success-persistence",
+        "typeorm-obs-source-commit-success-behavior"
+      ]
+    },
+    {
+      "ruleId": "TYPEORM-PER-002",
+      "facet": "persistence",
+      "subject": "failed transaction",
+      "proposition": "When an operation in the transaction callback fails, prior writes in that transaction are rolled back and do not remain persisted.",
+      "trigger": "A NOT NULL constraint fails after earlier writes in the callback.",
+      "applicability": {
+        "scope": "The rollback-on-invalid-post scenario using better-sqlite3."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-persistence",
+        "typeorm-obs-source-rollback-on-invalid-post-data"
+      ]
+    },
+    {
+      "ruleId": "TYPEORM-BEH-001",
+      "facet": "behavior",
+      "subject": "transaction callback",
+      "proposition": "The transaction callback receives a manager scoped to the transaction; successful return values are returned to the caller, while thrown errors propagate after rollback.",
+      "trigger": "EntityManager.transaction(callback).",
+      "applicability": {
+        "scope": "The two declared transaction scenarios."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "typeorm-obs-source-commit-success-behavior",
+        "typeorm-obs-source-rollback-on-invalid-post-behavior"
+      ]
+    },
+    {
+      "ruleId": "TYPEORM-ERR-001",
+      "facet": "errors-recovery",
+      "subject": "integrity constraint failure",
+      "proposition": "A NOT NULL constraint failure in the callback is propagated to the caller after the transaction's earlier writes are rolled back.",
+      "trigger": "Attempt to insert a Post without its required title.",
+      "applicability": {
+        "scope": "The rollback-on-invalid-post scenario."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-errors-recovery"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "typeorm-source-runtime-json",
+      "evidenceClass": "runtime",
+      "evidenceType": "transaction-runtime-capture",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "typeorm-source-runtime",
+        "collector": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3",
+        "sourceRevision": "b1e211fc2654d412612a08f8a7fb890f3352614f",
+        "location": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/typeorm-runtime-capture.json"
+      },
+      "capturedAt": "2026-11-27T02:19:50.239Z",
+      "embedded": {
+        "scenarioLabels": [
+          "commit-success",
+          "rollback-on-invalid-post"
+        ],
+        "sha256": "e362b819951a5da58f2322bae2889a46a5e99fe952863beaab2878a7d5ec1fb9"
+      },
+      "locator": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/typeorm-runtime-capture.json",
+      "digest": "e362b819951a5da58f2322bae2889a46a5e99fe952863beaab2878a7d5ec1fb9",
+      "sizeBytes": 1220,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    },
+    {
+      "evidenceId": "typeorm-pnpm-lock",
+      "evidenceClass": "source-artifact",
+      "evidenceType": "pnpm-lockfile",
+      "mediaType": "application/yaml",
+      "origin": {
+        "targetId": "typeorm-source-runtime",
+        "sourceRevision": "b1e211fc2654d412612a08f8a7fb890f3352614f",
+        "location": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/pnpm-lock.yaml"
+      },
+      "capturedAt": "2026-11-27T02:19:50.239Z",
+      "locator": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/pnpm-lock.yaml",
+      "digest": "c50b6de85334c8cc1de138693e180eb5c6d32f66dc72f0c5f6a5fd76c52c0485",
+      "sizeBytes": 701833,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "persistence",
+      "subject": "typeorm-entity-manager-transaction",
+      "status": "observed",
+      "reason": "Both declared transaction scenarios have a facet-specific observation.",
+      "scenarioIds": [
+        "typeorm-scenario-commit-success",
+        "typeorm-scenario-rollback-on-invalid-post"
+      ],
+      "executionIds": [
+        "typeorm-exec-source-commit-success",
+        "typeorm-exec-source-rollback-on-invalid-post"
+      ]
+    },
+    {
+      "facet": "data",
+      "subject": "typeorm-entity-manager-transaction",
+      "status": "observed",
+      "reason": "Both declared transaction scenarios have a facet-specific observation.",
+      "scenarioIds": [
+        "typeorm-scenario-commit-success",
+        "typeorm-scenario-rollback-on-invalid-post"
+      ],
+      "executionIds": [
+        "typeorm-exec-source-commit-success",
+        "typeorm-exec-source-rollback-on-invalid-post"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "typeorm-entity-manager-transaction",
+      "status": "observed",
+      "reason": "Both declared transaction scenarios have a facet-specific observation.",
+      "scenarioIds": [
+        "typeorm-scenario-commit-success",
+        "typeorm-scenario-rollback-on-invalid-post"
+      ],
+      "executionIds": [
+        "typeorm-exec-source-commit-success",
+        "typeorm-exec-source-rollback-on-invalid-post"
+      ]
+    },
+    {
+      "facet": "errors-recovery",
+      "subject": "typeorm-entity-manager-transaction",
+      "status": "observed",
+      "reason": "Both declared transaction scenarios have a facet-specific observation.",
+      "scenarioIds": [
+        "typeorm-scenario-commit-success",
+        "typeorm-scenario-rollback-on-invalid-post"
+      ],
+      "executionIds": [
+        "typeorm-exec-source-commit-success",
+        "typeorm-exec-source-rollback-on-invalid-post"
+      ]
+    }
+  ],
+  "limitations": [
+    "This is a bounded two-scenario case using better-sqlite3 and an independent sqlite3 replica.",
+    "No equivalence claim is made for other TypeORM drivers or advanced transaction features."
+  ],
+  "replicationScope": {
+    "scopeId": "typeorm-two-scenario-transaction-scope",
+    "description": "Complete inventory for the two declared transaction scenarios and four facets.",
+    "facets": [
+      "persistence",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "TYPEORM-P-001",
+        "facet": "persistence",
+        "subject": "typeorm-entity-manager-transaction",
+        "dimension": "commit-on-success",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "typeorm-obs-source-commit-success-persistence"
+        ],
+        "evidenceRefs": [
+          "typeorm-source-runtime-json"
+        ],
+        "rationale": "Both entity writes persist after a successful transaction callback."
+      },
+      {
+        "propertyId": "TYPEORM-P-002",
+        "facet": "persistence",
+        "subject": "typeorm-entity-manager-transaction",
+        "dimension": "rollback-on-callback-error",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "typeorm-obs-source-rollback-on-invalid-post-persistence"
+        ],
+        "evidenceRefs": [
+          "typeorm-source-runtime-json"
+        ],
+        "rationale": "All writes made before a callback failure are absent after rollback."
+      },
+      {
+        "propertyId": "TYPEORM-P-003",
+        "facet": "data",
+        "subject": "typeorm-entity-manager-transaction",
+        "dimension": "transactional-row-visibility",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "typeorm-obs-source-rollback-on-invalid-post-data"
+        ],
+        "evidenceRefs": [
+          "typeorm-source-runtime-json"
+        ],
+        "rationale": "Both writes are visible to reads through the transaction manager before the later failing write."
+      },
+      {
+        "propertyId": "TYPEORM-P-004",
+        "facet": "data",
+        "subject": "typeorm-entity-manager-transaction",
+        "dimension": "post-transaction-row-state",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "typeorm-obs-source-commit-success-data",
+          "typeorm-obs-source-rollback-on-invalid-post-data"
+        ],
+        "evidenceRefs": [
+          "typeorm-source-runtime-json"
+        ],
+        "rationale": "Rows after commit and rollback match the expected persisted entity snapshots."
+      },
+      {
+        "propertyId": "TYPEORM-P-005",
+        "facet": "behavior",
+        "subject": "typeorm-entity-manager-transaction",
+        "dimension": "callback-result-and-error-flow",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "typeorm-obs-source-commit-success-behavior",
+          "typeorm-obs-source-rollback-on-invalid-post-behavior"
+        ],
+        "evidenceRefs": [
+          "typeorm-source-runtime-json"
+        ],
+        "rationale": "Successful callback results are returned; callback errors propagate after rollback."
+      },
+      {
+        "propertyId": "TYPEORM-P-006",
+        "facet": "errors-recovery",
+        "subject": "typeorm-entity-manager-transaction",
+        "dimension": "integrity-error-rollback",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "typeorm-obs-source-rollback-on-invalid-post-errors-recovery"
+        ],
+        "evidenceRefs": [
+          "typeorm-source-runtime-json"
+        ],
+        "rationale": "A NOT NULL violation propagates and the transaction leaves no partial writes."
+      }
+    ],
+    "completeness": {
+      "status": "complete",
+      "assessedAt": "2026-11-27T02:19:50.747892Z",
+      "assessmentMethod": "All six required properties link to runtime observations and retained evidence in both implementations.",
+      "rationale": "All required properties in this bounded transaction scope were observed on the pinned TypeORM runtime and independent Python replica."
+    }
+  }
+}

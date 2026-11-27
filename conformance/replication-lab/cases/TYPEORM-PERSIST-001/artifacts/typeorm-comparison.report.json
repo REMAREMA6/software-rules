@@ -1,0 +1,481 @@
+{
+  "schemaVersion": "0.2.0",
+  "reportId": "typeorm-transaction-cross-stack-comparison",
+  "createdAt": "2026-11-27T02:19:50.749491Z",
+  "referenceCapture": {
+    "captureId": "typeorm-source-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/typeorm-source.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "typeorm-python-replica-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/typeorm-python-replica.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Compare successful commit and failed-callback rollback for two entity writes in an in-memory SQLite database.",
+    "facets": [
+      "persistence",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "scenarioIds": [
+      "typeorm-scenario-commit-success",
+      "typeorm-scenario-rollback-on-invalid-post"
+    ],
+    "conditions": [
+      "TypeORM 1.1.3 at the pinned source commit using better-sqlite3",
+      "Python 3.12 using sqlite3",
+      "Same required entity fields and transaction scenarios"
+    ],
+    "excludedDimensions": [
+      "Exact error message and driver-specific exception class",
+      "Other SQL dialects, isolation levels, concurrency, and nested transactions",
+      "Connection release, rollback failure, and external side effects"
+    ],
+    "limitations": [
+      "The Python implementation is a bounded transaction model, not a TypeORM replacement."
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "typeorm-transaction-semantic-projection",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "compare-transaction-outcomes",
+        "facet": "persistence",
+        "dimension": "transaction-state-and-error-projection",
+        "method": "Compare commit/rollback outcomes, entity rows, callback result, error propagation, and semantic integrity-constraint category; exclude driver-specific error text and runtime details.",
+        "methodVersion": "1.0.0",
+        "inputRepresentation": "Raw TypeORM and Python transaction captures",
+        "outputRepresentation": "Normalized transaction state, data, behaviour, and error projections",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "typeorm-align-commit-success-persistence",
+      "facet": "persistence",
+      "referenceRecordIds": [
+        "typeorm-obs-source-commit-success-persistence"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-commit-success-persistence"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-commit-success-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "typeorm-obs-source-commit-success-data"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-commit-success-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-commit-success-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "typeorm-obs-source-commit-success-behavior"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-commit-success-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-commit-success-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "typeorm-obs-source-commit-success-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-commit-success-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-persistence",
+      "facet": "persistence",
+      "referenceRecordIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-persistence"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-persistence"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-data"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-behavior"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    },
+    {
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same transaction scenario and facet."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "typeorm-result-commit-success-persistence",
+      "alignmentId": "typeorm-align-commit-success-persistence",
+      "facet": "persistence",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-commit-success-persistence"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-commit-success-persistence"
+      ],
+      "referenceValue": {
+        "terminal": "committed",
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "implementationValue": {
+        "terminal": "committed",
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-commit-success-data",
+      "alignmentId": "typeorm-align-commit-success-data",
+      "facet": "data",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-commit-success-data"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-commit-success-data"
+      ],
+      "referenceValue": {
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1,
+        "readsVisibleBeforeFailure": null
+      },
+      "implementationValue": {
+        "postRows": [
+          {
+            "id": 1,
+            "title": "Post #1"
+          }
+        ],
+        "categoryRows": [
+          {
+            "id": 1,
+            "name": "Category #1"
+          }
+        ],
+        "postCount": 1,
+        "categoryCount": 1,
+        "readsVisibleBeforeFailure": null
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-commit-success-behavior",
+      "alignmentId": "typeorm-align-commit-success-behavior",
+      "facet": "behavior",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-commit-success-behavior"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-commit-success-behavior"
+      ],
+      "referenceValue": {
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "readsVisibleBeforeFailure": null
+      },
+      "implementationValue": {
+        "terminal": "committed",
+        "callbackResult": {
+          "postId": 1,
+          "categoryId": 1
+        },
+        "readsVisibleBeforeFailure": null
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-commit-success-errors-recovery",
+      "alignmentId": "typeorm-align-commit-success-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-commit-success-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-commit-success-errors-recovery"
+      ],
+      "referenceValue": {
+        "errorPropagated": false,
+        "errorCategory": "none",
+        "terminal": "committed",
+        "postCountAfter": 1,
+        "categoryCountAfter": 1
+      },
+      "implementationValue": {
+        "errorPropagated": false,
+        "errorCategory": "none",
+        "terminal": "committed",
+        "postCountAfter": 1,
+        "categoryCountAfter": 1
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-rollback-on-invalid-post-persistence",
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-persistence",
+      "facet": "persistence",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-persistence"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-persistence"
+      ],
+      "referenceValue": {
+        "terminal": "rolled-back",
+        "postRows": [],
+        "categoryRows": [],
+        "postCount": 0,
+        "categoryCount": 0
+      },
+      "implementationValue": {
+        "terminal": "rolled-back",
+        "postRows": [],
+        "categoryRows": [],
+        "postCount": 0,
+        "categoryCount": 0
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-rollback-on-invalid-post-data",
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-data",
+      "facet": "data",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-data"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-data"
+      ],
+      "referenceValue": {
+        "postRows": [],
+        "categoryRows": [],
+        "postCount": 0,
+        "categoryCount": 0,
+        "readsVisibleBeforeFailure": true
+      },
+      "implementationValue": {
+        "postRows": [],
+        "categoryRows": [],
+        "postCount": 0,
+        "categoryCount": 0,
+        "readsVisibleBeforeFailure": true
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-rollback-on-invalid-post-behavior",
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-behavior",
+      "facet": "behavior",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-behavior"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-behavior"
+      ],
+      "referenceValue": {
+        "terminal": "rolled-back",
+        "callbackResult": null,
+        "readsVisibleBeforeFailure": true
+      },
+      "implementationValue": {
+        "terminal": "rolled-back",
+        "callbackResult": null,
+        "readsVisibleBeforeFailure": true
+      },
+      "reason": "The transaction-state projection matches."
+    },
+    {
+      "resultId": "typeorm-result-rollback-on-invalid-post-errors-recovery",
+      "alignmentId": "typeorm-align-rollback-on-invalid-post-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "transaction-state-and-error-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "typeorm-obs-source-rollback-on-invalid-post-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "typeorm-obs-replica-rollback-on-invalid-post-errors-recovery"
+      ],
+      "referenceValue": {
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "terminal": "rolled-back",
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "implementationValue": {
+        "errorPropagated": true,
+        "errorCategory": "integrity-constraint",
+        "terminal": "rolled-back",
+        "postCountAfter": 0,
+        "categoryCountAfter": 0
+      },
+      "reason": "The transaction-state projection matches."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 8,
+      "observedUnits": 8,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "implementation": {
+      "declaredUnits": 8,
+      "observedUnits": 8,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "sharedComparableUnits": 8,
+    "incomparableUnits": 0,
+    "limitations": [
+      "Coverage is limited to the eight facet/scenario projections in this report."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The independent Python implementation matches TypeORM 1.1.3 for the two declared transaction scenarios and 8 facet/scenario projections. This is bounded evidence, not universal equivalence.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "No claim is made about TypeORM features or database drivers outside the declared transaction scope."
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for all required properties in the declared two-scenario case scope, not the full TypeORM persistence facet."
+  }
+}

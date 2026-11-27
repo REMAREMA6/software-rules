@@ -1,0 +1,41 @@
+{
+  "capturedAt": "2026-11-27T02:19:50.603633Z",
+  "completedAt": "2026-11-27T02:19:50.603649Z",
+  "implementation": "Independent Python 3.12 sqlite3 transaction model",
+  "driver": "sqlite3",
+  "scenarios": [
+    {
+      "label": "commit-success",
+      "terminal": "committed",
+      "callbackResult": {
+        "postId": 1,
+        "categoryId": 1
+      },
+      "postRows": [
+        {
+          "id": 1,
+          "title": "Post #1"
+        }
+      ],
+      "categoryRows": [
+        {
+          "id": 1,
+          "name": "Category #1"
+        }
+      ],
+      "postCount": 1,
+      "categoryCount": 1
+    },
+    {
+      "label": "rollback-on-invalid-post",
+      "terminal": "rolled-back",
+      "errorPropagated": true,
+      "errorCategory": "integrity-constraint",
+      "readsVisibleBeforeFailure": true,
+      "postRowsAfter": [],
+      "categoryRowsAfter": [],
+      "postCountAfter": 0,
+      "categoryCountAfter": 0
+    }
+  ]
+}

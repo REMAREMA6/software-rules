@@ -1,0 +1,13 @@
+{
+  "result": "match",
+  "scenarioCount": 2,
+  "comparedFields": [
+    "callback return value",
+    "persisted rows after commit",
+    "error propagation",
+    "rows visible inside the transaction before failure",
+    "persisted rows after rollback",
+    "semantic integrity-constraint category"
+  ],
+  "errors": []
+}

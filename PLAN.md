@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; two bounded cases passed, TypeORM persistence case active  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 
@@ -219,13 +219,22 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 **Work sequence**
 - [x] Establish the independent replication-lab structure, case manifests, evidence layout, and initial runners; reports are generated per case as evidence becomes available.
 - [x] Re-audit Task Board and preserve it as bounded evidence; unresolved properties remain partial/incomplete rather than being promoted to complete.
-- [~] Register nine candidate repositories and inspect BullMQ at a pinned commit; continue property-level inspection and selection across the remaining facets.
-- [~] Begin extracting and capturing source-derived rules; BullMQ retry eligibility and backoff routing are recorded but remain unverified at runtime.
-- [~] Begin independent replication with a Python decision model for BullMQ retry policy; broaden to additional languages, runtimes, persistence and UI stacks.
-- [~] Add a pinned BullMQ+Redis runtime probe and a Python-generated replica capture; runtime and comparison workflow execution is pending.
-- [~] Add capture comparison and mutation-detection tests; source-versus-replica comparison awaits a successful pinned-source runtime run.
-- [~] Validate the source-derived BullMQ capture against the capture schema and cross-record integrity rules; continue evidence-quality and coverage validation case by case.
-- [ ] Publish the 15-facet evidence matrix and review every remaining gap.
+- [x] Register nine immutable source candidates and inspect the selected source implementations.
+- [x] Accept BMQ-ER-002 (BullMQ retry/backoff) and EXP-API-001 (Express routing/API) after successful pinned-source runtime, independent Python replica, comparison, mutation, schema/integrity, and artifact-retention runs.
+- [~] Execute TORM-PERSIST-001 (TypeORM commit/rollback) using compiled pinned source and independent Python/sqlite3.
+- [x] Extract and validate the bounded runtime rules in the accepted BullMQ and Express cases; source-derived inferences remain distinct where runtime evidence is absent.
+- [~] Extract TypeORM top-level transaction rules; runtime comparison pending.
+- [x] Independently replicate BullMQ retry decisions and Express HTTP routing in Python 3.12.
+- [~] Independently replicate TypeORM transaction outcomes in Python sqlite3; broaden to further stacks and UI technologies.
+- [x] Run and retain the pinned BullMQ+Redis runtime probe and Python replica capture; 12 semantic projections matched.
+- [x] Run and retain the pinned Express runtime probe and Python HTTP replica capture; 28 semantic projections matched.
+- [~] Run TypeORM source and replica probes; workflow result pending.
+- [x] Accept BullMQ and Express comparison/mutation results after reviewing successful GitHub Actions runs.
+- [~] Execute TypeORM comparison and mutation tests in CI.
+- [x] Validate accepted BullMQ and Express Software Rules captures and comparison reports against schemas and cross-record integrity checks.
+- [~] Add and validate schema-native TypeORM captures; continue evidence-quality audit case by case.
+- [x] Publish and update the living 15-facet evidence matrix.
+- [ ] Review every remaining property gap and complete all facet-specific cross-stack cases.
 
 **Exit gate:** all 15 facets have reviewed property inventories and suitable source/independent-replica cases; each required rule class and claimed property passes the source→technology-independent rule→independent replica→equivalent probes→capture→comparison→mutation loop; replication cases span materially different stacks and architectures; no required unknown or partial property is silently passed; stack-specific assumptions are explicit; schema and cross-record validation pass; and the final report bounds conclusions to evidence. A finite conformance suite supports a bounded portability claim for the tested rules and stacks, not a universal guarantee for every possible technology. A green CI run alone cannot satisfy this gate.
 
@@ -341,4 +350,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 with a bounded TypeORM persistence/data case using the pinned source repository and an independent Python/SQLite implementation. Then continue across all remaining facets using additional pinned source repositories and genuinely different stacks. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by executing TORM-PERSIST-001 and validating its source/replica captures. Then build and execute distinct cases for messaging, identity/authentication, authorization, dedicated security, business rules, integrations, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

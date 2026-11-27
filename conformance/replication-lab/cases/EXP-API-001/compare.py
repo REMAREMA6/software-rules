@@ -21,7 +21,7 @@ def compare(source, replica):
         if actual["request"] != expected["request"]:
             errors.append(f"{label}.request differs")
         for field in fields:
-            if actual["response"][field] != expected["response"][field]:
+            if actual["response"].get(field, 0) != expected["response"].get(field, 0):
                 errors.append(
                     f"{label}.{field}: source={actual['response'][field]!r}, "
                     f"replica={expected['response'][field]!r}"

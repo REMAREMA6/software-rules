@@ -11,7 +11,7 @@ A facet is not complete merely because one small rule has passed. The matrix dis
 | 2 | Behaviour | Task Board workflows; BullMQ retry/backoff; Express route dispatch. BullMQ and Express each pass bounded source/replica cases. | Python retry decision model; Python HTTP server. | Partial. Need broader state-machine, ordering, repeated/interrupted workflow, and cross-facet behaviour cases. |
 | 3 | Business rules | Task Board title/duplicate/count probes are partial. Medusa is a candidate for commerce pricing/cart rules. | No accepted independent business-rule replica yet. | Not complete. Need source-derived domain rule, boundary/precedence matrix, and independent implementation. |
 | 4 | Data | Task Board record/identifier/PATCH samples are partial; BullMQ attemptsMade semantics are covered within its retry case. | Python model for BullMQ counters. | Partial. Need explicit typed data schema, nullability, relationships, validation, transformation, and round-trip cases. |
-| 5 | Persistence | TypeORM transaction/rollback implementation inspected at pinned commit; TORM-PERSIST-001 runtime workflow and Python/sqlite3 replica prepared. | Python 3.12 sqlite3. | In progress; no pass until pinned source workflow and evidence validation succeed. |
+| 5 | Persistence | TypeORM transaction/rollback implementation inspected at pinned commit; TORM-PERSIST-001 compiles the pinned source and probes SQL.js against a Python/sqlite3 replica. | Python 3.12 sqlite3. | In progress; runtime workflow result and schema-native capture validation pending. |
 | 6 | API | Express 5.3.0 seven-request HTTP case passes 28 facet/scenario projections; Task Board also has a deterministic in-memory API adapter sample. | Python 3.12 HTTP server. | Bounded case passed. Need broader payload validation, authentication, pagination, concurrency, and error contract classes before facet-wide coverage. |
 | 7 | Messaging | BullMQ queue retry case covers job processing/retry outcomes, not the complete message delivery/acknowledgement contract. | Python decision-model simulator. | Not complete. Need publish/consume, delivery guarantee, ack/nack, duplicate, ordering, and idempotency case. |
 | 8 | Identity and authentication | Keycloak and OWASP Juice Shop are registered candidates; no accepted runtime case. | None. | Not started. |
@@ -28,9 +28,10 @@ A facet is not complete merely because one small rule has passed. The matrix dis
 1. **BMQ-ER-002 — BullMQ retry/backoff:** source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4`; pinned source runtime with Redis 7; independent Python 3.12 model; three scenarios; 12 semantic projections; mutation tests; schema and cross-record validation. Successful run [#45925568609](https://github.com/REMAREMA6/software-rules/actions/runs/45925568609); evidence commit [513766d](https://github.com/REMAREMA6/software-rules/commit/513766df3b9d4300df4c9297b79f221b54e29e42).
 2. **EXP-API-001 — Express routing/API:** source commit `43fca52d28a422c8be48fd489cbd4f2d6152bab6`; pinned Express runtime; independent Python 3.12 HTTP server; seven requests; 28 semantic projections; mutation tests; schema and cross-record validation. Successful run [#45926714897](https://github.com/REMAREMA6/software-rules/actions/runs/45926714897); evidence commit [ad30376](https://github.com/REMAREMA6/software-rules/commit/ad3037693d32221a6d7bdb6b9883c45db7b2be9c).
 
-## Active case
+## Active cases
 
-- **TORM-PERSIST-001 — TypeORM transaction commit/rollback:** pinned source commit `b1e211fc2654d412612a08f8a7fb890f3352614f`; compile source and run SQL.js driver; independent Python sqlite3 replica. Workflow added; result not yet verified.
+- **TORM-PERSIST-001 — TypeORM transaction commit/rollback:** pinned source commit `b1e211fc2654d412612a08f8a7fb890f3352614f`; compile source and run SQL.js driver; independent Python sqlite3 replica. Workflow and probe are present; runtime result and schema-native capture validation are not yet verified.
+- **BMQ-MSG-001 — BullMQ messaging lifecycle:** pinned source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4`; Redis-backed duplicate-ID, queue-event, successful-consumer, and failed-consumer probes; independent Python queue model. Runtime workflow and mutation tests are prepared; no pass claimed.
 
 ## Exit-gate interpretation
 

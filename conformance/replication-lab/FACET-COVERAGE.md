@@ -18,8 +18,8 @@ This matrix distinguishes a facet having some validated evidence from a facet be
 | 8 | Identity and authentication | Keycloak is a registered source candidate; no source/replica case has passed. | None yet | Not started |
 | 9 | Authorization and permissions | Keycloak is a registered source candidate; no actor/resource/action policy matrix has passed. | None yet | Not started |
 | 10 | Security controls | OWASP Juice Shop is a registered source candidate; no authorized source/replica security case has passed. | None yet | Not started |
-| 11 | Background processing | BullMQ retry eligibility/backoff case passes its bounded source/replica probes. Scheduling, cancellation, concurrency, stalled jobs, and full lifecycle remain uncovered. | Python retry-decision model | In progress |
-| 12 | Errors and recovery | BullMQ retry suppression, Express 404 fallback, and TypeORM rollback pass bounded cases. Medusa invalid_data error behavior passes in a bounded ten-probe case; broader failure classes remain uncovered. | Python retry, HTTP, SQLite, and date models | In progress |
+| 11 | Background processing | BullMQ retry/backoff and message lifecycle cases pass bounded source/replica probes. Scheduling, cancellation, concurrency, stalled jobs, and full lifecycle remain uncovered. | Python retry-decision model | In progress |
+| 12 | Errors and recovery | BullMQ retry suppression/consumer failure, Express 404 fallback, TypeORM rollback, and Medusa invalid_data behavior pass bounded cases; broader failure classes remain uncovered. | Python retry, HTTP, SQLite, and date models | In progress |
 | 13 | Integrations | Grafana, n8n, and Medusa are candidates; no external-system integration contract has passed an independent replica case. | None yet | Not started |
 | 14 | Configuration | Express default case-sensitive/strict routing settings pass in the seven-request case. Effective configuration precedence in Grafana/Keycloak remains untested. | Python HTTP server | In progress |
 | 15 | Performance and resource behaviour | Prometheus is a registered candidate; no reproducible source workload and independent measurement case has passed. | None yet | Not started |
@@ -34,6 +34,7 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [EXP-API-001](cases/EXP-API-001/CASE.md) | API; behaviour; configuration; errors/recovery | Seven HTTP requests, 28 matching projections, executable mutations, Software Rules captures, schema/integrity validation, and committed artifacts |
 | [TORM-PERSIST-001](cases/TORM-PERSIST-001/CASE.md) | Persistence; data; behaviour; errors/recovery | Two transaction scenarios, eight matching projections, six mutation tests, Software Rules captures, schema/integrity validation; workflow artifact retained (not yet committed as repository files) |
 | [MEDUSA-BR-001](cases/MEDUSA-BR-001/CASE.md) | Business rules; data; behaviour; errors/recovery | Ten date inputs, 40 matching projections, executable mutations, Software Rules captures, schema/integrity validation, and committed source evidence |
+| [BMQ-MSG-001](cases/BMQ-MSG-001/CASE.md) | Messaging; background processing; behaviour; errors/recovery; data | Two message scenarios, ten matching projections, executable Python replica mutations, Software Rules captures, schema/integrity validation, and committed evidence |
 
 ## Active cases
 

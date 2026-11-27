@@ -28,7 +28,7 @@ def source_capture():
                     {"event": "processor", "attemptsMade": 1},
                     {"event": "backoff-result", "delayMs": 80},
                     {"event": "queue:delayed"},
-                    {"event": "queue:waiting"},
+                    {"event": "queue:waiting", "data": {"prev": "delayed"}},
                     {"event": "processor", "attemptsMade": 2},
                     {"event": "queue:completed"},
                 ],

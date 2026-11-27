@@ -13,7 +13,7 @@ def captures():
     scenarios = [
         ("get-base", "GET", "/widgets", 200, "get", {"content-type": "text/html; charset=utf-8", "content-length": "3", "allow": None}),
         ("head-fallback", "HEAD", "/widgets", 200, "", {"content-type": "text/html; charset=utf-8", "content-length": "3", "allow": None}),
-        ("options-auto", "OPTIONS", "/widgets", 200, "GET, HEAD, PUT", {"content-type": "text/html; charset=utf-8", "content-length": "14", "allow": "GET, HEAD, PUT"}),
+        ("options-auto", "OPTIONS", "/widgets", 200, "GET, HEAD, PUT", {"content-type": "text/plain", "content-length": "14", "allow": "GET, HEAD, PUT"}),
         ("options-missing", "OPTIONS", "/missing", 404, "not found", {"content-type": "text/html; charset=utf-8", "content-length": "9", "allow": None}),
         ("options-explicit", "OPTIONS", "/override", 200, "GET", {"content-type": "text/html; charset=utf-8", "content-length": "3", "allow": "GET"}),
         ("case-and-trailing-slash", "GET", "/WIDGETS/", 200, "get", {"content-type": "text/html; charset=utf-8", "content-length": "3", "allow": None}),

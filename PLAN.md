@@ -212,7 +212,7 @@ Deliverables:
 
 Phase 6 uses **multiple source repositories and a separate independent replication project**. One application is not expected to implement all 15 facets. The existing Task Board is retained as a bounded initial fixture; other facets are validated using suitable source repositories that actually demonstrate their rules.
 
-The operating model, 15-facet matrix, source register, replication-lab layout, rule-level pass criteria, and exit gate are defined in [the cross-repository replication programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md).
+The operating model, source register, replication-lab layout, rule-level pass criteria, and exit gate are defined in [the cross-repository replication programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md). Live facet-by-facet evidence status is tracked in [FACET-COVERAGE.md](conformance/replication-lab/FACET-COVERAGE.md).
 
 **Required loop:** source repository and immutable commit → observe/inspect → extract technology-independent rule → capture in Software Rules → independent implementation in a different stack → equivalent probes → capture and compare → mutation test → evidence-backed result.
 

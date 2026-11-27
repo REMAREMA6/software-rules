@@ -294,12 +294,9 @@ def main():
     write(source_path, source)
     write(replica_path, replica)
     write(report_path, report)
-    for name, value in [
-        ("taskboard-ui-source.capture.json", source),
-        ("taskboard-ui-react.capture.json", replica),
-        ("taskboard-ui-comparison.report.json", report)
-    ]:
-        write(FIXTURES / name, value)
+    write(FIXTURES / "taskboard-ui-source.capture.json", source)
+    write(FIXTURES / "taskboard-ui-react.capture.json", replica)
+    write(ROOT / "comparison/examples/valid/taskboard-ui-react-cross-stack.json", report)
     print(json.dumps({
         "sourceCapture": str(source_path.relative_to(ROOT)),
         "replicaCapture": str(replica_path.relative_to(ROOT)),

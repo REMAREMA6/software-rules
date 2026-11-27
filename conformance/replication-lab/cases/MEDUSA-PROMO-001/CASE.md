@@ -26,7 +26,7 @@ The case extracts and executes the exact `evaluateRuleValueCondition` and `areRu
 
 ## Probe matrix
 
-Thirty deterministic probes cover all seven operators, scalar/array values, nested and scoped attributes, missing context, malformed rules, and multi-rule conjunction. Eight deliberate mutations target array quantification, missing-context handling, numeric comparison, scope stripping, multi-rule conjunction, and value filtering.
+Thirty-two deterministic probes cover all seven operators, scalar/array values, nested and scoped attributes, missing context, malformed rules, and multi-rule conjunction. Eight deliberate mutations target array quantification, missing-context handling, numeric comparison, scope stripping, multi-rule conjunction, and value filtering.
 
 ## Acceptance gate
 

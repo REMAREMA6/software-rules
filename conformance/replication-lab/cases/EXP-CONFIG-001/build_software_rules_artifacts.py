@@ -95,7 +95,7 @@ def build_report(source,replica):
  for key,a in left.items():
   b=right[key]; aid="express-config-alignment-"+key[0]+"-"+hashlib.sha256(key[1].encode()).hexdigest()[:12]
   align.append({"alignmentId":aid,"facet":FACET,"referenceRecordIds":[a["observationId"]],
-   "implementationRecordIds":[b["observationId"]],"status":"paired","identityBasis":"scenario-and-request-path",
+   "implementationRecordIds":[b["observationId"]],"status":"paired","identityBasis":"scenario-subject-facet-condition",
    "rationale":"Same configuration profile and HTTP request path."})
   av=a["normalizedValue"]; bv=b["normalizedValue"]
   results.append({"resultId":aid+"-result","alignmentId":aid,"facet":FACET,"dimension":"effective-configuration-and-route-outcome",

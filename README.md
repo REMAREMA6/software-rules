@@ -32,6 +32,7 @@ A technology-independent specification system for capturing, representing, and c
 - [Phase 6 cross-repository replication programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md)
 - [Phase 6 source repository register](examples/cross-repository/sources/README.md)
 - [Independent replication lab](conformance/replication-lab/README.md)
+- [Phase 6 final exit audit and 20-case evidence corpus](conformance/replication-lab/PHASE6-EXIT-AUDIT.md)
 - [Legacy Phase 6 facet notes](examples/PHASE-6-FACET-EXPANSION.md)
 - [Phase 6 Task Board conformance system](examples/task-board/README.md)
 - [Phase 6 Task Board evidence audit](examples/task-board/PHASE-6-AUDIT.md)

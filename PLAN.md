@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress  
 **Plan version:** 0.3.0  
-**Last updated:** 2026-11-26
+**Last updated:** 2026-11-27
 
 ## 1. Mission
 
@@ -21,7 +21,7 @@ The intended workflow is:
 7. Normalize and compare the captures.
 8. Report matches, differences, unknowns, and coverage limits.
 
-The specification describes observable software behaviour and state. It is not a source-code translation format and does not prescribe the implementation stack.
+The specification describes software rules and observable outcomes in technology-independent terms. It is not a source-code translation format and does not prescribe the implementation stack. The conformance programme must test transfer across materially different implementation stacks; finite tests can establish portability for the tested rules, stacks, and conditions, not mathematically guarantee compatibility with every possible stack.
 
 ## 2. Foundational distinctions
 
@@ -222,12 +222,12 @@ The operating model, 15-facet matrix, source register, replication-lab layout, r
 - [ ] Select and inspect multiple source repositories; record immutable commits, licences, boundaries, stacks, and facet suitability.
 - [ ] Extract and capture underlying rules for all 15 facets using facet-specific payloads.
 - [ ] Implement each rule independently in the replication project, using a different stack for cross-stack claims.
-- [ ] Execute semantically equivalent normal, boundary, negative, and failure probes.
+- [ ] Execute semantically equivalent normal, boundary, negative, repeated, ordering, concurrency, and failure probes where relevant.
 - [ ] Compare source and replica captures and run meaningful mutation tests.
 - [ ] Validate evidence provenance, property-level links, cross-facet relationships, and coverage.
 - [ ] Publish the 15-facet evidence matrix and review every remaining gap.
 
-**Exit gate:** all 15 facets have reviewed inventories and suitable source/independent-replica cases; each claimed rule passes the source→rule→replica→probe→comparison→mutation loop; no required unknown or partial property is silently passed; stack differences are explicit; and the final report bounds conclusions to evidence. A green CI run alone cannot satisfy this gate.
+**Exit gate:** all 15 facets have reviewed property inventories and suitable source/independent-replica cases; each required rule class and claimed property passes the source→technology-independent rule→independent replica→equivalent probes→capture→comparison→mutation loop; replication cases span materially different stacks and architectures; no required unknown or partial property is silently passed; stack-specific assumptions are explicit; schema and cross-record validation pass; and the final report bounds conclusions to evidence. A finite conformance suite supports a bounded portability claim for the tested rules and stacks, not a universal guarantee for every possible technology. A green CI run alone cannot satisfy this gate.
 
 ### Phase 7 — Review, release, and maintenance
 

@@ -3,6 +3,7 @@
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const http = require('node:http');
+const net = require('node:net');
 const express = require(process.cwd());
 
 const captureStartedAt = new Date().toISOString();
@@ -12,6 +13,20 @@ app.get('/widgets', (req, res) => res.send('get'));
 app.put('/widgets', (req, res) => res.send('put'));
 app.options('/override', (req, res) => res.set('Allow', 'GET').send('GET'));
 app.use((req, res) => res.status(404).send('not found'));
+
+async function headWireBodyBytes(port) {
+  const raw = await new Promise((resolve, reject) => {
+    const socket = net.createConnection({ host: '127.0.0.1', port }, () => {
+      socket.write('HEAD /widgets HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n');
+    });
+    const chunks = [];
+    socket.on('data', chunk => chunks.push(chunk));
+    socket.on('end', () => resolve(Buffer.concat(chunks)));
+    socket.on('error', reject);
+  });
+  const separator = raw.indexOf(Buffer.from('\r\n\r\n'));
+  return separator < 0 ? 0 : raw.length - separator - 4;
+}
 
 function selectedHeaders(headers) {
   return {
@@ -53,6 +68,8 @@ async function main() {
     await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
   }
 
+  const headScenario = scenarios.find(item => item.label === 'head-fallback');
+  headScenario.response.wireBodyBytes = await headWireBodyBytes(server.address().port);
   const lockDigest = fs.existsSync('package-lock.json')
     ? crypto.createHash('sha256').update(fs.readFileSync('package-lock.json')).digest('hex')
     : null;
@@ -73,7 +90,7 @@ async function main() {
   const head = scenarios.find(item => item.label === 'head-fallback').response;
   const checks = [
     get.status === 200 && get.body === 'get',
-    head.status === 200 && head.body === '' && head.headers['content-length'] === get.headers['content-length'],
+    head.status === 200 && head.body === '' && head.headers['content-length'] === get.headers['content-length'] && head.wireBodyBytes === 0,
     scenarios.find(item => item.label === 'options-auto').response.headers.allow === 'GET, HEAD, PUT',
     scenarios.find(item => item.label === 'options-auto').response.body === 'GET, HEAD, PUT',
     scenarios.find(item => item.label === 'options-missing').response.status === 404,

@@ -408,7 +408,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Corrected the facet evidence matrix to distinguish bounded case passes from facet-wide completeness.
 - [x] Inspected TypeORM transaction manager and SQLite-compatible query-runner implementation at the registered immutable commit.
 - [x] Added TORM-PERSIST-001 source probe, independent Python/sqlite3 model, comparator, mutation tests, and pinned-source CI workflow.
-- [~] TypeORM workflow execution and generated runtime evidence are pending. Do not count the case as passed until the actual run and artifacts are reviewed.
+- [x] At the time of this entry, TypeORM workflow execution and generated runtime evidence were pending; this was superseded by the successful source/replica, mutation, schema, and integrity run recorded in the 2026-11-27 verification entry below.
 - [ ] Messaging, identity/authentication, authorization, dedicated security, integrations, business rules, and repeatable performance/resource cases remain unimplemented or incomplete.
 
 

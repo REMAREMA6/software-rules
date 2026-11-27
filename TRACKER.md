@@ -352,3 +352,11 @@
 - [x] Corrected the cross-record validator so source-inferred properties may link directly to source-artifact evidence without fabricating runtime observations; it rejects runtime evidence misclassified as source-only evidence.
 - [x] Schema and cross-record validation passed after that correction (run [#87](https://github.com/REMAREMA6/software-rules/actions/runs/45923807641)).
 - [~] Pinned BullMQ runtime build/probe and Python-vs-source comparison are still executing in GitHub Actions. Do not count this case as passed until the workflow and artifacts are reviewed.
+
+
+### Runtime workflow audit — 2026-11-27
+
+- [x] Inspected artifacts from the first two green BullMQ workflow runs rather than accepting the job conclusion alone.
+- [x] Found that the source runtime capture and comparison report were empty. The -1 scenario timed out because the probe checked the recorded attempt number instead of the backoff result; shell pipelines also lacked `pipefail`, masking the failed Node/Python commands behind successful `tee` processes.
+- [x] Corrected the suppression assertion to inspect the returned backoff value, added explicit Redis/worker cleanup, and enabled `pipefail` for source-probe and comparison pipelines.
+- [~] Re-run the pinned-source workflow and inspect non-empty source, replica, and comparison artifacts. Previous green runs are explicitly not counted as conformance evidence.

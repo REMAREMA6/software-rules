@@ -15,7 +15,7 @@ def capture(mutation=None):
     state="completed";reason=None;attempts_started=2;attempts_made=0;processed=[label];counts={"waiting":0,"active":0,"completed":1,"failed":0}
    else:
     state="failed";reason="job stalled more than allowable limit";attempts_started=2;attempts_made=1;counts={"waiting":0,"active":0,"completed":0,"failed":1}
-  return {"label":label,"initialActiveId":"job-1",
+  return {"label":label,"initialActiveId":"recovery-job",
    "terminal":{"state":state,"attemptsStarted":attempts_started,"attemptsMade":attempts_made,"stalledCounter":stalled,
     **({"result":"recovered"} if state=="completed" else {"reason":reason})},
    "processed":processed,"eventCounts":{"stalled":1,"completed":1 if state=="completed" else 0,"failed":1 if state=="failed" else 0},

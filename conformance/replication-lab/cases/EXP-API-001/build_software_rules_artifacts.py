@@ -427,7 +427,7 @@ def build_capture(raw, prefix, is_source, raw_path, lock_path, revision):
                 "status": "complete",
                 "assessedAt": created,
                 "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence across all seven requests.",
-                "rationale": "All six required properties in this bounded case scope were observed on both source and independent replica.",
+                "rationale": "All eight required properties in this bounded case scope were observed on both source and independent replica.",
             },
         },
     }

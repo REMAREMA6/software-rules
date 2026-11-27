@@ -1,0 +1,2247 @@
+{
+  "schemaVersion": "0.2.0",
+  "reportId": "jose-jwt-auth-cross-stack-comparison",
+  "createdAt": "2026-11-27T02:53:50.333599Z",
+  "referenceCapture": {
+    "captureId": "jose-source-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jose-source.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "python-jwt-replica-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jose-python-replica.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Compare eleven HMAC JWT verification inputs and five facet projections.",
+    "facets": [
+      "identity-authentication",
+      "security-controls",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "scenarioIds": [
+      "jose-scenario-valid-token",
+      "jose-scenario-expired-token",
+      "jose-scenario-not-before-future",
+      "jose-scenario-issuer-mismatch",
+      "jose-scenario-audience-mismatch",
+      "jose-scenario-tampered-signature",
+      "jose-scenario-algorithm-not-allowed",
+      "jose-scenario-missing-exp-is-optional",
+      "jose-scenario-audience-array-match",
+      "jose-scenario-missing-issuer",
+      "jose-scenario-missing-audience"
+    ],
+    "conditions": [
+      "jose 6.2.18 at the pinned source commit, Node.js 22, WebCrypto",
+      "Python 3.12 standard-library HMAC verifier",
+      "Identical source-generated compact JWT token strings and fixed verification time"
+    ],
+    "excludedDimensions": [
+      "RSA/ECDSA and asymmetric algorithms",
+      "Remote JWKS, revocation, refresh tokens, and full authentication/session lifecycle",
+      "Clock tolerance, maxTokenAge, and other JOSE features"
+    ],
+    "limitations": [
+      "The Python replica is limited to HS256/HS384 HMAC and the declared JWT claim policy."
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "jose-jwt-auth-semantic-projection",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "compare-jwt-verification",
+        "facet": "identity-authentication",
+        "dimension": "jwt-verification-semantic-projection",
+        "method": "Compare accept/reject outcome, semantic error category, verified claims, and protected header; exclude implementation-specific error codes and messages.",
+        "methodVersion": "1.0.0",
+        "inputRepresentation": "Same compact JWT tokens and verification options",
+        "outputRepresentation": "Normalized authentication decision and verified claims",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "jose-align-valid-token-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-valid-token-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-valid-token-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-valid-token-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-valid-token-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-valid-token-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-valid-token-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-valid-token-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-valid-token-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-valid-token-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-valid-token-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-valid-token-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-valid-token-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-valid-token-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-valid-token-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-expired-token-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-expired-token-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-expired-token-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-expired-token-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-expired-token-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-expired-token-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-expired-token-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-expired-token-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-expired-token-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-expired-token-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-expired-token-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-expired-token-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-expired-token-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-expired-token-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-expired-token-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-not-before-future-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-not-before-future-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-not-before-future-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-not-before-future-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-not-before-future-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-not-before-future-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-not-before-future-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-not-before-future-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-not-before-future-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-not-before-future-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-not-before-future-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-not-before-future-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-not-before-future-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-not-before-future-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-not-before-future-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-issuer-mismatch-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-issuer-mismatch-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-issuer-mismatch-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-issuer-mismatch-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-issuer-mismatch-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-issuer-mismatch-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-issuer-mismatch-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-issuer-mismatch-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-issuer-mismatch-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-issuer-mismatch-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-issuer-mismatch-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-issuer-mismatch-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-issuer-mismatch-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-issuer-mismatch-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-issuer-mismatch-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-mismatch-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-mismatch-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-mismatch-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-mismatch-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-mismatch-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-mismatch-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-mismatch-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-mismatch-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-mismatch-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-mismatch-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-mismatch-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-mismatch-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-mismatch-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-mismatch-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-mismatch-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-tampered-signature-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-tampered-signature-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-tampered-signature-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-tampered-signature-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-tampered-signature-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-tampered-signature-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-tampered-signature-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-tampered-signature-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-tampered-signature-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-tampered-signature-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-tampered-signature-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-tampered-signature-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-tampered-signature-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-tampered-signature-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-tampered-signature-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-algorithm-not-allowed-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-algorithm-not-allowed-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-algorithm-not-allowed-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-algorithm-not-allowed-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-algorithm-not-allowed-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-algorithm-not-allowed-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-algorithm-not-allowed-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-algorithm-not-allowed-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-algorithm-not-allowed-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-algorithm-not-allowed-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-algorithm-not-allowed-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-algorithm-not-allowed-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-algorithm-not-allowed-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-algorithm-not-allowed-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-algorithm-not-allowed-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-exp-is-optional-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-exp-is-optional-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-exp-is-optional-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-exp-is-optional-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-exp-is-optional-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-exp-is-optional-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-exp-is-optional-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-exp-is-optional-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-exp-is-optional-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-exp-is-optional-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-exp-is-optional-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-exp-is-optional-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-exp-is-optional-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-exp-is-optional-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-exp-is-optional-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-array-match-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-array-match-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-array-match-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-array-match-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-array-match-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-array-match-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-array-match-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-array-match-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-array-match-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-array-match-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-array-match-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-array-match-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-audience-array-match-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-audience-array-match-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-audience-array-match-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-issuer-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-issuer-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-issuer-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-issuer-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-issuer-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-issuer-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-issuer-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-issuer-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-issuer-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-issuer-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-issuer-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-issuer-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-issuer-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-issuer-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-issuer-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-audience-identity-authentication",
+      "facet": "identity-authentication",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-audience-identity-authentication"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-audience-identity-authentication"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-audience-security-controls",
+      "facet": "security-controls",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-audience-security-controls"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-audience-security-controls"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-audience-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-audience-data"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-audience-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-audience-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-audience-behavior"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-audience-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    },
+    {
+      "alignmentId": "jose-align-missing-audience-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "jose-obs-source-missing-audience-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "jose-obs-replica-missing-audience-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same token and verification options."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "jose-result-valid-token-identity-authentication",
+      "alignmentId": "jose-align-valid-token-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-valid-token-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-valid-token-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example",
+          "exp": 1700000600,
+          "nbf": 1699999940
+        },
+        "protectedHeader": {
+          "alg": "HS256"
+        }
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example",
+          "exp": 1700000600,
+          "nbf": 1699999940
+        },
+        "protectedHeader": {
+          "alg": "HS256"
+        }
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-valid-token-security-controls",
+      "alignmentId": "jose-align-valid-token-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-valid-token-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-valid-token-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-valid-token-data",
+      "alignmentId": "jose-align-valid-token-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-valid-token-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-valid-token-data"
+      ],
+      "referenceValue": {
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example",
+          "exp": 1700000600,
+          "nbf": 1699999940
+        },
+        "outcome": "accepted"
+      },
+      "implementationValue": {
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example",
+          "exp": 1700000600,
+          "nbf": 1699999940
+        },
+        "outcome": "accepted"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-valid-token-behavior",
+      "alignmentId": "jose-align-valid-token-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-valid-token-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-valid-token-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "algorithm": "HS256"
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "algorithm": "HS256"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-valid-token-errors-recovery",
+      "alignmentId": "jose-align-valid-token-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-valid-token-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-valid-token-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-expired-token-identity-authentication",
+      "alignmentId": "jose-align-expired-token-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-expired-token-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-expired-token-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-expired-token-security-controls",
+      "alignmentId": "jose-align-expired-token-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-expired-token-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-expired-token-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-expired-token-data",
+      "alignmentId": "jose-align-expired-token-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-expired-token-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-expired-token-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-expired-token-behavior",
+      "alignmentId": "jose-align-expired-token-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-expired-token-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-expired-token-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-expired-token-errors-recovery",
+      "alignmentId": "jose-align-expired-token-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-expired-token-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-expired-token-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-expired"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-not-before-future-identity-authentication",
+      "alignmentId": "jose-align-not-before-future-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-not-before-future-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-not-before-future-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-not-before-future-security-controls",
+      "alignmentId": "jose-align-not-before-future-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-not-before-future-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-not-before-future-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-not-before-future-data",
+      "alignmentId": "jose-align-not-before-future-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-not-before-future-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-not-before-future-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-not-before-future-behavior",
+      "alignmentId": "jose-align-not-before-future-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-not-before-future-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-not-before-future-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-not-before-future-errors-recovery",
+      "alignmentId": "jose-align-not-before-future-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-not-before-future-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-not-before-future-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "token-not-yet-valid"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-issuer-mismatch-identity-authentication",
+      "alignmentId": "jose-align-issuer-mismatch-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-issuer-mismatch-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-issuer-mismatch-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-issuer-mismatch-security-controls",
+      "alignmentId": "jose-align-issuer-mismatch-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-issuer-mismatch-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-issuer-mismatch-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-issuer-mismatch-data",
+      "alignmentId": "jose-align-issuer-mismatch-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-issuer-mismatch-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-issuer-mismatch-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-issuer-mismatch-behavior",
+      "alignmentId": "jose-align-issuer-mismatch-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-issuer-mismatch-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-issuer-mismatch-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-issuer-mismatch-errors-recovery",
+      "alignmentId": "jose-align-issuer-mismatch-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-issuer-mismatch-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-issuer-mismatch-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-mismatch"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-mismatch-identity-authentication",
+      "alignmentId": "jose-align-audience-mismatch-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-mismatch-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-mismatch-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-mismatch-security-controls",
+      "alignmentId": "jose-align-audience-mismatch-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-mismatch-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-mismatch-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-mismatch-data",
+      "alignmentId": "jose-align-audience-mismatch-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-mismatch-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-mismatch-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-mismatch-behavior",
+      "alignmentId": "jose-align-audience-mismatch-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-mismatch-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-mismatch-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-mismatch-errors-recovery",
+      "alignmentId": "jose-align-audience-mismatch-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-mismatch-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-mismatch-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-mismatch"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-tampered-signature-identity-authentication",
+      "alignmentId": "jose-align-tampered-signature-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-tampered-signature-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-tampered-signature-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-tampered-signature-security-controls",
+      "alignmentId": "jose-align-tampered-signature-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-tampered-signature-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-tampered-signature-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-tampered-signature-data",
+      "alignmentId": "jose-align-tampered-signature-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-tampered-signature-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-tampered-signature-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-tampered-signature-behavior",
+      "alignmentId": "jose-align-tampered-signature-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-tampered-signature-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-tampered-signature-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-tampered-signature-errors-recovery",
+      "alignmentId": "jose-align-tampered-signature-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-tampered-signature-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-tampered-signature-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "signature-invalid"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-algorithm-not-allowed-identity-authentication",
+      "alignmentId": "jose-align-algorithm-not-allowed-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-algorithm-not-allowed-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-algorithm-not-allowed-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-algorithm-not-allowed-security-controls",
+      "alignmentId": "jose-align-algorithm-not-allowed-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-algorithm-not-allowed-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-algorithm-not-allowed-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-algorithm-not-allowed-data",
+      "alignmentId": "jose-align-algorithm-not-allowed-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-algorithm-not-allowed-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-algorithm-not-allowed-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-algorithm-not-allowed-behavior",
+      "alignmentId": "jose-align-algorithm-not-allowed-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-algorithm-not-allowed-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-algorithm-not-allowed-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-algorithm-not-allowed-errors-recovery",
+      "alignmentId": "jose-align-algorithm-not-allowed-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-algorithm-not-allowed-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-algorithm-not-allowed-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "algorithm-not-allowed"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-exp-is-optional-identity-authentication",
+      "alignmentId": "jose-align-missing-exp-is-optional-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-exp-is-optional-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-exp-is-optional-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example"
+        },
+        "protectedHeader": {
+          "alg": "HS256"
+        }
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example"
+        },
+        "protectedHeader": {
+          "alg": "HS256"
+        }
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-exp-is-optional-security-controls",
+      "alignmentId": "jose-align-missing-exp-is-optional-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-exp-is-optional-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-exp-is-optional-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-exp-is-optional-data",
+      "alignmentId": "jose-align-missing-exp-is-optional-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-exp-is-optional-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-exp-is-optional-data"
+      ],
+      "referenceValue": {
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example"
+        },
+        "outcome": "accepted"
+      },
+      "implementationValue": {
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": "api.example"
+        },
+        "outcome": "accepted"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-exp-is-optional-behavior",
+      "alignmentId": "jose-align-missing-exp-is-optional-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-exp-is-optional-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-exp-is-optional-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "algorithm": "HS256"
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "algorithm": "HS256"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-exp-is-optional-errors-recovery",
+      "alignmentId": "jose-align-missing-exp-is-optional-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-exp-is-optional-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-exp-is-optional-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-array-match-identity-authentication",
+      "alignmentId": "jose-align-audience-array-match-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-array-match-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-array-match-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": [
+            "api.example",
+            "other-api.example"
+          ],
+          "exp": 1700000600
+        },
+        "protectedHeader": {
+          "alg": "HS256"
+        }
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": [
+            "api.example",
+            "other-api.example"
+          ],
+          "exp": 1700000600
+        },
+        "protectedHeader": {
+          "alg": "HS256"
+        }
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-array-match-security-controls",
+      "alignmentId": "jose-align-audience-array-match-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-array-match-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-array-match-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-array-match-data",
+      "alignmentId": "jose-align-audience-array-match-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-array-match-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-array-match-data"
+      ],
+      "referenceValue": {
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": [
+            "api.example",
+            "other-api.example"
+          ],
+          "exp": 1700000600
+        },
+        "outcome": "accepted"
+      },
+      "implementationValue": {
+        "claims": {
+          "sub": "user-1",
+          "iss": "https://issuer.example",
+          "aud": [
+            "api.example",
+            "other-api.example"
+          ],
+          "exp": 1700000600
+        },
+        "outcome": "accepted"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-array-match-behavior",
+      "alignmentId": "jose-align-audience-array-match-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-array-match-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-array-match-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "algorithm": "HS256"
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null,
+        "algorithm": "HS256"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-audience-array-match-errors-recovery",
+      "alignmentId": "jose-align-audience-array-match-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-audience-array-match-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-audience-array-match-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorCategory": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-issuer-identity-authentication",
+      "alignmentId": "jose-align-missing-issuer-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-issuer-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-issuer-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-issuer-security-controls",
+      "alignmentId": "jose-align-missing-issuer-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-issuer-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-issuer-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-issuer-data",
+      "alignmentId": "jose-align-missing-issuer-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-issuer-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-issuer-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-issuer-behavior",
+      "alignmentId": "jose-align-missing-issuer-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-issuer-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-issuer-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-issuer-errors-recovery",
+      "alignmentId": "jose-align-missing-issuer-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-issuer-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-issuer-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "issuer-missing"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-audience-identity-authentication",
+      "alignmentId": "jose-align-missing-audience-identity-authentication",
+      "facet": "identity-authentication",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-audience-identity-authentication"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-audience-identity-authentication"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing",
+        "claims": null,
+        "protectedHeader": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-audience-security-controls",
+      "alignmentId": "jose-align-missing-audience-security-controls",
+      "facet": "security-controls",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-audience-security-controls"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-audience-security-controls"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-audience-data",
+      "alignmentId": "jose-align-missing-audience-data",
+      "facet": "data",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-audience-data"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-audience-data"
+      ],
+      "referenceValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "implementationValue": {
+        "claims": null,
+        "outcome": "rejected"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-audience-behavior",
+      "alignmentId": "jose-align-missing-audience-behavior",
+      "facet": "behavior",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-audience-behavior"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-audience-behavior"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing",
+        "algorithm": null
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing",
+        "algorithm": null
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    },
+    {
+      "resultId": "jose-result-missing-audience-errors-recovery",
+      "alignmentId": "jose-align-missing-audience-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "jwt-verification-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "jose-obs-source-missing-audience-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "jose-obs-replica-missing-audience-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorCategory": "audience-missing"
+      },
+      "reason": "JWT verification outcomes and normalized claims match."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 55,
+      "observedUnits": 55,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "implementation": {
+      "declaredUnits": 55,
+      "observedUnits": 55,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "sharedComparableUnits": 55,
+    "incomparableUnits": 0,
+    "limitations": [
+      "Coverage is limited to the 55 facet/scenario projections in this report."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The independent Python implementation matches jose 6.2.18 for eleven declared JWT verification scenarios and 55 facet/scenario projections. This is bounded evidence, not universal equivalence.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "No claim is made about JOSE algorithms or authentication workflows outside the declared HMAC JWT scope."
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for all required properties in the declared eleven-scenario HMAC JWT scope, not the complete jose library or identity/authentication facet."
+  }
+}

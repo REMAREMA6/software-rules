@@ -1,0 +1,276 @@
+{
+  "capturedAt": "2026-11-27T02:53:49.954Z",
+  "completedAt": "2026-11-27T02:53:49.954Z",
+  "source": "panva/jose pinned source build",
+  "sourceCommit": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
+  "packageVersion": "6.2.18",
+  "runtime": "v22.23.5",
+  "sourceFiles": [
+    "src/jwt/verify.ts",
+    "src/lib/jwt_claims_set.ts",
+    "src/lib/jws_verify.ts",
+    "test/jwt/verify.test.ts",
+    "package.json",
+    "LICENSE.md",
+    "tsconfig.json"
+  ],
+  "sourceFileDigests": {
+    "src/jwt/verify.ts": "7549a77e4db39257ddfcb6752ec3d107fe1c52d85d5df3c262f9896e4199fddf",
+    "src/lib/jwt_claims_set.ts": "b8497895c8547a0810073293ba17e6474fa07d8fc970902b3e73115592b6ee84",
+    "src/lib/jws_verify.ts": "94e9a76fbadc1e9cd6bf811076482f49d353b9959a6810267802ac2983a643ce",
+    "test/jwt/verify.test.ts": "8b23ff56b35c4edc18bf97f6f79df69af1421d4192eb86056a62972789dc588b",
+    "package.json": "8d8c09d46a9b6d815f57f4bd2a98b8f81535c96a2a9d3d131157a0860db1fac1",
+    "LICENSE.md": "8078b0829d6c3e9ecde2f003e1966e4cad3efc6e7a640efbab0313cc166b1af1",
+    "tsconfig.json": "52842b9a6abbe968cb9da9b3c970dad340e32a708182601cf11c6a4517b74d03"
+  },
+  "testTimeEpochSeconds": 1700000000,
+  "scenarios": [
+    {
+      "label": "valid-token",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDAsIm5iZiI6MTY5OTk5OTk0MH0.bXIjRJMmpalog_ujeijFKFbalCHtZkZhjjR5bdJriqU",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "accepted",
+      "errorCategory": null,
+      "errorCode": null,
+      "errorClaim": null,
+      "claims": {
+        "sub": "user-1",
+        "iss": "https://issuer.example",
+        "aud": "api.example",
+        "exp": 1700000600,
+        "nbf": 1699999940
+      },
+      "protectedHeader": {
+        "alg": "HS256"
+      }
+    },
+    {
+      "label": "expired-token",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE2OTk5OTk5OTksIm5iZiI6MTY5OTk5OTk0MH0._BuZltujZW8f7E3l0UAQxP4O6Nz6FrJFSEPK1BZOnac",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "token-expired",
+      "errorCode": "ERR_JWT_EXPIRED",
+      "errorClaim": "exp",
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "not-before-future",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDAsIm5iZiI6MTcwMDAwMDAwMX0.CUCSpYFqyR4iaasw-b4SNc2hxcgzWgDlBLKJdapwwWc",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "token-not-yet-valid",
+      "errorCode": "ERR_JWT_CLAIM_VALIDATION_FAILED",
+      "errorClaim": "nbf",
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "issuer-mismatch",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL3dyb25nLWlzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.eRIxcrXI3OJX_7DxNnKdOdkvuFivVoyRoPNShbw-BMg",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "issuer-mismatch",
+      "errorCode": "ERR_JWT_CLAIM_VALIDATION_FAILED",
+      "errorClaim": "iss",
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "audience-mismatch",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoib3RoZXItYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.lCX9TPxWarlvMRgnU4VBo_shyhhlwW4giusnKcnACQ0",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "audience-mismatch",
+      "errorCode": "ERR_JWT_CLAIM_VALIDATION_FAILED",
+      "errorClaim": "aud",
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "tampered-signature",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.ACUwm43_WFL5Irfyeux743DveLGrDzffKwVA_12fbyA",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "signature-invalid",
+      "errorCode": "ERR_JWS_SIGNATURE_VERIFICATION_FAILED",
+      "errorClaim": null,
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "algorithm-not-allowed",
+      "token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.DyGgTYndtytz6fhTwIPsqFvkCTVwNIZmgFR4zlabHrhAJHXGwrCdrTfdQrdgCfp1",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS00OGJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "algorithm-not-allowed",
+      "errorCode": "ERR_JOSE_ALG_NOT_ALLOWED",
+      "errorClaim": null,
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "missing-exp-is-optional",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUifQ.y5DOO-jvrUvZUA8WI0hnSE1RS-KjPg1lDBSRbkhxuAw",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "accepted",
+      "errorCategory": null,
+      "errorCode": null,
+      "errorClaim": null,
+      "claims": {
+        "sub": "user-1",
+        "iss": "https://issuer.example",
+        "aud": "api.example"
+      },
+      "protectedHeader": {
+        "alg": "HS256"
+      }
+    },
+    {
+      "label": "audience-array-match",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjpbImFwaS5leGFtcGxlIiwib3RoZXItYXBpLmV4YW1wbGUiXSwiZXhwIjoxNzAwMDAwNjAwfQ.KvYneQ7Kn93JDxDxYve45SslZeE5b-Feo09-X_d6mXE",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "accepted",
+      "errorCategory": null,
+      "errorCode": null,
+      "errorClaim": null,
+      "claims": {
+        "sub": "user-1",
+        "iss": "https://issuer.example",
+        "aud": [
+          "api.example",
+          "other-api.example"
+        ],
+        "exp": 1700000600
+      },
+      "protectedHeader": {
+        "alg": "HS256"
+      }
+    },
+    {
+      "label": "missing-issuer",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJhdWQiOiJhcGkuZXhhbXBsZSIsImV4cCI6MTcwMDAwMDYwMH0.3xvnBMy9wLQhfJAslxw80-Ax40DmEUVitrwqZO1I8Ko",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "issuer-missing",
+      "errorCode": "ERR_JWT_CLAIM_VALIDATION_FAILED",
+      "errorClaim": "iss",
+      "claims": null,
+      "protectedHeader": null
+    },
+    {
+      "label": "missing-audience",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiZXhwIjoxNzAwMDAwNjAwfQ.iqwxbvFFcPrnVmegmHuf_c7hzpxEYmhRoXpKmWCpGWY",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE",
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "outcome": "rejected",
+      "errorCategory": "audience-missing",
+      "errorCode": "ERR_JWT_CLAIM_VALIDATION_FAILED",
+      "errorClaim": "aud",
+      "claims": null,
+      "protectedHeader": null
+    }
+  ],
+  "checks": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "passed": true
+}

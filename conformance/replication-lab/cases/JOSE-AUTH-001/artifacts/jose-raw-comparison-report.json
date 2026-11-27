@@ -1,0 +1,11 @@
+{
+  "result": "match",
+  "scenarioCount": 11,
+  "comparedFields": [
+    "accept/reject outcome",
+    "semantic error category",
+    "verified claims",
+    "protected header"
+  ],
+  "errors": []
+}

@@ -1,0 +1,217 @@
+{
+  "capturedAt": "2026-11-27T02:53:50.058380Z",
+  "implementation": "Independent Python 3.12 HMAC/JWT claim verifier",
+  "scenarios": [
+    {
+      "label": "valid-token",
+      "outcome": "accepted",
+      "errorCategory": null,
+      "claims": {
+        "sub": "user-1",
+        "iss": "https://issuer.example",
+        "aud": "api.example",
+        "exp": 1700000600,
+        "nbf": 1699999940
+      },
+      "protectedHeader": {
+        "alg": "HS256"
+      },
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDAsIm5iZiI6MTY5OTk5OTk0MH0.bXIjRJMmpalog_ujeijFKFbalCHtZkZhjjR5bdJriqU",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "expired-token",
+      "outcome": "rejected",
+      "errorCategory": "token-expired",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE2OTk5OTk5OTksIm5iZiI6MTY5OTk5OTk0MH0._BuZltujZW8f7E3l0UAQxP4O6Nz6FrJFSEPK1BZOnac",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "not-before-future",
+      "outcome": "rejected",
+      "errorCategory": "token-not-yet-valid",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDAsIm5iZiI6MTcwMDAwMDAwMX0.CUCSpYFqyR4iaasw-b4SNc2hxcgzWgDlBLKJdapwwWc",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "issuer-mismatch",
+      "outcome": "rejected",
+      "errorCategory": "issuer-mismatch",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL3dyb25nLWlzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.eRIxcrXI3OJX_7DxNnKdOdkvuFivVoyRoPNShbw-BMg",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "audience-mismatch",
+      "outcome": "rejected",
+      "errorCategory": "audience-mismatch",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoib3RoZXItYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.lCX9TPxWarlvMRgnU4VBo_shyhhlwW4giusnKcnACQ0",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "tampered-signature",
+      "outcome": "rejected",
+      "errorCategory": "signature-invalid",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.ACUwm43_WFL5Irfyeux743DveLGrDzffKwVA_12fbyA",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "algorithm-not-allowed",
+      "outcome": "rejected",
+      "errorCategory": "algorithm-not-allowed",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUiLCJleHAiOjE3MDAwMDA2MDB9.DyGgTYndtytz6fhTwIPsqFvkCTVwNIZmgFR4zlabHrhAJHXGwrCdrTfdQrdgCfp1",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS00OGJ5dGVzISE"
+    },
+    {
+      "label": "missing-exp-is-optional",
+      "outcome": "accepted",
+      "errorCategory": null,
+      "claims": {
+        "sub": "user-1",
+        "iss": "https://issuer.example",
+        "aud": "api.example"
+      },
+      "protectedHeader": {
+        "alg": "HS256"
+      },
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjoiYXBpLmV4YW1wbGUifQ.y5DOO-jvrUvZUA8WI0hnSE1RS-KjPg1lDBSRbkhxuAw",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "audience-array-match",
+      "outcome": "accepted",
+      "errorCategory": null,
+      "claims": {
+        "sub": "user-1",
+        "iss": "https://issuer.example",
+        "aud": [
+          "api.example",
+          "other-api.example"
+        ],
+        "exp": 1700000600
+      },
+      "protectedHeader": {
+        "alg": "HS256"
+      },
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiYXVkIjpbImFwaS5leGFtcGxlIiwib3RoZXItYXBpLmV4YW1wbGUiXSwiZXhwIjoxNzAwMDAwNjAwfQ.KvYneQ7Kn93JDxDxYve45SslZeE5b-Feo09-X_d6mXE",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "missing-issuer",
+      "outcome": "rejected",
+      "errorCategory": "issuer-missing",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJhdWQiOiJhcGkuZXhhbXBsZSIsImV4cCI6MTcwMDAwMDYwMH0.3xvnBMy9wLQhfJAslxw80-Ax40DmEUVitrwqZO1I8Ko",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    },
+    {
+      "label": "missing-audience",
+      "outcome": "rejected",
+      "errorCategory": "audience-missing",
+      "claims": null,
+      "protectedHeader": null,
+      "verificationOptions": {
+        "algorithms": [
+          "HS256"
+        ],
+        "issuer": "https://issuer.example",
+        "audience": "api.example",
+        "currentDateEpochSeconds": 1700000000
+      },
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyLTEiLCJpc3MiOiJodHRwczovL2lzc3Vlci5leGFtcGxlIiwiZXhwIjoxNzAwMDAwNjAwfQ.iqwxbvFFcPrnVmegmHuf_c7hzpxEYmhRoXpKmWCpGWY",
+      "keyBase64url": "c29mdHdhcmUtcnVsZXMtam9zZS1obWFjLWtleS0zMmJ5dGVzISE"
+    }
+  ]
+}

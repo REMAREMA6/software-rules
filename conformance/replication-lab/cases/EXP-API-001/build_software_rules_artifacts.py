@@ -60,6 +60,7 @@ def normalized(scenario, facet):
             "path": request["path"],
             "status": response["status"],
             "body": response["body"],
+            "wireBodyBytes": response.get("wireBodyBytes", 0),
         }
     if facet == "configuration":
         return config
@@ -114,6 +115,7 @@ def payload(scenario, facet):
                 "status": response["status"],
                 "body": response["body"],
                 "allow": response["headers"].get("allow"),
+                "wireBodyBytes": response.get("wireBodyBytes", 0),
             }],
             "termination": "response-sent",
         }

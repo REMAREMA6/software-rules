@@ -4,6 +4,8 @@ const { Queue, QueueEvents, Worker } = require('./dist/cjs');
 const IORedis = require('ioredis');
 const { randomUUID } = require('node:crypto');
 
+const captureStartedAt = new Date().toISOString();
+
 const redisOptions = {
   host: process.env.REDIS_HOST || '127.0.0.1',
   port: Number(process.env.REDIS_PORT || 6379),
@@ -140,6 +142,8 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
   ];
 
   const report = {
+    capturedAt: captureStartedAt,
+    completedAt: new Date().toISOString(),
     source: 'BullMQ pinned source checkout',
     sourceCommit: process.env.BULLMQ_SOURCE_COMMIT,
     packageVersion: require('./package.json').version,

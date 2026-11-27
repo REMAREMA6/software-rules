@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; eight bounded cases pass (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and Redis client integration). No facet-wide completeness claim is justified; authorization, integrations, broader security, performance/resources, cross-UI-stack replication, and incomplete property inventories remain.  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; nine bounded cases pass, including TASKBOARD-UI-001 (independent React UI replication) alongside BullMQ retry/backoff/messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and Redis client integration. No facet-wide completeness claim is justified; authorization, integrations, broader security, performance/resources, and incomplete property inventories remain. The independent UI-stack case is accepted only for its bounded Task Board scope.  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 
@@ -240,7 +240,8 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 - [x] Validate accepted BullMQ and Express Software Rules captures and comparison reports against schemas and cross-record integrity checks.
 - [x] Validate TypeORM schema-native captures and comparison; evidence is retained in CI artifact `15167104492` (not committed to repository). Continue evidence-quality audit case by case.
 - [x] Publish and update the living 15-facet evidence matrix.
-- [ ] Add an external-integration case, broader business-rule and performance/resource cases, independent UI-stack replication, and complete the property-gap audit.
+- [x] TASKBOARD-UI-001 independent React 19/Vite UI-stack case passed its declared nine-observation conformance gate in run [#45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401).
+- [ ] Add external-integration, broader business-rule, and repeatable performance/resource cases; complete the property-gap audit.
 
 **Exit gate:** all 15 facets have reviewed property inventories and suitable source/independent-replica cases; each required rule class and claimed property passes the source→technology-independent rule→independent replica→equivalent probes→capture→comparison→mutation loop; replication cases span materially different stacks and architectures; no required unknown or partial property is silently passed; stack-specific assumptions are explicit; schema and cross-record validation pass; and the final report bounds conclusions to evidence. A finite conformance suite supports a bounded portability claim for the tested rules and stacks, not a universal guarantee for every possible technology. A green CI run alone cannot satisfy this gate.
 
@@ -356,4 +357,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by completing BMQ-MSG-001 schema-native capture validation and retaining the validated evidence. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, external integrations, broader business rules, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Keep the 15-facet inventory explicit and do not mark a facet complete from a single bounded case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by completing BMQ-MSG-001 schema-native capture validation and retaining the validated evidence. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, external integrations, broader business rules, and repeatable performance/resource behaviour; extend interface property inventories beyond the accepted bounded Task Board UI case. Keep the 15-facet inventory explicit and do not mark a facet complete from a single bounded case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

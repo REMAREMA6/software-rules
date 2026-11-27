@@ -1,0 +1,63 @@
+name: Task Board React cross-stack replication
+
+on:
+  push:
+    paths:
+      - "examples/task-board/reference/index.html"
+      - "conformance/replication-lab/projects/task-board-react/**"
+      - "conformance/replication-lab/cases/TASKBOARD-UI-001/**"
+      - "conformance/runtime/package.json"
+      - ".github/workflows/taskboard-react-cross-stack.yml"
+  pull_request:
+    paths:
+      - "examples/task-board/reference/index.html"
+      - "conformance/replication-lab/projects/task-board-react/**"
+      - "conformance/replication-lab/cases/TASKBOARD-UI-001/**"
+      - "conformance/runtime/package.json"
+      - ".github/workflows/taskboard-react-cross-stack.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  react-replication:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright and image comparison dependencies
+        run: npm install --prefix conformance/runtime
+      - name: Install React replica dependencies
+        run: npm install --prefix conformance/replication-lab/projects/task-board-react --no-audit --no-fund
+      - name: Install schema-validation dependencies
+        run: npm install --prefix conformance/validation
+      - name: Install Chromium
+        run: npx --prefix conformance/runtime playwright install --with-deps chromium
+      - name: Build baseline React replica
+        run: |
+          npm run build --prefix conformance/replication-lab/projects/task-board-react
+          cp -a conformance/replication-lab/projects/task-board-react/dist conformance/replication-lab/projects/task-board-react/dist-baseline
+      - name: Build deliberately mutated React replica
+        run: |
+          VITE_MUTATION_ACTIVE_COUNT=1 npm run build --prefix conformance/replication-lab/projects/task-board-react
+          cp -a conformance/replication-lab/projects/task-board-react/dist conformance/replication-lab/projects/task-board-react/dist-mutated
+      - name: Compare source and independent React replica
+        run: node conformance/replication-lab/cases/TASKBOARD-UI-001/compare.mjs
+      - name: Build Software Rules captures and comparison report
+        run: python3 conformance/replication-lab/cases/TASKBOARD-UI-001/build_software_rules_artifacts.py
+      - name: Run cross-record and evidence-link integrity tests
+        run: node conformance/integrity/test.mjs
+      - name: Run Software Rules schema and comparison validation
+        run: npm run validate --prefix conformance/validation
+      - name: Upload runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: taskboard-react-cross-stack-evidence
+          path: |
+            conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/
+            conformance/replication-lab/cases/TASKBOARD-UI-001/artifacts/
+          if-no-files-found: warn
+          retention-days: 30

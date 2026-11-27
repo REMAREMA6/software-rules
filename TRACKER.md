@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; eight bounded cross-stack cases are accepted (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and go-redis/redis-py integration). No entire facet is complete; several facet inventories and independent replications remain incomplete.
+**Overall status:** Phase 6 in progress; nine bounded cross-stack cases are accepted: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, go-redis/redis-py integration, and TASKBOARD-UI-001 (plain HTML/CSS to independent React UI replication). No entire facet is complete; several facet inventories and independent replications remain incomplete.
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Expand the cross-repository evidence matrix beyond the eight accepted bounded cases, prioritizing broader business rules, repeatable performance/resource behaviour, and independent UI-stack replication.
-- **Blockers:** No entire facet is complete. Casbin covers only simple RBAC; domains, role hierarchy, ABAC, deny policies, and policy mutation remain untested. JWT verification is only bounded authentication/security evidence, not a full identity provider or authorization lifecycle. External integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
-- **Next action:** Build the next bounded business-rule or performance/resource case and extend the independent UI-stack replication harness. Continue the property-inventory audit; do not infer facet completion from case counts.
+- **Current task:** Expand the cross-repository evidence matrix beyond the nine accepted bounded cases, prioritizing broader business rules, repeatable performance/resource behaviour, and incomplete property inventories.
+- **Blockers:** No entire facet is complete. Casbin covers only simple RBAC; domains, role hierarchy, ABAC, deny policies, and policy mutation remain untested. JWT verification is only bounded authentication/security evidence, not a full identity provider or authorization lifecycle. External integrations and repeatable performance/resource behaviour have no accepted cross-stack case. TASKBOARD-UI-001 now supplies a bounded independent UI-stack replica, but broader interface properties remain unresolved. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
+- **Next action:** Build the next bounded performance/resource or broader business-rule case, then continue the 15-facet property-inventory audit; do not infer facet completion from case counts.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Eight bounded cases pass, including JOSE JWT verification, Casbin simple RBAC, and go-redis integration. No facet-wide completeness claim is justified; the remaining property inventories and several facet cases are incomplete. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Nine bounded cases pass, including JOSE JWT verification, Casbin simple RBAC, go-redis integration, and TASKBOARD-UI-001. No facet-wide completeness claim is justified; the remaining property inventories and several facet cases are incomplete. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
@@ -162,7 +162,8 @@
 - [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto versus Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight mutations, schema/report validation, and evidence integrity passed in run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
 - [x] CASBIN-AUTHZ-001: pinned Apache Casbin Go source versus independent Python simple-RBAC evaluator; ten authorization requests, four executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753). Retained artifact ID `15168623669`.
 - [x] REDIS-INT-001: pinned go-redis Go client versus independent Python redis-py against Redis 7; seven operations, five executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414). Retained artifact ID `15168909418`.
-- [ ] Add distinct cross-stack cases for external integrations, broader business rules, repeatable performance/resources, and independent UI-stack replication; expand incomplete property inventories for all facets.
+- [x] TASKBOARD-UI-001: independent React 19/Vite replica of the plain HTML/CSS Task Board passed nine viewport/state comparisons, semantic/API-trace checks, mutation detection, Software Rules 0.2.0 capture/report validation, and evidence integrity in run [#45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401); artifact `15170370565` retained through 2026-12-27.
+- [ ] Add distinct cross-stack cases for external integrations, broader business rules, and repeatable performance/resources; expand incomplete property inventories for all facets.
 - [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
 
@@ -202,7 +203,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** eight bounded cross-stack cases pass, but no entire facet is complete for the full objective. Authorization covers simple RBAC only; integrations cover seven Redis operations only; security covers limited JWT controls. Performance/resources and independent UI-stack replication still lack accepted cases. Business rules, data, persistence, API, messaging, background processing, errors, and configuration have unresolved property inventories. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
+**Current blocker:** nine bounded cross-stack cases pass, but no entire facet is complete for the full objective. Authorization covers simple RBAC only; integrations cover seven Redis operations only; security covers limited JWT controls. Performance/resources still lack an accepted case; the independent UI-stack gap is closed only for the bounded Task Board scope. Business rules, data, persistence, API, messaging, background processing, errors, and configuration have unresolved property inventories. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
 
 
 ### 2026-11-27 — JOSE JWT authentication/security case accepted
@@ -475,7 +476,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] BMQ-MSG-001: pinned BullMQ 6.7.10 source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4` + Redis 7 matched an independent Python queue model across duplicate-ID and consumer-failure scenarios; ten semantic projections matched.
 - [x] BMQ-MSG-001: six mutation tests passed in run [#45928721261](https://github.com/REMAREMA6/software-rules/actions/runs/45928721261). Artifact ID `15167806675`, retained until 2026-12-27.
 - [x] BMQ-MSG-001 schema-native captures, comparison report, schema validation, and evidence-integrity validation passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126); committed evidence is recorded below.
-- [ ] Continue with identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and cross-UI-stack replication. No facet-wide completion claim.
+- [ ] Continue with identity/authentication, authorization, security controls, integrations, broader business rules, and performance/resources. TASKBOARD-UI-001 now covers the bounded cross-UI-stack case; no facet-wide completion claim.
 
 
 ### 2026-11-27 — Bounded BullMQ messaging case accepted

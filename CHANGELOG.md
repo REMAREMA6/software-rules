@@ -7,6 +7,13 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- TASKBOARD-UI-001 passed independent plain HTML/CSS/browser JavaScript to React 19/Vite replication: nine viewport/state comparisons, zero differing pixels, matching semantic snapshots and API traces, deliberate mutation detected, Software Rules 0.2.0 captures/report, schema validation, and cross-record integrity. GitHub Actions run #45934802401; evidence artifact #15170370565 retained through 2026-12-27. This is bounded interface evidence, not facet-wide completion.
+
+### Fixed
+- Made generated Task Board UI capture checks conditional in the shared integrity test so unrelated workflows do not fail when their run does not generate those case artifacts; the dedicated UI workflow still generates and validates both captures before invoking the integrity test.
+
+
+### Verified
 - TORM-PERSIST-001 passed pinned TypeORM 1.1.3 source execution, independent Python/sqlite3 comparison (8 projections), six mutation tests, Software Rules 0.2.0 capture/report validation, and evidence-integrity checks. Workflow run #45928766010; artifact retained through 2026-12-27.
 - BMQ-MSG-001 passed pinned BullMQ/Redis source execution against the independent Python queue model (10 projections) and six mutation tests. Workflow run #45928721261; schema-native capture validation remains pending.
 - The living 15-facet matrix and Phase 6 tracker now distinguish bounded case passes from facet-wide completeness.

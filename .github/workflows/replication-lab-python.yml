@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install Python conformance-test dependencies
+        run: pip install "redis==6.4.0"
       - name: Run independent rule-model and comparison tests
         run: |
           find conformance/replication-lab/cases -name "test_*.py" -type f -print0 | sort -z | while IFS= read -r -d '' test_file; do

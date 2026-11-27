@@ -39,7 +39,7 @@ function TaskBoard() {
   const visible = tasks.filter(task =>
     filter === "all" || (filter === "active" ? !task.completed : task.completed)
   );
-  const active = tasks.filter(task => !task.completed).length;
+  const active = import.meta.env.VITE_MUTATION_ACTIVE_COUNT === "1" ? tasks.length : tasks.filter(task => !task.completed).length;
 
   return <main className="app" id="app">
     <h1>Task Board</h1>

@@ -8,7 +8,7 @@ class TypeORMTransactionComparisonTests(unittest.TestCase):
             "commit": {"callbackReturn": "callback-result", "rowsAfterCommit": [{"id": 1, "value": "committed"}]}
         }}
         self.replica = {"scenarios": {
-            "rollback": {"error": {"name": "Error", "message": "forced-transaction-failure"}, "callbackResult": None, "rowsAfterRollback": []},
+            "rollback": {"error": {"name": "Error", "message": "forced-transaction-failure"}, "callbackResult": None, "rowsInsideCallback": [{"id": 1, "value": "rolled-back"}], "rowsAfterRollback": []},
             "commit": {"callbackReturn": "callback-result", "rowsAfterCommit": [{"id": 1, "value": "committed"}]}
         }}
 

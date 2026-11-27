@@ -3,7 +3,7 @@ name: BullMQ pinned-source runtime probe
 on:
   push:
     paths:
-      - "conformance/replication-lab/cases/BMQ-ER-002/**"
+      - "conformance/replication-lab/cases/BMQ-ER-002/compare_retry_probe.py"
       - "conformance/replication-lab/probes/bullmq-retry-runtime.cjs"
       - ".github/workflows/bullmq-pinned-runtime.yml"
   pull_request:

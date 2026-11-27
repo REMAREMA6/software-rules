@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; six bounded cross-stack cases are accepted (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, and JOSE JWT verification). No entire facet is complete; several facet inventories and independent replications remain incomplete.
+**Overall status:** Phase 6 in progress; seven bounded cross-stack cases are accepted (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, and Casbin RBAC authorization). No entire facet is complete; several facet inventories and independent replications remain incomplete.
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Expand the cross-repository evidence matrix beyond the six accepted bounded cases, starting with authorization and integration cases, then broader business rules, performance/resources, and cross-UI-stack replication.
-- **Blockers:** No entire facet is complete. JWT verification is only a bounded authentication/security case, not a full identity provider or authorization model. Authorization, external integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
-- **Next action:** Build a source/replica authorization case with an actor/resource/action policy matrix, then an external-integration case. Keep each bounded case separate and update the facet inventory only after source runtime, independent replica, mutation, schema, and evidence checks pass.
+- **Current task:** Expand the cross-repository evidence matrix beyond the seven accepted bounded cases, starting with external integrations, then broader business rules, performance/resources, and cross-UI-stack replication.
+- **Blockers:** No entire facet is complete. Casbin covers only simple RBAC; domains, role hierarchy, ABAC, deny policies, and policy mutation remain untested. JWT verification is only bounded authentication/security evidence, not a full identity provider or authorization lifecycle. External integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
+- **Next action:** Build an external-integration case with deterministic success/failure outcomes. Then expand business-rule, performance/resource, and UI-stack coverage, while continuing property-inventory audits.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -160,7 +160,8 @@
 - [x] TORM-PERSIST-001: TypeORM 1.1.3 pinned source + SQL.js versus Python 3.12 sqlite3; two scenarios, eight semantic projections, six mutations, schema 0.2.0 capture/report validation, and evidence integrity passed.
 - [x] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations, Software Rules 0.2.0 capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
 - [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto versus Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight mutations, schema/report validation, and evidence integrity passed in run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
-- [ ] Add distinct cross-stack cases for authorization, external integrations, broader business rules, repeatable performance/resources, and independent UI-stack replication; expand incomplete property inventories for all facets.
+- [x] CASBIN-AUTHZ-001: pinned Apache Casbin Go source versus independent Python simple-RBAC evaluator; ten authorization requests, four executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753). Retained artifact ID `15168623669`.
+- [ ] Add distinct cross-stack cases for external integrations, broader business rules, repeatable performance/resources, and independent UI-stack replication; expand incomplete property inventories for all facets.
 - [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
 
@@ -182,7 +183,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.
 - [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer runtime comparison, six mutations, schema-native captures, and evidence validation passed; delivery guarantees and idempotency breadth remain uncovered.
 - [~] 8. Identity/authentication — bounded JWT signature/claims verification passes; principal establishment, credential/session lifecycle, refresh, revocation, and logout remain uncovered.
-- [ ] 9. Authorization — actor/resource/action policy matrix and enforcement.
+- [~] 9. Authorization — simple Casbin RBAC actor/resource/action matrix passes; domains, role hierarchy, ABAC, deny policies, and policy mutation remain uncovered.
 - [~] 10. Security — bounded JWT signature-integrity and algorithm-allowlist controls pass; broader authorized bypass, containment, and security-control cases remain uncovered.
 - [~] 11. Background processing — BullMQ retry/backoff case passed; scheduling/cancellation/duplicate/stalled-worker lifecycle remain uncovered.
 - [~] 12. Errors/recovery — bounded BullMQ retry/suppression, Express 404, TypeORM rollback, Medusa invalid-date, and JOSE semantic JWT rejection cases passed; broader failure/recovery classes remain uncovered.
@@ -211,6 +212,16 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Generated Software Rules 0.2.0 source/replica captures and comparison report; schema validation, comparison validation, and evidence-integrity validation passed in [run #45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
 - [x] Committed source/replica captures, comparison, pinned source excerpts, licence, and toolchain metadata under `conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/` at commit [21334ff](https://github.com/REMAREMA6/software-rules/commit/21334ff55fe9ef5b29adc846ea8a49dfe849a80f); retained CI artifact ID `15168682159`.
 - [~] This is bounded JWT verification evidence, not complete identity-provider, session, authorization, or security-facet coverage.
+
+
+### 2026-11-27 — Casbin RBAC authorization case accepted
+
+- [x] Pinned Apache Casbin commit `fa4023fd7d02d9b7d023515e76b19b3be637f613` and executed the Go enforcer against ten subject/resource/action requests.
+- [x] Compared all ten source decisions with an independent Python 3.12 simple-RBAC model; no decision mismatch.
+- [x] Detected four executable mutations: removed role relation, removed resource equality, removed action equality, and default-allow behaviour.
+- [x] Generated Software Rules 0.2.0 captures and comparison; schema validation, cross-record integrity, and ten matching comparison results passed in [run #45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753).
+- [x] Retained source, replica, and Software Rules evidence in CI artifact `15168623669` (expires 2026-12-27).
+- [~] This proves only the declared simple-RBAC scope; it does not complete the authorization facet.
 
 ## Phase 7 — Review, release, and maintenance
 

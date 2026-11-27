@@ -1,0 +1,93 @@
+name: Casbin RBAC authorization cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/CASBIN-AUTHZ-001/**"
+      - "conformance/replication-lab/projects/casbin-rbac-python/**"
+      - ".github/workflows/casbin-authz-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/CASBIN-AUTHZ-001/**"
+      - "conformance/replication-lab/projects/casbin-rbac-python/**"
+      - ".github/workflows/casbin-authz-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  casbin-authorization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.0"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact Casbin source commit
+        env:
+          CASBIN_SOURCE_COMMIT: "fa4023fd7d02d9b7d023515e76b19b3be637f613"
+        run: |
+          git clone https://github.com/apache/casbin.git /tmp/casbin
+          git -C /tmp/casbin checkout --detach "$CASBIN_SOURCE_COMMIT"
+          test "$(git -C /tmp/casbin rev-parse HEAD)" = "$CASBIN_SOURCE_COMMIT"
+      - name: Build and run pinned Casbin Go source probe
+        env:
+          CASBIN_SOURCE_ROOT: /tmp/casbin
+          CASBIN_SOURCE_COMMIT: "fa4023fd7d02d9b7d023515e76b19b3be637f613"
+        run: |
+          mkdir -p /tmp/casbin-probe
+          cp conformance/replication-lab/cases/CASBIN-AUTHZ-001/source_probe.go /tmp/casbin-probe/main.go
+          cd /tmp/casbin-probe
+          go mod init casbin-probe
+          go mod edit -require=github.com/casbin/casbin/v3@v3.11.0
+          go mod edit -replace=github.com/casbin/casbin/v3=/tmp/casbin
+          go mod tidy
+          go run . > "$GITHUB_WORKSPACE/casbin-source-runtime.json"
+      - name: Run independent Python RBAC replica
+        run: |
+          python conformance/replication-lab/projects/casbin-rbac-python/replica_probe.py > casbin-python-runtime.json
+      - name: Compare source and replica decisions
+        run: |
+          python conformance/replication-lab/cases/CASBIN-AUTHZ-001/compare.py casbin-source-runtime.json casbin-python-runtime.json
+      - name: Run executable authorization mutation tests
+        run: python -m unittest discover -s conformance/replication-lab/cases/CASBIN-AUTHZ-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          mkdir -p conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts
+          cp casbin-source-runtime.json conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/casbin-source-runtime.json
+          cp casbin-python-runtime.json conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/casbin-python-runtime.json
+          cp /tmp/casbin/examples/rbac_model.conf conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/rbac_model.conf
+          cp /tmp/casbin/examples/rbac_policy.csv conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/rbac_policy.csv
+          cp /tmp/casbin/rbac_api_test.go conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/rbac_api_test.go
+          cp /tmp/casbin/go.mod conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/go.mod
+          cp /tmp/casbin/LICENSE conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/LICENSE
+          python conformance/replication-lab/cases/CASBIN-AUTHZ-001/build_software_rules_artifacts.py \
+            --source conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/casbin-source-runtime.json \
+            --replica conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/casbin-python-runtime.json \
+            --output-dir casbin-software-rules
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            casbin-software-rules/casbin-source.capture.json \
+            casbin-software-rules/casbin-python-replica.capture.json \
+            casbin-software-rules/casbin-comparison.report.json
+      - name: Retain source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: casbin-rbac-authorization-cross-stack
+          path: |
+            casbin-source-runtime.json
+            casbin-python-runtime.json
+            casbin-software-rules/*.json
+            conformance/replication-lab/cases/CASBIN-AUTHZ-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

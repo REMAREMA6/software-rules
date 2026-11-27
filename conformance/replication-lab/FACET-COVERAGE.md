@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Six bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, and JOSE JWT verification. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Seven bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, and Casbin simple-RBAC authorization. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 
@@ -16,7 +16,7 @@ This matrix distinguishes a facet having some validated evidence from a facet be
 | 6 | API | Express 5.3.0 matches an independent Python HTTP implementation across seven requests and 28 facet/scenario projections. This does not cover the complete Express API surface. | Python 3.12 HTTP server | In progress |
 | 7 | Messaging | BullMQ QueueEvents/message lifecycle matches the independent Python model across two scenarios and ten projections; six mutations, schema validation, comparison validation, and evidence-integrity checks passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126). | Python messaging model | In progress |
 | 8 | Identity and authentication | JOSE 6.2.18 JWT verification matches an independent Python verifier across 11 scenarios and 55 facet/scenario projections; eight executable mutations and schema/integrity validation passed. This is bounded token verification, not a full identity provider, login/session lifecycle, or authorization system. | Python 3.12 HMAC/JWT verifier | In progress |
-| 9 | Authorization and permissions | Keycloak is a registered source candidate; no actor/resource/action policy matrix has passed. | None yet | Not started |
+| 9 | Authorization and permissions | CASBIN-AUTHZ-001 matches pinned Apache Casbin Go source across ten subject/resource/action requests; four executable mutations, Software Rules 0.2.0 schema validation, comparison validation, and evidence integrity passed in run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753). This covers simple RBAC only; domains, role hierarchy, ABAC, deny policies, and policy mutation remain untested. | Python 3.12 RBAC evaluator | In progress |
 | 10 | Security controls | JOSE HMAC signature integrity and algorithm allowlisting match across the declared synthetic-token cases; eight mutations and schema/integrity validation passed. Broader security controls remain untested. | Python 3.12 HMAC/JWT verifier | In progress |
 | 11 | Background processing | BullMQ retry/backoff and message lifecycle cases pass bounded source/replica probes. Scheduling, cancellation, concurrency, stalled jobs, and full lifecycle remain uncovered. | Python retry-decision model | In progress |
 | 12 | Errors and recovery | BullMQ retry suppression/consumer failure, Express 404 fallback, TypeORM rollback, Medusa invalid_data, and JOSE semantic JWT rejection categories pass bounded cases; broader failure classes remain uncovered. | Python retry, queue, HTTP, SQLite, date, and JWT models | In progress |
@@ -36,6 +36,7 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [MEDUSA-BR-001](cases/MEDUSA-BR-001/CASE.md) | Business rules; data; behaviour; errors/recovery | Ten date inputs, 40 matching projections, executable mutations, Software Rules captures, schema/integrity validation, and committed source evidence |
 | [BMQ-MSG-001](cases/BMQ-MSG-001/CASE.md) | Messaging; background processing; behaviour; errors/recovery; data | Two message scenarios, ten matching projections, six executable mutations, Software Rules 0.2.0 captures, schema/integrity validation, and committed evidence; run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126) |
 | [JOSE-AUTH-001](cases/JOSE-AUTH-001/CASE.md) | Identity/authentication; security controls; data; behaviour; errors/recovery | Eleven JWT scenarios, 55 facet/scenario projections, eight executable mutations, Software Rules 0.2.0 captures, schema/integrity validation, committed evidence, and retained artifact; run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956) |
+| [CASBIN-AUTHZ-001](cases/CASBIN-AUTHZ-001/CASE.md) | Authorization and permissions; behaviour; data | Ten RBAC requests, four executable mutations, Software Rules 0.2.0 captures, comparison, schema validation, evidence integrity, and retained CI artifact; run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753) |
 
 
 ## Completion rule

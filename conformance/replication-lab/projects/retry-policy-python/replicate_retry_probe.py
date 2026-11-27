@@ -1,7 +1,5 @@
 import json
-from pathlib import Path
-
-from retry_policy import decide_retry, fixed
+from retry_policy import decide_retry
 
 
 def simulate(label, attempts, backoff, success_after_failures=None):

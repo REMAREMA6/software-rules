@@ -8,7 +8,7 @@ def round8(x):
 def calculate(quantity, tax_rate, adjustments, mutation=None):
  mutation=mutation or {}
  # Match the source's JS truthy fallback: missing or zero quantity becomes one.
- q=D(quantity or 1)
+ q=D((1 if quantity is None else quantity) if mutation.get("zero_quantity_no_fallback") else (quantity or 1))
  rate=None if tax_rate is None else D(tax_rate)
  subtotal=Decimal(0); tax=Decimal(0); total=Decimal(0); rows=[]
  for adj in adjustments:

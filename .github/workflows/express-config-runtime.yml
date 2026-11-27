@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: express-config-runtime
+  group: express-config-runtime-${{ github.event_name }}
   cancel-in-progress: true
 
 permissions:

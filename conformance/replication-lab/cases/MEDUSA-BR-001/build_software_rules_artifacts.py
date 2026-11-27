@@ -65,7 +65,7 @@ def normalized(scenario, facet):
         }
     if facet == "behavior":
         return {
-            "validationOrder": "starts_at-before-ends_at",
+            "validationOrder": scenario.get("validationOrder", "not-discriminated"),
             **base,
         }
     return {
@@ -129,7 +129,7 @@ def payload(scenario, facet):
                 {"sequence": 1, "action": "Check truthy starts_at with isDate."},
                 {"sequence": 2, "action": "Check truthy ends_at with isDate if starts_at did not throw."},
             ],
-            "outputs": [{"outcome": scenario["outcome"], "errorField": scenario.get("errorField")}],
+            "outputs": [{"outcome": scenario["outcome"], "errorField": scenario.get("errorField"), "validationOrder": scenario.get("validationOrder")}],
             "termination": "throws-invalid-data" if rejected else "returns-without-error",
             "extensions": {"scenarioLabel": label, "chronologyCompared": False},
         }

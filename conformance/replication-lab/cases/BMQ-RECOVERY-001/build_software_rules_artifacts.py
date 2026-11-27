@@ -40,7 +40,7 @@ def build_capture(raw,side,raw_path):
    "payload":{"facet":FACET,"kind":"job-lifecycle","subject":"Stalled job recovery and terminal policy",
     "job":"work","trigger":"Active worker force-close followed by lock expiry",
     "schedule":{"type":"immediate-queue-job","delayMs":0},
-    "enqueue":{"jobId":"recovery-job","attempts":1},
+    "enqueue":{"jobId":"recovery-job"},
     "worker":{"lockDurationMs":1000,"stalledIntervalMs":100,"maxStalledCount":1 if label=="recover-once" else 0,"concurrency":1},
     "lifecycle":life,"attemptCount":terminal["attemptsStarted"],
     "startedAt":created,"endedAt":created,"inputs":{"scenario":label},

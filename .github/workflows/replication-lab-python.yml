@@ -5,6 +5,7 @@ on:
     paths:
       - "conformance/replication-lab/projects/**"
       - "conformance/replication-lab/cases/**"
+      - "!conformance/replication-lab/cases/**/artifacts/**"
       - ".github/workflows/replication-lab-python.yml"
   pull_request:
     paths:

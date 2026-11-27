@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Ten bounded cross-stack cases have passed. PROM-PERF-001 is pending CI and evidence review; it is not yet accepted. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Twelve bounded cross-stack cases have passed: the original eight cases, TASKBOARD-UI-001, EXP-CONFIG-001, PROM-PERF-001, and CASBIN-ADV-AUTHZ-001. No entire facet is complete for the project-wide objective. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 
@@ -40,6 +40,8 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [REDIS-INT-001](cases/REDIS-INT-001/CASE.md) | Integrations; errors/recovery; data | Seven Redis interactions, five executable mutations, Software Rules 0.2.0 captures, comparison, schema validation, evidence integrity, and retained CI artifact; run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414) |
 | [TASKBOARD-UI-001](cases/TASKBOARD-UI-001/CASE.md) | Interface | Nine viewport/state comparisons, zero differing pixels, matching semantic snapshots/API traces, active-count mutation detected, Software Rules 0.2.0 captures/report, schema and integrity validation; run [#45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401), artifact `15170370565` |
 | [EXP-CONFIG-001](cases/EXP-CONFIG-001/CASE.md) | Configuration; API; behaviour | Five configuration profiles, 18 path observations, late-setting snapshot semantics, three deliberate mutation tests, Software Rules 0.2.0 captures/report, schema/integrity validation; run [#45937990537](https://github.com/REMAREMA6/software-rules/actions/runs/45937990537), artifact `15171850580` |
+| [PROM-PERF-001](cases/PROM-PERF-001/CASE.md) | Performance and resource behaviour; behaviour; data | Three pinned Prometheus runs and three Python model runs; 20,000 samples per run, three semantic matches, dropped-scrape and missing-repeat mutations detected, Software Rules captures/report validated; run [#45938387274](https://github.com/REMAREMA6/software-rules/actions/runs/45938387274), artifact `15171587211` |
+| [CASBIN-ADV-AUTHZ-001](cases/CASBIN-ADV-AUTHZ-001/CASE.md) | Authorization and permissions; behaviour; data; security controls | 19 domain-RBAC/ABAC/deny-override/policy-mutation decisions matched, four mutations detected, Software Rules captures/report validated; run [#45938792630](https://github.com/REMAREMA6/software-rules/actions/runs/45938792630), artifact `15172101161` |
 
 
 ## Pending cases\n\n| Case | Facet | Current status |\n|---|---|---|\n| [PROM-PERF-001](cases/PROM-PERF-001/CASE.md) | Performance and resource behaviour; behaviour; data | Pending pinned Prometheus runtime benchmark, three repeated measurements, independent workload model, mutation detection, Software Rules capture/report validation, and evidence review.\n\n## Completion rule

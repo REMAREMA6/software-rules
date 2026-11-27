@@ -70,14 +70,14 @@ async function runScenario(label, configure) {
     duplicate.setup.firstId === duplicate.setup.secondId,
     duplicate.setup.storedPayload === 'first',
     duplicate.setup.storedState === 'waiting',
-    duplicate.eventNames.join(',') === 'active,completed',
+    duplicate.eventNames.join(',') === 'waiting,active,completed',
     JSON.stringify(duplicate.processed) === JSON.stringify(['first']),
     duplicate.terminal.state === 'completed',
     duplicate.counts.completed === 1,
     failure.terminal.state === 'failed',
     failure.terminal.error === 'consumer-failed',
     failure.setup.storedState === 'waiting',
-    failure.eventNames.join(',') === 'active,failed',
+    failure.eventNames.join(',') === 'waiting,active,failed',
     failure.counts.failed === 1,
   ];
   const report = {

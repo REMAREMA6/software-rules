@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; two bounded cross-stack cases (BullMQ and Express) have passed source-runtime comparison, mutation testing, schema validation, and evidence retention; TypeORM persistence case is now active; 15-facet programme remains incomplete
+**Overall status:** Phase 6 in progress; two bounded cross-stack cases (BullMQ retry/backoff and Express routing) have passed the full evidence loop; TypeORM persistence and BullMQ messaging cases are implemented but runtime verification is pending; remaining facets are incomplete
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Execute TORM-PERSIST-001 against the pinned TypeORM source checkout and Python/sqlite3 replica; then proceed through messaging, identity/authentication, authorization, security, integrations, business rules, and repeatable performance/resource cases.
-- **Blockers:** The two accepted cases are bounded, not facet-complete. TypeORM source/replica run is pending. Messaging, identity, authorization, dedicated security, integrations, business-rule and repeatable performance cases have no accepted cross-stack evidence. Interface needs a separate UI-stack replica and completeness audit.
-- **Next action:** Verify the TypeORM workflow result and fix any source-build/runtime issues; generate schema-native captures and validate the complete evidence loop before accepting the case.
+- **Current task:** Verify TORM-PERSIST-001 and BMQ-MSG-001 source-runtime workflows, fix any failures, and produce schema-native captures/comparison reports before moving to identity, authorization, security, business rules, integrations, and performance/resource cases.
+- **Blockers:** The two accepted cases are bounded, not facet-complete. TypeORM and messaging runtime results are pending; neither case has schema-native captures yet. Identity, authorization, dedicated security, integrations, business rules, and repeatable performance cases still lack accepted cross-stack evidence. Interface needs a separate UI-stack replica and completeness audit.
+- **Next action:** Obtain and inspect actual TypeORM and BullMQ messaging runtime outputs, correct workflow/probe failures, then generate and validate Software Rules captures and comparison reports. Do not count prepared probes or local Python model checks as runtime passes.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -177,7 +177,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] 4. Data — shapes, types, nullability, relationships, transformations, and serialization.
 - [~] 5. Persistence — TypeORM top-level commit/rollback case is implemented; runtime comparison pending; durability/restart/concurrency remain uncovered.
 - [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.
-- [ ] 7. Messaging — publish/consume, delivery, acknowledgement, ordering, retries, and idempotency.
+- [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer case is implemented; runtime comparison pending; delivery guarantees and idempotency breadth remain uncovered.
 - [ ] 8. Identity/authentication — principal, credential/session lifecycle, expiry, and logout.
 - [ ] 9. Authorization — actor/resource/action policy matrix and enforcement.
 - [ ] 10. Security — authorized control, bypass, and containment scenarios.
@@ -409,3 +409,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Generated and validated Software Rules 0.2.0 captures and the comparison report.
 - [x] Committed raw/structured captures, frozen pnpm lockfile, and dependency tree under `conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/` at commit [fabf45a](https://github.com/REMAREMA6/software-rules/commit/fabf45ae466d2b68bcc49f6596f6c6bb220ddef3).
 - [~] Phase 6 remains active; this case proves only the declared two-scenario transaction scope.
+
+
+### 2026-11-27 — TypeORM persistence and BullMQ messaging case preparation
+
+- [x] Inspected TypeORM EntityManager transaction handling and SQLite-compatible QueryRunner implementation at immutable commit `b1e211fc2654d412612a08f8a7fb890f3352614f`.
+- [x] Added TORM-PERSIST-001 with a pinned-source compile/runtime workflow, SQL.js transaction probe, independent Python sqlite3 replica, comparator, and mutation tests.
+- [x] Ran the Python/sqlite3 model logic locally in the analysis environment; rollback, original-error propagation, commit visibility, and callback return assertions passed. This does not establish TypeORM source-runtime equivalence.
+- [x] Added BMQ-MSG-001 using pinned BullMQ source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4`: duplicate custom job ID suppression, stored-payload precedence, queue event sequence, successful completion, and terminal consumer failure.
+- [x] Added independent Python queue model, comparator mutation tests, and Redis-backed pinned-source workflow for BMQ-MSG-001.
+- [x] Ran the Python messaging model logic locally in the analysis environment; duplicate suppression, one processing outcome, completion acknowledgement, and failed-consumer terminal state assertions passed. This does not establish BullMQ source-runtime equivalence.
+- [~] Actual TypeORM and messaging GitHub Actions outputs and Software Rules schema-native captures are still unverified. Do not promote either case to passed.

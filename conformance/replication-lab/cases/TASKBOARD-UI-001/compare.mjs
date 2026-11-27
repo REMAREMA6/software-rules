@@ -76,6 +76,7 @@ try{
  await m.page.locator("#task-input").fill("One");await m.page.getByRole("button",{name:"Add task"}).click();
  await m.page.locator("#task-input").fill("Two");await m.page.getByRole("button",{name:"Add task"}).click();
  await m.page.getByRole("checkbox",{name:"Complete One"}).check();
+ await m.page.waitForFunction(()=>document.querySelector("#summary")?.textContent==="2 tasks · 2 active");
  const mutatedSummary=await m.page.locator("#summary").innerText();
  output.mutationDetected=mutatedSummary==="2 tasks · 2 active";
  output.mutatedSummary=mutatedSummary;assert(output.mutationDetected,"Deliberate active-count mutation was not detected");
@@ -83,6 +84,6 @@ try{
 }finally{await browser.close();sourceServer.close();replica.kill("SIGTERM");mutation.kill("SIGTERM");}
 output.failures=failures;
 await mkdir(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence",{recursive:true});
-await writeFile(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/runtime-comparison.json",JSON.stringify(output,null,2)+"\\n");
+await writeFile(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/runtime-comparison.json",JSON.stringify(output,null,2)+"\n");
 console.log(JSON.stringify(output,null,2));
 if(failures.length)process.exitCode=1;

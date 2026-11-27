@@ -1,7 +1,7 @@
 # Case — Express HTTP routing and method semantics
 
 **Case ID:** EXP-API-001  
-**Status:** Source inspection and independent Python probe prepared; pinned Express runtime comparison pending  
+**Status:** PASSED for the declared seven-request scope. Pinned Express runtime and independent Python HTTP replica match across 28 facet/scenario projections; executable mutation tests, Software Rules schema validation, cross-record evidence integrity, and artifact persistence all pass.  
 **Facet(s):** API; Behaviour; Configuration; Errors and recovery  
 **Source:** https://github.com/expressjs/express  
 **Source commit:** 43fca52d28a422c8be48fd489cbd4f2d6152bab6  
@@ -57,4 +57,4 @@ The comparison tests deliberately mutate the executable Python replica's HEAD wi
 
 ## Acceptance gate
 
-Accept this bounded case only after the pinned Express runtime and Python replica produce equivalent captures for all seven requests, mutation tests detect the listed incorrect variants, and Software Rules 0.2.0 source/replica captures plus the comparison report pass schema and cross-record evidence validation. This case cannot establish equivalence for all Express routing behaviour.
+**Passed for the declared bounded scope.** The pinned Express 5.3.0 runtime and independent Python 3.12 HTTP server match across all seven requests and 28 facet/scenario projections. The comparison covers API responses, behaviour, routing configuration, and 404 fallback. Executable mutation tests detect incorrect HEAD wire-body handling, OPTIONS method enumeration/precedence, case sensitivity, strict trailing-slash behaviour, and query-path handling. The Software Rules 0.2.0 source/replica captures and comparison report passed schema and cross-record integrity validation in [workflow run #20](https://github.com/REMAREMA6/software-rules/actions/runs/45926714897). Seven evidence files, including the generated npm dependency lockfile and dependency tree, are committed under `artifacts/` at [commit ad30376](https://github.com/REMAREMA6/software-rules/commit/ad3037693d32221a6d7bdb6b9883c45db7b2be9c). This does not establish equivalence for all Express routing behaviour or complete any entire facet.

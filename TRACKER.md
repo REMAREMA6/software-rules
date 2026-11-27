@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Execute and review PROM-PERF-001, a pending Prometheus TSDB write workload case with three repeated source/replica runs; then broaden business-rule coverage and continue the 15-facet property-inventory audit.
+- **Current task:** Execute and review PROM-PERF-001 (repeatable Prometheus workload) and EXP-CONFIG-001 (Express routing configuration activation), both pending runtime/evidence validation; then broaden business-rule coverage and continue the 15-facet property-inventory audit.
 - **Blockers:** No entire facet is complete. Casbin covers only simple RBAC; domains, role hierarchy, ABAC, deny policies, and policy mutation remain untested. JWT verification is only bounded authentication/security evidence, not a full identity provider or authorization lifecycle. External integrations and repeatable performance/resource behaviour have no accepted cross-stack case. TASKBOARD-UI-001 now supplies a bounded independent UI-stack replica, but broader interface properties remain unresolved. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered. Interface, data, persistence, API, messaging, background-processing, errors, and configuration still have unresolved property inventories.
-- **Next action:** Complete PROM-PERF-001 CI, mutation, Software Rules capture, and evidence review. If accepted, expand business-rule and integration classes and resolve remaining required property gaps; do not infer facet completion from case counts.
+- **Next action:** Complete PROM-PERF-001 and EXP-CONFIG-001 CI, mutation, Software Rules capture, and evidence review. If accepted, expand business-rule and integration classes and resolve remaining required property gaps; do not infer facet completion from case counts.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking

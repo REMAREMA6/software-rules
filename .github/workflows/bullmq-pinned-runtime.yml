@@ -20,6 +20,9 @@ concurrency:
   group: bullmq-pinned-runtime
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   pinned-bullmq-runtime:
     runs-on: ubuntu-latest
@@ -91,6 +94,24 @@ jobs:
             "$GITHUB_WORKSPACE/bullmq-software-rules/bullmq-source.capture.json" \
             "$GITHUB_WORKSPACE/bullmq-software-rules/bullmq-python-replica.capture.json" \
             "$GITHUB_WORKSPACE/bullmq-software-rules/bullmq-comparison.report.json"
+      - name: Commit verified case evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          evidence_dir="conformance/replication-lab/cases/BMQ-ER-002/artifacts"
+          mkdir -p "$evidence_dir"
+          cp bullmq-runtime-capture.json "$evidence_dir/bullmq-runtime-capture.json"
+          cp bullmq-replica-capture.json "$evidence_dir/bullmq-replica-capture.json"
+          cp bullmq-comparison-report.json "$evidence_dir/bullmq-raw-comparison-report.json"
+          cp bullmq-software-rules/bullmq-source.capture.json "$evidence_dir/bullmq-source.capture.json"
+          cp bullmq-software-rules/bullmq-python-replica.capture.json "$evidence_dir/bullmq-python-replica.capture.json"
+          cp bullmq-software-rules/bullmq-comparison.report.json "$evidence_dir/bullmq-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified BullMQ cross-stack evidence"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
       - name: Retain source, replica, and Software Rules captures
         if: always()
         uses: actions/upload-artifact@v4

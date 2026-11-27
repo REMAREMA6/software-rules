@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- BMQ-RECOVERY-001 passed two pinned BullMQ stalled-job scenarios: one stalled job requeued and completed within maxStalledCount; another failed at maxStalledCount=0. Attempts, stalled counter, events, processed values, and queue counts matched the Python state-machine model; four mutations and Software Rules schema/integrity passed in run #45943469678, artifact #15173607117. Multiple stalled jobs, concurrency, and Redis/host failover remain excluded.
+
+
+### Verified
 - TORM-PERSIST-002 passed four TypeORM 1.1.3/Python sqlite3 file-backed post-reopen scenarios covering commit durability, rollback durability, update durability and constraint-failure atomicity; four deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45942572930, artifact #15172764857. Multi-process concurrency, isolation levels and power-loss durability remain excluded.
 
 

@@ -160,7 +160,8 @@
 - [x] TORM-PERSIST-001: TypeORM 1.1.3 pinned source + SQL.js versus Python 3.12 sqlite3; two scenarios, eight semantic projections, six mutations, schema 0.2.0 capture/report validation, and evidence integrity passed.
 - [x] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations, Software Rules 0.2.0 capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
 - [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto versus Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight mutations, schema/report validation, and evidence integrity passed in run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
-- [ ] Add distinct cross-stack cases for authorization, external integrations, broader business rules, repeatable performance/resources, and independent UI-stack replication; expand incomplete property inventories for all facets.
+- [~] CASBIN-AUTHZ-001: pinned Apache Casbin Go source versus independent Python simple-RBAC evaluator; ten authorization requests, four executable mutations, Software Rules 0.2.0 capture/report builder, and CI workflow prepared; source runtime and schema validation pending.
+- [ ] Add distinct cross-stack cases for external integrations, broader business rules, repeatable performance/resources, and independent UI-stack replication; expand incomplete property inventories for all facets.
 - [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
 

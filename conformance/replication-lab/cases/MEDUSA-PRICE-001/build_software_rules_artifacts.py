@@ -69,7 +69,7 @@ def build_capture(raw,side,raw_path,source_artifacts):
  if source:
   for key,path in source_artifacts.items():
    data=Path(path).read_bytes(); evidence.append({"evidenceId":"medusa-price-source-"+key,
-    "evidenceClass":"source","evidenceType":"pinned-source-file","mediaType":"text/plain",
+    "evidenceClass":"source-artifact","evidenceType":"pinned-source-file","mediaType":"text/plain",
     "origin":{"targetId":target_id,"collector":"GitHub immutable source checkout","sourceRevision":raw["sourceCommit"],"location":path},
     "capturedAt":created,"embedded":{"sha256":hashlib.sha256(data).hexdigest()},
     "locator":path,"digest":hashlib.sha256(data).hexdigest(),"sizeBytes":len(data),

@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Nine bounded cross-stack cases have passed: the eight listed below plus TASKBOARD-UI-001 (plain HTML/CSS/browser JavaScript to independent React 19/Vite UI replication). No entire facet is complete for the project-wide objective. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Nine bounded cross-stack cases have passed: the eight listed below plus TASKBOARD-UI-001 (plain HTML/CSS/browser JavaScript to independent React 19/Vite UI replication). No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 

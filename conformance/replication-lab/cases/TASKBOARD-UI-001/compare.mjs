@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { createRequire } from "node:module";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -52,17 +52,25 @@ try{
  async function compareState(name){const d=diff(await a.page.screenshot({fullPage:true}),await b.page.screenshot({fullPage:true}));const same=JSON.stringify(await snapshot(a.page))===JSON.stringify(await snapshot(b.page));output.workflowResults.push({state:name,...d,semanticMatch:same});assert(d.differentPixels===0,name+" visual mismatch: "+d.differentPixels);assert(same,name+" semantic mismatch");}
  await a.page.locator("#task-input").fill("Write specification");await b.page.locator("#task-input").fill("Write specification");
  await Promise.all([a.page.getByRole("button",{name:"Add task"}).click(),b.page.getByRole("button",{name:"Add task"}).click()]);
+ await Promise.all([a.page.locator("#task-list li").nth(0).waitFor(),b.page.locator("#task-list li").nth(0).waitFor()]);
  await a.page.locator("#task-input").fill("Review evidence");await b.page.locator("#task-input").fill("Review evidence");
  await Promise.all([a.page.getByRole("button",{name:"Add task"}).click(),b.page.getByRole("button",{name:"Add task"}).click()]);
+ await Promise.all([a.page.locator("#task-list li").nth(1).waitFor(),b.page.locator("#task-list li").nth(1).waitFor()]);
  await compareState("populated");
  await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).check(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).check()]);
+ await Promise.all([a.page.locator(".task.done").waitFor(),b.page.locator(".task.done").waitFor()]);
  await compareState("completed");
  await Promise.all([a.page.getByRole("button",{name:"Active",exact:true}).click(),b.page.getByRole("button",{name:"Active",exact:true}).click()]);await compareState("active-filter");
  await Promise.all([a.page.getByRole("button",{name:"Completed",exact:true}).click(),b.page.getByRole("button",{name:"Completed",exact:true}).click()]);await compareState("completed-filter");
- await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).uncheck(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).uncheck()]);await compareState("toggle-back");
- await Promise.all([a.page.getByRole("button",{name:"Delete Review evidence"}).click(),b.page.getByRole("button",{name:"Delete Review evidence"}).click()]);await compareState("delete");
+ await Promise.all([a.page.getByRole("checkbox",{name:"Complete Write specification"}).uncheck(),b.page.getByRole("checkbox",{name:"Complete Write specification"}).uncheck()]);
+ await Promise.all([a.page.locator("#task-list li").waitFor({state:"detached"}),b.page.locator("#task-list li").waitFor({state:"detached"})]);
+ await compareState("toggle-back");
+ await Promise.all([a.page.getByRole("button",{name:"Active",exact:true}).click(),b.page.getByRole("button",{name:"Active",exact:true}).click()]);
+ await Promise.all([a.page.getByRole("button",{name:"Delete Review evidence"}).click(),b.page.getByRole("button",{name:"Delete Review evidence"}).click()]);
+ await Promise.all([a.page.getByText("Review evidence").waitFor({state:"detached"}),b.page.getByText("Review evidence").waitFor({state:"detached"})]);
+ await compareState("delete");
  assert(JSON.stringify(a.requests)===JSON.stringify(b.requests),"Source and React API request traces differ");
- assert(a.requests.map(x=>x.method).join(",")==="POST,POST,PATCH,PATCH,PATCH,DELETE","Unexpected API operation trace");
+ assert(a.requests.map(x=>x.method).join(",")==="POST,POST,PATCH,PATCH,DELETE","Unexpected API operation trace");
  await a.page.close();await b.page.close();
  const m=await open("http://127.0.0.1:4174",{width:1280,height:800});
  await m.page.locator("#task-input").fill("One");await m.page.getByRole("button",{name:"Add task"}).click();
@@ -74,5 +82,7 @@ try{
  await m.page.close();
 }finally{await browser.close();sourceServer.close();replica.kill("SIGTERM");mutation.kill("SIGTERM");}
 output.failures=failures;
+await mkdir(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence",{recursive:true});
+await writeFile(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/runtime-comparison.json",JSON.stringify(output,null,2)+"\\n");
 console.log(JSON.stringify(output,null,2));
 if(failures.length)process.exitCode=1;

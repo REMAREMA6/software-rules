@@ -17,7 +17,8 @@ class JoseJwtAuthenticationTests(unittest.TestCase):
         self.source = source_fixture()
 
     def test_independent_verifier_matches_reference_fixture(self):
-        self.assertEqual(compare(self.source, capture(self.source))["result"], "match")
+        report = compare(self.source, capture(self.source))
+        self.assertEqual(report["result"], "match", report["errors"])
 
     def test_signature_verification_mutation_is_detected(self):
         self.assertEqual(compare(self.source, capture(self.source, verify_signature=False))["result"], "mismatch")

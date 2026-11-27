@@ -1,5 +1,4 @@
 const http = require("node:http");
-const axios = require(process.env.AXIOS_SOURCE_ROOT + "/dist/node/axios.cjs");
 
 function send(res,status,contentType,body,headers={}) {
   res.writeHead(status,{"Content-Type":contentType,...headers});
@@ -23,6 +22,7 @@ function parseOutcome(response) {
   return {kind:"response",status:response.status,data:response.data};
 }
 async function main() {
+  const axios = (await import(process.env.AXIOS_SOURCE_ROOT + "/index.js")).default;
   await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
   const base="http://127.0.0.1:"+server.address().port;
   const scenarios=[];

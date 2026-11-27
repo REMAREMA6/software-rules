@@ -1,7 +1,7 @@
 # Case — TypeORM/PostgreSQL transaction isolation and serializable conflict handling
 
 **Case ID:** TYPEORM-ISOLATION-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all three overlapping-transaction scenarios. TypeORM 1.1.3/PostgreSQL 16 matched the independent Python 3.12/psycopg runtime; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence-integrity validation in [run #45946136744](https://github.com/REMAREMA6/software-rules/actions/runs/45946136744), artifact `15175051244` (expires 2026-12-27).  
 **Facets:** Persistence; behaviour; data; errors and recovery  
 **Source:** https://github.com/typeorm/typeorm  
 **Immutable source commit:** `b1e211fc2654d412612a08f8a7fb890f3352614f`  

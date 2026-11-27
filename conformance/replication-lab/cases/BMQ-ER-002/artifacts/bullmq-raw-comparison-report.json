@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+  "sourcePackageVersion": "6.7.10",
+  "replica": "independent Python retry-policy model",
+  "comparedFields": [
+    "configuredAttempts",
+    "processorAttempts",
+    "processorAttemptsMade",
+    "strategyAttempts",
+    "backoffResults",
+    "stateTransitions",
+    "finalState",
+    "outcome.terminal",
+    "outcome.attemptsMade"
+  ],
+  "scenarioCount": 3,
+  "result": "match",
+  "errors": []
+}

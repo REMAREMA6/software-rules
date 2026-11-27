@@ -1,0 +1,86 @@
+{
+  "capturedAt": "2026-11-27T01:59:02.706461Z",
+  "completedAt": "2026-11-27T01:59:02.706471Z",
+  "implementation": "independent Python retry-policy model",
+  "scenarios": [
+    {
+      "label": "positive-backoff-completes",
+      "configuredAttempts": 3,
+      "processorAttempts": 3,
+      "processorAttemptsMade": [
+        0,
+        1,
+        2
+      ],
+      "strategyAttempts": [
+        1,
+        2
+      ],
+      "backoffResults": [
+        40,
+        80
+      ],
+      "stateTransitions": [
+        "delayed",
+        "waiting",
+        "delayed",
+        "waiting",
+        "completed"
+      ],
+      "outcome": {
+        "terminal": "completed",
+        "attemptsMade": 3,
+        "result": "ok"
+      },
+      "finalState": "completed"
+    },
+    {
+      "label": "minus-one-suppresses-retry",
+      "configuredAttempts": 3,
+      "processorAttempts": 1,
+      "processorAttemptsMade": [
+        0
+      ],
+      "strategyAttempts": [
+        1
+      ],
+      "backoffResults": [
+        -1
+      ],
+      "stateTransitions": [
+        "failed"
+      ],
+      "outcome": {
+        "terminal": "failed",
+        "attemptsMade": 1,
+        "error": "processor failure"
+      },
+      "finalState": "failed"
+    },
+    {
+      "label": "zero-delay-respects-attempt-limit",
+      "configuredAttempts": 2,
+      "processorAttempts": 2,
+      "processorAttemptsMade": [
+        0,
+        1
+      ],
+      "strategyAttempts": [
+        1
+      ],
+      "backoffResults": [
+        0
+      ],
+      "stateTransitions": [
+        "waiting",
+        "failed"
+      ],
+      "outcome": {
+        "terminal": "failed",
+        "attemptsMade": 2,
+        "error": "processor failure"
+      },
+      "finalState": "failed"
+    }
+  ]
+}

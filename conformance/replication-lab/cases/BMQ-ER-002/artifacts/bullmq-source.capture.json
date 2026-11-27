@@ -1,0 +1,2212 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "bullmq-source-runtime-capture",
+  "createdAt": "2026-11-27T01:59:02.798718Z",
+  "purpose": "Capture the declared three-scenario BullMQ retry/backoff conformance scope in the Software Rules format.",
+  "target": {
+    "targetId": "bullmq-source-runtime",
+    "systemName": "BullMQ",
+    "systemVersion": "6.7.10",
+    "build": {
+      "revision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+    },
+    "boundary": {
+      "description": "A bounded retry/backoff decision and terminal-state probe; not a complete capture of BullMQ or a full queue implementation.",
+      "included": [
+        "Three declared processor/retry scenarios",
+        "Processor attempt count and attemptsMade values",
+        "Custom backoff strategy inputs and results",
+        "Observed delayed/waiting/failed/completed transitions"
+      ],
+      "excluded": [
+        "Other retry options and unrecoverable-error variants",
+        "Queue scheduler, rate limiting, stalled jobs, and worker shutdown",
+        "Production deployment and external application behaviour",
+        "Exact processor error-message equality between source and replica"
+      ]
+    },
+    "environment": {
+      "platform": "CI runner",
+      "os": "Ubuntu Linux",
+      "runtime": "Node.js and Redis 7",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "scenarioCount": 3,
+          "sourceCommit": "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Three deterministic retry/backoff scenarios: positive delays then completion; -1 suppression; zero-delay retry followed by attempts-limit failure.",
+    "facetIds": [
+      "background-processing",
+      "errors-recovery",
+      "data",
+      "behavior"
+    ],
+    "subjects": [
+      "job-retry-policy",
+      "job-attempt-counter"
+    ],
+    "scenarioIds": [
+      "bmq-scenario-positive",
+      "bmq-scenario-minus-one",
+      "bmq-scenario-zero-delay"
+    ]
+  },
+  "collector": {
+    "name": "Instrumented BullMQ worker, QueueEvents, and Job state",
+    "methodDescription": "Controlled scenario execution with instrumentation of processor calls, backoff strategy arguments/results, queue lifecycle events, and terminal job state."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "bmq-scenario-positive",
+      "title": "Positive Backoff Completes",
+      "purpose": "Probe custom retry eligibility, backoff routing, attempt counters, and terminal state.",
+      "facetIds": [
+        "background-processing",
+        "errors-recovery",
+        "data",
+        "behavior"
+      ],
+      "subject": "job-retry-policy",
+      "preconditions": [
+        "A fresh isolated queue and worker are used for the scenario.",
+        "Configured attempts limit is 3.",
+        "The worker uses a deterministic custom backoff strategy."
+      ],
+      "trigger": "Add a job and let its processor return or throw according to the scenario.",
+      "inputs": {
+        "configuredAttempts": 3,
+        "scenario": "positive-backoff-completes"
+      },
+      "observableQuestions": [
+        "How many processor attempts occur?",
+        "Which attempt numbers are passed to the backoff strategy?",
+        "How are backoff results routed?",
+        "What are the terminal state and attemptsMade value?"
+      ]
+    },
+    {
+      "scenarioId": "bmq-scenario-minus-one",
+      "title": "Minus One Suppresses Retry",
+      "purpose": "Probe custom retry eligibility, backoff routing, attempt counters, and terminal state.",
+      "facetIds": [
+        "background-processing",
+        "errors-recovery",
+        "data",
+        "behavior"
+      ],
+      "subject": "job-retry-policy",
+      "preconditions": [
+        "A fresh isolated queue and worker are used for the scenario.",
+        "Configured attempts limit is 3.",
+        "The worker uses a deterministic custom backoff strategy."
+      ],
+      "trigger": "Add a job and let its processor return or throw according to the scenario.",
+      "inputs": {
+        "configuredAttempts": 3,
+        "scenario": "minus-one-suppresses-retry"
+      },
+      "observableQuestions": [
+        "How many processor attempts occur?",
+        "Which attempt numbers are passed to the backoff strategy?",
+        "How are backoff results routed?",
+        "What are the terminal state and attemptsMade value?"
+      ]
+    },
+    {
+      "scenarioId": "bmq-scenario-zero-delay",
+      "title": "Zero Delay Respects Attempt Limit",
+      "purpose": "Probe custom retry eligibility, backoff routing, attempt counters, and terminal state.",
+      "facetIds": [
+        "background-processing",
+        "errors-recovery",
+        "data",
+        "behavior"
+      ],
+      "subject": "job-retry-policy",
+      "preconditions": [
+        "A fresh isolated queue and worker are used for the scenario.",
+        "Configured attempts limit is 2.",
+        "The worker uses a deterministic custom backoff strategy."
+      ],
+      "trigger": "Add a job and let its processor return or throw according to the scenario.",
+      "inputs": {
+        "configuredAttempts": 2,
+        "scenario": "zero-delay-respects-attempt-limit"
+      },
+      "observableQuestions": [
+        "How many processor attempts occur?",
+        "Which attempt numbers are passed to the backoff strategy?",
+        "How are backoff results routed?",
+        "What are the terminal state and attemptsMade value?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "bmq-exec-source-positive",
+      "scenarioId": "bmq-scenario-positive",
+      "targetId": "bullmq-source-runtime",
+      "startedAt": "2026-11-27T01:59:01.878Z",
+      "endedAt": "2026-11-27T01:59:02.481Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js with Redis 7",
+        "sourcePackageVersion": "6.7.10",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "independentReplica": false,
+        "scope": "Three deterministic retry/backoff scenarios only"
+      },
+      "actualInputs": {
+        "configuredAttempts": 3,
+        "backoffResults": [
+          40,
+          80
+        ]
+      },
+      "trigger": "Enqueue and process one job in a fresh queue/model instance.",
+      "collector": {
+        "name": "Instrumented BullMQ worker, QueueEvents, and Job state"
+      },
+      "limitations": [
+        "Does not cover every BullMQ retry option, scheduler condition, or deployment configuration."
+      ]
+    },
+    {
+      "executionId": "bmq-exec-source-minus-one",
+      "scenarioId": "bmq-scenario-minus-one",
+      "targetId": "bullmq-source-runtime",
+      "startedAt": "2026-11-27T01:59:01.878Z",
+      "endedAt": "2026-11-27T01:59:02.481Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js with Redis 7",
+        "sourcePackageVersion": "6.7.10",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "independentReplica": false,
+        "scope": "Three deterministic retry/backoff scenarios only"
+      },
+      "actualInputs": {
+        "configuredAttempts": 3,
+        "backoffResults": [
+          -1
+        ]
+      },
+      "trigger": "Enqueue and process one job in a fresh queue/model instance.",
+      "collector": {
+        "name": "Instrumented BullMQ worker, QueueEvents, and Job state"
+      },
+      "limitations": [
+        "Does not cover every BullMQ retry option, scheduler condition, or deployment configuration."
+      ]
+    },
+    {
+      "executionId": "bmq-exec-source-zero-delay",
+      "scenarioId": "bmq-scenario-zero-delay",
+      "targetId": "bullmq-source-runtime",
+      "startedAt": "2026-11-27T01:59:01.878Z",
+      "endedAt": "2026-11-27T01:59:02.481Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js with Redis 7",
+        "sourcePackageVersion": "6.7.10",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "independentReplica": false,
+        "scope": "Three deterministic retry/backoff scenarios only"
+      },
+      "actualInputs": {
+        "configuredAttempts": 2,
+        "backoffResults": [
+          0
+        ]
+      },
+      "trigger": "Enqueue and process one job in a fresh queue/model instance.",
+      "collector": {
+        "name": "Instrumented BullMQ worker, QueueEvents, and Job state"
+      },
+      "limitations": [
+        "Does not cover every BullMQ retry option, scheduler condition, or deployment configuration."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "bmq-obs-source-positive-background",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-positive",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 0,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "job-retry-policy",
+        "job": "probe",
+        "trigger": "The worker processor returns successfully or throws an error.",
+        "worker": {
+          "processorAttempts": 3,
+          "strategyAttempts": [
+            1,
+            2
+          ]
+        },
+        "lifecycle": [
+          {
+            "state": "delayed"
+          },
+          {
+            "state": "waiting"
+          },
+          {
+            "state": "delayed"
+          },
+          {
+            "state": "waiting"
+          },
+          {
+            "state": "completed"
+          }
+        ],
+        "attemptCount": 3,
+        "inputs": {
+          "configuredAttempts": 3,
+          "backoffResults": [
+            40,
+            80
+          ]
+        },
+        "retry": {
+          "strategyAttempts": [
+            1,
+            2
+          ],
+          "backoffResults": [
+            40,
+            80
+          ]
+        },
+        "terminalResult": "completed",
+        "output": {
+          "finalState": "completed",
+          "attemptsMade": 3,
+          "result": "ok"
+        }
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "jobId": "1",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 23
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 23
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 40,
+            "atMs": 23
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744741945
+            },
+            "atMs": 25
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 83
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 83
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 2,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 83
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 2,
+            "delayMs": 80,
+            "atMs": 83
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744742044
+            },
+            "atMs": 84
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 264
+          },
+          {
+            "event": "processor",
+            "attempt": 3,
+            "attemptsMade": 2,
+            "atMs": 264
+          },
+          {
+            "event": "queue:completed",
+            "data": {
+              "jobId": "1",
+              "returnvalue": "ok",
+              "prev": "active"
+            },
+            "atMs": 266
+          }
+        ]
+      },
+      "normalizedValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-positive-errors",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-positive",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "job-retry-policy",
+        "trigger": "The processor throws and BullMQ evaluates retry eligibility and backoff.",
+        "operationRef": "bmq-scenario-positive",
+        "error": {
+          "category": "none",
+          "message": ""
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Job.moveToFailed retry decision",
+        "recoveryActions": [
+          {
+            "action": "backoff-evaluated",
+            "result": 40
+          },
+          {
+            "action": "backoff-evaluated",
+            "result": 80
+          }
+        ],
+        "recoveryState": "completed",
+        "terminalOutcome": "completed",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "jobId": "1",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 23
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 23
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 40,
+            "atMs": 23
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744741945
+            },
+            "atMs": 25
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 83
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 83
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 2,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 83
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 2,
+            "delayMs": 80,
+            "atMs": 83
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744742044
+            },
+            "atMs": 84
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 264
+          },
+          {
+            "event": "processor",
+            "attempt": 3,
+            "attemptsMade": 2,
+            "atMs": 264
+          },
+          {
+            "event": "queue:completed",
+            "data": {
+              "jobId": "1",
+              "returnvalue": "ok",
+              "prev": "active"
+            },
+            "atMs": 266
+          }
+        ]
+      },
+      "normalizedValue": {
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-positive-data",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-positive",
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "job-attempt-counter",
+        "dataSubject": "BullMQ Job",
+        "fieldPath": "attemptsMade",
+        "observedValue": {
+          "terminalAttemptsMade": 3,
+          "processorStartAttemptsMade": [
+            0,
+            1,
+            2
+          ]
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "serialization": {
+          "representation": "JSON object containing integer counter observations"
+        }
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "jobId": "1",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 23
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 23
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 40,
+            "atMs": 23
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744741945
+            },
+            "atMs": 25
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 83
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 83
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 2,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 83
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 2,
+            "delayMs": 80,
+            "atMs": 83
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744742044
+            },
+            "atMs": 84
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 264
+          },
+          {
+            "event": "processor",
+            "attempt": 3,
+            "attemptsMade": 2,
+            "atMs": 264
+          },
+          {
+            "event": "queue:completed",
+            "data": {
+              "jobId": "1",
+              "returnvalue": "ok",
+              "prev": "active"
+            },
+            "atMs": 266
+          }
+        ]
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "attemptsMade": 3
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-positive-behavior",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-positive",
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "job-retry-lifecycle",
+        "trigger": "A worker processor attempt returns or throws.",
+        "preconditions": [
+          "Configured attempts limit is 3"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Processor attempt 1",
+            "input": {
+              "attemptsMadeBeforeAttempt": 0
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Processor attempt 2",
+            "input": {
+              "attemptsMadeBeforeAttempt": 1
+            }
+          },
+          {
+            "sequence": 3,
+            "action": "Processor attempt 3",
+            "input": {
+              "attemptsMadeBeforeAttempt": 2
+            }
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": "active",
+            "to": "delayed"
+          },
+          {
+            "from": "delayed",
+            "to": "waiting"
+          },
+          {
+            "from": "active",
+            "to": "delayed"
+          },
+          {
+            "from": "delayed",
+            "to": "waiting"
+          },
+          {
+            "from": "active",
+            "to": "completed"
+          }
+        ],
+        "outputs": [
+          {
+            "terminalState": "completed",
+            "attemptsMade": 3
+          }
+        ],
+        "termination": "completed"
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "jobId": "1",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 23
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 23
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 40,
+            "atMs": 23
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744741945
+            },
+            "atMs": 25
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 83
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 83
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 2,
+            "type": "software-rules-custom",
+            "error": "transient",
+            "jobId": "1",
+            "atMs": 83
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 2,
+            "delayMs": 80,
+            "atMs": 83
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795744742044
+            },
+            "atMs": 84
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 264
+          },
+          {
+            "event": "processor",
+            "attempt": 3,
+            "attemptsMade": 2,
+            "atMs": 264
+          },
+          {
+            "event": "queue:completed",
+            "data": {
+              "jobId": "1",
+              "returnvalue": "ok",
+              "prev": "active"
+            },
+            "atMs": 266
+          }
+        ]
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-minus-one-background",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-minus-one",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 4,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "job-retry-policy",
+        "job": "probe",
+        "trigger": "The worker processor returns successfully or throws an error.",
+        "worker": {
+          "processorAttempts": 1,
+          "strategyAttempts": [
+            1
+          ]
+        },
+        "lifecycle": [
+          {
+            "state": "failed"
+          }
+        ],
+        "attemptCount": 1,
+        "inputs": {
+          "configuredAttempts": 3,
+          "backoffResults": [
+            -1
+          ]
+        },
+        "retry": {
+          "strategyAttempts": [
+            1
+          ],
+          "backoffResults": [
+            -1
+          ]
+        },
+        "terminalResult": "failed",
+        "output": {
+          "finalState": "failed",
+          "attemptsMade": 1,
+          "result": null
+        }
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 1,
+          "error": "stop"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "stop",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": -1,
+            "atMs": 9
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "stop",
+              "prev": "active"
+            },
+            "atMs": 9
+          }
+        ]
+      },
+      "normalizedValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-minus-one-errors",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-minus-one",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 5,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "job-retry-policy",
+        "trigger": "The processor throws and BullMQ evaluates retry eligibility and backoff.",
+        "operationRef": "bmq-scenario-minus-one",
+        "error": {
+          "category": "processor-error",
+          "message": "stop"
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Job.moveToFailed retry decision",
+        "recoveryActions": [
+          {
+            "action": "backoff-evaluated",
+            "result": -1
+          }
+        ],
+        "recoveryState": "failed",
+        "terminalOutcome": "failed",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 1,
+          "error": "stop"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "stop",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": -1,
+            "atMs": 9
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "stop",
+              "prev": "active"
+            },
+            "atMs": 9
+          }
+        ]
+      },
+      "normalizedValue": {
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-minus-one-data",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-minus-one",
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 6,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "job-attempt-counter",
+        "dataSubject": "BullMQ Job",
+        "fieldPath": "attemptsMade",
+        "observedValue": {
+          "terminalAttemptsMade": 1,
+          "processorStartAttemptsMade": [
+            0
+          ]
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "serialization": {
+          "representation": "JSON object containing integer counter observations"
+        }
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 1,
+          "error": "stop"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "stop",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": -1,
+            "atMs": 9
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "stop",
+              "prev": "active"
+            },
+            "atMs": 9
+          }
+        ]
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "attemptsMade": 1
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-minus-one-behavior",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-minus-one",
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 7,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "job-retry-lifecycle",
+        "trigger": "A worker processor attempt returns or throws.",
+        "preconditions": [
+          "Configured attempts limit is 3"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Processor attempt 1",
+            "input": {
+              "attemptsMadeBeforeAttempt": 0
+            }
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": "active",
+            "to": "failed"
+          }
+        ],
+        "outputs": [
+          {
+            "terminalState": "failed",
+            "attemptsMade": 1
+          }
+        ],
+        "termination": "failed"
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 1,
+          "error": "stop"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "stop",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": -1,
+            "atMs": 9
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "stop",
+              "prev": "active"
+            },
+            "atMs": 9
+          }
+        ]
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-zero-delay-background",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-zero-delay",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 8,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "job-retry-policy",
+        "job": "probe",
+        "trigger": "The worker processor returns successfully or throws an error.",
+        "worker": {
+          "processorAttempts": 2,
+          "strategyAttempts": [
+            1
+          ]
+        },
+        "lifecycle": [
+          {
+            "state": "waiting"
+          },
+          {
+            "state": "failed"
+          }
+        ],
+        "attemptCount": 2,
+        "inputs": {
+          "configuredAttempts": 2,
+          "backoffResults": [
+            0
+          ]
+        },
+        "retry": {
+          "strategyAttempts": [
+            1
+          ],
+          "backoffResults": [
+            0
+          ]
+        },
+        "terminalResult": "failed",
+        "output": {
+          "finalState": "failed",
+          "attemptsMade": 2,
+          "result": null
+        }
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 2,
+          "error": "always-fails"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "always-fails",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 0,
+            "atMs": 9
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "active"
+            },
+            "atMs": 10
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 11
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "always-fails",
+              "prev": "active"
+            },
+            "atMs": 11
+          }
+        ]
+      },
+      "normalizedValue": {
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-zero-delay-errors",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-zero-delay",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 9,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "job-retry-policy",
+        "trigger": "The processor throws and BullMQ evaluates retry eligibility and backoff.",
+        "operationRef": "bmq-scenario-zero-delay",
+        "error": {
+          "category": "processor-error",
+          "message": "always-fails"
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Job.moveToFailed retry decision",
+        "recoveryActions": [
+          {
+            "action": "backoff-evaluated",
+            "result": 0
+          }
+        ],
+        "recoveryState": "failed",
+        "terminalOutcome": "failed",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 2,
+          "error": "always-fails"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "always-fails",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 0,
+            "atMs": 9
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "active"
+            },
+            "atMs": 10
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 11
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "always-fails",
+              "prev": "active"
+            },
+            "atMs": 11
+          }
+        ]
+      },
+      "normalizedValue": {
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-zero-delay-data",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-zero-delay",
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 10,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "job-attempt-counter",
+        "dataSubject": "BullMQ Job",
+        "fieldPath": "attemptsMade",
+        "observedValue": {
+          "terminalAttemptsMade": 2,
+          "processorStartAttemptsMade": [
+            0,
+            1
+          ]
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "serialization": {
+          "representation": "JSON object containing integer counter observations"
+        }
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 2,
+          "error": "always-fails"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "always-fails",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 0,
+            "atMs": 9
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "active"
+            },
+            "atMs": 10
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 11
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "always-fails",
+              "prev": "active"
+            },
+            "atMs": 11
+          }
+        ]
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "attemptsMade": 2
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-source-zero-delay-behavior",
+      "targetId": "bullmq-source-runtime",
+      "executionId": "bmq-exec-source-zero-delay",
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.481Z",
+      "sequence": 11,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "BullMQ runtime probe"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "job-retry-lifecycle",
+        "trigger": "A worker processor attempt returns or throws.",
+        "preconditions": [
+          "Configured attempts limit is 2"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Processor attempt 1",
+            "input": {
+              "attemptsMadeBeforeAttempt": 0
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Processor attempt 2",
+            "input": {
+              "attemptsMadeBeforeAttempt": 1
+            }
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": "active",
+            "to": "waiting"
+          },
+          {
+            "from": "active",
+            "to": "failed"
+          }
+        ],
+        "outputs": [
+          {
+            "terminalState": "failed",
+            "attemptsMade": 2
+          }
+        ],
+        "termination": "failed"
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "jobId": "1",
+          "attemptsMade": 2,
+          "error": "always-fails"
+        },
+        "finalState": "failed",
+        "trace": [
+          {
+            "event": "processor",
+            "attempt": 1,
+            "attemptsMade": 0,
+            "atMs": 9
+          },
+          {
+            "event": "backoff",
+            "attemptsMade": 1,
+            "type": "software-rules-custom",
+            "error": "always-fails",
+            "jobId": "1",
+            "atMs": 9
+          },
+          {
+            "event": "backoff-result",
+            "attemptsMade": 1,
+            "delayMs": 0,
+            "atMs": 9
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "active"
+            },
+            "atMs": 10
+          },
+          {
+            "event": "processor",
+            "attempt": 2,
+            "attemptsMade": 1,
+            "atMs": 11
+          },
+          {
+            "event": "queue:failed",
+            "data": {
+              "jobId": "1",
+              "failedReason": "always-fails",
+              "prev": "active"
+            },
+            "atMs": 11
+          }
+        ]
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-source-runtime-json"
+      ],
+      "status": "observed"
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "BMQ-ER-004",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "proposition": "A job is retried after a processor failure only while the configured attempts limit permits another attempt; when the limit is reached, the job transitions to failed.",
+      "trigger": "A processor attempt throws.",
+      "applicability": {
+        "scope": "The configured attempts=2 boundary in this case."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bmq-obs-source-positive-background",
+        "bmq-obs-source-minus-one-background",
+        "bmq-obs-source-zero-delay-background"
+      ]
+    },
+    {
+      "ruleId": "BMQ-ER-005",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "proposition": "A custom backoff result of -1 suppresses retry, a positive delay routes through delayed state, and zero routes immediately back to waiting.",
+      "trigger": "A processor attempt throws and the custom backoff strategy returns a value.",
+      "applicability": {
+        "scope": "The tested deterministic custom strategy results -1, 0, 40, and 80 milliseconds."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bmq-obs-source-positive-background",
+        "bmq-obs-source-minus-one-background",
+        "bmq-obs-source-zero-delay-background"
+      ]
+    },
+    {
+      "ruleId": "BMQ-ER-006",
+      "facet": "data",
+      "subject": "job-attempt-counter",
+      "proposition": "BullMQ increments attemptsMade after each failed attempt and also after a successful completion; the value observed at the start of processing is the number of prior failures.",
+      "trigger": "A processor attempt fails or completes.",
+      "applicability": {
+        "scope": "The tested two-failure-then-success, suppressed-retry, and attempt-limit scenarios."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bmq-obs-source-positive-data",
+        "bmq-obs-source-minus-one-data",
+        "bmq-obs-source-zero-delay-data"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "bmq-source-runtime-json",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-runtime-capture",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "bullmq-source-runtime",
+        "collector": "Instrumented BullMQ worker, QueueEvents, and Job state",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "location": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-runtime-capture.json"
+      },
+      "capturedAt": "2026-11-27T01:59:02.481Z",
+      "embedded": {
+        "scenarioLabels": [
+          "positive-backoff-completes",
+          "minus-one-suppresses-retry",
+          "zero-delay-respects-attempt-limit"
+        ],
+        "rawCaptureDigest": "b9c2f1df1d1ddc9d49960431afd1dc6ba9a9ccedbff94073ada8875a93648da9"
+      },
+      "locator": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-runtime-capture.json",
+      "digest": "b9c2f1df1d1ddc9d49960431afd1dc6ba9a9ccedbff94073ada8875a93648da9",
+      "sizeBytes": 5120,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-source-positive",
+        "bmq-exec-source-minus-one",
+        "bmq-exec-source-zero-delay"
+      ]
+    },
+    {
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-source-positive",
+        "bmq-exec-source-minus-one",
+        "bmq-exec-source-zero-delay"
+      ]
+    },
+    {
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-source-positive",
+        "bmq-exec-source-minus-one",
+        "bmq-exec-source-zero-delay"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-source-positive",
+        "bmq-exec-source-minus-one",
+        "bmq-exec-source-zero-delay"
+      ]
+    }
+  ],
+  "limitations": [
+    "The replica is a narrow independent decision-model simulation, not a BullMQ replacement or Redis-backed queue.",
+    "The comparison is limited to the declared scenarios and semantic fields; error-message text and scheduler timing are excluded."
+  ],
+  "replicationScope": {
+    "scopeId": "bullmq-three-scenario-retry-scope",
+    "description": "Complete property inventory for the three explicitly declared retry/backoff scenarios only.",
+    "facets": [
+      "background-processing",
+      "errors-recovery",
+      "data",
+      "behavior"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "BMQ-P-001",
+        "facet": "background-processing",
+        "subject": "job-retry-policy",
+        "dimension": "processor-attempt-count",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-source-positive-background",
+          "bmq-obs-source-minus-one-background",
+          "bmq-obs-source-zero-delay-background"
+        ],
+        "evidenceRefs": [
+          "bmq-source-runtime-json"
+        ],
+        "rationale": "Total processor attempts in each scenario."
+      },
+      {
+        "propertyId": "BMQ-P-002",
+        "facet": "background-processing",
+        "subject": "job-retry-policy",
+        "dimension": "backoff-decision-and-routing",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-source-positive-background",
+          "bmq-obs-source-minus-one-background",
+          "bmq-obs-source-zero-delay-background"
+        ],
+        "evidenceRefs": [
+          "bmq-source-runtime-json"
+        ],
+        "rationale": "Backoff attempt numbers, return values, and ordered queue transitions."
+      },
+      {
+        "propertyId": "BMQ-P-003",
+        "facet": "errors-recovery",
+        "subject": "job-retry-policy",
+        "dimension": "retry-suppression-and-terminal-outcome",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-source-positive-errors",
+          "bmq-obs-source-minus-one-errors",
+          "bmq-obs-source-zero-delay-errors"
+        ],
+        "evidenceRefs": [
+          "bmq-source-runtime-json"
+        ],
+        "rationale": "Whether retry is suppressed or the job reaches completion/failure."
+      },
+      {
+        "propertyId": "BMQ-P-004",
+        "facet": "behavior",
+        "subject": "job-retry-policy",
+        "dimension": "ordered-state-transitions",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-source-positive-behavior",
+          "bmq-obs-source-minus-one-behavior",
+          "bmq-obs-source-zero-delay-behavior"
+        ],
+        "evidenceRefs": [
+          "bmq-source-runtime-json"
+        ],
+        "rationale": "The ordered delayed/waiting/failed/completed transitions."
+      },
+      {
+        "propertyId": "BMQ-P-005",
+        "facet": "data",
+        "subject": "job-retry-policy",
+        "dimension": "attemptsMade-counter",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-source-positive-data",
+          "bmq-obs-source-minus-one-data",
+          "bmq-obs-source-zero-delay-data"
+        ],
+        "evidenceRefs": [
+          "bmq-source-runtime-json"
+        ],
+        "rationale": "The terminal attemptsMade value, including successful completion."
+      },
+      {
+        "propertyId": "BMQ-P-006",
+        "facet": "data",
+        "subject": "job-retry-policy",
+        "dimension": "attempt-counter-before-processing",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-source-positive-data",
+          "bmq-obs-source-minus-one-data",
+          "bmq-obs-source-zero-delay-data"
+        ],
+        "evidenceRefs": [
+          "bmq-source-runtime-json"
+        ],
+        "rationale": "The attemptsMade value observed at the beginning of each processor attempt."
+      }
+    ],
+    "completeness": {
+      "status": "complete",
+      "assessedAt": "2026-11-27T01:59:02.798718Z",
+      "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence for all three declared scenarios.",
+      "rationale": "All six required properties in this bounded case scope were observed in every declared scenario. This does not imply complete coverage of BullMQ retry behaviour or any entire facet."
+    }
+  }
+}

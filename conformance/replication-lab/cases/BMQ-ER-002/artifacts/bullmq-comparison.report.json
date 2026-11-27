@@ -1,0 +1,739 @@
+{
+  "schemaVersion": "0.2.0",
+  "reportId": "bullmq-three-scenario-cross-stack-comparison",
+  "createdAt": "2026-11-27T01:59:02.799664Z",
+  "referenceCapture": {
+    "captureId": "bullmq-source-runtime-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-source.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "bullmq-python-replica-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-python-replica.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Compare the retry decision, attempt counters, ordered state transitions, and terminal outcomes for the three declared scenarios.",
+    "facets": [
+      "background-processing",
+      "errors-recovery",
+      "data",
+      "behavior"
+    ],
+    "scenarioIds": [
+      "bmq-scenario-positive",
+      "bmq-scenario-minus-one",
+      "bmq-scenario-zero-delay"
+    ],
+    "conditions": [
+      "BullMQ 6.7.10 at the pinned source commit with Redis 7",
+      "Python 3.12 independent retry-policy model",
+      "Deterministic custom backoff results: 40/80 ms, -1, and 0 ms"
+    ],
+    "excludedDimensions": [
+      "Exact processor error-message and stack-trace equality",
+      "Redis scheduler timing and internal implementation details",
+      "UnrecoverableError and maxStartedAttempts branches",
+      "Other retry/backoff strategies and the full BullMQ worker lifecycle"
+    ],
+    "limitations": [
+      "The Python replica models the decision semantics and does not implement BullMQ, Redis, queue storage, or the worker scheduler."
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "bmq-retry-semantic-projection",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "project-retry-semantics",
+        "facet": "background-processing",
+        "dimension": "retry-policy-semantic-projection",
+        "method": "Compare configured attempt limit, processor attempts, backoff attempt numbers/results, ordered retry transitions, terminal state, and attemptsMade; exclude error text, wall-clock values, and the initial enqueue waiting event that has no previous state.",
+        "methodVersion": "1.0.0",
+        "inputRepresentation": "Raw instrumented source and independent replica JSON captures",
+        "outputRepresentation": "Ordered semantic retry-policy projection",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "bmq-align-positive-background-processing",
+      "facet": "background-processing",
+      "referenceRecordIds": [
+        "bmq-obs-source-positive-background"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-positive-background"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-positive-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "bmq-obs-source-positive-errors"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-positive-errors"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-positive-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "bmq-obs-source-positive-data"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-positive-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-positive-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "bmq-obs-source-positive-behavior"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-positive-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-minus-one-background-processing",
+      "facet": "background-processing",
+      "referenceRecordIds": [
+        "bmq-obs-source-minus-one-background"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-minus-one-background"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-minus-one-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "bmq-obs-source-minus-one-errors"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-minus-one-errors"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-minus-one-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "bmq-obs-source-minus-one-data"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-minus-one-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-minus-one-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "bmq-obs-source-minus-one-behavior"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-minus-one-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-zero-delay-background-processing",
+      "facet": "background-processing",
+      "referenceRecordIds": [
+        "bmq-obs-source-zero-delay-background"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-zero-delay-background"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-zero-delay-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "bmq-obs-source-zero-delay-errors"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-zero-delay-errors"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-zero-delay-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "bmq-obs-source-zero-delay-data"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-zero-delay-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    },
+    {
+      "alignmentId": "bmq-align-zero-delay-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "bmq-obs-source-zero-delay-behavior"
+      ],
+      "implementationRecordIds": [
+        "bmq-obs-replica-zero-delay-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both records are observations of the same declared retry scenario and facet."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "bmq-result-positive-background-processing",
+      "alignmentId": "bmq-align-positive-background-processing",
+      "facet": "background-processing",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-positive-background"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-positive-background"
+      ],
+      "referenceValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "implementationValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-positive-errors-recovery",
+      "alignmentId": "bmq-align-positive-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-positive-errors"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-positive-errors"
+      ],
+      "referenceValue": {
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "implementationValue": {
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-positive-data",
+      "alignmentId": "bmq-align-positive-data",
+      "facet": "data",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-positive-data"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-positive-data"
+      ],
+      "referenceValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "attemptsMade": 3
+      },
+      "implementationValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "attemptsMade": 3
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-positive-behavior",
+      "alignmentId": "bmq-align-positive-behavior",
+      "facet": "behavior",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-positive-behavior"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-positive-behavior"
+      ],
+      "referenceValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "implementationValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-minus-one-background-processing",
+      "alignmentId": "bmq-align-minus-one-background-processing",
+      "facet": "background-processing",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-minus-one-background"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-minus-one-background"
+      ],
+      "referenceValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "implementationValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-minus-one-errors-recovery",
+      "alignmentId": "bmq-align-minus-one-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-minus-one-errors"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-minus-one-errors"
+      ],
+      "referenceValue": {
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "implementationValue": {
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-minus-one-data",
+      "alignmentId": "bmq-align-minus-one-data",
+      "facet": "data",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-minus-one-data"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-minus-one-data"
+      ],
+      "referenceValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "attemptsMade": 1
+      },
+      "implementationValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "attemptsMade": 1
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-minus-one-behavior",
+      "alignmentId": "bmq-align-minus-one-behavior",
+      "facet": "behavior",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-minus-one-behavior"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-minus-one-behavior"
+      ],
+      "referenceValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "implementationValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-zero-delay-background-processing",
+      "alignmentId": "bmq-align-zero-delay-background-processing",
+      "facet": "background-processing",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-zero-delay-background"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-zero-delay-background"
+      ],
+      "referenceValue": {
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "implementationValue": {
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-zero-delay-errors-recovery",
+      "alignmentId": "bmq-align-zero-delay-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-zero-delay-errors"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-zero-delay-errors"
+      ],
+      "referenceValue": {
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "implementationValue": {
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-zero-delay-data",
+      "alignmentId": "bmq-align-zero-delay-data",
+      "facet": "data",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-zero-delay-data"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-zero-delay-data"
+      ],
+      "referenceValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "attemptsMade": 2
+      },
+      "implementationValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "attemptsMade": 2
+      },
+      "reason": "The declared semantic projection matches."
+    },
+    {
+      "resultId": "bmq-result-zero-delay-behavior",
+      "alignmentId": "bmq-align-zero-delay-behavior",
+      "facet": "behavior",
+      "dimension": "retry-policy-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bmq-obs-source-zero-delay-behavior"
+      ],
+      "implementationObservationIds": [
+        "bmq-obs-replica-zero-delay-behavior"
+      ],
+      "referenceValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "implementationValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "reason": "The declared semantic projection matches."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 12,
+      "observedUnits": 12,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "implementation": {
+      "declaredUnits": 12,
+      "observedUnits": 12,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "sharedComparableUnits": 12,
+    "incomparableUnits": 0,
+    "limitations": [
+      "Coverage is limited to the 12 facet/scenario projections defined in this report."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The independent Python model matches the pinned BullMQ runtime for the three declared retry/backoff scenarios and 12 facet/scenario projections. This is bounded evidence for these rules and inputs, not universal equivalence or proof for all BullMQ behaviours or all technology stacks.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "A match for this finite probe matrix does not prove compatibility with every BullMQ option, workload, or technology stack."
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for every required property in the declared three-scenario case scope; neither capture claims full BullMQ or full-facet completeness."
+  }
+}

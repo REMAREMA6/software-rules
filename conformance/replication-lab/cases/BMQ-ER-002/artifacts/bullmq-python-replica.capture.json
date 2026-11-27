@@ -1,0 +1,1644 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "bullmq-python-replica-capture",
+  "createdAt": "2026-11-27T01:59:02.799396Z",
+  "purpose": "Capture the declared three-scenario BullMQ retry/backoff conformance scope in the Software Rules format.",
+  "target": {
+    "targetId": "bullmq-python-replica",
+    "systemName": "Independent Python retry-policy model",
+    "systemVersion": "Python 3.12 model",
+    "build": {
+      "revision": "8f53067c7e9cbcccd4b9c20d18c8f917524f3133"
+    },
+    "boundary": {
+      "description": "A bounded retry/backoff decision and terminal-state probe; not a complete capture of BullMQ or a full queue implementation.",
+      "included": [
+        "Three declared processor/retry scenarios",
+        "Processor attempt count and attemptsMade values",
+        "Custom backoff strategy inputs and results",
+        "Observed delayed/waiting/failed/completed transitions"
+      ],
+      "excluded": [
+        "Other retry options and unrecoverable-error variants",
+        "Queue scheduler, rate limiting, stalled jobs, and worker shutdown",
+        "Production deployment and external application behaviour",
+        "Exact processor error-message equality between source and replica"
+      ]
+    },
+    "environment": {
+      "platform": "CI runner",
+      "os": "Ubuntu Linux",
+      "runtime": "Python 3.12",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "scenarioCount": 3,
+          "sourceCommit": null
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Three deterministic retry/backoff scenarios: positive delays then completion; -1 suppression; zero-delay retry followed by attempts-limit failure.",
+    "facetIds": [
+      "background-processing",
+      "errors-recovery",
+      "data",
+      "behavior"
+    ],
+    "subjects": [
+      "job-retry-policy",
+      "job-attempt-counter"
+    ],
+    "scenarioIds": [
+      "bmq-scenario-positive",
+      "bmq-scenario-minus-one",
+      "bmq-scenario-zero-delay"
+    ]
+  },
+  "collector": {
+    "name": "Independent Python retry-policy model execution",
+    "methodDescription": "Controlled scenario execution with instrumentation of processor calls, backoff strategy arguments/results, queue lifecycle events, and terminal job state."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "bmq-scenario-positive",
+      "title": "Positive Backoff Completes",
+      "purpose": "Probe custom retry eligibility, backoff routing, attempt counters, and terminal state.",
+      "facetIds": [
+        "background-processing",
+        "errors-recovery",
+        "data",
+        "behavior"
+      ],
+      "subject": "job-retry-policy",
+      "preconditions": [
+        "A fresh isolated queue and worker are used for the scenario.",
+        "Configured attempts limit is 3.",
+        "The worker uses a deterministic custom backoff strategy."
+      ],
+      "trigger": "Add a job and let its processor return or throw according to the scenario.",
+      "inputs": {
+        "configuredAttempts": 3,
+        "scenario": "positive-backoff-completes"
+      },
+      "observableQuestions": [
+        "How many processor attempts occur?",
+        "Which attempt numbers are passed to the backoff strategy?",
+        "How are backoff results routed?",
+        "What are the terminal state and attemptsMade value?"
+      ]
+    },
+    {
+      "scenarioId": "bmq-scenario-minus-one",
+      "title": "Minus One Suppresses Retry",
+      "purpose": "Probe custom retry eligibility, backoff routing, attempt counters, and terminal state.",
+      "facetIds": [
+        "background-processing",
+        "errors-recovery",
+        "data",
+        "behavior"
+      ],
+      "subject": "job-retry-policy",
+      "preconditions": [
+        "A fresh isolated queue and worker are used for the scenario.",
+        "Configured attempts limit is 3.",
+        "The worker uses a deterministic custom backoff strategy."
+      ],
+      "trigger": "Add a job and let its processor return or throw according to the scenario.",
+      "inputs": {
+        "configuredAttempts": 3,
+        "scenario": "minus-one-suppresses-retry"
+      },
+      "observableQuestions": [
+        "How many processor attempts occur?",
+        "Which attempt numbers are passed to the backoff strategy?",
+        "How are backoff results routed?",
+        "What are the terminal state and attemptsMade value?"
+      ]
+    },
+    {
+      "scenarioId": "bmq-scenario-zero-delay",
+      "title": "Zero Delay Respects Attempt Limit",
+      "purpose": "Probe custom retry eligibility, backoff routing, attempt counters, and terminal state.",
+      "facetIds": [
+        "background-processing",
+        "errors-recovery",
+        "data",
+        "behavior"
+      ],
+      "subject": "job-retry-policy",
+      "preconditions": [
+        "A fresh isolated queue and worker are used for the scenario.",
+        "Configured attempts limit is 2.",
+        "The worker uses a deterministic custom backoff strategy."
+      ],
+      "trigger": "Add a job and let its processor return or throw according to the scenario.",
+      "inputs": {
+        "configuredAttempts": 2,
+        "scenario": "zero-delay-respects-attempt-limit"
+      },
+      "observableQuestions": [
+        "How many processor attempts occur?",
+        "Which attempt numbers are passed to the backoff strategy?",
+        "How are backoff results routed?",
+        "What are the terminal state and attemptsMade value?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "bmq-exec-replica-positive",
+      "scenarioId": "bmq-scenario-positive",
+      "targetId": "bullmq-python-replica",
+      "startedAt": "2026-11-27T01:59:02.706461Z",
+      "endedAt": "2026-11-27T01:59:02.706471Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourcePackageVersion": null,
+        "sourceRevision": null,
+        "independentReplica": true,
+        "scope": "Three deterministic retry/backoff scenarios only"
+      },
+      "actualInputs": {
+        "configuredAttempts": 3,
+        "backoffResults": [
+          40,
+          80
+        ]
+      },
+      "trigger": "Enqueue and process one job in a fresh queue/model instance.",
+      "collector": {
+        "name": "Independent Python retry-policy model execution"
+      },
+      "limitations": [
+        "Does not cover every BullMQ retry option, scheduler condition, or deployment configuration."
+      ]
+    },
+    {
+      "executionId": "bmq-exec-replica-minus-one",
+      "scenarioId": "bmq-scenario-minus-one",
+      "targetId": "bullmq-python-replica",
+      "startedAt": "2026-11-27T01:59:02.706461Z",
+      "endedAt": "2026-11-27T01:59:02.706471Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourcePackageVersion": null,
+        "sourceRevision": null,
+        "independentReplica": true,
+        "scope": "Three deterministic retry/backoff scenarios only"
+      },
+      "actualInputs": {
+        "configuredAttempts": 3,
+        "backoffResults": [
+          -1
+        ]
+      },
+      "trigger": "Enqueue and process one job in a fresh queue/model instance.",
+      "collector": {
+        "name": "Independent Python retry-policy model execution"
+      },
+      "limitations": [
+        "Does not cover every BullMQ retry option, scheduler condition, or deployment configuration."
+      ]
+    },
+    {
+      "executionId": "bmq-exec-replica-zero-delay",
+      "scenarioId": "bmq-scenario-zero-delay",
+      "targetId": "bullmq-python-replica",
+      "startedAt": "2026-11-27T01:59:02.706461Z",
+      "endedAt": "2026-11-27T01:59:02.706471Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourcePackageVersion": null,
+        "sourceRevision": null,
+        "independentReplica": true,
+        "scope": "Three deterministic retry/backoff scenarios only"
+      },
+      "actualInputs": {
+        "configuredAttempts": 2,
+        "backoffResults": [
+          0
+        ]
+      },
+      "trigger": "Enqueue and process one job in a fresh queue/model instance.",
+      "collector": {
+        "name": "Independent Python retry-policy model execution"
+      },
+      "limitations": [
+        "Does not cover every BullMQ retry option, scheduler condition, or deployment configuration."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "bmq-obs-replica-positive-background",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-positive",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 0,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "job-retry-policy",
+        "job": "probe",
+        "trigger": "The worker processor returns successfully or throws an error.",
+        "worker": {
+          "processorAttempts": 3,
+          "strategyAttempts": [
+            1,
+            2
+          ]
+        },
+        "lifecycle": [
+          {
+            "state": "delayed"
+          },
+          {
+            "state": "waiting"
+          },
+          {
+            "state": "delayed"
+          },
+          {
+            "state": "waiting"
+          },
+          {
+            "state": "completed"
+          }
+        ],
+        "attemptCount": 3,
+        "inputs": {
+          "configuredAttempts": 3,
+          "backoffResults": [
+            40,
+            80
+          ]
+        },
+        "retry": {
+          "strategyAttempts": [
+            1,
+            2
+          ],
+          "backoffResults": [
+            40,
+            80
+          ]
+        },
+        "terminalResult": "completed",
+        "output": {
+          "finalState": "completed",
+          "attemptsMade": 3,
+          "result": "ok"
+        }
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed"
+      },
+      "normalizedValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-positive-errors",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-positive",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "job-retry-policy",
+        "trigger": "The processor throws and BullMQ evaluates retry eligibility and backoff.",
+        "operationRef": "bmq-scenario-positive",
+        "error": {
+          "category": "none",
+          "message": ""
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Job.moveToFailed retry decision",
+        "recoveryActions": [
+          {
+            "action": "backoff-evaluated",
+            "result": 40
+          },
+          {
+            "action": "backoff-evaluated",
+            "result": 80
+          }
+        ],
+        "recoveryState": "completed",
+        "terminalOutcome": "completed",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed"
+      },
+      "normalizedValue": {
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-positive-data",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-positive",
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "job-attempt-counter",
+        "dataSubject": "BullMQ Job",
+        "fieldPath": "attemptsMade",
+        "observedValue": {
+          "terminalAttemptsMade": 3,
+          "processorStartAttemptsMade": [
+            0,
+            1,
+            2
+          ]
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "serialization": {
+          "representation": "JSON object containing integer counter observations"
+        }
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed"
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "attemptsMade": 3
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-positive-behavior",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-positive",
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "positive-backoff-completes",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "job-retry-lifecycle",
+        "trigger": "A worker processor attempt returns or throws.",
+        "preconditions": [
+          "Configured attempts limit is 3"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Processor attempt 1",
+            "input": {
+              "attemptsMadeBeforeAttempt": 0
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Processor attempt 2",
+            "input": {
+              "attemptsMadeBeforeAttempt": 1
+            }
+          },
+          {
+            "sequence": 3,
+            "action": "Processor attempt 3",
+            "input": {
+              "attemptsMadeBeforeAttempt": 2
+            }
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": "active",
+            "to": "delayed"
+          },
+          {
+            "from": "delayed",
+            "to": "waiting"
+          },
+          {
+            "from": "active",
+            "to": "delayed"
+          },
+          {
+            "from": "delayed",
+            "to": "waiting"
+          },
+          {
+            "from": "active",
+            "to": "completed"
+          }
+        ],
+        "outputs": [
+          {
+            "terminalState": "completed",
+            "attemptsMade": 3
+          }
+        ],
+        "termination": "completed"
+      },
+      "rawValue": {
+        "label": "positive-backoff-completes",
+        "configuredAttempts": 3,
+        "processorAttempts": 3,
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "strategyAttempts": [
+          1,
+          2
+        ],
+        "backoffResults": [
+          40,
+          80
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "outcome": {
+          "terminal": "completed",
+          "attemptsMade": 3,
+          "result": "ok"
+        },
+        "finalState": "completed"
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1,
+          2
+        ],
+        "stateTransitions": [
+          "delayed",
+          "waiting",
+          "delayed",
+          "waiting",
+          "completed"
+        ],
+        "terminal": "completed",
+        "finalState": "completed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-minus-one-background",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-minus-one",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 4,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "job-retry-policy",
+        "job": "probe",
+        "trigger": "The worker processor returns successfully or throws an error.",
+        "worker": {
+          "processorAttempts": 1,
+          "strategyAttempts": [
+            1
+          ]
+        },
+        "lifecycle": [
+          {
+            "state": "failed"
+          }
+        ],
+        "attemptCount": 1,
+        "inputs": {
+          "configuredAttempts": 3,
+          "backoffResults": [
+            -1
+          ]
+        },
+        "retry": {
+          "strategyAttempts": [
+            1
+          ],
+          "backoffResults": [
+            -1
+          ]
+        },
+        "terminalResult": "failed",
+        "output": {
+          "finalState": "failed",
+          "attemptsMade": 1,
+          "result": null
+        }
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "processorAttemptsMade": [
+          0
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 1,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-minus-one-errors",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-minus-one",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 5,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "job-retry-policy",
+        "trigger": "The processor throws and BullMQ evaluates retry eligibility and backoff.",
+        "operationRef": "bmq-scenario-minus-one",
+        "error": {
+          "category": "processor-error",
+          "message": "processor failure"
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Job.moveToFailed retry decision",
+        "recoveryActions": [
+          {
+            "action": "backoff-evaluated",
+            "result": -1
+          }
+        ],
+        "recoveryState": "failed",
+        "terminalOutcome": "failed",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "processorAttemptsMade": [
+          0
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 1,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-minus-one-data",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-minus-one",
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 6,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "job-attempt-counter",
+        "dataSubject": "BullMQ Job",
+        "fieldPath": "attemptsMade",
+        "observedValue": {
+          "terminalAttemptsMade": 1,
+          "processorStartAttemptsMade": [
+            0
+          ]
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "serialization": {
+          "representation": "JSON object containing integer counter observations"
+        }
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "processorAttemptsMade": [
+          0
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 1,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "attemptsMade": 1
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-minus-one-behavior",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-minus-one",
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 7,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "minus-one-suppresses-retry",
+        "configuredAttempts": 3
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "job-retry-lifecycle",
+        "trigger": "A worker processor attempt returns or throws.",
+        "preconditions": [
+          "Configured attempts limit is 3"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Processor attempt 1",
+            "input": {
+              "attemptsMadeBeforeAttempt": 0
+            }
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": "active",
+            "to": "failed"
+          }
+        ],
+        "outputs": [
+          {
+            "terminalState": "failed",
+            "attemptsMade": 1
+          }
+        ],
+        "termination": "failed"
+      },
+      "rawValue": {
+        "label": "minus-one-suppresses-retry",
+        "configuredAttempts": 3,
+        "processorAttempts": 1,
+        "processorAttemptsMade": [
+          0
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          -1
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 1,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0
+        ],
+        "stateTransitions": [
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-zero-delay-background",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-zero-delay",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 8,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "job-retry-policy",
+        "job": "probe",
+        "trigger": "The worker processor returns successfully or throws an error.",
+        "worker": {
+          "processorAttempts": 2,
+          "strategyAttempts": [
+            1
+          ]
+        },
+        "lifecycle": [
+          {
+            "state": "waiting"
+          },
+          {
+            "state": "failed"
+          }
+        ],
+        "attemptCount": 2,
+        "inputs": {
+          "configuredAttempts": 2,
+          "backoffResults": [
+            0
+          ]
+        },
+        "retry": {
+          "strategyAttempts": [
+            1
+          ],
+          "backoffResults": [
+            0
+          ]
+        },
+        "terminalResult": "failed",
+        "output": {
+          "finalState": "failed",
+          "attemptsMade": 2,
+          "result": null
+        }
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 2,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-zero-delay-errors",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-zero-delay",
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 9,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "job-retry-policy",
+        "trigger": "The processor throws and BullMQ evaluates retry eligibility and backoff.",
+        "operationRef": "bmq-scenario-zero-delay",
+        "error": {
+          "category": "processor-error",
+          "message": "processor failure"
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Job.moveToFailed retry decision",
+        "recoveryActions": [
+          {
+            "action": "backoff-evaluated",
+            "result": 0
+          }
+        ],
+        "recoveryState": "failed",
+        "terminalOutcome": "failed",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 2,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-zero-delay-data",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-zero-delay",
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 10,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "job-attempt-counter",
+        "dataSubject": "BullMQ Job",
+        "fieldPath": "attemptsMade",
+        "observedValue": {
+          "terminalAttemptsMade": 2,
+          "processorStartAttemptsMade": [
+            0,
+            1
+          ]
+        },
+        "observedType": "object",
+        "nullability": "non-null",
+        "serialization": {
+          "representation": "JSON object containing integer counter observations"
+        }
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 2,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "attemptsMade": 2
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bmq-obs-replica-zero-delay-behavior",
+      "targetId": "bullmq-python-replica",
+      "executionId": "bmq-exec-replica-zero-delay",
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "observedAt": "2026-11-27T01:59:02.706471Z",
+      "sequence": 11,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Execute the declared scenario and retain processor attempts, backoff inputs/results, ordered state events, and terminal job/model state.",
+        "tool": "Python replica simulator"
+      },
+      "conditions": {
+        "scenario": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2
+      },
+      "trigger": "A job processor attempt returns or throws.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "job-retry-lifecycle",
+        "trigger": "A worker processor attempt returns or throws.",
+        "preconditions": [
+          "Configured attempts limit is 2"
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Processor attempt 1",
+            "input": {
+              "attemptsMadeBeforeAttempt": 0
+            }
+          },
+          {
+            "sequence": 2,
+            "action": "Processor attempt 2",
+            "input": {
+              "attemptsMadeBeforeAttempt": 1
+            }
+          }
+        ],
+        "stateTransitions": [
+          {
+            "from": "active",
+            "to": "waiting"
+          },
+          {
+            "from": "active",
+            "to": "failed"
+          }
+        ],
+        "outputs": [
+          {
+            "terminalState": "failed",
+            "attemptsMade": 2
+          }
+        ],
+        "termination": "failed"
+      },
+      "rawValue": {
+        "label": "zero-delay-respects-attempt-limit",
+        "configuredAttempts": 2,
+        "processorAttempts": 2,
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "strategyAttempts": [
+          1
+        ],
+        "backoffResults": [
+          0
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "outcome": {
+          "terminal": "failed",
+          "attemptsMade": 2,
+          "error": "processor failure"
+        },
+        "finalState": "failed"
+      },
+      "normalizedValue": {
+        "processorAttemptsMade": [
+          0,
+          1
+        ],
+        "stateTransitions": [
+          "waiting",
+          "failed"
+        ],
+        "terminal": "failed",
+        "finalState": "failed"
+      },
+      "evidenceRefs": [
+        "bmq-python-replica-json"
+      ],
+      "status": "observed"
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "BMQ-ER-004",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "proposition": "A job is retried after a processor failure only while the configured attempts limit permits another attempt; when the limit is reached, the job transitions to failed.",
+      "trigger": "A processor attempt throws.",
+      "applicability": {
+        "scope": "The configured attempts=2 boundary in this case."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bmq-obs-replica-positive-background",
+        "bmq-obs-replica-minus-one-background",
+        "bmq-obs-replica-zero-delay-background"
+      ]
+    },
+    {
+      "ruleId": "BMQ-ER-005",
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "proposition": "A custom backoff result of -1 suppresses retry, a positive delay routes through delayed state, and zero routes immediately back to waiting.",
+      "trigger": "A processor attempt throws and the custom backoff strategy returns a value.",
+      "applicability": {
+        "scope": "The tested deterministic custom strategy results -1, 0, 40, and 80 milliseconds."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bmq-obs-replica-positive-background",
+        "bmq-obs-replica-minus-one-background",
+        "bmq-obs-replica-zero-delay-background"
+      ]
+    },
+    {
+      "ruleId": "BMQ-ER-006",
+      "facet": "data",
+      "subject": "job-attempt-counter",
+      "proposition": "BullMQ increments attemptsMade after each failed attempt and also after a successful completion; the value observed at the start of processing is the number of prior failures.",
+      "trigger": "A processor attempt fails or completes.",
+      "applicability": {
+        "scope": "The tested two-failure-then-success, suppressed-retry, and attempt-limit scenarios."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bmq-obs-replica-positive-data",
+        "bmq-obs-replica-minus-one-data",
+        "bmq-obs-replica-zero-delay-data"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "bmq-python-replica-json",
+      "evidenceClass": "runtime",
+      "evidenceType": "independent-model-execution-capture",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "bullmq-python-replica",
+        "collector": "Independent Python retry-policy model execution",
+        "sourceRevision": "8f53067c7e9cbcccd4b9c20d18c8f917524f3133",
+        "location": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-replica-capture.json"
+      },
+      "capturedAt": "2026-11-27T01:59:02.706471Z",
+      "embedded": {
+        "scenarioLabels": [
+          "positive-backoff-completes",
+          "minus-one-suppresses-retry",
+          "zero-delay-respects-attempt-limit"
+        ],
+        "rawCaptureDigest": "4a8d936aa5346600e48a7090e1b8aa4581d8e6498ba8e0f2987c3bdc65de47db"
+      },
+      "locator": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-replica-capture.json",
+      "digest": "4a8d936aa5346600e48a7090e1b8aa4581d8e6498ba8e0f2987c3bdc65de47db",
+      "sizeBytes": 1739,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "background-processing",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-replica-positive",
+        "bmq-exec-replica-minus-one",
+        "bmq-exec-replica-zero-delay"
+      ]
+    },
+    {
+      "facet": "errors-recovery",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-replica-positive",
+        "bmq-exec-replica-minus-one",
+        "bmq-exec-replica-zero-delay"
+      ]
+    },
+    {
+      "facet": "data",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-replica-positive",
+        "bmq-exec-replica-minus-one",
+        "bmq-exec-replica-zero-delay"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "job-retry-policy",
+      "status": "observed",
+      "reason": "All declared scenario executions produced an observation for this facet.",
+      "scenarioIds": [
+        "bmq-scenario-positive",
+        "bmq-scenario-minus-one",
+        "bmq-scenario-zero-delay"
+      ],
+      "executionIds": [
+        "bmq-exec-replica-positive",
+        "bmq-exec-replica-minus-one",
+        "bmq-exec-replica-zero-delay"
+      ]
+    }
+  ],
+  "limitations": [
+    "The replica is a narrow independent decision-model simulation, not a BullMQ replacement or Redis-backed queue.",
+    "The comparison is limited to the declared scenarios and semantic fields; error-message text and scheduler timing are excluded."
+  ],
+  "replicationScope": {
+    "scopeId": "bullmq-three-scenario-retry-scope",
+    "description": "Complete property inventory for the three explicitly declared retry/backoff scenarios only.",
+    "facets": [
+      "background-processing",
+      "errors-recovery",
+      "data",
+      "behavior"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "BMQ-P-001",
+        "facet": "background-processing",
+        "subject": "job-retry-policy",
+        "dimension": "processor-attempt-count",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-replica-positive-background",
+          "bmq-obs-replica-minus-one-background",
+          "bmq-obs-replica-zero-delay-background"
+        ],
+        "evidenceRefs": [
+          "bmq-python-replica-json"
+        ],
+        "rationale": "Total processor attempts in each scenario."
+      },
+      {
+        "propertyId": "BMQ-P-002",
+        "facet": "background-processing",
+        "subject": "job-retry-policy",
+        "dimension": "backoff-decision-and-routing",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-replica-positive-background",
+          "bmq-obs-replica-minus-one-background",
+          "bmq-obs-replica-zero-delay-background"
+        ],
+        "evidenceRefs": [
+          "bmq-python-replica-json"
+        ],
+        "rationale": "Backoff attempt numbers, return values, and ordered queue transitions."
+      },
+      {
+        "propertyId": "BMQ-P-003",
+        "facet": "errors-recovery",
+        "subject": "job-retry-policy",
+        "dimension": "retry-suppression-and-terminal-outcome",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-replica-positive-errors",
+          "bmq-obs-replica-minus-one-errors",
+          "bmq-obs-replica-zero-delay-errors"
+        ],
+        "evidenceRefs": [
+          "bmq-python-replica-json"
+        ],
+        "rationale": "Whether retry is suppressed or the job reaches completion/failure."
+      },
+      {
+        "propertyId": "BMQ-P-004",
+        "facet": "behavior",
+        "subject": "job-retry-policy",
+        "dimension": "ordered-state-transitions",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-replica-positive-behavior",
+          "bmq-obs-replica-minus-one-behavior",
+          "bmq-obs-replica-zero-delay-behavior"
+        ],
+        "evidenceRefs": [
+          "bmq-python-replica-json"
+        ],
+        "rationale": "The ordered delayed/waiting/failed/completed transitions."
+      },
+      {
+        "propertyId": "BMQ-P-005",
+        "facet": "data",
+        "subject": "job-retry-policy",
+        "dimension": "attemptsMade-counter",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-replica-positive-data",
+          "bmq-obs-replica-minus-one-data",
+          "bmq-obs-replica-zero-delay-data"
+        ],
+        "evidenceRefs": [
+          "bmq-python-replica-json"
+        ],
+        "rationale": "The terminal attemptsMade value, including successful completion."
+      },
+      {
+        "propertyId": "BMQ-P-006",
+        "facet": "data",
+        "subject": "job-retry-policy",
+        "dimension": "attempt-counter-before-processing",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bmq-obs-replica-positive-data",
+          "bmq-obs-replica-minus-one-data",
+          "bmq-obs-replica-zero-delay-data"
+        ],
+        "evidenceRefs": [
+          "bmq-python-replica-json"
+        ],
+        "rationale": "The attemptsMade value observed at the beginning of each processor attempt."
+      }
+    ],
+    "completeness": {
+      "status": "complete",
+      "assessedAt": "2026-11-27T01:59:02.799396Z",
+      "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence for all three declared scenarios.",
+      "rationale": "All six required properties in this bounded case scope were observed in every declared scenario. This does not imply complete coverage of BullMQ retry behaviour or any entire facet."
+    }
+  }
+}

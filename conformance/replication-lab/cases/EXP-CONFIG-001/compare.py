@@ -6,6 +6,8 @@ def index(raw):
 def compare(a,b):
     x,y=index(a),index(b); errors=[]
     if set(x)!=set(y): errors.append("scenario/path sets differ")
+    ac={v["label"]:v.get("config") for v in a["scenarios"]}; bc={v["label"]:v.get("config") for v in b["scenarios"]}
+    if ac!=bc: errors.append("effective configuration differs")
     for key,value in x.items():
         if y.get(key)!=value: errors.append(f"{key}: source={value}, replica={y.get(key)}")
     return {"result":"mismatch" if errors else "match","observationCount":len(x),"errors":errors}

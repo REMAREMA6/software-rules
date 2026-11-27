@@ -2,9 +2,6 @@ import json
 import sys
 from pathlib import Path
 
-source_path, replica_path = map(Path, sys.argv[1:3])
-source = json.loads(source_path.read_text())
-replica = json.loads(replica_path.read_text())
 
 def field_value(source_scenario, field):
     if field == "backoffResults":
@@ -16,49 +13,56 @@ def field_value(source_scenario, field):
     return source_scenario[field]
 
 
-source_by_label = {item["label"]: item for item in source["scenarios"]}
-replica_by_label = {item["label"]: item for item in replica["scenarios"]}
-fields = (
-    "configuredAttempts",
-    "processorAttempts",
-    "strategyAttempts",
-    "backoffResults",
-    "finalState",
-)
-errors = []
-for label, expected in replica_by_label.items():
-    actual = source_by_label.get(label)
-    if actual is None:
-        errors.append(f"{label}: missing source scenario")
-        continue
-    for field in fields:
-        actual_value = field_value(actual, field)
-        expected_value = expected[field]
-        if actual_value != expected_value:
-            errors.append(
-                f"{label}.{field}: source={actual_value!r}, replica={expected_value!r}"
-            )
-    for field in ("terminal", "attemptsMade"):
-        if actual["outcome"].get(field) != expected["outcome"].get(field):
-            errors.append(
-                f"{label}.outcome.{field}: source={actual['outcome'].get(field)!r}, "
-                f"replica={expected['outcome'].get(field)!r}"
-            )
-    if "result" in expected["outcome"] and actual["outcome"].get("result") != expected["outcome"]["result"]:
-        errors.append(f"{label}.outcome.result differs")
-if set(source_by_label) != set(replica_by_label):
-    errors.append("source and replica scenario sets differ")
+def compare_captures(source, replica):
+    source_by_label = {item["label"]: item for item in source["scenarios"]}
+    replica_by_label = {item["label"]: item for item in replica["scenarios"]}
+    fields = (
+        "configuredAttempts",
+        "processorAttempts",
+        "strategyAttempts",
+        "backoffResults",
+        "finalState",
+    )
+    errors = []
+    for label, expected in replica_by_label.items():
+        actual = source_by_label.get(label)
+        if actual is None:
+            errors.append(f"{label}: missing source scenario")
+            continue
+        for field in fields:
+            actual_value = field_value(actual, field)
+            expected_value = expected[field]
+            if actual_value != expected_value:
+                errors.append(
+                    f"{label}.{field}: source={actual_value!r}, replica={expected_value!r}"
+                )
+        for field in ("terminal", "attemptsMade"):
+            if actual["outcome"].get(field) != expected["outcome"].get(field):
+                errors.append(
+                    f"{label}.outcome.{field}: source={actual['outcome'].get(field)!r}, "
+                    f"replica={expected['outcome'].get(field)!r}"
+                )
+        if "result" in expected["outcome"] and actual["outcome"].get("result") != expected["outcome"]["result"]:
+            errors.append(f"{label}.outcome.result differs")
+    if set(source_by_label) != set(replica_by_label):
+        errors.append("source and replica scenario sets differ")
 
-report = {
-    "sourceCommit": source.get("sourceCommit"),
-    "sourcePackageVersion": source.get("packageVersion"),
-    "replica": replica.get("implementation"),
-    "comparedFields": list(fields) + ["outcome.terminal", "outcome.attemptsMade"],
-    "scenarioCount": len(replica_by_label),
-    "result": "mismatch" if errors else "match",
-    "errors": errors,
-}
-print(json.dumps(report, indent=2))
-if errors:
-    raise SystemExit(1)
+    return {
+        "sourceCommit": source.get("sourceCommit"),
+        "sourcePackageVersion": source.get("packageVersion"),
+        "replica": replica.get("implementation"),
+        "comparedFields": list(fields) + ["outcome.terminal", "outcome.attemptsMade"],
+        "scenarioCount": len(replica_by_label),
+        "result": "mismatch" if errors else "match",
+        "errors": errors,
+    }
 
+
+if __name__ == "__main__":
+    source_path, replica_path = map(Path, sys.argv[1:3])
+    source = json.loads(source_path.read_text())
+    replica = json.loads(replica_path.read_text())
+    report = compare_captures(source, replica)
+    print(json.dumps(report, indent=2))
+    if report["errors"]:
+        raise SystemExit(1)

@@ -64,12 +64,11 @@ async function main() {
         },
       });
     }
+    const headScenario = scenarios.find(item => item.label === 'head-fallback');
+    headScenario.response.wireBodyBytes = await headWireBodyBytes(server.address().port);
   } finally {
     await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
   }
-
-  const headScenario = scenarios.find(item => item.label === 'head-fallback');
-  headScenario.response.wireBodyBytes = await headWireBodyBytes(server.address().port);
   const lockDigest = fs.existsSync('package-lock.json')
     ? crypto.createHash('sha256').update(fs.readFileSync('package-lock.json')).digest('hex')
     : null;

@@ -1,7 +1,7 @@
 # Case — Casbin domain RBAC, ABAC, deny override, and policy mutation
 
 **Case ID:** CASBIN-ADV-AUTHZ-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all 19 declared requests in [run #45938792630](https://github.com/REMAREMA6/software-rules/actions/runs/45938792630). Pinned Casbin and independent Python decisions matched; domain-isolation, ABAC-owner, deny-override, and policy-mutation changes were all detected; Software Rules 0.2.0 captures/comparison passed schema and cross-record integrity validation. Artifact `15172101161` retained through 2026-12-27. This expands selected authorization classes but does not complete the authorization facet.  
 **Facet(s):** Authorization and permissions; behaviour; data; security controls  
 **Source:** https://github.com/apache/casbin  
 **Immutable source commit:** `fa4023fd7d02d9b7d023515e76b19b3be637f613`  

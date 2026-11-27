@@ -48,7 +48,9 @@ jobs:
         working-directory: /tmp/express
         env:
           EXPRESS_SOURCE_COMMIT: "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
-        run: node "$GITHUB_WORKSPACE/conformance/replication-lab/cases/EXP-CONFIG-001/source_probe.cjs" > "$GITHUB_WORKSPACE/express-config-source.json"
+        run: |
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/cases/EXP-CONFIG-001/source_probe.cjs" ./software-rules-express-config-probe.cjs
+          node ./software-rules-express-config-probe.cjs > "$GITHUB_WORKSPACE/express-config-source.json"
       - name: Execute independent Python configuration model
         run: python conformance/replication-lab/projects/express-config-python/replica_probe.py > express-config-replica.json
       - name: Compare effective configuration and route outcomes

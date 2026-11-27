@@ -1,7 +1,7 @@
 # Case — BullMQ delayed-job rescheduling and cancellation
 
 **Case ID:** BMQ-SCHED-001  
-**Status:** PASSED for delayed-job rescheduling and cancellation. Pinned BullMQ 6.7.10/Redis 7 matched the independent Python state machine; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence-integrity validation in [run #45945262230](https://github.com/REMAREMA6/software-rules/actions/runs/45945262230), artifact `15174920212` (expires 2026-12-27).  
+**Status:** PASSED for delayed-job rescheduling and cancellation. Pinned BullMQ 6.7.10/Redis 7 matched the independent Python state machine; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence-integrity validation in [run #45946359808](https://github.com/REMAREMA6/software-rules/actions/runs/45946359808), artifact `15174518117` (expires 2026-12-27).  
 **Facets:** Background processing; behaviour; messaging; errors and recovery  
 **Source:** https://github.com/taskforcesh/bullmq  
 **Immutable source commit:** `526668f2c5e6de9d5d664df577f09a6bdccac1b4`  

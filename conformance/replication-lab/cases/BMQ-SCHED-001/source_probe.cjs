@@ -16,34 +16,36 @@ async function main(){
   await job.changeDelay(250);
   const afterChangeDelay=await job.getState();
   worker=new Worker(name,async current=>{processed.push(current.name);return 'processed';},{connection:wc,concurrency:1});
-  const completed=await new Promise((resolve,reject)=>{
+  const result=await new Promise((resolve,reject)=>{
    const timer=setTimeout(()=>reject(new Error('rescheduled delayed job did not complete')),7000);
    worker.on('active',current=>events.push({event:'active',jobId:current.id}));
-   worker.on('completed',(current,result)=>{events.push({event:'completed',jobId:current.id});clearTimeout(timer);resolve(result)});
+   worker.on('completed',(current,value)=>{events.push({event:'completed',jobId:current.id});clearTimeout(timer);resolve(value)});
    worker.on('failed',(current,error)=>{clearTimeout(timer);reject(error)});
   });
   const finalState=await job.getState();
+  const scheduledCounts=await queue.getJobCounts('delayed','waiting','active','completed','failed');
   const cancelled=await queue.add('cancelled',{value:2},{jobId:'cancelled-job',delay:5000});
   const cancelInitialState=await cancelled.getState();
   await cancelled.remove();
   const cancelledJob=await queue.getJob('cancelled-job');
   await new Promise(resolve=>setTimeout(resolve,350));
-  const counts=await queue.getJobCounts('delayed','waiting','active','completed','failed');
-  const output={
-   scheduled:{initialState,afterChangeDelay,events,finalState,processed,result:completed},
-   cancelled:{initialState:cancelInitialState,removed:cancelledJob===undefined||cancelledJob===null,
-    jobExists:!!cancelledJob,processed:processed.includes('cancelled'),finalState:cancelledJob?await cancelledJob.getState():'missing'},
-   counts
-  };
+  const cancelCounts=await queue.getJobCounts('delayed','waiting','active','completed','failed');
+  const scenarios=[
+   {label:'reschedule-delayed-job',initialState,afterChangeDelay,events,finalState,
+    processed:processed.filter(x=>x==='scheduled'),result,counts:scheduledCounts},
+   {label:'cancel-delayed-job',initialState:cancelInitialState,removed:!cancelledJob,jobExists:!!cancelledJob,
+    processed:processed.includes('cancelled'),finalState:cancelledJob?await cancelledJob.getState():'missing',counts:cancelCounts}
+  ];
   const checks=[
-   initialState==='delayed',afterChangeDelay==='delayed',
-   events.length===2&&events[0].event==='active'&&events[1].event==='completed',
-   finalState==='completed'&&completed==='processed',
-   cancelInitialState==='delayed'&&(cancelledJob===undefined||cancelledJob===null),
-   !processed.includes('cancelled')&&counts.delayed===0&&counts.completed===1
+   scenarios[0].initialState==='delayed'&&scenarios[0].afterChangeDelay==='delayed',
+   scenarios[0].events.length===2&&scenarios[0].events[0].event==='active'&&scenarios[0].events[1].event==='completed',
+   scenarios[0].finalState==='completed'&&scenarios[0].result==='processed'&&scenarios[0].counts.completed===1,
+   scenarios[1].initialState==='delayed'&&scenarios[1].removed&&!scenarios[1].jobExists,
+   !scenarios[1].processed&&scenarios[1].finalState==='missing',
+   scenarios[1].counts.delayed===0&&scenarios[1].counts.completed===1
   ];
   console.log(JSON.stringify({source:'BullMQ pinned source checkout',sourceCommit:process.env.BULLMQ_SOURCE_COMMIT,
-   packageVersion:require('./package.json').version,scenarios:[output],checks,passed:checks.every(Boolean)},null,2));
+   packageVersion:require('./package.json').version,scenarios,checks,passed:checks.every(Boolean)},null,2));
   if(!checks.every(Boolean))process.exitCode=1;
  }finally{
   if(worker)await worker.close(true).catch(()=>{});

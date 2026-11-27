@@ -1,0 +1,68 @@
+name: BullMQ pinned-source runtime probe
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/BMQ-ER-002/**"
+      - "conformance/replication-lab/probes/bullmq-retry-runtime.cjs"
+      - ".github/workflows/bullmq-pinned-runtime.yml"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/BMQ-ER-002/**"
+      - "conformance/replication-lab/probes/bullmq-retry-runtime.cjs"
+      - ".github/workflows/bullmq-pinned-runtime.yml"
+  workflow_dispatch:
+
+jobs:
+  pinned-bullmq-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: none
+      - name: Checkout exact BullMQ source commit
+        env:
+          BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+        run: |
+          git clone https://github.com/taskforcesh/bullmq.git /tmp/bullmq
+          git -C /tmp/bullmq checkout --detach "$BULLMQ_SOURCE_COMMIT"
+          test "$(git -C /tmp/bullmq rev-parse HEAD)" = "$BULLMQ_SOURCE_COMMIT"
+      - name: Install pinned source dependencies
+        working-directory: /tmp/bullmq
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          yarn install --frozen-lockfile --non-interactive
+      - name: Build pinned BullMQ source
+        working-directory: /tmp/bullmq
+        run: yarn build
+      - name: Run source runtime probe
+        working-directory: /tmp/bullmq
+        env:
+          BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: "6379"
+        run: |
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/probes/bullmq-retry-runtime.cjs" ./software-rules-retry-probe.cjs
+          node ./software-rules-retry-probe.cjs | tee "$GITHUB_WORKSPACE/bullmq-runtime-capture.json"
+      - name: Retain source runtime capture
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bullmq-pinned-runtime-capture
+          path: bullmq-runtime-capture.json
+          if-no-files-found: warn
+          retention-days: 30

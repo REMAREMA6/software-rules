@@ -88,7 +88,7 @@ Use a shared conceptual envelope for cross-facet identity, execution context, me
 A common identity, condition, provenance, and evidence model may enable cross-facet navigation and comparison without flattening different kinds of observations into generic prose.
 
 ### Consequences
-The conceptual split is accepted. Do not freeze a schema yet: facet specifications must still test requiredness, cardinality, and specialized payload needs.
+The conceptual split remains accepted. The current draft serialization is implemented in schema version 0.2.0, with shared records and 15 typed facet payloads. The schema remains pre-stable; requiredness and semantic sufficiency continue to be reviewed against the facet specifications and Replication Completeness Rule.
 
 ## D-003 — Bound equivalence claims to captured evidence
 
@@ -150,7 +150,7 @@ The core model must support declared-contract references without allowing them t
 ## D-006 — Expand the facet taxonomy
 
 - **Date:** 2026-11-26
-- **Status:** Proposed
+- **Status:** Superseded by D-010
 
 ### Context
 Phase 1 research found that the initial facet list did not clearly separate identity/authentication from authorization and did not explicitly account for runtime configuration or performance/resource observations.
@@ -160,7 +160,7 @@ Phase 1 research found that the initial facet list did not clearly separate iden
 - Revise the list by clarifying identity/access boundaries and adding configuration and performance/resource behaviour as candidate facets.
 
 ### Decision
-Use the revised 15-facet taxonomy in STANDARDS-REVIEW.md as the working proposal. Do not treat the list or its boundaries as normative yet.
+Historical proposal: use the revised 15-facet taxonomy as a working proposal. This proposal was superseded when D-010 accepted the 15-facet catalogue for the current specification draft.
 
 ### Rationale
 The additional areas can affect runtime behaviour and comparison conditions. Authentication and authorization are distinct concepts. Configuration and performance/resource observations are not adequately represented by the original list.
@@ -270,13 +270,13 @@ Phase 3 established a common conceptual envelope and 15 facet-specific payload i
 - A common capture/record model with one typed schema per facet and explicit cross-record references.
 
 ### Decision
-Use JSON Schema Draft 2020-12. Serialize captures through one manifest schema and shared record definitions, with separate runtime-rule, source-derived-rule, declared-contract, and evidence records. Each facet has its own payload schema. Use versioned URN identifiers under `urn:software-rules:schema:v1:`; the current draft version is 0.1.0. Preserve unknown/absent/redacted distinctions through explicit field-state records and use explicit `extensions` objects rather than silently accepting arbitrary core fields.
+Use JSON Schema Draft 2020-12. Serialize captures through one manifest schema and shared record definitions, with separate runtime-rule, source-derived-rule, declared-contract, and evidence records. Each facet has its own payload schema. Use versioned URN identifiers under `urn:software-rules:schema:v1:`; the current draft version is 0.2.0. Preserve unknown/absent/redacted distinctions through explicit field-state records and use explicit `extensions` objects rather than silently accepting arbitrary core fields.
 
 ### Rationale
 This reuses a reviewed standard for structural validation while retaining the common-envelope/facet-payload separation. Separate record classes make provenance differences machine-visible. Explicit extension points reduce accidental schema drift.
 
 ### Consequences
-JSON Schema validates local structure, not reference existence, evidence authenticity, or semantic correctness. Those require additional conformance checks. The comparison-report schema is only a structural envelope; normalization, matching, tolerance, and difference classification remain Phase 5 work. The schema remains Draft and has no compatibility guarantee until stable release.
+JSON Schema validates local structure, not reference existence, evidence authenticity, or semantic correctness. Those require additional conformance checks. The comparison-report schema is only a structural envelope; normalization, matching, tolerance, and difference classification remain Phase 5 work. The schema remains Draft at version 0.2.0 and has no compatibility guarantee until a stable release.
 
 ### Evidence and references
 See `specification/SCHEMA-DESIGN.md`, `schemas/v1/README.md`, and the Phase 1 JSON Schema review in `research/STANDARDS-REVIEW.md`.
@@ -328,4 +328,26 @@ Adopt the second option. Every replication-oriented capture must declare its sco
 The first option undermines the purpose of the format: two implementations can match on a small captured subset while differing in uncaptured properties. The third option is not operationally meaningful because completeness must be judged against a declared replication target. Explicit scope makes completeness testable without pretending that one finite capture covers every possible system behaviour.
 
 ### Consequences
-The normative rule is specified in `specification/REPLICATION-COMPLETENESS.md`. Phase 7 must propagate it into capture planning, facet property inventories, coverage and completeness reporting, comparison semantics, schemas, examples, and conformance checks. The Phase 6 Task Board baseline result remains bounded to its captured observations and must not be presented as proof of full screen or system replication.
+The normative rule is specified in `specification/REPLICATION-COMPLETENESS.md`. Phase 7 reviewed its propagation through capture planning, facet property inventories, coverage and completeness reporting, comparison semantics, schemas, examples, and conformance checks. The Phase 6 Task Board case remains bounded to its declared interface inventory and must not be presented as proof of full screen or system replication.
+
+## D-014 — Publish a versioned pre-stable specification snapshot
+
+- **Date:** 2026-11-27
+- **Status:** Accepted
+
+### Context
+Phase 6 completed its declared 24-case cross-repository validation corpus. Phase 7 reviewed the specification, schema set, completeness requirement, evidence model, conformance implementation, known limitations, and maintenance process. The documents and schemas remain draft and several property classes remain intentionally uncovered.
+
+### Options considered
+- Declare a stable 1.0.0 release based on the Phase 6 corpus and passing workflows.
+- Publish a versioned 0.x draft snapshot with explicit limitations and stable-release criteria.
+- Delay all versioned publication until every possible facet/property class has been empirically explored.
+
+### Decision
+Publish the reviewed specification as version 0.3.0 Draft, with machine-readable schema version 0.2.0 Draft. Do not label the format Stable or claim facet-wide completeness. Preserve the 24-case Phase 6 boundary and publish the maintenance policy and stable 1.0.0 readiness criteria.
+
+### Rationale
+The specification and conformance process are sufficiently developed to provide a versioned reviewable baseline. The declared corpus validates bounded portability and the evidence process, but does not prove universal equivalence or exhaustively enumerate all possible properties. A stable 1.0.0 claim would exceed the current maturity and compatibility guarantees.
+
+### Consequences
+Consumers must pin both specification and schema versions and accept that 0.x compatibility is not guaranteed. The current capture schema records schema version 0.2.0 but does not yet include a separate specificationVersion field; that is an explicit pre-1.0 task. A versioned repository snapshot is published under releases/0.3.0-draft/; a Git tag or GitHub Release object is a separate maintainer publication action. See MAINTENANCE.md, specification/VERSIONING.md, and PHASE7-RELEASE-AUDIT.md.

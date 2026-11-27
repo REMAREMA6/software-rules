@@ -54,7 +54,14 @@ export function validateCapture(capture) {
         if (property.status === "captured" && observation && observation.status !== "observed") errors.push(`${path}: captured property references non-observed observation "${id}"`);
       }
       for (const id of evidenceRefs) {
-        if (!evidenceLinkedByObservations.has(id)) errors.push(`${path}: evidence "${id}" is not attached to any observation linked by this property`);
+        const evidenceRecord = evidence.get(id);
+        if (property.status === "source-inferred") {
+          if (evidenceRecord && evidenceRecord.evidenceClass !== "source-artifact") {
+            errors.push(`${path}: source-inferred property must reference source-artifact evidence, not "${evidenceRecord.evidenceClass}"`);
+          }
+        } else if (!evidenceLinkedByObservations.has(id)) {
+          errors.push(`${path}: evidence "${id}" is not attached to any observation linked by this property`);
+        }
       }
       if (property.status === "captured") {
         const hasAdequateRuntimeObservation = linkedObservations.some(observation =>

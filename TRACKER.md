@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Begin the next independent source/replica case for the API facet using the pinned Express repository; preserve the same source → technology-independent rule → different-stack replica → equivalent probes → comparison → mutation → Software Rules capture loop.
+- **Current task:** Begin a persistence/data case using the pinned TypeORM repository; extract a transaction/rollback rule and reproduce it independently in Python/SQLite, then capture and compare both runtimes.
 - **Blockers:** The Task Board is only one fixture. The cross-repository case set is incomplete; BullMQ source runtime and capture comparison are pending; the other source candidates still require property-level inspection and suitable independent replicas.
-- **Next action:** Inspect Express routing/API rules at the registered immutable commit, choose a bounded rule set, and build an independent Python HTTP implementation with discriminating probes. Continue until every required facet/property has adequate cases.
+- **Next action:** Inspect TypeORM transaction and rollback implementation/tests at the registered immutable commit; define a narrow reproducible database transaction case and an independent Python/SQLite implementation. Continue until every required facet/property has adequate cases.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -373,3 +373,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Generated and validated source/replica Software Rules 0.2.0 captures and the comparison report.
 - [x] Committed six raw/structured evidence files under `conformance/replication-lab/cases/BMQ-ER-002/artifacts/` at commit [513766d](https://github.com/REMAREMA6/software-rules/commit/513766df3b9d4300df4c9297b79f221b54e29e42).
 - [~] Phase 6 remains active: this proves portability only for the declared retry/backoff properties and three scenarios. Continue with Express API and the remaining facets.
+
+
+### 2026-11-27 — Bounded Express API/routing case accepted
+
+- [x] Pinned Express 5.3.0 to commit `43fca52d28a422c8be48fd489cbd4f2d6152bab6`; generated and retained a dependency lockfile because the source commit has no lockfile.
+- [x] Executed seven HTTP requests against Express and an independent Python 3.12 HTTP server.
+- [x] Matched 28 facet/scenario projections across API, behaviour, configuration, and errors/recovery.
+- [x] Executable mutations detected incorrect HEAD wire-body handling, OPTIONS method enumeration/precedence, case-sensitive routing, strict trailing-slash matching, and query-path matching.
+- [x] Generated and validated Software Rules 0.2.0 captures and the comparison report.
+- [x] Committed raw/structured captures, comparison, package lock, and dependency tree under `conformance/replication-lab/cases/EXP-API-001/artifacts/` at commit [ad30376](https://github.com/REMAREMA6/software-rules/commit/ad3037693d32221a6d7bdb6b9883c45db7b2be9c).
+- [~] Phase 6 remains active; this case proves only the declared seven-request scope, not complete Express/API coverage.

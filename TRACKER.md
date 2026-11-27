@@ -397,3 +397,15 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Added TORM-PERSIST-001 source probe, independent Python/sqlite3 model, comparator, mutation tests, and pinned-source CI workflow.
 - [~] TypeORM workflow execution and generated runtime evidence are pending. Do not count the case as passed until the actual run and artifacts are reviewed.
 - [ ] Messaging, identity/authentication, authorization, dedicated security, integrations, business rules, and repeatable performance/resource cases remain unimplemented or incomplete.
+
+
+### 2026-11-27 — Bounded TypeORM transaction case accepted
+
+- [x] Pinned TypeORM 1.1.3 to commit `b1e211fc2654d412612a08f8a7fb890f3352614f`; installed the frozen pnpm workspace dependencies and compiled the Node entrypoint.
+- [x] Executed successful commit and NOT NULL failure/rollback scenarios with better-sqlite3.
+- [x] Reproduced transaction commit/rollback semantics independently in Python 3.12/sqlite3.
+- [x] Matched eight facet/scenario projections across persistence, data, behaviour, and errors/recovery.
+- [x] Detected the executable commit-on-error mutation.
+- [x] Generated and validated Software Rules 0.2.0 captures and the comparison report.
+- [x] Committed raw/structured captures, frozen pnpm lockfile, and dependency tree under `conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/` at commit [fabf45a](https://github.com/REMAREMA6/software-rules/commit/fabf45ae466d2b68bcc49f6596f6c6bb220ddef3).
+- [~] Phase 6 remains active; this case proves only the declared two-scenario transaction scope.

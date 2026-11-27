@@ -10,6 +10,23 @@ def field_value(source_scenario, field):
             for event in source_scenario["trace"]
             if event["event"] == "backoff-result"
         ]
+    if field == "processorAttemptsMade":
+        return [
+            event["attemptsMade"]
+            for event in source_scenario["trace"]
+            if event["event"] == "processor"
+        ]
+    if field == "stateTransitions":
+        return [
+            event["event"].removeprefix("queue:")
+            for event in source_scenario["trace"]
+            if event["event"] in {
+                "queue:delayed",
+                "queue:waiting",
+                "queue:failed",
+                "queue:completed",
+            }
+        ]
     return source_scenario[field]
 
 
@@ -19,8 +36,10 @@ def compare_captures(source, replica):
     fields = (
         "configuredAttempts",
         "processorAttempts",
+        "processorAttemptsMade",
         "strategyAttempts",
         "backoffResults",
+        "stateTransitions",
         "finalState",
     )
     errors = []

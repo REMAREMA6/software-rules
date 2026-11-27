@@ -60,16 +60,18 @@ async function runScenario(label, configure) {
       secondId: second.id,
       storedPayload: stored && stored.data.payload,
       storedState: stored ? await stored.getState() : 'missing',
+      queuedCount: (await queue.getJobCounts('waiting')).waiting,
     };
   });
   const failure = await runScenario('consumer-failure', async queue => {
     const job = await queue.add('deliver', { payload: 'failure-case', fail: true }, { jobId: 'failure-message-id', attempts: 1 });
-    return { firstId: job.id, storedState: await job.getState() };
+    return { firstId: job.id, storedState: await job.getState(), queuedCount: (await queue.getJobCounts('waiting')).waiting };
   });
   const checks = [
     duplicate.setup.firstId === duplicate.setup.secondId,
     duplicate.setup.storedPayload === 'first',
     duplicate.setup.storedState === 'waiting',
+    duplicate.setup.queuedCount === 1,
     duplicate.eventNames.join(',') === 'waiting,active,completed',
     JSON.stringify(duplicate.processed) === JSON.stringify(['first']),
     duplicate.terminal.state === 'completed',
@@ -77,6 +79,7 @@ async function runScenario(label, configure) {
     failure.terminal.state === 'failed',
     failure.terminal.error === 'consumer-failed',
     failure.setup.storedState === 'waiting',
+    failure.setup.queuedCount === 1,
     failure.eventNames.join(',') === 'waiting,active,failed',
     failure.counts.failed === 1,
   ];

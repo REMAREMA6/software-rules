@@ -1,6 +1,6 @@
 # Interface Facet
 
-**Maturity:** Draft — Phase 3 facet specification  
+**Maturity:** Draft — Software Rules specification 0.3.0  
 **Facet ID:** `interface`  
 **Purpose:** Capture the observable structure and presentation of a running user interface so independent implementations can be compared without depending on the original UI framework.
 
@@ -98,7 +98,7 @@ A facet observation may contain:
 - UI state and rendering evidence references.
 - Completeness, exclusions, redactions, and inspection limitations.
 
-This is a conceptual payload inventory, not a JSON schema. Field names, requiredness, value types, and platform adapters are Phase 4 work.
+This is a conceptual payload inventory. The current draft JSON Schema mapping is maintained in `schemas/v1/facets/interface.schema.json`; platform-specific adapters and completeness of an individual inventory remain scope-dependent.
 
 ## 11. Evidence and limitations
 
@@ -129,4 +129,4 @@ Screenshots are useful evidence but insufficient as the sole representation: the
 
 ## 14. Research mappings
 
-The facet should reuse DOM/CSSOM and WebDriver concepts for web inspection, WAI-ARIA for accessibility semantics, and platform accessibility/UI inspection APIs for native interfaces. These are observation sources and domain standards, not a complete cross-platform Software Rules payload. See [standards review](../../research/STANDARDS-REVIEW.md) and [references](../../research/REFERENCES.md).
+The facet should reuse DOM/CSSOM and WebDriver concepts for web inspection, WAI-ARIA for accessibility semantics, and platform accessibility/UI inspection APIs for native interfaces. These are observation sources and domain standards, not a complete cross-platform Software Rules payload. See [standards review](././research/STANDARDS-REVIEW.md) and [references](././research/REFERENCES.md).

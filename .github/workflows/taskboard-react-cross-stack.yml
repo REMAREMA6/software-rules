@@ -43,3 +43,11 @@ jobs:
           cp -a conformance/replication-lab/projects/task-board-react/dist conformance/replication-lab/projects/task-board-react/dist-mutated
       - name: Compare source and independent React replica
         run: node conformance/replication-lab/cases/TASKBOARD-UI-001/compare.mjs
+      - name: Upload runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: taskboard-react-cross-stack-evidence
+          path: conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/
+          if-no-files-found: warn
+          retention-days: 30

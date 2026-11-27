@@ -20,8 +20,16 @@ def source_capture():
                 "outcome": {"terminal": "completed", "attemptsMade": 3, "result": "ok"},
                 "finalState": "completed",
                 "trace": [
+                    {"event": "processor", "attemptsMade": 0},
                     {"event": "backoff-result", "delayMs": 40},
+                    {"event": "queue:delayed"},
+                    {"event": "queue:waiting"},
+                    {"event": "processor", "attemptsMade": 1},
                     {"event": "backoff-result", "delayMs": 80},
+                    {"event": "queue:delayed"},
+                    {"event": "queue:waiting"},
+                    {"event": "processor", "attemptsMade": 2},
+                    {"event": "queue:completed"},
                 ],
             }
         ],
@@ -40,7 +48,7 @@ def replica_capture():
                 "strategyAttempts": [1, 2],
                 "backoffResults": [40, 80],
                 "stateTransitions": ["delayed", "waiting", "delayed", "waiting", "completed"],
-                "outcome": {"terminal": "completed", "attemptsMade": 2, "result": "ok"},
+                "outcome": {"terminal": "completed", "attemptsMade": 3, "result": "ok"},
                 "finalState": "completed",
             }
         ],

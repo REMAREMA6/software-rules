@@ -243,14 +243,16 @@ def build_capture(raw, prefix, is_source, raw_path, lock_path, revision):
             })
 
     property_specs = [
-        ("EXP-P-001", "api", "http-response-contract", "Status, response body, content type, content length, and Allow header for all seven requests."),
-        ("EXP-P-002", "api", "head-to-get-fallback", "HEAD uses the GET route when no explicit HEAD route exists and suppresses the response body."),
-        ("EXP-P-003", "api", "automatic-options-and-explicit-override", "Automatic OPTIONS lists unique methods including HEAD for GET; explicit OPTIONS handler takes precedence."),
-        ("EXP-P-004", "configuration", "default-router-settings", "Case-sensitive routing and strict routing are disabled by default."),
-        ("EXP-P-005", "behavior", "path-match-normalization", "Path matching is case-insensitive, allows a trailing slash, and ignores the query string."),
-        ("EXP-P-006", "errors-recovery", "unmatched-route-fallback", "An unmatched path falls through to the configured 404 response."),
+        ("EXP-P-001", "api", "http-response-contract", "Status, response body, content type, content length, Allow header, and HEAD wire-body bytes for all seven requests.", obs_by_facet["api"]),
+        ("EXP-P-002", "api", "head-to-get-fallback", "HEAD uses the GET route when no explicit HEAD route exists; the response body is suppressed and content length matches GET.", [oid(prefix, "get-base", "api"), oid(prefix, "head-fallback", "api")]),
+        ("EXP-P-003", "api", "automatic-options-and-explicit-override", "Automatic OPTIONS lists unique methods including HEAD for GET; an explicit OPTIONS handler takes precedence.", [oid(prefix, "options-auto", "api"), oid(prefix, "options-explicit", "api")]),
+        ("EXP-P-004", "configuration", "default-router-settings", "Case-sensitive routing and strict routing are disabled by default.", obs_by_facet["configuration"]),
+        ("EXP-P-005", "behavior", "path-match-normalization", "Path matching is case-insensitive, allows a trailing slash, and ignores the query string.", [oid(prefix, "case-and-trailing-slash", "behavior"), oid(prefix, "query-ignored", "behavior")]),
+        ("EXP-P-006", "errors-recovery", "unmatched-route-fallback", "An unmatched path falls through to the configured 404 response.", [oid(prefix, "options-missing", "errors-recovery")]),
+        ("EXP-P-007", "behavior", "head-wire-body-suppression", "The HEAD response contains zero body bytes on the raw HTTP wire.", [oid(prefix, "head-fallback", "behavior")]),
+        ("EXP-P-008", "behavior", "explicit-options-precedence", "An explicit OPTIONS handler takes precedence over automatic method enumeration.", [oid(prefix, "options-explicit", "behavior")]),
     ]
-    for property_id, facet, dimension, rationale in property_specs:
+    for property_id, facet, dimension, rationale, observation_refs in property_specs:
         inventory.append({
             "propertyId": property_id,
             "facet": facet,
@@ -258,7 +260,7 @@ def build_capture(raw, prefix, is_source, raw_path, lock_path, revision):
             "dimension": dimension,
             "requirement": "required",
             "status": "captured",
-            "observationRefs": obs_by_facet[facet],
+            "observationRefs": observation_refs,
             "evidenceRefs": [runtime_evidence_id],
             "rationale": rationale,
         })

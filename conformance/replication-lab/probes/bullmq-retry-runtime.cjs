@@ -79,11 +79,7 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
   await events.close();
   await queue.obliterate({ force: true });
   await queue.close();
-  await Promise.all([
-    queueConnection.quit(),
-    workerConnection.quit(),
-    eventsConnection.quit(),
-  ]);
+  // BullMQ close() owns and closes each supplied Redis connection.
   return result;
 }
 

@@ -51,7 +51,7 @@ def are_rules_valid(rules,context,scope,mutation=None):
   if scope=="items" and not mutation.get("skip_scope_strip"):path=path.replace("items.","",1)
   elif scope=="shipping_methods" and not mutation.get("skip_scope_strip"):path=path.replace("shipping_methods.","",1)
   found=pick(path,context)
-  if found is MISSING and mutation.get("missing_context_fails_ne"):
+  if found is MISSING and mutation.get("ne_missing_fails"):
    decisions.append(False)
    continue
   decisions.append(evaluate(valid,rule.get("operator",""),found))

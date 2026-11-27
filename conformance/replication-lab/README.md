@@ -27,4 +27,4 @@ The lab is organised by rule case, not by source stack. Each case links to an im
 
 ## Current status
 
-The living facet-by-facet evidence matrix is maintained in [FACET-COVERAGE.md](FACET-COVERAGE.md). No facet is complete for the full project objective yet. The existing Task Board fixture remains separate and retains its bounded evidence status.
+The living facet-by-facet evidence matrix is maintained in [FACET-COVERAGE.md](FACET-COVERAGE.md). One bounded BullMQ retry/backoff case passes across four facets; no entire facet is complete for the full project objective yet. The existing Task Board fixture remains separate and retains its bounded evidence status.

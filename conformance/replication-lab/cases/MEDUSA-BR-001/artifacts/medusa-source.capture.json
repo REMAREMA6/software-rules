@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "medusa-source-capture",
-  "createdAt": "2026-11-27T02:30:00.542440Z",
+  "createdAt": "2026-11-27T02:36:04.408800Z",
   "purpose": "Capture the declared ten-probe Medusa price-list date validation scope.",
   "target": {
     "targetId": "medusa-source-runtime",
@@ -340,8 +340,8 @@
       "executionId": "medusa-exec-source-omitted-both",
       "scenarioId": "medusa-scenario-omitted-both",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -363,8 +363,8 @@
       "executionId": "medusa-exec-source-null-both",
       "scenarioId": "medusa-scenario-null-both",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -389,8 +389,8 @@
       "executionId": "medusa-exec-source-empty-string-both",
       "scenarioId": "medusa-scenario-empty-string-both",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -415,8 +415,8 @@
       "executionId": "medusa-exec-source-valid-start-iso",
       "scenarioId": "medusa-scenario-valid-start-iso",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -440,8 +440,8 @@
       "executionId": "medusa-exec-source-valid-end-iso",
       "scenarioId": "medusa-scenario-valid-end-iso",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -465,8 +465,8 @@
       "executionId": "medusa-exec-source-invalid-start",
       "scenarioId": "medusa-scenario-invalid-start",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -490,8 +490,8 @@
       "executionId": "medusa-exec-source-invalid-end",
       "scenarioId": "medusa-scenario-invalid-end",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -515,8 +515,8 @@
       "executionId": "medusa-exec-source-date-object-start",
       "scenarioId": "medusa-scenario-date-object-start",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -542,8 +542,8 @@
       "executionId": "medusa-exec-source-reversed-range",
       "scenarioId": "medusa-scenario-reversed-range",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -568,8 +568,8 @@
       "executionId": "medusa-exec-source-both-invalid-start-first",
       "scenarioId": "medusa-scenario-both-invalid-start-first",
       "targetId": "medusa-source-runtime",
-      "startedAt": "2026-11-27T02:30:00.343Z",
-      "endedAt": "2026-11-27T02:30:00.344Z",
+      "startedAt": "2026-11-27T02:36:04.210Z",
+      "endedAt": "2026-11-27T02:36:04.210Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / TypeScript transpileModule",
@@ -598,7 +598,7 @@
       "executionId": "medusa-exec-source-omitted-both",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -663,7 +663,7 @@
       "executionId": "medusa-exec-source-omitted-both",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -730,7 +730,7 @@
       "executionId": "medusa-exec-source-omitted-both",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -799,7 +799,7 @@
       "executionId": "medusa-exec-source-omitted-both",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -859,7 +859,7 @@
       "executionId": "medusa-exec-source-null-both",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -930,7 +930,7 @@
       "executionId": "medusa-exec-source-null-both",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -1006,7 +1006,7 @@
       "executionId": "medusa-exec-source-null-both",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -1078,7 +1078,7 @@
       "executionId": "medusa-exec-source-null-both",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1141,7 +1141,7 @@
       "executionId": "medusa-exec-source-empty-string-both",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1212,7 +1212,7 @@
       "executionId": "medusa-exec-source-empty-string-both",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1288,7 +1288,7 @@
       "executionId": "medusa-exec-source-empty-string-both",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1360,7 +1360,7 @@
       "executionId": "medusa-exec-source-empty-string-both",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1423,7 +1423,7 @@
       "executionId": "medusa-exec-source-valid-start-iso",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 12,
       "method": {
         "class": "instrumentation",
@@ -1492,7 +1492,7 @@
       "executionId": "medusa-exec-source-valid-start-iso",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 13,
       "method": {
         "class": "instrumentation",
@@ -1565,7 +1565,7 @@
       "executionId": "medusa-exec-source-valid-start-iso",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 14,
       "method": {
         "class": "instrumentation",
@@ -1636,7 +1636,7 @@
       "executionId": "medusa-exec-source-valid-start-iso",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 15,
       "method": {
         "class": "instrumentation",
@@ -1698,7 +1698,7 @@
       "executionId": "medusa-exec-source-valid-end-iso",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 16,
       "method": {
         "class": "instrumentation",
@@ -1767,7 +1767,7 @@
       "executionId": "medusa-exec-source-valid-end-iso",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 17,
       "method": {
         "class": "instrumentation",
@@ -1840,7 +1840,7 @@
       "executionId": "medusa-exec-source-valid-end-iso",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 18,
       "method": {
         "class": "instrumentation",
@@ -1911,7 +1911,7 @@
       "executionId": "medusa-exec-source-valid-end-iso",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 19,
       "method": {
         "class": "instrumentation",
@@ -1973,7 +1973,7 @@
       "executionId": "medusa-exec-source-invalid-start",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 20,
       "method": {
         "class": "instrumentation",
@@ -2042,7 +2042,7 @@
       "executionId": "medusa-exec-source-invalid-start",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 21,
       "method": {
         "class": "instrumentation",
@@ -2115,7 +2115,7 @@
       "executionId": "medusa-exec-source-invalid-start",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 22,
       "method": {
         "class": "instrumentation",
@@ -2186,7 +2186,7 @@
       "executionId": "medusa-exec-source-invalid-start",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 23,
       "method": {
         "class": "instrumentation",
@@ -2248,7 +2248,7 @@
       "executionId": "medusa-exec-source-invalid-end",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 24,
       "method": {
         "class": "instrumentation",
@@ -2317,7 +2317,7 @@
       "executionId": "medusa-exec-source-invalid-end",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 25,
       "method": {
         "class": "instrumentation",
@@ -2390,7 +2390,7 @@
       "executionId": "medusa-exec-source-invalid-end",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 26,
       "method": {
         "class": "instrumentation",
@@ -2461,7 +2461,7 @@
       "executionId": "medusa-exec-source-invalid-end",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 27,
       "method": {
         "class": "instrumentation",
@@ -2523,7 +2523,7 @@
       "executionId": "medusa-exec-source-date-object-start",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 28,
       "method": {
         "class": "instrumentation",
@@ -2596,7 +2596,7 @@
       "executionId": "medusa-exec-source-date-object-start",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 29,
       "method": {
         "class": "instrumentation",
@@ -2675,7 +2675,7 @@
       "executionId": "medusa-exec-source-date-object-start",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 30,
       "method": {
         "class": "instrumentation",
@@ -2748,7 +2748,7 @@
       "executionId": "medusa-exec-source-date-object-start",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 31,
       "method": {
         "class": "instrumentation",
@@ -2812,7 +2812,7 @@
       "executionId": "medusa-exec-source-reversed-range",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 32,
       "method": {
         "class": "instrumentation",
@@ -2883,7 +2883,7 @@
       "executionId": "medusa-exec-source-reversed-range",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 33,
       "method": {
         "class": "instrumentation",
@@ -2959,7 +2959,7 @@
       "executionId": "medusa-exec-source-reversed-range",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 34,
       "method": {
         "class": "instrumentation",
@@ -3031,7 +3031,7 @@
       "executionId": "medusa-exec-source-reversed-range",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 35,
       "method": {
         "class": "instrumentation",
@@ -3094,7 +3094,7 @@
       "executionId": "medusa-exec-source-both-invalid-start-first",
       "facet": "business-rules",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 36,
       "method": {
         "class": "instrumentation",
@@ -3165,7 +3165,7 @@
       "executionId": "medusa-exec-source-both-invalid-start-first",
       "facet": "data",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 37,
       "method": {
         "class": "instrumentation",
@@ -3241,7 +3241,7 @@
       "executionId": "medusa-exec-source-both-invalid-start-first",
       "facet": "behavior",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 38,
       "method": {
         "class": "instrumentation",
@@ -3313,7 +3313,7 @@
       "executionId": "medusa-exec-source-both-invalid-start-first",
       "facet": "errors-recovery",
       "subject": "medusa-price-list-date-validation",
-      "observedAt": "2026-11-27T02:30:00.344Z",
+      "observedAt": "2026-11-27T02:36:04.210Z",
       "sequence": 39,
       "method": {
         "class": "instrumentation",
@@ -3450,7 +3450,7 @@
         "sourceRevision": "6e28e10acb9676392315b3ff1a9c7147fce4b5ab",
         "location": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/medusa-runtime-capture.json"
       },
-      "capturedAt": "2026-11-27T02:30:00.344Z",
+      "capturedAt": "2026-11-27T02:36:04.210Z",
       "embedded": {
         "scenarioLabels": [
           "omitted-both",
@@ -3464,10 +3464,10 @@
           "reversed-range",
           "both-invalid-start-first"
         ],
-        "sha256": "7e3b80fc79d1f5e0f82bfc49ba0ba3a3793ff69fb1ed1d3b978d932652ee6e08"
+        "sha256": "cf59a3dedcaa59110bd7d034b9d70ec136191f2442f79a7d0b5d39779a0f5778"
       },
       "locator": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/medusa-runtime-capture.json",
-      "digest": "7e3b80fc79d1f5e0f82bfc49ba0ba3a3793ff69fb1ed1d3b978d932652ee6e08",
+      "digest": "cf59a3dedcaa59110bd7d034b9d70ec136191f2442f79a7d0b5d39779a0f5778",
       "sizeBytes": 4105,
       "retention": {
         "status": "retained",
@@ -3484,7 +3484,7 @@
         "sourceRevision": "6e28e10acb9676392315b3ff1a9c7147fce4b5ab",
         "location": "packages/modules/pricing/src/utils/validate-price-list-dates.ts"
       },
-      "capturedAt": "2026-11-27T02:30:00.344Z",
+      "capturedAt": "2026-11-27T02:36:04.210Z",
       "locator": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/validate-price-list-dates.ts",
       "digest": "53089099d3b3f8335558b6087fa1e4dce680b1193ea70b6c01390fe0c76aa193",
       "sizeBytes": 680,
@@ -3503,7 +3503,7 @@
         "sourceRevision": "6e28e10acb9676392315b3ff1a9c7147fce4b5ab",
         "location": "packages/core/utils/src/common/is-date.ts"
       },
-      "capturedAt": "2026-11-27T02:30:00.344Z",
+      "capturedAt": "2026-11-27T02:36:04.210Z",
       "locator": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/is-date.ts",
       "digest": "080205e738f1c397bbee97f4e2de8c8d27ea3b7a04a0a332020542b94b20c387",
       "sizeBytes": 115,
@@ -3522,7 +3522,7 @@
         "sourceRevision": "6e28e10acb9676392315b3ff1a9c7147fce4b5ab",
         "location": "packages/core/utils/src/common/errors.ts"
       },
-      "capturedAt": "2026-11-27T02:30:00.344Z",
+      "capturedAt": "2026-11-27T02:36:04.210Z",
       "locator": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/errors.ts",
       "digest": "88bbc7224b967507b035daed1e01a98e486f933ff2a917f1ea911831e8ed3974",
       "sizeBytes": 2070,
@@ -3541,7 +3541,7 @@
         "sourceRevision": "6e28e10acb9676392315b3ff1a9c7147fce4b5ab",
         "location": "packages/modules/pricing/src/services/pricing-module.ts"
       },
-      "capturedAt": "2026-11-27T02:30:00.344Z",
+      "capturedAt": "2026-11-27T02:36:04.210Z",
       "locator": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/pricing-module.ts",
       "digest": "ff4b44f3b6fa608959b840b18aa65f4646372fc95f761c98541f38211157930e",
       "sizeBytes": 57918,
@@ -3825,7 +3825,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:30:00.542440Z",
+      "assessedAt": "2026-11-27T02:36:04.408800Z",
       "assessmentMethod": "All eight required properties are linked to runtime observations and retained evidence in both implementations.",
       "rationale": "Every declared date-validation property is observed on the pinned source utility and independent Python implementation."
     }

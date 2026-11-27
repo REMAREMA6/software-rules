@@ -22,5 +22,5 @@ frozen_case_sensitive=False
 late=[{"path":"/Report","status":200 if match("/Report",frozen_case_sensitive,False) else 404}]
 changed_case_sensitive=True
 late.append({"path":"/report","status":200 if match("/report",frozen_case_sensitive,False) else 404})
-scenarios.append({"label":"late-case-sensitive-change","config":{"caseSensitive":"changed-to-true-after-first-request","strict":False,"activation":"after-router-initialization"},"decisions":late})
+scenarios.append({"label":"late-case-sensitive-change","config":{"caseSensitive":False,"strict":False,"settingAfterInitialization":True,"activation":"after-router-initialization"},"decisions":late})
 print(json.dumps({"implementation":"Independent Python 3.12 configuration model","scenarios":scenarios},indent=2))

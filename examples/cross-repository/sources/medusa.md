@@ -35,3 +35,10 @@ The case covers ten inputs: omitted, null, empty, valid/invalid ISO values, Date
 ## Status
 
 One bounded ten-input case now passes: the pinned Medusa utility and independent Python model match across 40 facet/scenario projections; executable mutations are detected; Software Rules captures and comparison pass schema/integrity validation. Source/helper code, raw and structured captures, comparison, and toolchain lock are committed under `conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/` at [commit dd0ad76](https://github.com/REMAREMA6/software-rules/commit/dd0ad76f0ec9557a41250c5fcc3efa14dc5aa1a2). This does not cover full Medusa pricing or all business rules.
+
+
+## Additional accepted price-selection case
+
+[MEDUSA-PRICE-001](../../conformance/replication-lab/cases/MEDUSA-PRICE-001/CASE.md) executes the exact pinned `PricingModuleService.calculatePrices` method body using the TypeScript compiler API and a deterministic repository fixture. An independent Python 3.12 model matched nine calculated/original price-selection scenarios; five deliberate mutations were detected; Software Rules 0.2.0 captures and comparison passed schema and cross-record integrity validation in [run #45939713683](https://github.com/REMAREMA6/software-rules/actions/runs/45939713683), artifact `15172460158`.
+
+This is bounded service-level price-selection evidence. SQL candidate filtering, quantity tiers, tax inclusivity, currency normalization, cart totals, discount stacking, and broader commerce rules remain uncovered.

@@ -1,0 +1,102 @@
+name: BullMQ stalled-job recovery cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/BMQ-RECOVERY-001/**"
+      - "conformance/replication-lab/projects/bullmq-stalled-python/**"
+      - ".github/workflows/bullmq-stalled-recovery-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/BMQ-RECOVERY-001/**"
+      - "conformance/replication-lab/projects/bullmq-stalled-python/**"
+      - ".github/workflows/bullmq-stalled-recovery-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: bullmq-stalled-recovery-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  stalled-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact BullMQ source commit
+        env:
+          BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+        run: |
+          git init /tmp/bullmq
+          git -C /tmp/bullmq remote add origin https://github.com/taskforcesh/bullmq.git
+          git -C /tmp/bullmq fetch --depth=1 origin "$BULLMQ_SOURCE_COMMIT"
+          git -C /tmp/bullmq checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/bullmq rev-parse HEAD)" = "$BULLMQ_SOURCE_COMMIT"
+      - name: Install and build pinned BullMQ source
+        working-directory: /tmp/bullmq
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          yarn install --frozen-lockfile --non-interactive
+          yarn build
+      - name: Execute pinned BullMQ stalled-job recovery probe
+        working-directory: /tmp/bullmq
+        env:
+          BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: "6379"
+        run: |
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-RECOVERY-001/source_probe.cjs" ./software-rules-stalled-probe.cjs
+          node ./software-rules-stalled-probe.cjs > "$GITHUB_WORKSPACE/bullmq-stalled-source-runtime.json"
+      - name: Execute independent Python stalled-job model
+        run: python conformance/replication-lab/projects/bullmq-stalled-python/replica_probe.py > bullmq-stalled-python-runtime.json
+      - name: Compare stalled-job lifecycle outcomes
+        run: python conformance/replication-lab/cases/BMQ-RECOVERY-001/compare.py bullmq-stalled-source-runtime.json bullmq-stalled-python-runtime.json
+      - name: Run deliberate stalled-recovery mutations
+        run: python -m unittest discover -s conformance/replication-lab/cases/BMQ-RECOVERY-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          python conformance/replication-lab/cases/BMQ-RECOVERY-001/build_software_rules_artifacts.py \
+            --source bullmq-stalled-source-runtime.json \
+            --replica bullmq-stalled-python-runtime.json \
+            --output-dir bullmq-stalled-software-rules
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            bullmq-stalled-software-rules/bullmq-stalled-source.capture.json \
+            bullmq-stalled-software-rules/bullmq-stalled-python-replica.capture.json \
+            bullmq-stalled-software-rules/bullmq-stalled-comparison.report.json
+      - name: Retain BullMQ source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bullmq-stalled-recovery-cross-stack
+          path: |
+            bullmq-stalled-source-runtime.json
+            bullmq-stalled-python-runtime.json
+            bullmq-stalled-software-rules/*.json
+          if-no-files-found: warn
+          retention-days: 30

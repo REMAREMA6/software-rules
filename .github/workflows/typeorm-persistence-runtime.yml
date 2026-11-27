@@ -42,7 +42,8 @@ jobs:
       - name: Install pinned workspace dependencies
         working-directory: /tmp/typeorm
         run: |
-          corepack prepare pnpm@12.22.0 --activate
+          npm install --global pnpm@12.22.0
+          pnpm --version
           pnpm install --filter typeorm... --include-workspace-root --frozen-lockfile --ignore-scripts
       - name: Compile TypeORM from pinned source
         working-directory: /tmp/typeorm

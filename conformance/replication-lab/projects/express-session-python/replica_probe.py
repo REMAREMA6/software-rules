@@ -17,7 +17,7 @@ def verify(cookie):
  return sid if hmac.compare_digest(sig,expected) else None
 def cookie_info(cookie,cleared=False):
  if not cookie:return {"name":None,"present":False,"cleared":False,"attributes":[]}
- return {"name":"connect.sid","present":not cleared,"cleared":cleared,"attributes":["httponly","path","samesite"]}
+ return {"name":"connect.sid","present":not cleared,"cleared":cleared,"attributes":["expires","httponly","path","samesite"] if cleared else ["httponly","path","samesite"]}
 def capture(mutation=None):
  m=mutation or {}; store={}; outcomes=[]; cookie=None
  def emit(label,data,set_cookie=None,cleared=False):

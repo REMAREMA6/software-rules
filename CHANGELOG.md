@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Added
+- TypeORM TORM-PERSIST-001 transaction/rollback case with pinned-source compilation/runtime workflow, SQL.js probe, independent Python sqlite3 model, comparator, and mutation tests; runtime equivalence remains pending.
+- BullMQ BMQ-MSG-001 messaging case for duplicate job IDs, queue event order, consumer completion/failure, independent Python queue model, comparator mutations, and Redis-backed source workflow; runtime equivalence remains pending.
+
+### Added
 - TypeORM TORM-PERSIST-001: pinned-source transaction/rollback probe, independent Python/sqlite3 replica, comparison, mutation tests, and CI workflow; case remains pending runtime verification.
 - Updated the 15-facet evidence matrix to reflect verified BullMQ and Express bounded cases and distinguish them from facet-wide completeness.
 

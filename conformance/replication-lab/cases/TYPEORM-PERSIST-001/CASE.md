@@ -1,7 +1,7 @@
 # Case — TypeORM transaction atomicity and rollback
 
 **Case ID:** TYPEORM-PERSIST-001  
-**Status:** Source implementation and tests inspected; independent Python/SQLite replica prepared; pinned TypeORM runtime comparison pending  
+**Status:** PASSED for the declared two-scenario scope. Pinned TypeORM runtime and independent Python/SQLite replica match across eight facet/scenario projections; executable rollback mutation tests, Software Rules schema validation, cross-record evidence integrity, and artifact persistence all pass.  
 **Facet(s):** Persistence; Data; Behaviour; Errors and recovery  
 **Source:** https://github.com/typeorm/typeorm  
 **Source commit:** b1e211fc2654d412612a08f8a7fb890f3352614f  
@@ -35,6 +35,6 @@ The Python 3.12 implementation uses the standard-library `sqlite3` module and an
 
 The replica tests deliberately commit the transaction after an exception instead of rolling it back. The comparison must detect the leaked post/category rows. Additional comparison mutations alter callback error propagation and committed callback results.
 
-## Acceptance gate
+## Result
 
-Accept only after the pinned TypeORM runtime and independent Python replica match both scenarios, executable mutation tests detect the incorrect commit-on-error variant, and Software Rules 0.2.0 captures plus comparison report pass schema and cross-record evidence validation.
+**Passed for the declared bounded scope.** The pinned TypeORM 1.1.3 source at commit `b1e211fc2654d412612a08f8a7fb890f3352614f` and the independent Python 3.12/sqlite3 model match both scenarios across eight facet/scenario projections. The executable commit-on-error mutation is detected. The Software Rules 0.2.0 source/replica captures and comparison report passed schema and cross-record evidence validation in [workflow run #5](https://github.com/REMAREMA6/software-rules/actions/runs/45927631068). Seven raw/structured evidence artifacts, including the frozen pnpm lockfile and dependency tree, are committed under `artifacts/` at [commit fabf45a](https://github.com/REMAREMA6/software-rules/commit/fabf45ae466d2b68bcc49f6596f6c6bb220ddef3). This result does not establish transaction behaviour for other database drivers, isolation levels, nested transactions, concurrency, or distributed transactions.

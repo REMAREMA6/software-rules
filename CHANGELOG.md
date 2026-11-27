@@ -7,6 +7,11 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- MEDUSA-ADJUST-001 passed nine pinned Medusa adjustment/tax-allocation scenarios against an independent Python Decimal model; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45943612155, artifact #15173389412.
+- MEDUSA-PROMO-001 passed 32 pinned Medusa promotion-rule eligibility scenarios against an independent Python evaluator; eight deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45944011363, artifact #15174046701.
+
+
+### Verified
 - BMQ-RECOVERY-001 passed two pinned BullMQ stalled-job scenarios: one stalled job requeued and completed within maxStalledCount; another failed at maxStalledCount=0. Attempts, stalled counter, events, processed values, and queue counts matched the Python state-machine model; four mutations and Software Rules schema/integrity passed in run #45943469678, artifact #15173607117. Multiple stalled jobs, concurrency, and Redis/host failover remain excluded.
 
 

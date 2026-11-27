@@ -4,7 +4,7 @@ from compare import compare
 class TypeORMTransactionComparisonTests(unittest.TestCase):
     def setUp(self):
         self.source = {"scenarios": {
-            "rollback": {"error": {"name": "Error", "message": "forced-transaction-failure"}, "callbackResult": None, "rowsAfterRollback": []},
+            "rollback": {"error": {"name": "Error", "message": "forced-transaction-failure"}, "callbackResult": None, "rowsInsideCallback": [{"id": 1, "value": "rolled-back"}], "rowsAfterRollback": []},
             "commit": {"callbackReturn": "callback-result", "rowsAfterCommit": [{"id": 1, "value": "committed"}]}
         }}
         self.replica = {"scenarios": {
@@ -21,6 +21,10 @@ class TypeORMTransactionComparisonTests(unittest.TestCase):
 
     def test_error_swallowing_is_detected(self):
         self.replica["scenarios"]["rollback"]["error"] = None
+        self.assertEqual(compare(self.source, self.replica)["result"], "mismatch")
+
+    def test_read_your_writes_mutation_is_detected(self):
+        self.replica["scenarios"]["rollback"]["rowsInsideCallback"] = []
         self.assertEqual(compare(self.source, self.replica)["result"], "mismatch")
 
     def test_commit_loss_is_detected(self):

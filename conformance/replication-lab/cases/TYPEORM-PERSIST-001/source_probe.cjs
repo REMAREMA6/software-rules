@@ -4,7 +4,7 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 require('reflect-metadata');
 
-const { DataSource, EntitySchema } = require(require('node:path').resolve(process.cwd(), 'build/compiled'));
+const { DataSource, EntitySchema } = require(require('node:path').resolve(process.cwd(), 'build/package/index.js'));
 const captureStartedAt = new Date().toISOString();
 
 const Post = new EntitySchema({

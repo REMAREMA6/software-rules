@@ -53,6 +53,7 @@ def normalized(scenario, facet):
             "status": response["status"],
             "body": response["body"],
             "headers": response["headers"],
+            "wireBodyBytes": response.get("wireBodyBytes", 0),
         }
     if facet == "behavior":
         return {
@@ -99,6 +100,7 @@ def payload(scenario, facet):
                 "body": response["body"],
                 "contentType": response["headers"].get("content-type") or "",
             },
+            "extensions": {"wireBodyBytes": response.get("wireBodyBytes", 0)},
         }
     if facet == "behavior":
         return {

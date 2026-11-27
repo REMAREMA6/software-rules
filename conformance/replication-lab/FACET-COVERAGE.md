@@ -20,7 +20,7 @@ This is an evidence-status register, not a list of technologies that happen to c
 | 11 | Background processing | BullMQ | Source-derived retry rules and Python decision-model simulation exist; pinned BullMQ+Redis runtime comparison is pending | Python 3.12 model | In progress |
 | 12 | Errors and recovery | BullMQ; Express; TypeORM | Task Board has bounded HTTP 503/no-recovery observations; BullMQ retry suppression and attempt limits passed for three scenarios; Express 404 fallback case prepared; broader error/recovery paths remain untested | Python 3.12 model | In progress |
 | 13 | Integrations | n8n; Grafana; Medusa | Candidates only; n8n licence restrictions require per-file review | None | Not started |
-| 14 | Configuration | Grafana; Keycloak | Candidate source settings identified; runtime precedence not verified | None | Not started |
+| 14 | Configuration | Express; Grafana; Keycloak | Express default case-sensitive/strict routing settings are included in the seven-request probe; runtime comparison pending. Grafana/Keycloak settings remain candidates. | Python routing replica prepared | In progress |
 | 15 | Performance and resource behaviour | Prometheus; Grafana | Task Board has single-run navigation/paint/resource samples only; no repeatable load/throughput case | None | Partial baseline only |
 
 ## Interpretation

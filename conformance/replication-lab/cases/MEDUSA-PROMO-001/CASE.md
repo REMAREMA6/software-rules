@@ -1,7 +1,7 @@
 # Case — Medusa promotion rule evaluation and context eligibility
 
 **Case ID:** MEDUSA-PROMO-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all 32 promotion-rule scenarios. Pinned Medusa functions and independent Python 3.12 evaluator matched; eight deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence-integrity validation in [run #45943496797](https://github.com/REMAREMA6/software-rules/actions/runs/45943496797), artifact `15172569923` (expires 2026-12-27).  
 **Facets:** Business rules; behaviour; data  
 **Source:** https://github.com/medusajs/medusa  
 **Immutable source commit:** `6e28e10acb9676392315b3ff1a9c7147fce4b5ab`  

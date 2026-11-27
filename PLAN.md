@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; seven bounded cases pass (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, and Casbin RBAC authorization). No facet-wide completeness claim is justified; authorization, integrations, broader security, performance/resources, cross-UI-stack replication, and incomplete property inventories remain.  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; eight bounded cases pass (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and Redis client integration). No facet-wide completeness claim is justified; authorization, integrations, broader security, performance/resources, cross-UI-stack replication, and incomplete property inventories remain.  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 
@@ -225,7 +225,7 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 - [x] BMQ-MSG-001: pinned BullMQ source + Redis vs Python queue model; two scenarios, ten semantic projections, six mutation tests, schema-native capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
 - [x] JOSE-AUTH-001: pinned jose 6.2.18 / Node.js WebCrypto vs independent Python 3.12 HMAC/JWT verifier; eleven scenarios, 55 facet/scenario projections, eight executable mutations, Software Rules 0.2.0 schema/report validation, and evidence integrity passed in [run #45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956).
 - [x] CASBIN-AUTHZ-001: pinned Apache Casbin Go source vs independent Python 3.12 RBAC evaluator; ten requests, four executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in [run #45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753).
-- [~] REDIS-INT-001: pinned go-redis Go client vs Python redis-py against Redis 7; seven operations, five executable mutations, Software Rules 0.2.0 capture/report builder, and CI workflow prepared; source runtime and schema validation pending.
+- [x] REDIS-INT-001: pinned go-redis Go client vs Python redis-py against Redis 7; seven operations, five executable mutations, Software Rules 0.2.0 captures, schema/report validation, and evidence integrity passed in [run #45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414).
 - [x] Extract and validate the bounded runtime rules in the accepted BullMQ and Express cases; source-derived inferences remain distinct where runtime evidence is absent.
 - [x] Extracted and compared bounded TypeORM top-level transaction rules; broader transaction/durability semantics remain outside the case.
 - [x] Independently replicate BullMQ retry decisions and Express HTTP routing in Python 3.12.

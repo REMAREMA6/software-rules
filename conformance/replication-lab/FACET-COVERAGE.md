@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Eight bounded cross-stack cases have passed: BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, Casbin simple-RBAC authorization, and go-redis/redis-py integration. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Nine bounded cross-stack cases have passed: the eight listed below plus TASKBOARD-UI-001 (plain HTML/CSS/browser JavaScript to independent React 19/Vite UI replication). No entire facet is complete for the project-wide objective. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 
@@ -8,7 +8,7 @@ This matrix distinguishes a facet having some validated evidence from a facet be
 
 | # | Facet | Source evidence / current result | Independent replica | Status |
 |---|---|---|---|---|
-| 1 | Interface | Task Board has a bounded 1280×800 UI capture with pixel-identical tested states and detected visual mutation; two inventory properties remain partial and broader interface environments are not covered. | Independent browser UI fixture | Partial |
+| 1 | Interface | TASKBOARD-UI-001 passes nine source/replica viewport/state comparisons with zero differing pixels, matching semantic snapshots and API traces, schema-native captures, integrity validation, and detected active-count mutation (run [#45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401)). The earlier 13-state Task Board fixture remains separate evidence. Other interface environments, states, native platforms, font fallback, and broader property inventory remain uncovered. | Independent React 19/Vite replica of plain HTML/CSS/browser JavaScript | Partial |
 | 2 | Behaviour | BullMQ retry/backoff and messaging, Express routing, TypeORM transactions, Medusa date-validation order, and JOSE verification ordering have bounded cross-stack matches. | Python retry/queue models, HTTP server, SQLite transaction model, date validator, and JWT verifier | In progress |
 | 3 | Business rules | Medusa price-list date validation passes ten probes and 40 projections. Full cart, discount, tax, and price-selection rules remain uncovered. | Python ISO-8601 validator with mutation tests | In progress |
 | 4 | Data | TypeORM Post/Category snapshots, BullMQ attempt counters/message payloads, Medusa date fields, and verified JWT claims have bounded evidence; Task Board data properties remain partial. | Python/SQLite, queue, date, and JWT models | Partial |
@@ -38,6 +38,7 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [JOSE-AUTH-001](cases/JOSE-AUTH-001/CASE.md) | Identity/authentication; security controls; data; behaviour; errors/recovery | Eleven JWT scenarios, 55 facet/scenario projections, eight executable mutations, Software Rules 0.2.0 captures, schema/integrity validation, committed evidence, and retained artifact; run [#45930973956](https://github.com/REMAREMA6/software-rules/actions/runs/45930973956) |
 | [CASBIN-AUTHZ-001](cases/CASBIN-AUTHZ-001/CASE.md) | Authorization and permissions; behaviour; data | Ten RBAC requests, four executable mutations, Software Rules 0.2.0 captures, comparison, schema validation, evidence integrity, and retained CI artifact; run [#45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753) |
 | [REDIS-INT-001](cases/REDIS-INT-001/CASE.md) | Integrations; errors/recovery; data | Seven Redis interactions, five executable mutations, Software Rules 0.2.0 captures, comparison, schema validation, evidence integrity, and retained CI artifact; run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414) |
+| [TASKBOARD-UI-001](cases/TASKBOARD-UI-001/CASE.md) | Interface | Nine viewport/state comparisons, zero differing pixels, matching semantic snapshots/API traces, active-count mutation detected, Software Rules 0.2.0 captures/report, schema and integrity validation; run [#45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401), artifact `15170370565` |
 
 
 ## Completion rule

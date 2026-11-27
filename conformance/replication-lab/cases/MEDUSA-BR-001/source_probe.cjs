@@ -100,9 +100,9 @@ async function main() {
       validatePriceListDates(hydrate(input));
       return { label, input, outcome: 'accepted', errorType: null, errorName: null, isMedusaError: false, errorField: null };
     } catch (error) {
-      return { label, input, outcome: 'rejected', ...classify(error) };
+      return { label, input, outcome: 'rejected', ...classify(error), validationOrder: label === 'both-invalid-start-first' ? 'starts_at-first' : 'not-discriminated' };
     }
-  });
+  }).map(item => ({ ...item, validationOrder: item.validationOrder || 'not-discriminated' }));
 
   const packageJson = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'packages/modules/pricing/package.json'), 'utf8'));
   const commit = process.env.MEDUSA_SOURCE_COMMIT;

@@ -1,0 +1,127 @@
+import json
+import threading
+from datetime import datetime, timezone
+from http.client import HTTPConnection
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import urlsplit
+
+
+def make_handler(case_sensitive=False, strict_routing=False):
+    def route_matches(path):
+        pathname = urlsplit(path).path
+        expected = "/widgets"
+        actual = pathname
+        if not strict_routing:
+            actual = actual.rstrip("/") or "/"
+            expected = expected.rstrip("/") or "/"
+        if not case_sensitive:
+            actual = actual.casefold()
+            expected = expected.casefold()
+        return actual == expected
+
+    class Handler(BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+
+        def log_message(self, *_args):
+            pass
+
+        def send_result(self, status, body, allow=None, suppress_body=False):
+            encoded = body.encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            if allow is not None:
+                self.send_header("Allow", allow)
+            self.send_header("Connection", "close")
+            self.end_headers()
+            if not suppress_body:
+                self.wfile.write(encoded)
+            self.close_connection = True
+
+        def do_GET(self):
+            if route_matches(self.path):
+                self.send_result(200, "get")
+            else:
+                self.send_result(404, "not found")
+
+        def do_HEAD(self):
+            if route_matches(self.path):
+                self.send_result(200, "get", suppress_body=True)
+            else:
+                self.send_result(404, "not found", suppress_body=True)
+
+        def do_PUT(self):
+            if route_matches(self.path):
+                self.send_result(200, "put")
+            else:
+                self.send_result(404, "not found")
+
+        def do_OPTIONS(self):
+            pathname = urlsplit(self.path).path
+            if pathname == "/override":
+                self.send_result(200, "GET", allow="GET")
+            elif route_matches(self.path):
+                self.send_result(200, "GET, HEAD, PUT", allow="GET, HEAD, PUT")
+            else:
+                self.send_result(404, "not found")
+
+    return Handler
+
+
+def capture():
+    case_sensitive = False
+    strict_routing = False
+    server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(case_sensitive, strict_routing))
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    host, port = server.server_address
+    requests = [
+        ("get-base", "GET", "/widgets"),
+        ("head-fallback", "HEAD", "/widgets"),
+        ("options-auto", "OPTIONS", "/widgets"),
+        ("options-missing", "OPTIONS", "/missing"),
+        ("options-explicit", "OPTIONS", "/override"),
+        ("case-and-trailing-slash", "GET", "/WIDGETS/"),
+        ("query-ignored", "GET", "/widgets?color=blue"),
+    ]
+    scenarios = []
+    try:
+        for label, method, path in requests:
+            connection = HTTPConnection(host, port, timeout=5)
+            connection.request(method, path, headers={"Connection": "close"})
+            response = connection.getresponse()
+            body = response.read().decode("utf-8")
+            headers = {
+                "content-type": response.getheader("Content-Type"),
+                "content-length": response.getheader("Content-Length"),
+                "allow": response.getheader("Allow"),
+            }
+            scenarios.append({
+                "label": label,
+                "request": {"method": method, "path": path},
+                "response": {
+                    "status": response.status,
+                    "headers": headers,
+                    "body": body,
+                },
+            })
+            connection.close()
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+
+    return {
+        "capturedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "completedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "implementation": "Independent Python 3.12 standard-library HTTP server",
+        "configuration": {
+            "caseSensitiveRouting": case_sensitive,
+            "strictRouting": strict_routing,
+        },
+        "scenarios": scenarios,
+    }
+
+
+if __name__ == "__main__":
+    print(json.dumps(capture(), indent=2))

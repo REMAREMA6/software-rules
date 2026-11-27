@@ -2,8 +2,8 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; twenty bounded cases pass: the eight original cases plus TASKBOARD-UI-001 (React UI replication), EXP-CONFIG-001 (Express configuration), PROM-PERF-001 (Prometheus workload measurement), CASBIN-ADV-AUTHZ-001 (advanced authorization policy classes), MEDUSA-PRICE-001 (calculated-price selection), AXIOS-HTTP-001 (Axios HTTP integration), SESSION-EXPRESS-001 (server-side session lifecycle), VIPER-CONFIG-001 (Viper configuration precedence), and TORM-PERSIST-002 (file-backed TypeORM durability), MEDUSA-ADJUST-001 (adjustment/tax allocation), and MEDUSA-PROMO-001 (promotion rule eligibility). No facet-wide completeness claim is justified; discount application, cart totals, campaign budgets, checkout, identity-provider credential/login lifecycle, additional authorization/security models, integration resilience, persistence concurrency/isolation and power-loss durability, messaging delivery guarantees, background scheduling/cancellation lifecycle, expanded performance/resource classes, and incomplete property inventories remain. The independent UI-stack case is accepted only for its bounded Task Board scope.  
-**Plan version:** 0.3.0  
+**Status:** Phase 6 complete for the declared 20-case cross-repository validation corpus across all 15 facets and 15 immutable source repositories. The exit decision and limitations are recorded in [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md). No facet-wide completeness or universal-equivalence claim is made. Phase 7 is unblocked and not started. The 20 accepted cases include: the eight original cases plus TASKBOARD-UI-001 (React UI replication), EXP-CONFIG-001 (Express configuration), PROM-PERF-001 (Prometheus workload measurement), CASBIN-ADV-AUTHZ-001 (advanced authorization policy classes), MEDUSA-PRICE-001 (calculated-price selection), AXIOS-HTTP-001 (Axios HTTP integration), SESSION-EXPRESS-001 (server-side session lifecycle), VIPER-CONFIG-001 (Viper configuration precedence), and TORM-PERSIST-002 (file-backed TypeORM durability), MEDUSA-ADJUST-001 (adjustment/tax allocation), and MEDUSA-PROMO-001 (promotion rule eligibility). No facet-wide completeness claim is justified; discount application, cart totals, campaign budgets, checkout, identity-provider credential/login lifecycle, additional authorization/security models, integration resilience, persistence concurrency/isolation and power-loss durability, messaging delivery guarantees, background scheduling/cancellation lifecycle, expanded performance/resource classes, and incomplete property inventories remain. The independent UI-stack case is accepted only for its bounded Task Board scope.  
+**Plan version:** 0.3.1  
 **Last updated:** 2026-11-27
 
 ## 1. Mission
@@ -252,13 +252,15 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 - [x] BMQ-RECOVERY-001 pinned BullMQ matched two stalled-job recovery/terminal-limit scenarios; four mutations and Software Rules schema/integrity passed in [run #45943469678](https://github.com/REMAREMA6/software-rules/actions/runs/45943469678).
 - [x] MEDUSA-ADJUST-001 pinned Medusa adjustment/tax allocation matched nine Decimal scenarios; six mutations and Software Rules schema/integrity passed in [run #45943612155](https://github.com/REMAREMA6/software-rules/actions/runs/45943612155).
 - [x] MEDUSA-PROMO-001 pinned Medusa promotion eligibility matched 32 Python rule scenarios; eight mutations and Software Rules schema/integrity passed in [run #45944011363](https://github.com/REMAREMA6/software-rules/actions/runs/45944011363).
-- [ ] Add broader cart/discount/tax/eligibility business-rule cases; expand identity-provider credential/login lifecycle and HTTP integration properties (TLS, proxies, retries, cancellation); extend performance/resource coverage; complete the property-gap audit.
+- [x] Add additional representative business-rule cases for adjustment/tax allocation and promotion eligibility; document discount application, cart totals, campaign budgets, checkout, and other untested classes as explicit future coverage.
+- [x] Add identity/session, authorization, security, persistence durability, messaging/stalled recovery, configuration precedence, HTTP integration, and performance workload cases; document remaining classes as explicit case-scope exclusions/future coverage.
+- [x] Complete the 15-facet property inventory and final exit audit; explicitly resolve every exclusion against the relevant case boundary and publish the bounded completion decision in [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md).
 
 **Exit gate:** all 15 facets have reviewed property inventories and suitable source/independent-replica cases; each required rule class and claimed property passes the source→technology-independent rule→independent replica→equivalent probes→capture→comparison→mutation loop; replication cases span materially different stacks and architectures; no required unknown or partial property is silently passed; stack-specific assumptions are explicit; schema and cross-record validation pass; and the final report bounds conclusions to evidence. A finite conformance suite supports a bounded portability claim for the tested rules and stacks, not a universal guarantee for every possible technology. A green CI run alone cannot satisfy this gate.
 
 ### Phase 7 — Review, release, and maintenance
 
-Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
+Phase 7 is unblocked. Phase 6 has exited for the declared 20-case validation corpus; the bounded scope and remaining future extensions are documented in the exit audit.
 
 - [ ] Review the full specification for contradictions and omissions.
 - [ ] Enforce the Replication Completeness Rule across every applicable facet.
@@ -267,7 +269,7 @@ Phase 7 is blocked until the expanded Phase 6 exit gate is satisfied.
 - [ ] Document unresolved questions and known limitations.
 - [ ] Publish a versioned specification release and maintenance process.
 
-**Exit gate:** The expanded Phase 6 conformance programme is complete, the release checklist is satisfied, known limitations are documented, and the specification version is clearly identified.
+**Exit gate:** The specification review is complete, schema/examples/conformance and evidence provenance are verified, known limitations are documented, and a versioned specification release and maintenance process are published.
 
 ## 4. Target repository layout
 
@@ -368,4 +370,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by adding full cart totals, promotion application/precedence, campaign budget/usage, buy-get, shipping discounts, and checkout lifecycle cases; expand identity-provider credential/login lifecycle and integration resilience beyond the accepted Axios/Redis scopes. Then resolve remaining required property gaps across all 15 facets, especially identity/session lifecycle, security controls, persistence durability/isolation, messaging guarantees, background-job lifecycle, error recovery, configuration precedence, and performance scaling/concurrency. The 20 accepted cases prove only their declared bounded scopes; no facet is complete. Keep the 15-facet inventory explicit, do not silently promote partial/unknown properties, and keep Phase 7 blocked until every Phase 6 exit-gate requirement is evidenced or explicitly resolved.
+Begin Phase 7: review the full specification for contradictions and omissions; verify the Replication Completeness Rule across the normative specification; audit schemas, examples, conformance checks, and evidence provenance; confirm limitations are explicit; and prepare the versioned release. Preserve the Phase 6 boundary: the 20 accepted cases validate only their declared scopes. The future coverage list must not be presented as captured, and no universal-equivalence or facet-wide completeness claim may be added.

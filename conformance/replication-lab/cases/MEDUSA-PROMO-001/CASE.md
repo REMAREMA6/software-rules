@@ -1,7 +1,7 @@
 # Case — Medusa promotion rule evaluation and context eligibility
 
 **Case ID:** MEDUSA-PROMO-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED in [run #45944011363](https://github.com/REMAREMA6/software-rules/actions/runs/45944011363). The exact pinned Medusa `evaluateRuleValueCondition` and `areRulesValidForContext` functions matched an independent Python evaluator across 32 scenarios covering all seven operators, scalar/array quantification, numeric comparison, missing context, nested paths, item/shipping scope prefixes, malformed rules, and multi-rule conjunction. Eight deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema, cross-record integrity, and comparison completeness validation. Artifact `15174046701` retained through 2026-12-27. This is bounded promotion-rule eligibility evidence, not discount application or full checkout coverage.  
 **Facets:** Business rules; behaviour; data  
 **Source:** https://github.com/medusajs/medusa  
 **Immutable source commit:** `6e28e10acb9676392315b3ff1a9c7147fce4b5ab`  

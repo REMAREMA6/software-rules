@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "typeorm-source-capture",
-  "createdAt": "2026-11-27T02:19:50.747892Z",
+  "createdAt": "2026-11-27T02:36:07.696902Z",
   "purpose": "Capture the declared two-scenario TypeORM transaction conformance scope.",
   "target": {
     "targetId": "typeorm-source-runtime",
@@ -121,8 +121,8 @@
       "executionId": "typeorm-exec-source-commit-success",
       "scenarioId": "typeorm-scenario-commit-success",
       "targetId": "typeorm-source-runtime",
-      "startedAt": "2026-11-27T02:19:50.196Z",
-      "endedAt": "2026-11-27T02:19:50.239Z",
+      "startedAt": "2026-11-27T02:36:07.489Z",
+      "endedAt": "2026-11-27T02:36:07.511Z",
       "status": "completed",
       "actualContext": {
         "runtime": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3",
@@ -146,8 +146,8 @@
       "executionId": "typeorm-exec-source-rollback-on-invalid-post",
       "scenarioId": "typeorm-scenario-rollback-on-invalid-post",
       "targetId": "typeorm-source-runtime",
-      "startedAt": "2026-11-27T02:19:50.196Z",
-      "endedAt": "2026-11-27T02:19:50.239Z",
+      "startedAt": "2026-11-27T02:36:07.489Z",
+      "endedAt": "2026-11-27T02:36:07.511Z",
       "status": "completed",
       "actualContext": {
         "runtime": "TypeORM 1.1.3 / Node.js 22 / better-sqlite3",
@@ -175,7 +175,7 @@
       "executionId": "typeorm-exec-source-commit-success",
       "facet": "persistence",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -270,7 +270,7 @@
       "executionId": "typeorm-exec-source-commit-success",
       "facet": "data",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -372,7 +372,7 @@
       "executionId": "typeorm-exec-source-commit-success",
       "facet": "behavior",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -460,7 +460,7 @@
       "executionId": "typeorm-exec-source-commit-success",
       "facet": "errors-recovery",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -529,7 +529,7 @@
       "executionId": "typeorm-exec-source-rollback-on-invalid-post",
       "facet": "persistence",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -593,7 +593,7 @@
       "executionId": "typeorm-exec-source-rollback-on-invalid-post",
       "facet": "data",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -664,7 +664,7 @@
       "executionId": "typeorm-exec-source-rollback-on-invalid-post",
       "facet": "behavior",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -735,7 +735,7 @@
       "executionId": "typeorm-exec-source-rollback-on-invalid-post",
       "facet": "errors-recovery",
       "subject": "typeorm-entity-manager-transaction",
-      "observedAt": "2026-11-27T02:19:50.239Z",
+      "observedAt": "2026-11-27T02:36:07.511Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -865,16 +865,16 @@
         "sourceRevision": "b1e211fc2654d412612a08f8a7fb890f3352614f",
         "location": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/typeorm-runtime-capture.json"
       },
-      "capturedAt": "2026-11-27T02:19:50.239Z",
+      "capturedAt": "2026-11-27T02:36:07.511Z",
       "embedded": {
         "scenarioLabels": [
           "commit-success",
           "rollback-on-invalid-post"
         ],
-        "sha256": "e362b819951a5da58f2322bae2889a46a5e99fe952863beaab2878a7d5ec1fb9"
+        "sha256": "aa1f265005196b2804e7a02cae5c045d4cf7d621ab7dc04bad204ad1f57abdd8"
       },
       "locator": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/typeorm-runtime-capture.json",
-      "digest": "e362b819951a5da58f2322bae2889a46a5e99fe952863beaab2878a7d5ec1fb9",
+      "digest": "aa1f265005196b2804e7a02cae5c045d4cf7d621ab7dc04bad204ad1f57abdd8",
       "sizeBytes": 1220,
       "retention": {
         "status": "retained",
@@ -891,7 +891,7 @@
         "sourceRevision": "b1e211fc2654d412612a08f8a7fb890f3352614f",
         "location": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/pnpm-lock.yaml"
       },
-      "capturedAt": "2026-11-27T02:19:50.239Z",
+      "capturedAt": "2026-11-27T02:36:07.511Z",
       "locator": "conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/pnpm-lock.yaml",
       "digest": "c50b6de85334c8cc1de138693e180eb5c6d32f66dc72f0c5f6a5fd76c52c0485",
       "sizeBytes": 701833,
@@ -1068,7 +1068,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:19:50.747892Z",
+      "assessedAt": "2026-11-27T02:36:07.696902Z",
       "assessmentMethod": "All six required properties link to runtime observations and retained evidence in both implementations.",
       "rationale": "All required properties in this bounded transaction scope were observed on the pinned TypeORM runtime and independent Python replica."
     }

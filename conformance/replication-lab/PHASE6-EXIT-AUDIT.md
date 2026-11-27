@@ -81,7 +81,7 @@ Most hosted CI artifacts use 30-day retention and show their expiry date in GitH
 ## 6. Limitations and non-claims
 
 - No facet is declared universally complete.
-- The 20 cases do not prove equivalence for arbitrary software, arbitrary stacks, all environments, or untested behaviours.
+- The 23 cases do not prove equivalence for arbitrary software, arbitrary stacks, all environments, or untested behaviours.
 - A case's local `replicationScope.completeness` applies only to that case's declared property inventory.
 - The performance case is a bounded workload measurement, not a universal performance model.
 - The UI case proves only the declared Task Board UI observations and tested runtime.

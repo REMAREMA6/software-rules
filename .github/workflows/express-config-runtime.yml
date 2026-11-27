@@ -1,0 +1,69 @@
+name: Express configuration cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/EXP-CONFIG-001/**"
+      - "conformance/replication-lab/projects/express-config-python/**"
+      - ".github/workflows/express-config-runtime.yml"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/EXP-CONFIG-001/**"
+      - "conformance/replication-lab/projects/express-config-python/**"
+      - ".github/workflows/express-config-runtime.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: express-config-runtime
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  express-configuration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout exact Express source commit
+        env:
+          EXPRESS_SOURCE_COMMIT: "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
+        run: |
+          git init /tmp/express
+          git -C /tmp/express remote add origin https://github.com/expressjs/express.git
+          git -C /tmp/express fetch --depth=1 origin "$EXPRESS_SOURCE_COMMIT"
+          git -C /tmp/express checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/express rev-parse HEAD)" = "$EXPRESS_SOURCE_COMMIT"
+      - name: Install exact Express production dependency graph
+        working-directory: /tmp/express
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Execute pinned Express configuration probes
+        working-directory: /tmp/express
+        env:
+          EXPRESS_SOURCE_COMMIT: "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
+        run: node "$GITHUB_WORKSPACE/conformance/replication-lab/cases/EXP-CONFIG-001/source_probe.cjs" > "$GITHUB_WORKSPACE/express-config-source.json"
+      - name: Execute independent Python configuration model
+        run: python conformance/replication-lab/projects/express-config-python/replica_probe.py > express-config-replica.json
+      - name: Compare effective configuration and route outcomes
+        run: python conformance/replication-lab/cases/EXP-CONFIG-001/compare.py express-config-source.json express-config-replica.json
+      - name: Run deliberate configuration mutation tests
+        run: |
+          cd conformance/replication-lab/cases/EXP-CONFIG-001
+          python -m unittest -v
+      - name: Retain configuration captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: express-configuration-cross-stack
+          path: |
+            express-config-source.json
+            express-config-replica.json
+          if-no-files-found: warn
+          retention-days: 30

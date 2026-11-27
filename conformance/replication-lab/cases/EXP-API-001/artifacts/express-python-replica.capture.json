@@ -1,14 +1,14 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "express-python-replica-capture",
-  "createdAt": "2026-11-27T02:10:15.134097Z",
+  "createdAt": "2026-11-27T02:35:54.677736Z",
   "purpose": "Capture the declared seven-request Express routing/API conformance scope.",
   "target": {
     "targetId": "express-python-replica",
     "systemName": "Independent Python HTTP routing replica",
     "systemVersion": "Python 3.12",
     "build": {
-      "revision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2"
+      "revision": "cf16b4bec97493511c8da08a334348c436b2d81c"
     },
     "boundary": {
       "description": "Minimal HTTP application exercising the declared routing and method semantics.",
@@ -269,12 +269,12 @@
       "executionId": "express-exec-replica-get-base",
       "scenarioId": "express-scenario-get-base",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -293,12 +293,12 @@
       "executionId": "express-exec-replica-head-fallback",
       "scenarioId": "express-scenario-head-fallback",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -317,12 +317,12 @@
       "executionId": "express-exec-replica-options-auto",
       "scenarioId": "express-scenario-options-auto",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -341,12 +341,12 @@
       "executionId": "express-exec-replica-options-missing",
       "scenarioId": "express-scenario-options-missing",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -365,12 +365,12 @@
       "executionId": "express-exec-replica-options-explicit",
       "scenarioId": "express-scenario-options-explicit",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -389,12 +389,12 @@
       "executionId": "express-exec-replica-case-and-trailing-slash",
       "scenarioId": "express-scenario-case-and-trailing-slash",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -413,12 +413,12 @@
       "executionId": "express-exec-replica-query-ignored",
       "scenarioId": "express-scenario-query-ignored",
       "targetId": "express-python-replica",
-      "startedAt": "2026-11-27T02:10:15.037279Z",
-      "endedAt": "2026-11-27T02:10:15.037305Z",
+      "startedAt": "2026-11-27T02:35:54.569668Z",
+      "endedAt": "2026-11-27T02:35:54.569684Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 standard library",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "dependencyLockDigest": null
       },
       "actualInputs": {
@@ -441,7 +441,7 @@
       "executionId": "express-exec-replica-get-base",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -519,7 +519,7 @@
       "executionId": "express-exec-replica-get-base",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -590,7 +590,7 @@
       "executionId": "express-exec-replica-get-base",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -647,7 +647,7 @@
       "executionId": "express-exec-replica-get-base",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -709,7 +709,7 @@
       "executionId": "express-exec-replica-head-fallback",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -788,7 +788,7 @@
       "executionId": "express-exec-replica-head-fallback",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -860,7 +860,7 @@
       "executionId": "express-exec-replica-head-fallback",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -918,7 +918,7 @@
       "executionId": "express-exec-replica-head-fallback",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -981,7 +981,7 @@
       "executionId": "express-exec-replica-options-auto",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1059,7 +1059,7 @@
       "executionId": "express-exec-replica-options-auto",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1130,7 +1130,7 @@
       "executionId": "express-exec-replica-options-auto",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1187,7 +1187,7 @@
       "executionId": "express-exec-replica-options-auto",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1249,7 +1249,7 @@
       "executionId": "express-exec-replica-options-missing",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 12,
       "method": {
         "class": "instrumentation",
@@ -1327,7 +1327,7 @@
       "executionId": "express-exec-replica-options-missing",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 13,
       "method": {
         "class": "instrumentation",
@@ -1398,7 +1398,7 @@
       "executionId": "express-exec-replica-options-missing",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 14,
       "method": {
         "class": "instrumentation",
@@ -1455,7 +1455,7 @@
       "executionId": "express-exec-replica-options-missing",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 15,
       "method": {
         "class": "instrumentation",
@@ -1517,7 +1517,7 @@
       "executionId": "express-exec-replica-options-explicit",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 16,
       "method": {
         "class": "instrumentation",
@@ -1595,7 +1595,7 @@
       "executionId": "express-exec-replica-options-explicit",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 17,
       "method": {
         "class": "instrumentation",
@@ -1666,7 +1666,7 @@
       "executionId": "express-exec-replica-options-explicit",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 18,
       "method": {
         "class": "instrumentation",
@@ -1723,7 +1723,7 @@
       "executionId": "express-exec-replica-options-explicit",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 19,
       "method": {
         "class": "instrumentation",
@@ -1785,7 +1785,7 @@
       "executionId": "express-exec-replica-case-and-trailing-slash",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 20,
       "method": {
         "class": "instrumentation",
@@ -1863,7 +1863,7 @@
       "executionId": "express-exec-replica-case-and-trailing-slash",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 21,
       "method": {
         "class": "instrumentation",
@@ -1934,7 +1934,7 @@
       "executionId": "express-exec-replica-case-and-trailing-slash",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 22,
       "method": {
         "class": "instrumentation",
@@ -1991,7 +1991,7 @@
       "executionId": "express-exec-replica-case-and-trailing-slash",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 23,
       "method": {
         "class": "instrumentation",
@@ -2053,7 +2053,7 @@
       "executionId": "express-exec-replica-query-ignored",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 24,
       "method": {
         "class": "instrumentation",
@@ -2133,7 +2133,7 @@
       "executionId": "express-exec-replica-query-ignored",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 25,
       "method": {
         "class": "instrumentation",
@@ -2204,7 +2204,7 @@
       "executionId": "express-exec-replica-query-ignored",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 26,
       "method": {
         "class": "instrumentation",
@@ -2261,7 +2261,7 @@
       "executionId": "express-exec-replica-query-ignored",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:10:15.037305Z",
+      "observedAt": "2026-11-27T02:35:54.569684Z",
       "sequence": 27,
       "method": {
         "class": "instrumentation",
@@ -2408,10 +2408,10 @@
       "origin": {
         "targetId": "express-python-replica",
         "collector": "Independent Python standard-library HTTP server",
-        "sourceRevision": "b44a7bf6eb82a940085b6fd94023a6a3a8c777f2",
+        "sourceRevision": "cf16b4bec97493511c8da08a334348c436b2d81c",
         "location": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-replica-capture.json"
       },
-      "capturedAt": "2026-11-27T02:10:15.037305Z",
+      "capturedAt": "2026-11-27T02:35:54.569684Z",
       "embedded": {
         "scenarioLabels": [
           "get-base",
@@ -2422,10 +2422,10 @@
           "case-and-trailing-slash",
           "query-ignored"
         ],
-        "sha256": "af3f90c91fd8c50b64ecfd13605b08d1d18950a453b340ba03e0504d1ceddb8b"
+        "sha256": "7e26a0b791a803a3acbcb65e0172a9fb9e338b419d636bc4e734d82766ced4e9"
       },
       "locator": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-replica-capture.json",
-      "digest": "af3f90c91fd8c50b64ecfd13605b08d1d18950a453b340ba03e0504d1ceddb8b",
+      "digest": "7e26a0b791a803a3acbcb65e0172a9fb9e338b419d636bc4e734d82766ced4e9",
       "sizeBytes": 2747,
       "retention": {
         "status": "retained",
@@ -2683,7 +2683,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:10:15.134097Z",
+      "assessedAt": "2026-11-27T02:35:54.677736Z",
       "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence across all seven requests.",
       "rationale": "All eight required properties in this bounded case scope were observed on both source and independent replica."
     }

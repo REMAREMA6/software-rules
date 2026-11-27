@@ -1,7 +1,7 @@
 # Case — Axios HTTP client integration contract
 
 **Case ID:** AXIOS-HTTP-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all nine declared HTTP interactions in [run #45940398493](https://github.com/REMAREMA6/software-rules/actions/runs/45940398493). Pinned Axios 1.21.1 and independent Python urllib matched all nine normalized outcomes; six deliberate mutations were detected; Software Rules 0.2.0 source/replica captures and comparison passed schema and cross-record integrity validation. Artifact `15172188627` retained through 2026-12-27. This is bounded HTTP integration evidence, not full Axios or integration-facet coverage.  
 **Facet(s):** Integrations; API; behaviour; errors and recovery  
 **Source:** https://github.com/axios/axios  
 **Immutable source commit:** `71c87d506567e2fe37ba9f6fae6a4fc9411583d0`  

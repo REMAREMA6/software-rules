@@ -1,0 +1,1288 @@
+{
+  "schemaVersion": "0.2.0",
+  "reportId": "express-seven-request-cross-stack-comparison",
+  "createdAt": "2026-11-27T02:10:15.134285Z",
+  "referenceCapture": {
+    "captureId": "express-source-runtime-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-source.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "express-python-replica-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-python-replica.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Compare seven declared HTTP requests and the selected routing configuration/response semantics.",
+    "facets": [
+      "api",
+      "behavior",
+      "configuration",
+      "errors-recovery"
+    ],
+    "scenarioIds": [
+      "express-scenario-get-base",
+      "express-scenario-head-fallback",
+      "express-scenario-options-auto",
+      "express-scenario-options-missing",
+      "express-scenario-options-explicit",
+      "express-scenario-case-and-trailing-slash",
+      "express-scenario-query-ignored"
+    ],
+    "conditions": [
+      "Express 5.3.0 at the pinned source commit",
+      "Python 3.12 standard-library HTTP server",
+      "Same seven method/path requests and route table"
+    ],
+    "excludedDimensions": [
+      "Date, Server, ETag, X-Powered-By, and timing headers",
+      "All response headers beyond content-type, content-length, and Allow",
+      "Request bodies, authentication, streaming, redirects, and other middleware"
+    ],
+    "limitations": [
+      "The Python replica is a bounded route/method model, not a complete Express implementation."
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "express-http-routing-projection",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "compare-selected-http-fields",
+        "facet": "api",
+        "dimension": "http-routing-semantic-projection",
+        "method": "Compare request method/path, response status/body, selected content-type/content-length/Allow headers, and effective routing configuration; exclude platform-generated headers and timing.",
+        "methodVersion": "1.0.0",
+        "inputRepresentation": "Raw source and replica HTTP captures",
+        "outputRepresentation": "Normalized request/response and routing configuration projection",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "express-align-get-base-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-get-base-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-get-base-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-get-base-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-get-base-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-get-base-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-get-base-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-get-base-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-get-base-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-get-base-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-get-base-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-get-base-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-head-fallback-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-head-fallback-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-head-fallback-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-head-fallback-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-head-fallback-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-head-fallback-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-head-fallback-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-head-fallback-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-head-fallback-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-head-fallback-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-head-fallback-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-head-fallback-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-auto-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-options-auto-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-auto-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-auto-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-options-auto-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-auto-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-auto-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-options-auto-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-auto-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-auto-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-options-auto-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-auto-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-missing-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-options-missing-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-missing-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-missing-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-options-missing-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-missing-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-missing-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-options-missing-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-missing-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-missing-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-options-missing-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-missing-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-explicit-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-options-explicit-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-explicit-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-explicit-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-options-explicit-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-explicit-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-explicit-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-options-explicit-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-explicit-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-options-explicit-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-options-explicit-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-options-explicit-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-case-and-trailing-slash-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-case-and-trailing-slash-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-case-and-trailing-slash-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-case-and-trailing-slash-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-case-and-trailing-slash-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-case-and-trailing-slash-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-case-and-trailing-slash-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-case-and-trailing-slash-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-case-and-trailing-slash-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-case-and-trailing-slash-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-case-and-trailing-slash-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-case-and-trailing-slash-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-query-ignored-api",
+      "facet": "api",
+      "referenceRecordIds": [
+        "express-obs-source-query-ignored-api"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-query-ignored-api"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-query-ignored-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "express-obs-source-query-ignored-behavior"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-query-ignored-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-query-ignored-configuration",
+      "facet": "configuration",
+      "referenceRecordIds": [
+        "express-obs-source-query-ignored-configuration"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-query-ignored-configuration"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    },
+    {
+      "alignmentId": "express-align-query-ignored-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "express-obs-source-query-ignored-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "express-obs-replica-query-ignored-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same HTTP request and facet."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "express-result-get-base-api",
+      "alignmentId": "express-align-get-base-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-get-base-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-get-base-api"
+      ],
+      "referenceValue": {
+        "method": "GET",
+        "path": "/widgets",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "GET",
+        "path": "/widgets",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-get-base-behavior",
+      "alignmentId": "express-align-get-base-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-get-base-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-get-base-behavior"
+      ],
+      "referenceValue": {
+        "method": "GET",
+        "path": "/widgets",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "GET",
+        "path": "/widgets",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-get-base-configuration",
+      "alignmentId": "express-align-get-base-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-get-base-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-get-base-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-get-base-errors-recovery",
+      "alignmentId": "express-align-get-base-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-get-base-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-get-base-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "implementationValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-head-fallback-api",
+      "alignmentId": "express-align-head-fallback-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-head-fallback-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-head-fallback-api"
+      ],
+      "referenceValue": {
+        "method": "HEAD",
+        "path": "/widgets",
+        "status": 200,
+        "body": "",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "HEAD",
+        "path": "/widgets",
+        "status": 200,
+        "body": "",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-head-fallback-behavior",
+      "alignmentId": "express-align-head-fallback-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-head-fallback-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-head-fallback-behavior"
+      ],
+      "referenceValue": {
+        "method": "HEAD",
+        "path": "/widgets",
+        "status": 200,
+        "body": "",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "HEAD",
+        "path": "/widgets",
+        "status": 200,
+        "body": "",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-head-fallback-configuration",
+      "alignmentId": "express-align-head-fallback-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-head-fallback-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-head-fallback-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-head-fallback-errors-recovery",
+      "alignmentId": "express-align-head-fallback-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-head-fallback-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-head-fallback-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "implementationValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-auto-api",
+      "alignmentId": "express-align-options-auto-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-auto-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-auto-api"
+      ],
+      "referenceValue": {
+        "method": "OPTIONS",
+        "path": "/widgets",
+        "status": 200,
+        "body": "GET, HEAD, PUT",
+        "headers": {
+          "content-type": "text/plain",
+          "content-length": "14",
+          "allow": "GET, HEAD, PUT"
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "OPTIONS",
+        "path": "/widgets",
+        "status": 200,
+        "body": "GET, HEAD, PUT",
+        "headers": {
+          "content-type": "text/plain",
+          "content-length": "14",
+          "allow": "GET, HEAD, PUT"
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-auto-behavior",
+      "alignmentId": "express-align-options-auto-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-auto-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-auto-behavior"
+      ],
+      "referenceValue": {
+        "method": "OPTIONS",
+        "path": "/widgets",
+        "status": 200,
+        "body": "GET, HEAD, PUT",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "OPTIONS",
+        "path": "/widgets",
+        "status": 200,
+        "body": "GET, HEAD, PUT",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-auto-configuration",
+      "alignmentId": "express-align-options-auto-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-auto-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-auto-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-auto-errors-recovery",
+      "alignmentId": "express-align-options-auto-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-auto-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-auto-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "implementationValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-missing-api",
+      "alignmentId": "express-align-options-missing-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-missing-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-missing-api"
+      ],
+      "referenceValue": {
+        "method": "OPTIONS",
+        "path": "/missing",
+        "status": 404,
+        "body": "not found",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "9",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "OPTIONS",
+        "path": "/missing",
+        "status": 404,
+        "body": "not found",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "9",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-missing-behavior",
+      "alignmentId": "express-align-options-missing-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-missing-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-missing-behavior"
+      ],
+      "referenceValue": {
+        "method": "OPTIONS",
+        "path": "/missing",
+        "status": 404,
+        "body": "not found",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "OPTIONS",
+        "path": "/missing",
+        "status": 404,
+        "body": "not found",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-missing-configuration",
+      "alignmentId": "express-align-options-missing-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-missing-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-missing-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-missing-errors-recovery",
+      "alignmentId": "express-align-options-missing-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-missing-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-missing-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 404,
+        "notFound": true,
+        "body": "not found"
+      },
+      "implementationValue": {
+        "status": 404,
+        "notFound": true,
+        "body": "not found"
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-explicit-api",
+      "alignmentId": "express-align-options-explicit-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-explicit-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-explicit-api"
+      ],
+      "referenceValue": {
+        "method": "OPTIONS",
+        "path": "/override",
+        "status": 200,
+        "body": "GET",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": "GET"
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "OPTIONS",
+        "path": "/override",
+        "status": 200,
+        "body": "GET",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": "GET"
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-explicit-behavior",
+      "alignmentId": "express-align-options-explicit-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-explicit-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-explicit-behavior"
+      ],
+      "referenceValue": {
+        "method": "OPTIONS",
+        "path": "/override",
+        "status": 200,
+        "body": "GET",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "OPTIONS",
+        "path": "/override",
+        "status": 200,
+        "body": "GET",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-explicit-configuration",
+      "alignmentId": "express-align-options-explicit-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-explicit-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-explicit-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-options-explicit-errors-recovery",
+      "alignmentId": "express-align-options-explicit-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-options-explicit-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-options-explicit-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "implementationValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-case-and-trailing-slash-api",
+      "alignmentId": "express-align-case-and-trailing-slash-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-case-and-trailing-slash-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-case-and-trailing-slash-api"
+      ],
+      "referenceValue": {
+        "method": "GET",
+        "path": "/WIDGETS/",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "GET",
+        "path": "/WIDGETS/",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-case-and-trailing-slash-behavior",
+      "alignmentId": "express-align-case-and-trailing-slash-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-case-and-trailing-slash-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-case-and-trailing-slash-behavior"
+      ],
+      "referenceValue": {
+        "method": "GET",
+        "path": "/WIDGETS/",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "GET",
+        "path": "/WIDGETS/",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-case-and-trailing-slash-configuration",
+      "alignmentId": "express-align-case-and-trailing-slash-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-case-and-trailing-slash-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-case-and-trailing-slash-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-case-and-trailing-slash-errors-recovery",
+      "alignmentId": "express-align-case-and-trailing-slash-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-case-and-trailing-slash-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-case-and-trailing-slash-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "implementationValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-query-ignored-api",
+      "alignmentId": "express-align-query-ignored-api",
+      "facet": "api",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-query-ignored-api"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-query-ignored-api"
+      ],
+      "referenceValue": {
+        "method": "GET",
+        "path": "/widgets?color=blue",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "GET",
+        "path": "/widgets?color=blue",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-query-ignored-behavior",
+      "alignmentId": "express-align-query-ignored-behavior",
+      "facet": "behavior",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-query-ignored-behavior"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-query-ignored-behavior"
+      ],
+      "referenceValue": {
+        "method": "GET",
+        "path": "/widgets?color=blue",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "implementationValue": {
+        "method": "GET",
+        "path": "/widgets?color=blue",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-query-ignored-configuration",
+      "alignmentId": "express-align-query-ignored-configuration",
+      "facet": "configuration",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-query-ignored-configuration"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-query-ignored-configuration"
+      ],
+      "referenceValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "implementationValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    },
+    {
+      "resultId": "express-result-query-ignored-errors-recovery",
+      "alignmentId": "express-align-query-ignored-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "http-routing-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "express-obs-source-query-ignored-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "express-obs-replica-query-ignored-errors-recovery"
+      ],
+      "referenceValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "implementationValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "reason": "The compared HTTP/routing projection matches."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 28,
+      "observedUnits": 28,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "implementation": {
+      "declaredUnits": 28,
+      "observedUnits": 28,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "sharedComparableUnits": 28,
+    "incomparableUnits": 0,
+    "limitations": [
+      "Coverage is limited to the 28 facet/scenario projections defined in this report."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The independent Python implementation matches Express 5.3.0 for the seven declared HTTP requests and 28 facet/scenario projections. This is bounded evidence, not universal equivalence.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "No claim is made about Express features outside the declared route/method/configuration scope."
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for all required properties in the declared seven-request case scope, not the full Express application or API facet."
+  }
+}

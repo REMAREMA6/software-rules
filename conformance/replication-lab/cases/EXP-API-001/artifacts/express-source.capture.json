@@ -1,0 +1,2710 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "express-source-runtime-capture",
+  "createdAt": "2026-11-27T02:10:15.133501Z",
+  "purpose": "Capture the declared seven-request Express routing/API conformance scope.",
+  "target": {
+    "targetId": "express-source-runtime",
+    "systemName": "Express 5.3.0",
+    "systemVersion": "5.3.0",
+    "build": {
+      "revision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6"
+    },
+    "boundary": {
+      "description": "Minimal HTTP application exercising the declared routing and method semantics.",
+      "included": [
+        "HEAD-to-GET fallback and body suppression",
+        "Automatic OPTIONS method enumeration and explicit override",
+        "Case-insensitive and non-strict route matching defaults",
+        "Query-independent route matching",
+        "Configured unmatched-route 404 fallback"
+      ],
+      "excluded": [
+        "Other Express middleware, routers, route patterns, parameters, and HTTP methods",
+        "Authentication, request body parsing, streaming, redirects, and static files",
+        "Full response header equality, timing, and transport-level differences",
+        "All Express configuration settings and error paths"
+      ]
+    },
+    "environment": {
+      "platform": "CI runner",
+      "os": "Ubuntu Linux",
+      "runtime": "Node.js 22",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false,
+          "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Seven declared HTTP requests over a minimal route table.",
+    "facetIds": [
+      "api",
+      "behavior",
+      "configuration",
+      "errors-recovery"
+    ],
+    "subjects": [
+      "express-route-dispatch",
+      "express-router-defaults"
+    ],
+    "scenarioIds": [
+      "express-scenario-get-base",
+      "express-scenario-head-fallback",
+      "express-scenario-options-auto",
+      "express-scenario-options-missing",
+      "express-scenario-options-explicit",
+      "express-scenario-case-and-trailing-slash",
+      "express-scenario-query-ignored"
+    ]
+  },
+  "collector": {
+    "name": "Instrumented Express HTTP server",
+    "methodDescription": "Controlled HTTP requests with response status, body, selected headers, and effective router settings captured."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "express-scenario-get-base",
+      "title": "Get Base",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send GET /widgets.",
+      "inputs": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    },
+    {
+      "scenarioId": "express-scenario-head-fallback",
+      "title": "Head Fallback",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send HEAD /widgets.",
+      "inputs": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    },
+    {
+      "scenarioId": "express-scenario-options-auto",
+      "title": "Options Auto",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send OPTIONS /widgets.",
+      "inputs": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    },
+    {
+      "scenarioId": "express-scenario-options-missing",
+      "title": "Options Missing",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send OPTIONS /missing.",
+      "inputs": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    },
+    {
+      "scenarioId": "express-scenario-options-explicit",
+      "title": "Options Explicit",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send OPTIONS /override.",
+      "inputs": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    },
+    {
+      "scenarioId": "express-scenario-case-and-trailing-slash",
+      "title": "Case And Trailing Slash",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send GET /WIDGETS/.",
+      "inputs": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    },
+    {
+      "scenarioId": "express-scenario-query-ignored",
+      "title": "Query Ignored",
+      "purpose": "Probe HTTP method routing, route matching defaults, response semantics, and unmatched-path handling.",
+      "facetIds": [
+        "api",
+        "behavior",
+        "configuration",
+        "errors-recovery"
+      ],
+      "subject": "express-route-dispatch",
+      "preconditions": [
+        "GET and PUT handlers are registered at /widgets.",
+        "An explicit OPTIONS handler is registered at /override.",
+        "A deterministic 404 fallback middleware is registered after routes."
+      ],
+      "trigger": "Send GET /widgets?color=blue.",
+      "inputs": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "observableQuestions": [
+        "Which route handles the HTTP method?",
+        "What status, body, and selected headers are returned?",
+        "Do routing defaults affect path matching?",
+        "Does an unmatched path reach the 404 fallback?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "express-exec-source-get-base",
+      "scenarioId": "express-scenario-get-base",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    },
+    {
+      "executionId": "express-exec-source-head-fallback",
+      "scenarioId": "express-scenario-head-fallback",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    },
+    {
+      "executionId": "express-exec-source-options-auto",
+      "scenarioId": "express-scenario-options-auto",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    },
+    {
+      "executionId": "express-exec-source-options-missing",
+      "scenarioId": "express-scenario-options-missing",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    },
+    {
+      "executionId": "express-exec-source-options-explicit",
+      "scenarioId": "express-scenario-options-explicit",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    },
+    {
+      "executionId": "express-exec-source-case-and-trailing-slash",
+      "scenarioId": "express-scenario-case-and-trailing-slash",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    },
+    {
+      "executionId": "express-exec-source-query-ignored",
+      "scenarioId": "express-scenario-query-ignored",
+      "targetId": "express-source-runtime",
+      "startedAt": "2026-11-27T02:10:14.309Z",
+      "endedAt": "2026-11-27T02:10:14.365Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js 22 / Express 5.3.0",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "dependencyLockDigest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102"
+      },
+      "actualInputs": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "trigger": "Send one HTTP request to the isolated application.",
+      "collector": {
+        "name": "Instrumented Express HTTP server"
+      },
+      "limitations": [
+        "Only the seven declared HTTP requests and selected response headers are in scope."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "express-obs-source-get-base-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-get-base",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 0,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "trigger": "GET /widgets",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/widgets",
+        "method": "GET",
+        "target": "Express application",
+        "request": {
+          "path": "/widgets",
+          "query": {},
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get",
+          "contentType": "text/html; charset=utf-8"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "get-base",
+        "request": {
+          "method": "GET",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "method": "GET",
+        "path": "/widgets",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-get-base-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-get-base",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "trigger": "GET /widgets",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "GET /widgets arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 200,
+            "body": "get",
+            "allow": null,
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "get-base",
+        "request": {
+          "method": "GET",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "method": "GET",
+        "path": "/widgets",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-get-base-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-get-base",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "trigger": "GET /widgets",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "get-base",
+        "request": {
+          "method": "GET",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-get-base-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-get-base",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "trigger": "GET /widgets",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "Request matches a registered route.",
+        "operationRef": "express-scenario-get-base",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "normal response sent",
+        "terminalOutcome": "HTTP 200",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "get-base",
+        "request": {
+          "method": "GET",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-head-fallback-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-head-fallback",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 4,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "trigger": "HEAD /widgets",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/widgets",
+        "method": "HEAD",
+        "target": "Express application",
+        "request": {
+          "path": "/widgets",
+          "query": {},
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "",
+          "contentType": "text/html; charset=utf-8"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "head-fallback",
+        "request": {
+          "method": "HEAD",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "",
+          "wireBodyBytes": 0
+        }
+      },
+      "normalizedValue": {
+        "method": "HEAD",
+        "path": "/widgets",
+        "status": 200,
+        "body": "",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-head-fallback-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-head-fallback",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 5,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "trigger": "HEAD /widgets",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "HEAD /widgets arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 200,
+            "body": "",
+            "allow": null,
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "head-fallback",
+        "request": {
+          "method": "HEAD",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "",
+          "wireBodyBytes": 0
+        }
+      },
+      "normalizedValue": {
+        "method": "HEAD",
+        "path": "/widgets",
+        "status": 200,
+        "body": "",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-head-fallback-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-head-fallback",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 6,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "trigger": "HEAD /widgets",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "head-fallback",
+        "request": {
+          "method": "HEAD",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "",
+          "wireBodyBytes": 0
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-head-fallback-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-head-fallback",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 7,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "trigger": "HEAD /widgets",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "Request matches a registered route.",
+        "operationRef": "express-scenario-head-fallback",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "normal response sent",
+        "terminalOutcome": "HTTP 200",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "head-fallback",
+        "request": {
+          "method": "HEAD",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "",
+          "wireBodyBytes": 0
+        }
+      },
+      "normalizedValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-auto-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-auto",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 8,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "trigger": "OPTIONS /widgets",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/widgets",
+        "method": "OPTIONS",
+        "target": "Express application",
+        "request": {
+          "path": "/widgets",
+          "query": {},
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/plain",
+            "content-length": "14",
+            "allow": "GET, HEAD, PUT"
+          },
+          "body": "GET, HEAD, PUT",
+          "contentType": "text/plain"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "options-auto",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/plain",
+            "content-length": "14",
+            "allow": "GET, HEAD, PUT"
+          },
+          "body": "GET, HEAD, PUT"
+        }
+      },
+      "normalizedValue": {
+        "method": "OPTIONS",
+        "path": "/widgets",
+        "status": 200,
+        "body": "GET, HEAD, PUT",
+        "headers": {
+          "content-type": "text/plain",
+          "content-length": "14",
+          "allow": "GET, HEAD, PUT"
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-auto-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-auto",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 9,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "trigger": "OPTIONS /widgets",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "OPTIONS /widgets arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 200,
+            "body": "GET, HEAD, PUT",
+            "allow": "GET, HEAD, PUT",
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "options-auto",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/plain",
+            "content-length": "14",
+            "allow": "GET, HEAD, PUT"
+          },
+          "body": "GET, HEAD, PUT"
+        }
+      },
+      "normalizedValue": {
+        "method": "OPTIONS",
+        "path": "/widgets",
+        "status": 200,
+        "body": "GET, HEAD, PUT",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-auto-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-auto",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 10,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "trigger": "OPTIONS /widgets",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "options-auto",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/plain",
+            "content-length": "14",
+            "allow": "GET, HEAD, PUT"
+          },
+          "body": "GET, HEAD, PUT"
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-auto-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-auto",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 11,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "trigger": "OPTIONS /widgets",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "Request matches a registered route.",
+        "operationRef": "express-scenario-options-auto",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "normal response sent",
+        "terminalOutcome": "HTTP 200",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "options-auto",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/widgets"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/plain",
+            "content-length": "14",
+            "allow": "GET, HEAD, PUT"
+          },
+          "body": "GET, HEAD, PUT"
+        }
+      },
+      "normalizedValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-missing-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-missing",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 12,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "trigger": "OPTIONS /missing",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/missing",
+        "method": "OPTIONS",
+        "target": "Express application",
+        "request": {
+          "path": "/missing",
+          "query": {},
+          "headers": {}
+        },
+        "response": {
+          "status": 404,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "9",
+            "allow": null
+          },
+          "body": "not found",
+          "contentType": "text/html; charset=utf-8"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "options-missing",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/missing"
+        },
+        "response": {
+          "status": 404,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "9",
+            "allow": null
+          },
+          "body": "not found"
+        }
+      },
+      "normalizedValue": {
+        "method": "OPTIONS",
+        "path": "/missing",
+        "status": 404,
+        "body": "not found",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "9",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-missing-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-missing",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 13,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "trigger": "OPTIONS /missing",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "OPTIONS /missing arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 404,
+            "body": "not found",
+            "allow": null,
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "options-missing",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/missing"
+        },
+        "response": {
+          "status": 404,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "9",
+            "allow": null
+          },
+          "body": "not found"
+        }
+      },
+      "normalizedValue": {
+        "method": "OPTIONS",
+        "path": "/missing",
+        "status": 404,
+        "body": "not found",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-missing-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-missing",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 14,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "trigger": "OPTIONS /missing",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "options-missing",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/missing"
+        },
+        "response": {
+          "status": 404,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "9",
+            "allow": null
+          },
+          "body": "not found"
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-missing-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-missing",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 15,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "trigger": "OPTIONS /missing",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "OPTIONS /missing does not match a registered route.",
+        "operationRef": "express-scenario-options-missing",
+        "error": {
+          "category": "http-not-found",
+          "code": "404",
+          "message": "not found"
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "404 response sent",
+        "terminalOutcome": "HTTP 404",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "options-missing",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/missing"
+        },
+        "response": {
+          "status": 404,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "9",
+            "allow": null
+          },
+          "body": "not found"
+        }
+      },
+      "normalizedValue": {
+        "status": 404,
+        "notFound": true,
+        "body": "not found"
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-explicit-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-explicit",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 16,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "trigger": "OPTIONS /override",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/override",
+        "method": "OPTIONS",
+        "target": "Express application",
+        "request": {
+          "path": "/override",
+          "query": {},
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": "GET"
+          },
+          "body": "GET",
+          "contentType": "text/html; charset=utf-8"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "options-explicit",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/override"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": "GET"
+          },
+          "body": "GET"
+        }
+      },
+      "normalizedValue": {
+        "method": "OPTIONS",
+        "path": "/override",
+        "status": 200,
+        "body": "GET",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": "GET"
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-explicit-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-explicit",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 17,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "trigger": "OPTIONS /override",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "OPTIONS /override arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 200,
+            "body": "GET",
+            "allow": "GET",
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "options-explicit",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/override"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": "GET"
+          },
+          "body": "GET"
+        }
+      },
+      "normalizedValue": {
+        "method": "OPTIONS",
+        "path": "/override",
+        "status": 200,
+        "body": "GET",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-explicit-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-explicit",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 18,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "trigger": "OPTIONS /override",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "options-explicit",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/override"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": "GET"
+          },
+          "body": "GET"
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-options-explicit-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-options-explicit",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 19,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "trigger": "OPTIONS /override",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "Request matches a registered route.",
+        "operationRef": "express-scenario-options-explicit",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "normal response sent",
+        "terminalOutcome": "HTTP 200",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "options-explicit",
+        "request": {
+          "method": "OPTIONS",
+          "path": "/override"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": "GET"
+          },
+          "body": "GET"
+        }
+      },
+      "normalizedValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-case-and-trailing-slash-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-case-and-trailing-slash",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 20,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "trigger": "GET /WIDGETS/",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/WIDGETS/",
+        "method": "GET",
+        "target": "Express application",
+        "request": {
+          "path": "/WIDGETS/",
+          "query": {},
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get",
+          "contentType": "text/html; charset=utf-8"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "case-and-trailing-slash",
+        "request": {
+          "method": "GET",
+          "path": "/WIDGETS/"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "method": "GET",
+        "path": "/WIDGETS/",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-case-and-trailing-slash-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-case-and-trailing-slash",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 21,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "trigger": "GET /WIDGETS/",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "GET /WIDGETS/ arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 200,
+            "body": "get",
+            "allow": null,
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "case-and-trailing-slash",
+        "request": {
+          "method": "GET",
+          "path": "/WIDGETS/"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "method": "GET",
+        "path": "/WIDGETS/",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-case-and-trailing-slash-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-case-and-trailing-slash",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 22,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "trigger": "GET /WIDGETS/",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "case-and-trailing-slash",
+        "request": {
+          "method": "GET",
+          "path": "/WIDGETS/"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-case-and-trailing-slash-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-case-and-trailing-slash",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 23,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "trigger": "GET /WIDGETS/",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "Request matches a registered route.",
+        "operationRef": "express-scenario-case-and-trailing-slash",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "normal response sent",
+        "terminalOutcome": "HTTP 200",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "case-and-trailing-slash",
+        "request": {
+          "method": "GET",
+          "path": "/WIDGETS/"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-query-ignored-api",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-query-ignored",
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 24,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "trigger": "GET /widgets?color=blue",
+      "payload": {
+        "facet": "api",
+        "kind": "request-response",
+        "subject": "express-route-dispatch",
+        "protocol": "HTTP/1.1",
+        "endpoint": "/widgets",
+        "method": "GET",
+        "target": "Express application",
+        "request": {
+          "path": "/widgets",
+          "query": {
+            "color": "blue"
+          },
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get",
+          "contentType": "text/html; charset=utf-8"
+        },
+        "extensions": {
+          "wireBodyBytes": 0
+        }
+      },
+      "rawValue": {
+        "label": "query-ignored",
+        "request": {
+          "method": "GET",
+          "path": "/widgets?color=blue"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "method": "GET",
+        "path": "/widgets?color=blue",
+        "status": 200,
+        "body": "get",
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-query-ignored-behavior",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-query-ignored",
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 25,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "trigger": "GET /widgets?color=blue",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "express-route-dispatch",
+        "trigger": "GET /widgets?color=blue arrives at the application.",
+        "preconditions": [
+          "GET and PUT handlers are registered for /widgets.",
+          "An explicit OPTIONS handler is registered for /override."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Dispatch request through Express router"
+          }
+        ],
+        "outputs": [
+          {
+            "status": 200,
+            "body": "get",
+            "allow": null,
+            "wireBodyBytes": 0
+          }
+        ],
+        "termination": "response-sent"
+      },
+      "rawValue": {
+        "label": "query-ignored",
+        "request": {
+          "method": "GET",
+          "path": "/widgets?color=blue"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "method": "GET",
+        "path": "/widgets?color=blue",
+        "status": 200,
+        "body": "get",
+        "wireBodyBytes": 0
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-query-ignored-configuration",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-query-ignored",
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 26,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "trigger": "GET /widgets?color=blue",
+      "payload": {
+        "facet": "configuration",
+        "kind": "effective-configuration",
+        "subject": "express-router-defaults",
+        "key": "case-sensitive and strict routing",
+        "value": {
+          "caseSensitiveRouting": false,
+          "strictRouting": false
+        },
+        "valueType": "object",
+        "origin": "Express application default settings passed to Router construction",
+        "scope": "application router",
+        "mutability": "configurable before router initialization"
+      },
+      "rawValue": {
+        "label": "query-ignored",
+        "request": {
+          "method": "GET",
+          "path": "/widgets?color=blue"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "caseSensitiveRouting": false,
+        "strictRouting": false
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "express-obs-source-query-ignored-errors-recovery",
+      "targetId": "express-source-runtime",
+      "executionId": "express-exec-source-query-ignored",
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "observedAt": "2026-11-27T02:10:14.365Z",
+      "sequence": 27,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Send the declared HTTP request and record status, body, selected headers, and effective routing configuration.",
+        "tool": "Node fetch + Express"
+      },
+      "conditions": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "trigger": "GET /widgets?color=blue",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "express-route-dispatch",
+        "trigger": "Request matches a registered route.",
+        "operationRef": "express-scenario-query-ignored",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "router fallthrough",
+        "propagationBoundary": "application fallback middleware",
+        "recoveryActions": [],
+        "recoveryState": "normal response sent",
+        "terminalOutcome": "HTTP 200",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "query-ignored",
+        "request": {
+          "method": "GET",
+          "path": "/widgets?color=blue"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "content-type": "text/html; charset=utf-8",
+            "content-length": "3",
+            "allow": null
+          },
+          "body": "get"
+        }
+      },
+      "normalizedValue": {
+        "status": 200,
+        "notFound": false,
+        "body": ""
+      },
+      "evidenceRefs": [
+        "express-source-runtime-json"
+      ],
+      "status": "observed"
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "EXP-API-001",
+      "facet": "api",
+      "subject": "HTTP HEAD",
+      "proposition": "When no explicit HEAD route exists, a matching GET route handles HEAD; the response body is suppressed and the selected representation headers match GET.",
+      "trigger": "A HEAD request matches a path with a GET handler.",
+      "applicability": {
+        "scope": "HEAD /widgets only; selected content-type and content-length headers."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "express-obs-source-get-base-api",
+        "express-obs-source-head-fallback-api"
+      ]
+    },
+    {
+      "ruleId": "EXP-API-002",
+      "facet": "api",
+      "subject": "HTTP OPTIONS",
+      "proposition": "When no explicit OPTIONS route exists, Express returns the unique methods registered for the matching path and includes HEAD when GET is registered; an explicit OPTIONS route overrides this automatic response.",
+      "trigger": "An OPTIONS request matches a path.",
+      "applicability": {
+        "scope": "OPTIONS /widgets and /override."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "express-obs-source-options-auto-api",
+        "express-obs-source-options-explicit-api"
+      ]
+    },
+    {
+      "ruleId": "EXP-CFG-001",
+      "facet": "configuration",
+      "subject": "Express router defaults",
+      "proposition": "Case-sensitive routing and strict routing are disabled by default.",
+      "trigger": "The application lazily initializes its router without explicit overrides.",
+      "applicability": {
+        "scope": "The tested Express application instance."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "express-obs-source-get-base-configuration",
+        "express-obs-source-head-fallback-configuration",
+        "express-obs-source-options-auto-configuration",
+        "express-obs-source-options-missing-configuration",
+        "express-obs-source-options-explicit-configuration",
+        "express-obs-source-case-and-trailing-slash-configuration",
+        "express-obs-source-query-ignored-configuration"
+      ]
+    },
+    {
+      "ruleId": "EXP-API-003",
+      "facet": "behavior",
+      "subject": "Express route matching",
+      "proposition": "Default route matching is case-insensitive, permits an optional trailing slash, and matches the pathname independently of the query string.",
+      "trigger": "A request path is matched against a registered route.",
+      "applicability": {
+        "scope": "GET /WIDGETS/ and GET /widgets?color=blue."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "express-obs-source-case-and-trailing-slash-behavior",
+        "express-obs-source-query-ignored-behavior"
+      ]
+    },
+    {
+      "ruleId": "EXP-ERR-001",
+      "facet": "errors-recovery",
+      "subject": "Unmatched route",
+      "proposition": "A request that matches no registered route continues to the application fallback middleware, which returns the configured 404 response.",
+      "trigger": "A request does not match a registered route.",
+      "applicability": {
+        "scope": "OPTIONS /missing only."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "express-obs-source-options-missing-errors-recovery"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "express-source-runtime-json",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-http-runtime-capture",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "express-source-runtime",
+        "collector": "Instrumented Express HTTP server",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "location": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-runtime-capture.json"
+      },
+      "capturedAt": "2026-11-27T02:10:14.365Z",
+      "embedded": {
+        "scenarioLabels": [
+          "get-base",
+          "head-fallback",
+          "options-auto",
+          "options-missing",
+          "options-explicit",
+          "case-and-trailing-slash",
+          "query-ignored"
+        ],
+        "sha256": "ba013af4c12c4fb0cc958b1d21eec99ac0fdf6b5b9034affc980fa6edff5fc34"
+      },
+      "locator": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-runtime-capture.json",
+      "digest": "ba013af4c12c4fb0cc958b1d21eec99ac0fdf6b5b9034affc980fa6edff5fc34",
+      "sizeBytes": 3042,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    },
+    {
+      "evidenceId": "express-dependency-lock",
+      "evidenceClass": "source-artifact",
+      "evidenceType": "npm-lockfile",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "express-source-runtime",
+        "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
+        "location": "conformance/replication-lab/cases/EXP-API-001/artifacts/package-lock.json"
+      },
+      "capturedAt": "2026-11-27T02:10:14.365Z",
+      "locator": "conformance/replication-lab/cases/EXP-API-001/artifacts/package-lock.json",
+      "digest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102",
+      "sizeBytes": 185538,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "api",
+      "subject": "express-route-dispatch",
+      "status": "observed",
+      "reason": "All seven declared requests have a facet-specific observation.",
+      "scenarioIds": [
+        "express-scenario-get-base",
+        "express-scenario-head-fallback",
+        "express-scenario-options-auto",
+        "express-scenario-options-missing",
+        "express-scenario-options-explicit",
+        "express-scenario-case-and-trailing-slash",
+        "express-scenario-query-ignored"
+      ],
+      "executionIds": [
+        "express-exec-source-get-base",
+        "express-exec-source-head-fallback",
+        "express-exec-source-options-auto",
+        "express-exec-source-options-missing",
+        "express-exec-source-options-explicit",
+        "express-exec-source-case-and-trailing-slash",
+        "express-exec-source-query-ignored"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "express-route-dispatch",
+      "status": "observed",
+      "reason": "All seven declared requests have a facet-specific observation.",
+      "scenarioIds": [
+        "express-scenario-get-base",
+        "express-scenario-head-fallback",
+        "express-scenario-options-auto",
+        "express-scenario-options-missing",
+        "express-scenario-options-explicit",
+        "express-scenario-case-and-trailing-slash",
+        "express-scenario-query-ignored"
+      ],
+      "executionIds": [
+        "express-exec-source-get-base",
+        "express-exec-source-head-fallback",
+        "express-exec-source-options-auto",
+        "express-exec-source-options-missing",
+        "express-exec-source-options-explicit",
+        "express-exec-source-case-and-trailing-slash",
+        "express-exec-source-query-ignored"
+      ]
+    },
+    {
+      "facet": "configuration",
+      "subject": "express-route-dispatch",
+      "status": "observed",
+      "reason": "All seven declared requests have a facet-specific observation.",
+      "scenarioIds": [
+        "express-scenario-get-base",
+        "express-scenario-head-fallback",
+        "express-scenario-options-auto",
+        "express-scenario-options-missing",
+        "express-scenario-options-explicit",
+        "express-scenario-case-and-trailing-slash",
+        "express-scenario-query-ignored"
+      ],
+      "executionIds": [
+        "express-exec-source-get-base",
+        "express-exec-source-head-fallback",
+        "express-exec-source-options-auto",
+        "express-exec-source-options-missing",
+        "express-exec-source-options-explicit",
+        "express-exec-source-case-and-trailing-slash",
+        "express-exec-source-query-ignored"
+      ]
+    },
+    {
+      "facet": "errors-recovery",
+      "subject": "express-route-dispatch",
+      "status": "observed",
+      "reason": "All seven declared requests have a facet-specific observation.",
+      "scenarioIds": [
+        "express-scenario-get-base",
+        "express-scenario-head-fallback",
+        "express-scenario-options-auto",
+        "express-scenario-options-missing",
+        "express-scenario-options-explicit",
+        "express-scenario-case-and-trailing-slash",
+        "express-scenario-query-ignored"
+      ],
+      "executionIds": [
+        "express-exec-source-get-base",
+        "express-exec-source-head-fallback",
+        "express-exec-source-options-auto",
+        "express-exec-source-options-missing",
+        "express-exec-source-options-explicit",
+        "express-exec-source-case-and-trailing-slash",
+        "express-exec-source-query-ignored"
+      ]
+    }
+  ],
+  "limitations": [
+    "The independent Python server reproduces only the declared routing semantics; it is not a complete Express implementation.",
+    "Only selected response headers are compared; Date, Server, ETag, X-Powered-By, and timing are excluded."
+  ],
+  "replicationScope": {
+    "scopeId": "express-seven-request-routing-scope",
+    "description": "Complete inventory for the seven declared requests and four facets.",
+    "facets": [
+      "api",
+      "behavior",
+      "configuration",
+      "errors-recovery"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "EXP-P-001",
+        "facet": "api",
+        "subject": "express-route-dispatch",
+        "dimension": "http-response-contract",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-get-base-api",
+          "express-obs-source-head-fallback-api",
+          "express-obs-source-options-auto-api",
+          "express-obs-source-options-missing-api",
+          "express-obs-source-options-explicit-api",
+          "express-obs-source-case-and-trailing-slash-api",
+          "express-obs-source-query-ignored-api"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "Status, response body, content type, content length, Allow header, and HEAD wire-body bytes for all seven requests."
+      },
+      {
+        "propertyId": "EXP-P-002",
+        "facet": "api",
+        "subject": "express-route-dispatch",
+        "dimension": "head-to-get-fallback",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-get-base-api",
+          "express-obs-source-head-fallback-api"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "HEAD uses the GET route when no explicit HEAD route exists; the response body is suppressed and content length matches GET."
+      },
+      {
+        "propertyId": "EXP-P-003",
+        "facet": "api",
+        "subject": "express-route-dispatch",
+        "dimension": "automatic-options-and-explicit-override",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-options-auto-api",
+          "express-obs-source-options-explicit-api"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "Automatic OPTIONS lists unique methods including HEAD for GET; an explicit OPTIONS handler takes precedence."
+      },
+      {
+        "propertyId": "EXP-P-004",
+        "facet": "configuration",
+        "subject": "express-route-dispatch",
+        "dimension": "default-router-settings",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-get-base-configuration",
+          "express-obs-source-head-fallback-configuration",
+          "express-obs-source-options-auto-configuration",
+          "express-obs-source-options-missing-configuration",
+          "express-obs-source-options-explicit-configuration",
+          "express-obs-source-case-and-trailing-slash-configuration",
+          "express-obs-source-query-ignored-configuration"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "Case-sensitive routing and strict routing are disabled by default."
+      },
+      {
+        "propertyId": "EXP-P-005",
+        "facet": "behavior",
+        "subject": "express-route-dispatch",
+        "dimension": "path-match-normalization",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-case-and-trailing-slash-behavior",
+          "express-obs-source-query-ignored-behavior"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "Path matching is case-insensitive, allows a trailing slash, and ignores the query string."
+      },
+      {
+        "propertyId": "EXP-P-006",
+        "facet": "errors-recovery",
+        "subject": "express-route-dispatch",
+        "dimension": "unmatched-route-fallback",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-options-missing-errors-recovery"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "An unmatched path falls through to the configured 404 response."
+      },
+      {
+        "propertyId": "EXP-P-007",
+        "facet": "behavior",
+        "subject": "express-route-dispatch",
+        "dimension": "head-wire-body-suppression",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-head-fallback-behavior"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "The HEAD response contains zero body bytes on the raw HTTP wire."
+      },
+      {
+        "propertyId": "EXP-P-008",
+        "facet": "behavior",
+        "subject": "express-route-dispatch",
+        "dimension": "explicit-options-precedence",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "express-obs-source-options-explicit-behavior"
+        ],
+        "evidenceRefs": [
+          "express-source-runtime-json"
+        ],
+        "rationale": "An explicit OPTIONS handler takes precedence over automatic method enumeration."
+      }
+    ],
+    "completeness": {
+      "status": "complete",
+      "assessedAt": "2026-11-27T02:10:15.133501Z",
+      "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence across all seven requests.",
+      "rationale": "All eight required properties in this bounded case scope were observed on both source and independent replica."
+    }
+  }
+}

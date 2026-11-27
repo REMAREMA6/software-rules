@@ -1,0 +1,13 @@
+{
+  "result": "match",
+  "scenarioCount": 7,
+  "comparedFields": [
+    "configuration",
+    "request",
+    "response.status",
+    "response.body",
+    "response.headers",
+    "response.wireBodyBytes"
+  ],
+  "errors": []
+}

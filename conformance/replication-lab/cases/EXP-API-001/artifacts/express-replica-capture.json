@@ -1,0 +1,124 @@
+{
+  "capturedAt": "2026-11-27T02:10:15.037279Z",
+  "completedAt": "2026-11-27T02:10:15.037305Z",
+  "implementation": "Independent Python 3.12 standard-library HTTP server",
+  "configuration": {
+    "caseSensitiveRouting": false,
+    "strictRouting": false
+  },
+  "scenarios": [
+    {
+      "label": "get-base",
+      "request": {
+        "method": "GET",
+        "path": "/widgets"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "body": "get"
+      }
+    },
+    {
+      "label": "head-fallback",
+      "request": {
+        "method": "HEAD",
+        "path": "/widgets"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "body": "",
+        "wireBodyBytes": 0
+      }
+    },
+    {
+      "label": "options-auto",
+      "request": {
+        "method": "OPTIONS",
+        "path": "/widgets"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/plain",
+          "content-length": "14",
+          "allow": "GET, HEAD, PUT"
+        },
+        "body": "GET, HEAD, PUT"
+      }
+    },
+    {
+      "label": "options-missing",
+      "request": {
+        "method": "OPTIONS",
+        "path": "/missing"
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "9",
+          "allow": null
+        },
+        "body": "not found"
+      }
+    },
+    {
+      "label": "options-explicit",
+      "request": {
+        "method": "OPTIONS",
+        "path": "/override"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": "GET"
+        },
+        "body": "GET"
+      }
+    },
+    {
+      "label": "case-and-trailing-slash",
+      "request": {
+        "method": "GET",
+        "path": "/WIDGETS/"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "body": "get"
+      }
+    },
+    {
+      "label": "query-ignored",
+      "request": {
+        "method": "GET",
+        "path": "/widgets?color=blue"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "text/html; charset=utf-8",
+          "content-length": "3",
+          "allow": null
+        },
+        "body": "get"
+      }
+    }
+  ]
+}

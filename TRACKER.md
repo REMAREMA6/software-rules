@@ -167,6 +167,8 @@
 - [ ] Resolve Task Board's remaining partial properties if still in its declared scope; otherwise explicitly constrain that fixture's scope with evidence and justification.
 
 ### Fifteen-facet cross-repository programme
+
+See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVERAGE.md) for source candidates, current evidence, replica status, and blockers per facet.
 - [ ] 1. Interface — screen/state capture and independent UI-stack replication.
 - [ ] 2. Behaviour — triggers, transitions, side effects, ordering, and failure replication.
 - [ ] 3. Business rules — conditions, constraints, calculations, precedence, and boundary replication.

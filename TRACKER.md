@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; four bounded cases are accepted in the 15-facet matrix (BullMQ retry/backoff, Express routing, TypeORM transactions, Medusa date validation); BullMQ messaging source/replica runtime and mutation tests pass, with schema-native validation pending; remaining facets are incomplete
+**Overall status:** Phase 6 in progress; four bounded cases are accepted in the 15-facet matrix (BullMQ retry/backoff, Express routing, TypeORM transactions, Medusa date validation); TypeORM capture schema and evidence-integrity validation passed; BullMQ messaging runtime comparison and mutation tests pass, but schema-native validation has not run because its workflow was cancelled; remaining facets are incomplete
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,7 +19,7 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Complete BMQ-MSG-001 schema-native captures, comparison report, schema/integrity validation, and retained evidence; then build the missing identity/authentication, authorization, security, integrations, business-rule, performance/resource, and cross-UI-stack cases.
+- **Current task:** Rerun BMQ-MSG-001 with schema-native captures, comparison report, schema/integrity validation, and retained evidence; then build the missing identity/authentication, authorization, security, integrations, business-rule, performance/resource, and cross-UI-stack cases.
 - **Blockers:** No entire facet is complete. BMQ-MSG-001 still needs schema-native capture validation. Identity/authentication, authorization, dedicated security, integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered.
 - **Next action:** Finish BMQ-MSG-001 schema validation and evidence retention. Then create and run cross-stack cases for identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and a UI framework/stack pair.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | BullMQ retry, Express API, TypeORM persistence, and Medusa date-validation cases are recorded as bounded passes. BullMQ messaging runtime and mutation tests also pass; schema capture validation is active. Remaining facets and property inventories are incomplete. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | BullMQ retry, Express API, TypeORM persistence, and Medusa date-validation cases are recorded as bounded passes. TypeORM schema-native captures and integrity validation passed in CI. BullMQ messaging runtime and mutation tests pass, but its schema-capture workflow was cancelled before validation. Remaining facets and property inventories are incomplete. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance

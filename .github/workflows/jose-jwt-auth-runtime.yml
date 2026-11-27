@@ -7,6 +7,7 @@ on:
       - "conformance/replication-lab/projects/jwt-auth-python/**"
       - ".github/workflows/jose-jwt-auth-runtime.yml"
       - "conformance/validation/validate-case-artifacts.mjs"
+      - "!conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/**"
   pull_request:
     paths:
       - "conformance/replication-lab/cases/JOSE-AUTH-001/**"

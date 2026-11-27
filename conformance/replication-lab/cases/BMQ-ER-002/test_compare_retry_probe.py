@@ -20,6 +20,7 @@ def source_capture():
                 "outcome": {"terminal": "completed", "attemptsMade": 3, "result": "ok"},
                 "finalState": "completed",
                 "trace": [
+                    {"event": "queue:waiting", "data": {"jobId": "1"}},
                     {"event": "processor", "attemptsMade": 0},
                     {"event": "backoff-result", "delayMs": 40},
                     {"event": "queue:delayed"},

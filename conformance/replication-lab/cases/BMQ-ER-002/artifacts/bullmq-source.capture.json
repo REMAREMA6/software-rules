@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "bullmq-source-runtime-capture",
-  "createdAt": "2026-11-27T07:51:13.745582Z",
+  "createdAt": "2026-11-27T07:55:24.887753Z",
   "purpose": "Capture the declared three-scenario BullMQ retry/backoff conformance scope in the Software Rules format.",
   "target": {
     "targetId": "bullmq-source-runtime",
@@ -151,8 +151,8 @@
       "executionId": "bmq-exec-source-positive",
       "scenarioId": "bmq-scenario-positive",
       "targetId": "bullmq-source-runtime",
-      "startedAt": "2026-11-27T07:51:12.792Z",
-      "endedAt": "2026-11-27T07:51:13.367Z",
+      "startedAt": "2026-11-27T07:55:22.657Z",
+      "endedAt": "2026-11-27T07:55:23.172Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js with Redis 7",
@@ -180,8 +180,8 @@
       "executionId": "bmq-exec-source-minus-one",
       "scenarioId": "bmq-scenario-minus-one",
       "targetId": "bullmq-source-runtime",
-      "startedAt": "2026-11-27T07:51:12.792Z",
-      "endedAt": "2026-11-27T07:51:13.367Z",
+      "startedAt": "2026-11-27T07:55:22.657Z",
+      "endedAt": "2026-11-27T07:55:23.172Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js with Redis 7",
@@ -208,8 +208,8 @@
       "executionId": "bmq-exec-source-zero-delay",
       "scenarioId": "bmq-scenario-zero-delay",
       "targetId": "bullmq-source-runtime",
-      "startedAt": "2026-11-27T07:51:12.792Z",
-      "endedAt": "2026-11-27T07:51:13.367Z",
+      "startedAt": "2026-11-27T07:55:22.657Z",
+      "endedAt": "2026-11-27T07:55:23.172Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js with Redis 7",
@@ -240,7 +240,7 @@
       "executionId": "bmq-exec-source-positive",
       "facet": "background-processing",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -331,7 +331,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff",
@@ -339,35 +339,27 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 40,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "queue:delayed",
             "data": {
               "jobId": "1",
-              "delay": 1795765872866
+              "delay": 1795766122723
             },
-            "atMs": 31
-          },
-          {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1",
-              "prev": "delayed"
-            },
-            "atMs": 127
+            "atMs": 24
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff",
@@ -375,21 +367,13 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff-result",
             "attemptsMade": 2,
             "delayMs": 80,
-            "atMs": 127
-          },
-          {
-            "event": "queue:delayed",
-            "data": {
-              "jobId": "1",
-              "delay": 1795765873004
-            },
-            "atMs": 128
+            "atMs": 80
           },
           {
             "event": "queue:waiting",
@@ -397,13 +381,29 @@
               "jobId": "1",
               "prev": "delayed"
             },
-            "atMs": 228
+            "atMs": 80
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795766122820
+            },
+            "atMs": 81
           },
           {
             "event": "processor",
             "attempt": 3,
             "attemptsMade": 2,
-            "atMs": 228
+            "atMs": 181
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 181
           },
           {
             "event": "queue:completed",
@@ -412,7 +412,7 @@
               "returnvalue": "ok",
               "prev": "active"
             },
-            "atMs": 231
+            "atMs": 183
           }
         ]
       },
@@ -448,7 +448,7 @@
       "executionId": "bmq-exec-source-positive",
       "facet": "errors-recovery",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -510,7 +510,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff",
@@ -518,35 +518,27 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 40,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "queue:delayed",
             "data": {
               "jobId": "1",
-              "delay": 1795765872866
+              "delay": 1795766122723
             },
-            "atMs": 31
-          },
-          {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1",
-              "prev": "delayed"
-            },
-            "atMs": 127
+            "atMs": 24
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff",
@@ -554,21 +546,13 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff-result",
             "attemptsMade": 2,
             "delayMs": 80,
-            "atMs": 127
-          },
-          {
-            "event": "queue:delayed",
-            "data": {
-              "jobId": "1",
-              "delay": 1795765873004
-            },
-            "atMs": 128
+            "atMs": 80
           },
           {
             "event": "queue:waiting",
@@ -576,13 +560,29 @@
               "jobId": "1",
               "prev": "delayed"
             },
-            "atMs": 228
+            "atMs": 80
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795766122820
+            },
+            "atMs": 81
           },
           {
             "event": "processor",
             "attempt": 3,
             "attemptsMade": 2,
-            "atMs": 228
+            "atMs": 181
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 181
           },
           {
             "event": "queue:completed",
@@ -591,7 +591,7 @@
               "returnvalue": "ok",
               "prev": "active"
             },
-            "atMs": 231
+            "atMs": 183
           }
         ]
       },
@@ -621,7 +621,7 @@
       "executionId": "bmq-exec-source-positive",
       "facet": "data",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -677,7 +677,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff",
@@ -685,35 +685,27 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 40,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "queue:delayed",
             "data": {
               "jobId": "1",
-              "delay": 1795765872866
+              "delay": 1795766122723
             },
-            "atMs": 31
-          },
-          {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1",
-              "prev": "delayed"
-            },
-            "atMs": 127
+            "atMs": 24
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff",
@@ -721,21 +713,13 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff-result",
             "attemptsMade": 2,
             "delayMs": 80,
-            "atMs": 127
-          },
-          {
-            "event": "queue:delayed",
-            "data": {
-              "jobId": "1",
-              "delay": 1795765873004
-            },
-            "atMs": 128
+            "atMs": 80
           },
           {
             "event": "queue:waiting",
@@ -743,13 +727,29 @@
               "jobId": "1",
               "prev": "delayed"
             },
-            "atMs": 228
+            "atMs": 80
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795766122820
+            },
+            "atMs": 81
           },
           {
             "event": "processor",
             "attempt": 3,
             "attemptsMade": 2,
-            "atMs": 228
+            "atMs": 181
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 181
           },
           {
             "event": "queue:completed",
@@ -758,7 +758,7 @@
               "returnvalue": "ok",
               "prev": "active"
             },
-            "atMs": 231
+            "atMs": 183
           }
         ]
       },
@@ -781,7 +781,7 @@
       "executionId": "bmq-exec-source-positive",
       "facet": "behavior",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -878,7 +878,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff",
@@ -886,35 +886,27 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 40,
-            "atMs": 29
+            "atMs": 23
           },
           {
             "event": "queue:delayed",
             "data": {
               "jobId": "1",
-              "delay": 1795765872866
+              "delay": 1795766122723
             },
-            "atMs": 31
-          },
-          {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1",
-              "prev": "delayed"
-            },
-            "atMs": 127
+            "atMs": 24
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff",
@@ -922,21 +914,13 @@
             "type": "software-rules-custom",
             "error": "transient",
             "jobId": "1",
-            "atMs": 127
+            "atMs": 80
           },
           {
             "event": "backoff-result",
             "attemptsMade": 2,
             "delayMs": 80,
-            "atMs": 127
-          },
-          {
-            "event": "queue:delayed",
-            "data": {
-              "jobId": "1",
-              "delay": 1795765873004
-            },
-            "atMs": 128
+            "atMs": 80
           },
           {
             "event": "queue:waiting",
@@ -944,13 +928,29 @@
               "jobId": "1",
               "prev": "delayed"
             },
-            "atMs": 228
+            "atMs": 80
+          },
+          {
+            "event": "queue:delayed",
+            "data": {
+              "jobId": "1",
+              "delay": 1795766122820
+            },
+            "atMs": 81
           },
           {
             "event": "processor",
             "attempt": 3,
             "attemptsMade": 2,
-            "atMs": 228
+            "atMs": 181
+          },
+          {
+            "event": "queue:waiting",
+            "data": {
+              "jobId": "1",
+              "prev": "delayed"
+            },
+            "atMs": 181
           },
           {
             "event": "queue:completed",
@@ -959,7 +959,7 @@
               "returnvalue": "ok",
               "prev": "active"
             },
-            "atMs": 231
+            "atMs": 183
           }
         ]
       },
@@ -990,7 +990,7 @@
       "executionId": "bmq-exec-source-minus-one",
       "facet": "background-processing",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -1060,17 +1060,10 @@
         "finalState": "failed",
         "trace": [
           {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1"
-            },
-            "atMs": 10
-          },
-          {
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff",
@@ -1078,13 +1071,13 @@
             "type": "software-rules-custom",
             "error": "stop",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": -1,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1093,7 +1086,7 @@
               "failedReason": "stop",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 9
           }
         ]
       },
@@ -1123,7 +1116,7 @@
       "executionId": "bmq-exec-source-minus-one",
       "facet": "errors-recovery",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -1176,17 +1169,10 @@
         "finalState": "failed",
         "trace": [
           {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1"
-            },
-            "atMs": 10
-          },
-          {
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff",
@@ -1194,13 +1180,13 @@
             "type": "software-rules-custom",
             "error": "stop",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": -1,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1209,7 +1195,7 @@
               "failedReason": "stop",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 9
           }
         ]
       },
@@ -1234,7 +1220,7 @@
       "executionId": "bmq-exec-source-minus-one",
       "facet": "data",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -1283,17 +1269,10 @@
         "finalState": "failed",
         "trace": [
           {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1"
-            },
-            "atMs": 10
-          },
-          {
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff",
@@ -1301,13 +1280,13 @@
             "type": "software-rules-custom",
             "error": "stop",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": -1,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1316,7 +1295,7 @@
               "failedReason": "stop",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 9
           }
         ]
       },
@@ -1337,7 +1316,7 @@
       "executionId": "bmq-exec-source-minus-one",
       "facet": "behavior",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1399,17 +1378,10 @@
         "finalState": "failed",
         "trace": [
           {
-            "event": "queue:waiting",
-            "data": {
-              "jobId": "1"
-            },
-            "atMs": 10
-          },
-          {
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff",
@@ -1417,13 +1389,13 @@
             "type": "software-rules-custom",
             "error": "stop",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": -1,
-            "atMs": 11
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1432,7 +1404,7 @@
               "failedReason": "stop",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 9
           }
         ]
       },
@@ -1457,7 +1429,7 @@
       "executionId": "bmq-exec-source-zero-delay",
       "facet": "background-processing",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1533,7 +1505,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff",
@@ -1541,13 +1513,13 @@
             "type": "software-rules-custom",
             "error": "always-fails",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "queue:waiting",
@@ -1555,13 +1527,13 @@
               "jobId": "1",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 8
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 13
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1570,7 +1542,7 @@
               "failedReason": "always-fails",
               "prev": "active"
             },
-            "atMs": 14
+            "atMs": 9
           }
         ]
       },
@@ -1601,7 +1573,7 @@
       "executionId": "bmq-exec-source-zero-delay",
       "facet": "errors-recovery",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1657,7 +1629,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff",
@@ -1665,13 +1637,13 @@
             "type": "software-rules-custom",
             "error": "always-fails",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "queue:waiting",
@@ -1679,13 +1651,13 @@
               "jobId": "1",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 8
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 13
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1694,7 +1666,7 @@
               "failedReason": "always-fails",
               "prev": "active"
             },
-            "atMs": 14
+            "atMs": 9
           }
         ]
       },
@@ -1720,7 +1692,7 @@
       "executionId": "bmq-exec-source-zero-delay",
       "facet": "data",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1773,7 +1745,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff",
@@ -1781,13 +1753,13 @@
             "type": "software-rules-custom",
             "error": "always-fails",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "queue:waiting",
@@ -1795,13 +1767,13 @@
               "jobId": "1",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 8
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 13
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1810,7 +1782,7 @@
               "failedReason": "always-fails",
               "prev": "active"
             },
-            "atMs": 14
+            "atMs": 9
           }
         ]
       },
@@ -1832,7 +1804,7 @@
       "executionId": "bmq-exec-source-zero-delay",
       "facet": "behavior",
       "subject": "job-retry-policy",
-      "observedAt": "2026-11-27T07:51:13.367Z",
+      "observedAt": "2026-11-27T07:55:23.172Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1908,7 +1880,7 @@
             "event": "processor",
             "attempt": 1,
             "attemptsMade": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff",
@@ -1916,13 +1888,13 @@
             "type": "software-rules-custom",
             "error": "always-fails",
             "jobId": "1",
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "backoff-result",
             "attemptsMade": 1,
             "delayMs": 0,
-            "atMs": 11
+            "atMs": 7
           },
           {
             "event": "queue:waiting",
@@ -1930,13 +1902,13 @@
               "jobId": "1",
               "prev": "active"
             },
-            "atMs": 12
+            "atMs": 8
           },
           {
             "event": "processor",
             "attempt": 2,
             "attemptsMade": 1,
-            "atMs": 13
+            "atMs": 8
           },
           {
             "event": "queue:failed",
@@ -1945,7 +1917,7 @@
               "failedReason": "always-fails",
               "prev": "active"
             },
-            "atMs": 14
+            "atMs": 9
           }
         ]
       },
@@ -2029,18 +2001,18 @@
         "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
         "location": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-runtime-capture.json"
       },
-      "capturedAt": "2026-11-27T07:51:13.367Z",
+      "capturedAt": "2026-11-27T07:55:23.172Z",
       "embedded": {
         "scenarioLabels": [
           "positive-backoff-completes",
           "minus-one-suppresses-retry",
           "zero-delay-respects-attempt-limit"
         ],
-        "rawCaptureDigest": "ecc0e7e6c883778a16e588806265de5a2cc8f1bcc7efb3da9a334003cdedace6"
+        "rawCaptureDigest": "9cb8d0c3d1f0453ef6f472496d4946a2932c836ab28de565a9fc1d216e46a0b8"
       },
       "locator": "conformance/replication-lab/cases/BMQ-ER-002/artifacts/bullmq-runtime-capture.json",
-      "digest": "ecc0e7e6c883778a16e588806265de5a2cc8f1bcc7efb3da9a334003cdedace6",
-      "sizeBytes": 5268,
+      "digest": "9cb8d0c3d1f0453ef6f472496d4946a2932c836ab28de565a9fc1d216e46a0b8",
+      "sizeBytes": 5117,
       "retention": {
         "status": "retained",
         "access": "Version-controlled repository artifact path"
@@ -2232,7 +2204,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T07:51:13.745582Z",
+      "assessedAt": "2026-11-27T07:55:24.887753Z",
       "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence for all three declared scenarios.",
       "rationale": "All six required properties in this bounded case scope were observed in every declared scenario. This does not imply complete coverage of BullMQ retry behaviour or any entire facet."
     }

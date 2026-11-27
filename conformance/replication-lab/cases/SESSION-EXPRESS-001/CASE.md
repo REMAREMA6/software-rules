@@ -1,7 +1,7 @@
 # Case — Express session creation, regeneration, tamper rejection, and destruction
 
 **Case ID:** SESSION-EXPRESS-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all nine sequential session lifecycle transitions in [run #45941194819](https://github.com/REMAREMA6/software-rules/actions/runs/45941194819). Pinned express-session 1.19.0 and independent Python 3.12 model matched all nine normalized outcomes; five deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and cross-record integrity validation. Artifact `15172927152` retained through 2026-12-27. This is bounded MemoryStore session lifecycle evidence, not a full identity provider or complete authentication/security facet.  
 **Facet(s):** Identity and authentication; security controls; behaviour; data; errors and recovery  
 **Source:** https://github.com/expressjs/session  
 **Immutable source commit:** `8947e169ae838b22cc1af198e50e370e6fc09f96`  

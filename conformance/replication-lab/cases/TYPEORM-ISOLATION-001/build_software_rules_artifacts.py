@@ -47,9 +47,9 @@ def build_capture(raw,side,raw_path,source_artifacts):
     "transaction":{"isolationLevel":{"read-committed-nonrepeatable-read":"READ COMMITTED","repeatable-read-stable-snapshot":"REPEATABLE READ","serializable-write-skew-prevention":"SERIALIZABLE"}[label],
      "overlappingConnections":2,"scenario":label},
     "lifecycle":[{"state":"started"},{"state":"read"},{"state":"concurrent-transaction-committed"},{"state":"committed-or-aborted"}],
-    "output":output,"error":{"category":output.get("errorCode") or "none","propagated":output.get("commitB")=="aborted"},
+    "output":output,
     "invariant":{"name":"at-least-one-doctor-on-call","expectedMinimum":1,"actual":output.get("remainingOnCall")},
-    "extensions":{"scenario":label}},
+    "extensions":{"scenario":label,"serializationError":{"category":output.get("errorCode") or "none","propagated":output.get("commitB")=="aborted"}}},
    "rawValue":item,"normalizedValue":item,"evidenceRefs":[prefix+"-runtime"],"status":"observed"})
  inventory=[{"propertyId":pid,"facet":FACET,"subject":"PostgreSQL transaction isolation","dimension":dim,
   "requirement":"required","status":"captured","observationRefs":obsids,"evidenceRefs":[prefix+"-runtime"],"rationale":why}

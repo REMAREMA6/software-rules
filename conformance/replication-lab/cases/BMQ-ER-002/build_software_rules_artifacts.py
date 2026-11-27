@@ -585,7 +585,7 @@ def build_report(source_capture, replica_capture):
                 "operationId": "project-retry-semantics",
                 "facet": "background-processing",
                 "dimension": "retry-policy-semantic-projection",
-                "method": "Compare configured attempt limit, processor attempts, backoff attempt numbers/results, ordered queue transitions, terminal state, and attemptsMade while excluding error text and wall-clock values.",
+                "method": "Compare configured attempt limit, processor attempts, backoff attempt numbers/results, ordered retry transitions, terminal state, and attemptsMade; exclude error text, wall-clock values, and the initial enqueue waiting event that has no previous state.",
                 "methodVersion": "1.0.0",
                 "inputRepresentation": "Raw instrumented source and independent replica JSON captures",
                 "outputRepresentation": "Ordered semantic retry-policy projection",

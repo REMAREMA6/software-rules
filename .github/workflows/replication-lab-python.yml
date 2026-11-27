@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run independent rule-model tests
-        working-directory: conformance/replication-lab/projects/retry-policy-python
-        run: python -m unittest -v
+      - name: Run independent rule-model and comparison tests
+        run: |
+          python -m unittest discover -s conformance/replication-lab/projects/retry-policy-python -v
+          python -m unittest discover -s conformance/replication-lab/cases/BMQ-ER-002 -p "test_*.py" -v
+          python conformance/replication-lab/projects/retry-policy-python/replicate_retry_probe.py > /tmp/bullmq-replica-capture.json

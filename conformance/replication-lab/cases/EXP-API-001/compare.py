@@ -12,7 +12,7 @@ def compare(source, replica):
     if set(source_by_label) != set(replica_by_label):
         errors.append("scenario sets differ")
 
-    fields = ("status", "body", "headers")
+    fields = ("status", "body", "headers", "wireBodyBytes")
     for label, expected in replica_by_label.items():
         actual = source_by_label.get(label)
         if actual is None:

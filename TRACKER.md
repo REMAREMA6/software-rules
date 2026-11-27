@@ -179,7 +179,7 @@
 See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVERAGE.md) for source candidates, current evidence, replica status, and blockers per facet.
 - [ ] 1. Interface — screen/state capture and independent UI-stack replication.
 - [ ] 2. Behaviour — triggers, transitions, side effects, ordering, and failure replication.
-- [~] 3. Business rules — date validation, calculated/original price selection, and Task Board title/count rules pass; cart totals, discounts, tax, quantity tiers, and eligibility remain open.
+- [~] 3. Business rules — date validation, calculated/original price selection, adjustment/tax allocation, promotion rule operators/context eligibility, and Task Board title/count rules pass; full cart totals, promotion application/precedence, campaign budgets/usage, quantity tiers, currency normalization, shipping discounts, and checkout remain open.
 - [ ] 4. Data — shapes, types, nullability, relationships, transformations, and serialization.
 - [~] 5. Persistence — bounded TypeORM top-level commit/rollback case passed; durability/restart/concurrency and other drivers remain uncovered.
 - [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.

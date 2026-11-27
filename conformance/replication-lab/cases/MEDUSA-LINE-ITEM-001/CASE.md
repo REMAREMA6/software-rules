@@ -26,7 +26,7 @@ The case extracts and executes Medusa's exact `getLineItemTotals`, `calculateAdj
 
 ## Probe matrix
 
-Twelve deterministic scenarios cover no tax, exclusive/inclusive tax, multiple tax lines, exclusive/inclusive discounts, multiple/mixed adjustments, fractional and zero quantity, and empty tax context. Six deliberate mutations target inclusive conversion, additive tax, discount-tax recalculation, per-adjustment values, quantity allocation, and original-versus-discounted tax.
+Fourteen deterministic scenarios cover no tax, exclusive/inclusive tax, multiple tax lines, exclusive/inclusive discounts, multiple/mixed adjustments, fractional and zero quantity, and empty tax context. Six deliberate mutations target inclusive conversion, additive tax, discount-tax recalculation, per-adjustment values, quantity allocation, and original-versus-discounted tax.
 
 ## Acceptance gate
 

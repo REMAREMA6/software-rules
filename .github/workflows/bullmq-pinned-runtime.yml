@@ -32,7 +32,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: none
       - name: Checkout exact BullMQ source commit
         env:
           BULLMQ_SOURCE_COMMIT: "526668f2c5e6de9d5d664df577f09a6bdccac1b4"

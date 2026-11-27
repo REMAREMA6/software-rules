@@ -2,7 +2,7 @@
 
 **Maturity:** Draft — Software Rules specification 0.3.0.  
 **Purpose:** Define the shared conceptual structure for capturing rules and supporting observations across unlike facets.  
-**Important:** This is not a finalized JSON/YAML schema. Serialized field names, cardinalities, and requiredness remain open.
+**Important:** The current draft JSON Schema mapping is version 0.2.0 under `schemas/v1/`. This document defines conceptual meaning; the schema defines current serialized field names, types, cardinalities, and structural requiredness. Neither establishes that a particular capture's property inventory is exhaustive.
 
 ## 1. Model overview
 
@@ -168,6 +168,12 @@ These are illustrative conceptual tests, not captures from a real product and no
 
 The shared model works because both examples identify target, scenario, execution, conditions, trigger, observation, method, evidence, rule, and coverage. Their payloads remain facet-specific. This supports a shared conceptual envelope without forcing a universal observation payload.
 
-## 10. Deferred decisions
+## 10. Remaining design limits
 
-Phase 2 does not freeze exact serialized field names, cardinalities, identifier syntax, cross-capture identity matching, facet payloads, normalization algorithms, comparison tolerances, formal conformance levels, or final facet taxonomy. These require Phase 3–5 research and examples.
+The current draft has serialized common records and 15 typed facet payloads, plus versioned normalization, matching, comparison, and conformance rules. The following remain explicit pre-stable work rather than uncompleted Phase 2–5 tasks:
+
+- Add a distinct `specificationVersion` field to capture manifests; the current captures identify schema version 0.2.0 and rely on release provenance for the overall specification version.
+- Expand platform-specific adapters and facet payloads as new source-backed property classes are encountered.
+- Continue testing identifier alignment, semantic evaluators, and tolerance profiles against new independent implementations.
+- Keep completeness inventory exhaustiveness as an expert scope-review responsibility; structural validators cannot prove that no relevant property was omitted.
+- Define stable 1.0.0 compatibility, migration, and formal conformance levels only after the readiness criteria in `specification/VERSIONING.md` are met.

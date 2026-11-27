@@ -32,7 +32,7 @@ A technology-independent specification system for capturing, representing, and c
 - [Phase 6 cross-repository replication programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md)
 - [Phase 6 source repository register](examples/cross-repository/sources/README.md)
 - [Independent replication lab](conformance/replication-lab/README.md)
-- [Phase 6 final exit audit and 20-case evidence corpus](conformance/replication-lab/PHASE6-EXIT-AUDIT.md)
+- [Phase 6 final exit audit and 24-case evidence corpus](conformance/replication-lab/PHASE6-EXIT-AUDIT.md)
 - [Legacy Phase 6 facet notes](examples/PHASE-6-FACET-EXPANSION.md)
 - [Phase 6 Task Board conformance system](examples/task-board/README.md)
 - [Phase 6 Task Board evidence audit](examples/task-board/PHASE-6-AUDIT.md)
@@ -94,8 +94,8 @@ The current draft defines 15 observation facets. See the [facet catalogue](facet
 
 ## Remaining specification work
 
-- [~] Cross-repository, cross-stack replication and conformance (Phase 6; see [cross-repository programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md) and [replication lab](conformance/replication-lab/README.md))
-- [ ] Final review, versioned release, and maintenance process (Phase 7; blocked by Phase 6)
+- [x] Cross-repository, cross-stack replication and conformance (Phase 6; 24 accepted bounded cases; see [cross-repository programme](examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md) and [replication lab](conformance/replication-lab/README.md))
+- [ ] Final review, versioned release, and maintenance process (Phase 7; unblocked)
 
 The draft capture schemas, comparison-report schema, structural fixtures, and comparison methodology are available under `schemas/v1/`, `conformance/validation/`, and `comparison/`.
 

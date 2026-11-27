@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; thirteen bounded cases pass, including TASKBOARD-UI-001 (independent React UI replication) and EXP-CONFIG-001 (Express routing configuration) alongside BullMQ retry/backoff/messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and Redis client integration. No facet-wide completeness claim is justified; additional authorization models, external integrations, broader security, expanded performance/resource classes, and incomplete property inventories remain. The independent UI-stack case is accepted only for its bounded Task Board scope.  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; thirteen bounded cases pass: the eight original cases plus TASKBOARD-UI-001 (React UI replication), EXP-CONFIG-001 (Express configuration), PROM-PERF-001 (Prometheus workload measurement), CASBIN-ADV-AUTHZ-001 (advanced authorization policy classes), and MEDUSA-PRICE-001 (calculated-price selection). No facet-wide completeness claim is justified; additional authorization models, external integrations, broader security, expanded performance/resource classes, and incomplete property inventories remain. The independent UI-stack case is accepted only for its bounded Task Board scope.  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 

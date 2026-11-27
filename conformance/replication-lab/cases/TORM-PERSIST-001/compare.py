@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 def compare(source, replica):
-    fields = {"rollback": ("error", "callbackResult", "rowsAfterRollback"), "commit": ("callbackReturn", "rowsAfterCommit")}
+    fields = {"rollback": ("error", "callbackResult", "rowsInsideCallback", "rowsAfterRollback"), "commit": ("callbackReturn", "rowsAfterCommit")}
     differences = []
     for scenario, names in fields.items():
         for name in names:

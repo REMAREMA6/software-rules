@@ -331,4 +331,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by obtaining a successful pinned BullMQ source-runtime run, reviewing the source/replica capture comparison, and mutation-testing the comparison. Then expand the case programme across the remaining facets using additional pinned repositories and genuinely different implementation stacks. Continue the interface state/viewport audit. Then select or extend a richer controlled target for persistence, identity, authorization, security, integrations, and background processing. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by obtaining a successful pinned BullMQ source-runtime run, reviewing the source/replica capture comparison, and mutation-testing the comparison. Then expand the case programme across the remaining facets using additional pinned source repositories and independent implementations in genuinely different stacks. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

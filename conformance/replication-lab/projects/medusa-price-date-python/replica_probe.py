@@ -68,6 +68,7 @@ def capture(empty_string_is_missing=True, validate_end=True, start_first=True, e
                 "errorName": None,
                 "isMedusaError": False,
                 "errorField": None,
+                "validationOrder": "starts_at-first" if label == "both-invalid-start-first" and start_first else "ends_at-first" if label == "both-invalid-start-first" else "not-discriminated",
             })
         except ValueError as error:
             error_type, error_field = error.args[0]
@@ -79,6 +80,7 @@ def capture(empty_string_is_missing=True, validate_end=True, start_first=True, e
                 "errorName": "ValueError",
                 "isMedusaError": False,
                 "errorField": error_field,
+                "validationOrder": "starts_at-first" if label == "both-invalid-start-first" and start_first else "ends_at-first" if label == "both-invalid-start-first" else "not-discriminated",
             })
     return {
         "capturedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),

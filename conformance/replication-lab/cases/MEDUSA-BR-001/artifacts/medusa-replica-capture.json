@@ -1,0 +1,131 @@
+{
+  "capturedAt": "2026-11-27T02:30:00.425725Z",
+  "completedAt": "2026-11-27T02:30:00.425736Z",
+  "implementation": "Independent Python 3.12 ISO-8601 price-list date validator",
+  "scenarios": [
+    {
+      "label": "omitted-both",
+      "input": {},
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "null-both",
+      "input": {
+        "starts_at": null,
+        "ends_at": null
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "empty-string-both",
+      "input": {
+        "starts_at": "",
+        "ends_at": ""
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "valid-start-iso",
+      "input": {
+        "starts_at": "2026-01-01T00:00:00.000Z"
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "valid-end-iso",
+      "input": {
+        "ends_at": "2026-12-31T23:59:59.999Z"
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "invalid-start",
+      "input": {
+        "starts_at": "not-a-date"
+      },
+      "outcome": "rejected",
+      "errorType": "invalid_data",
+      "errorName": "ValueError",
+      "isMedusaError": false,
+      "errorField": "starts_at",
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "invalid-end",
+      "input": {
+        "ends_at": "not-a-date"
+      },
+      "outcome": "rejected",
+      "errorType": "invalid_data",
+      "errorName": "ValueError",
+      "isMedusaError": false,
+      "errorField": "ends_at",
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "date-object-start",
+      "input": {
+        "starts_at": {
+          "__date": "2026-01-01T00:00:00.000Z"
+        }
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "reversed-range",
+      "input": {
+        "starts_at": "2026-12-31T00:00:00.000Z",
+        "ends_at": "2026-01-01T00:00:00.000Z"
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "both-invalid-start-first",
+      "input": {
+        "starts_at": "bad-start",
+        "ends_at": "bad-end"
+      },
+      "outcome": "rejected",
+      "errorType": "invalid_data",
+      "errorName": "ValueError",
+      "isMedusaError": false,
+      "errorField": "starts_at",
+      "validationOrder": "starts_at-first"
+    }
+  ]
+}

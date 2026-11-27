@@ -1,0 +1,1743 @@
+{
+  "schemaVersion": "0.2.0",
+  "reportId": "medusa-price-date-cross-stack-comparison",
+  "createdAt": "2026-11-27T02:30:00.543279Z",
+  "referenceCapture": {
+    "captureId": "medusa-source-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/medusa-source.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "medusa-python-replica-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/medusa-python-replica.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Compare ten date validation inputs and four facet projections.",
+    "facets": [
+      "business-rules",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "scenarioIds": [
+      "medusa-scenario-omitted-both",
+      "medusa-scenario-null-both",
+      "medusa-scenario-empty-string-both",
+      "medusa-scenario-valid-start-iso",
+      "medusa-scenario-valid-end-iso",
+      "medusa-scenario-invalid-start",
+      "medusa-scenario-invalid-end",
+      "medusa-scenario-date-object-start",
+      "medusa-scenario-reversed-range",
+      "medusa-scenario-both-invalid-start-first"
+    ],
+    "conditions": [
+      "Pinned Medusa pricing utility and its pinned helper sources",
+      "Python 3.12 ISO-8601 date validator",
+      "Same ten declared input objects"
+    ],
+    "excludedDimensions": [
+      "Non-ISO date strings and JavaScript Date parser quirks outside declared inputs",
+      "Database persistence, price-list activation, and full Medusa application behavior",
+      "Exact error message text and source-language error class identity"
+    ],
+    "limitations": [
+      "The replica is a bounded date-validation model, not a Medusa pricing module replacement."
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "medusa-price-date-validation-projection",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "compare-date-validation-outcomes",
+        "facet": "business-rules",
+        "dimension": "date-validation-semantic-projection",
+        "method": "Compare accept/reject outcome, invalid_data category, and failing-field precedence; exclude source-language exception class and message.",
+        "methodVersion": "1.0.0",
+        "inputRepresentation": "Pinned Medusa utility and Python date-validation captures",
+        "outputRepresentation": "Normalized validation outcome",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "medusa-align-omitted-both-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-omitted-both-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-omitted-both-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-omitted-both-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-omitted-both-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-omitted-both-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-omitted-both-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-omitted-both-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-omitted-both-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-omitted-both-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-omitted-both-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-omitted-both-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-null-both-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-null-both-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-null-both-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-null-both-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-null-both-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-null-both-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-null-both-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-null-both-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-null-both-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-null-both-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-null-both-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-null-both-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-empty-string-both-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-empty-string-both-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-empty-string-both-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-empty-string-both-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-empty-string-both-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-empty-string-both-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-empty-string-both-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-empty-string-both-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-empty-string-both-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-empty-string-both-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-empty-string-both-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-empty-string-both-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-start-iso-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-start-iso-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-start-iso-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-start-iso-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-start-iso-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-start-iso-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-start-iso-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-start-iso-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-start-iso-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-start-iso-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-start-iso-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-start-iso-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-end-iso-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-end-iso-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-end-iso-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-end-iso-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-end-iso-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-end-iso-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-end-iso-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-end-iso-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-end-iso-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-valid-end-iso-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-valid-end-iso-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-valid-end-iso-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-start-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-start-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-start-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-start-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-start-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-start-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-start-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-start-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-start-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-start-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-start-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-start-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-end-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-end-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-end-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-end-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-end-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-end-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-end-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-end-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-end-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-invalid-end-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-invalid-end-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-invalid-end-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-date-object-start-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-date-object-start-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-date-object-start-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-date-object-start-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-date-object-start-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-date-object-start-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-date-object-start-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-date-object-start-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-date-object-start-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-date-object-start-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-date-object-start-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-date-object-start-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-reversed-range-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-reversed-range-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-reversed-range-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-reversed-range-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-reversed-range-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-reversed-range-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-reversed-range-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-reversed-range-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-reversed-range-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-reversed-range-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-reversed-range-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-reversed-range-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-both-invalid-start-first-business-rules",
+      "facet": "business-rules",
+      "referenceRecordIds": [
+        "medusa-obs-source-both-invalid-start-first-business-rules"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-both-invalid-start-first-business-rules"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-both-invalid-start-first-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "medusa-obs-source-both-invalid-start-first-data"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-both-invalid-start-first-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-both-invalid-start-first-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "medusa-obs-source-both-invalid-start-first-behavior"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-both-invalid-start-first-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    },
+    {
+      "alignmentId": "medusa-align-both-invalid-start-first-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "medusa-obs-source-both-invalid-start-first-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "medusa-obs-replica-both-invalid-start-first-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same date validation input and facet."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "medusa-result-omitted-both-business-rules",
+      "alignmentId": "medusa-align-omitted-both-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-omitted-both-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-omitted-both-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-omitted-both-data",
+      "alignmentId": "medusa-align-omitted-both-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-omitted-both-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-omitted-both-data"
+      ],
+      "referenceValue": {
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-omitted-both-behavior",
+      "alignmentId": "medusa-align-omitted-both-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-omitted-both-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-omitted-both-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-omitted-both-errors-recovery",
+      "alignmentId": "medusa-align-omitted-both-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-omitted-both-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-omitted-both-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-null-both-business-rules",
+      "alignmentId": "medusa-align-null-both-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-null-both-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-null-both-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-null-both-data",
+      "alignmentId": "medusa-align-null-both-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-null-both-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-null-both-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-null-both-behavior",
+      "alignmentId": "medusa-align-null-both-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-null-both-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-null-both-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-null-both-errors-recovery",
+      "alignmentId": "medusa-align-null-both-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-null-both-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-null-both-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-empty-string-both-business-rules",
+      "alignmentId": "medusa-align-empty-string-both-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-empty-string-both-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-empty-string-both-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-empty-string-both-data",
+      "alignmentId": "medusa-align-empty-string-both-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-empty-string-both-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-empty-string-both-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-empty-string-both-behavior",
+      "alignmentId": "medusa-align-empty-string-both-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-empty-string-both-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-empty-string-both-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-empty-string-both-errors-recovery",
+      "alignmentId": "medusa-align-empty-string-both-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-empty-string-both-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-empty-string-both-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-start-iso-business-rules",
+      "alignmentId": "medusa-align-valid-start-iso-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-start-iso-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-start-iso-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-start-iso-data",
+      "alignmentId": "medusa-align-valid-start-iso-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-start-iso-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-start-iso-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-start-iso-behavior",
+      "alignmentId": "medusa-align-valid-start-iso-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-start-iso-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-start-iso-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-start-iso-errors-recovery",
+      "alignmentId": "medusa-align-valid-start-iso-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-start-iso-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-start-iso-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-end-iso-business-rules",
+      "alignmentId": "medusa-align-valid-end-iso-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-end-iso-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-end-iso-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-end-iso-data",
+      "alignmentId": "medusa-align-valid-end-iso-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-end-iso-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-end-iso-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-end-iso-behavior",
+      "alignmentId": "medusa-align-valid-end-iso-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-end-iso-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-end-iso-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-valid-end-iso-errors-recovery",
+      "alignmentId": "medusa-align-valid-end-iso-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-valid-end-iso-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-valid-end-iso-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-start-business-rules",
+      "alignmentId": "medusa-align-invalid-start-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-start-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-start-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-start-data",
+      "alignmentId": "medusa-align-invalid-start-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-start-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-start-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-start-behavior",
+      "alignmentId": "medusa-align-invalid-start-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-start-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-start-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-start-errors-recovery",
+      "alignmentId": "medusa-align-invalid-start-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-start-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-start-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at",
+        "rejected": true
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at",
+        "rejected": true
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-end-business-rules",
+      "alignmentId": "medusa-align-invalid-end-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-end-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-end-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-end-data",
+      "alignmentId": "medusa-align-invalid-end-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-end-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-end-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "implementationValue": {
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-end-behavior",
+      "alignmentId": "medusa-align-invalid-end-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-end-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-end-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-invalid-end-errors-recovery",
+      "alignmentId": "medusa-align-invalid-end-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-invalid-end-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-invalid-end-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at",
+        "rejected": true
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at",
+        "rejected": true
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-date-object-start-business-rules",
+      "alignmentId": "medusa-align-date-object-start-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-date-object-start-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-date-object-start-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-date-object-start-data",
+      "alignmentId": "medusa-align-date-object-start-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-date-object-start-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-date-object-start-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-date-object-start-behavior",
+      "alignmentId": "medusa-align-date-object-start-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-date-object-start-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-date-object-start-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-date-object-start-errors-recovery",
+      "alignmentId": "medusa-align-date-object-start-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-date-object-start-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-date-object-start-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-reversed-range-business-rules",
+      "alignmentId": "medusa-align-reversed-range-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-reversed-range-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-reversed-range-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-reversed-range-data",
+      "alignmentId": "medusa-align-reversed-range-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-reversed-range-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-reversed-range-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-reversed-range-behavior",
+      "alignmentId": "medusa-align-reversed-range-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-reversed-range-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-reversed-range-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "implementationValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-reversed-range-errors-recovery",
+      "alignmentId": "medusa-align-reversed-range-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-reversed-range-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-reversed-range-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "implementationValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-both-invalid-start-first-business-rules",
+      "alignmentId": "medusa-align-both-invalid-start-first-business-rules",
+      "facet": "business-rules",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-both-invalid-start-first-business-rules"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-both-invalid-start-first-business-rules"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-both-invalid-start-first-data",
+      "alignmentId": "medusa-align-both-invalid-start-first-data",
+      "facet": "data",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-both-invalid-start-first-data"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-both-invalid-start-first-data"
+      ],
+      "referenceValue": {
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "implementationValue": {
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-both-invalid-start-first-behavior",
+      "alignmentId": "medusa-align-both-invalid-start-first-behavior",
+      "facet": "behavior",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-both-invalid-start-first-behavior"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-both-invalid-start-first-behavior"
+      ],
+      "referenceValue": {
+        "validationOrder": "starts_at-first",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "implementationValue": {
+        "validationOrder": "starts_at-first",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "reason": "The date validation outcome matches."
+    },
+    {
+      "resultId": "medusa-result-both-invalid-start-first-errors-recovery",
+      "alignmentId": "medusa-align-both-invalid-start-first-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "date-validation-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "medusa-obs-source-both-invalid-start-first-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "medusa-obs-replica-both-invalid-start-first-errors-recovery"
+      ],
+      "referenceValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at",
+        "rejected": true
+      },
+      "implementationValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at",
+        "rejected": true
+      },
+      "reason": "The date validation outcome matches."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 40,
+      "observedUnits": 40,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "implementation": {
+      "declaredUnits": 40,
+      "observedUnits": 40,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "sharedComparableUnits": 40,
+    "incomparableUnits": 0,
+    "limitations": [
+      "Coverage is limited to the 40 facet/scenario projections in this report."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The independent Python implementation matches the pinned Medusa date-validation utility for ten declared inputs and 40 facet/scenario projections. This is bounded evidence, not universal equivalence.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "No claim is made about full Medusa pricing or JavaScript Date parser inputs outside this scope."
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for all required properties in the declared ten-probe case scope, not the full Medusa pricing module or business-rules facet."
+  }
+}

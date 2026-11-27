@@ -1,0 +1,3757 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "medusa-python-replica-capture",
+  "createdAt": "2026-11-27T02:30:00.543028Z",
+  "purpose": "Capture the declared ten-probe Medusa price-list date validation scope.",
+  "target": {
+    "targetId": "python-date-replica",
+    "systemName": "Independent Python price-list date validator",
+    "systemVersion": "Python 3.12",
+    "build": {
+      "revision": "83631192947038f0bc914604433d5c571cdb79f8"
+    },
+    "boundary": {
+      "description": "Optional price-list start/end date validation utility.",
+      "included": [
+        "Truthiness-based optional field handling",
+        "Date parse validity for ISO-8601 and Date object inputs",
+        "Medusa invalid_data error category",
+        "Start-before-end validation order",
+        "Absence of chronology validation in this utility"
+      ],
+      "excluded": [
+        "Other JavaScript Date parser formats",
+        "Database persistence and price-list activation logic",
+        "Full Medusa pricing service and application runtime",
+        "Date normalization after validation"
+      ]
+    },
+    "environment": {
+      "platform": "CI runner",
+      "os": "Ubuntu Linux",
+      "runtime": "Python 3.12",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "typescriptVersion": null,
+          "sourceDependencyResolution": null
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Ten declared input scenarios against validatePriceListDates.",
+    "facetIds": [
+      "business-rules",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "subjects": [
+      "medusa-price-list-date-validation",
+      "starts_at",
+      "ends_at"
+    ],
+    "scenarioIds": [
+      "medusa-scenario-omitted-both",
+      "medusa-scenario-null-both",
+      "medusa-scenario-empty-string-both",
+      "medusa-scenario-valid-start-iso",
+      "medusa-scenario-valid-end-iso",
+      "medusa-scenario-invalid-start",
+      "medusa-scenario-invalid-end",
+      "medusa-scenario-date-object-start",
+      "medusa-scenario-reversed-range",
+      "medusa-scenario-both-invalid-start-first"
+    ]
+  },
+  "collector": {
+    "name": "Python 3.12 ISO-8601 validator",
+    "methodDescription": "Execute the pinned validation utility and retain accept/reject outcomes, Medusa error type, and field precedence."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "medusa-scenario-omitted-both",
+      "title": "Omitted Both",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {},
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-null-both",
+      "title": "Null Both",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": null,
+        "ends_at": null
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-empty-string-both",
+      "title": "Empty String Both",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": "",
+        "ends_at": ""
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-valid-start-iso",
+      "title": "Valid Start Iso",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": "2026-01-01T00:00:00.000Z"
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-valid-end-iso",
+      "title": "Valid End Iso",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "ends_at": "2026-12-31T23:59:59.999Z"
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-invalid-start",
+      "title": "Invalid Start",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": "not-a-date"
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-invalid-end",
+      "title": "Invalid End",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "ends_at": "not-a-date"
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-date-object-start",
+      "title": "Date Object Start",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": {
+          "__date": "2026-01-01T00:00:00.000Z"
+        }
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-reversed-range",
+      "title": "Reversed Range",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": "2026-12-31T00:00:00.000Z",
+        "ends_at": "2026-01-01T00:00:00.000Z"
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    },
+    {
+      "scenarioId": "medusa-scenario-both-invalid-start-first",
+      "title": "Both Invalid Start First",
+      "purpose": "Probe optional price-list date field validation and error outcomes.",
+      "facetIds": [
+        "business-rules",
+        "data",
+        "behavior",
+        "errors-recovery"
+      ],
+      "subject": "medusa-price-list-date-validation",
+      "preconditions": [
+        "The source utility validates starts_at before ends_at.",
+        "Only ISO-8601 strings and Date objects are within the declared scope."
+      ],
+      "trigger": "Call validatePriceListDates with the declared input object.",
+      "inputs": {
+        "starts_at": "bad-start",
+        "ends_at": "bad-end"
+      },
+      "observableQuestions": [
+        "Does the validator accept or reject the input?",
+        "Which field is rejected?",
+        "Which Medusa error category is returned?",
+        "Does the validator enforce chronological order?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "medusa-exec-replica-omitted-both",
+      "scenarioId": "medusa-scenario-omitted-both",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {},
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-null-both",
+      "scenarioId": "medusa-scenario-null-both",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": null,
+        "ends_at": null
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-empty-string-both",
+      "scenarioId": "medusa-scenario-empty-string-both",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": "",
+        "ends_at": ""
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-valid-start-iso",
+      "scenarioId": "medusa-scenario-valid-start-iso",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": "2026-01-01T00:00:00.000Z"
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-valid-end-iso",
+      "scenarioId": "medusa-scenario-valid-end-iso",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "ends_at": "2026-12-31T23:59:59.999Z"
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-invalid-start",
+      "scenarioId": "medusa-scenario-invalid-start",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": "not-a-date"
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-invalid-end",
+      "scenarioId": "medusa-scenario-invalid-end",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "ends_at": "not-a-date"
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-date-object-start",
+      "scenarioId": "medusa-scenario-date-object-start",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": {
+          "__date": "2026-01-01T00:00:00.000Z"
+        }
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-reversed-range",
+      "scenarioId": "medusa-scenario-reversed-range",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": "2026-12-31T00:00:00.000Z",
+        "ends_at": "2026-01-01T00:00:00.000Z"
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    },
+    {
+      "executionId": "medusa-exec-replica-both-invalid-start-first",
+      "scenarioId": "medusa-scenario-both-invalid-start-first",
+      "targetId": "python-date-replica",
+      "startedAt": "2026-11-27T02:30:00.425725Z",
+      "endedAt": "2026-11-27T02:30:00.425736Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Python 3.12",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "typescriptVersion": null,
+        "helperResolution": "Independent Python implementation"
+      },
+      "actualInputs": {
+        "starts_at": "bad-start",
+        "ends_at": "bad-end"
+      },
+      "trigger": "Invoke the validator once with the declared input.",
+      "collector": {
+        "name": "Python 3.12 ISO-8601 validator"
+      },
+      "limitations": [
+        "Only ISO-8601 strings, Date objects, missing, null, and empty-string values are covered.",
+        "Other JavaScript Date parser formats are excluded."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "medusa-obs-replica-omitted-both-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-omitted-both",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 0,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "omitted-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {},
+        "conditions": {
+          "starts_atTruthy": false,
+          "ends_atTruthy": false,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "omitted-both",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "omitted-both",
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-omitted-both-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-omitted-both",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "omitted-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {},
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "omitted-both",
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-omitted-both-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-omitted-both",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "omitted-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "omitted-both",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "omitted-both",
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-omitted-both-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-omitted-both",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "omitted-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario omitted-both.",
+        "operationRef": "medusa-scenario-omitted-both",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "omitted-both",
+        "input": {},
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-null-both-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-null-both",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 4,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "null-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "conditions": {
+          "starts_atTruthy": false,
+          "ends_atTruthy": false,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "null-both",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "null-both",
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-null-both-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-null-both",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 5,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "null-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "null-both",
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-null-both-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-null-both",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 6,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "null-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "null-both",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "null-both",
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-null-both-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-null-both",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 7,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "null-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario null-both.",
+        "operationRef": "medusa-scenario-null-both",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "null-both",
+        "input": {
+          "starts_at": null,
+          "ends_at": null
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-empty-string-both-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-empty-string-both",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 8,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "empty-string-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "conditions": {
+          "starts_atTruthy": false,
+          "ends_atTruthy": false,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "empty-string-both",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "empty-string-both",
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-empty-string-both-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-empty-string-both",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 9,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "empty-string-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "empty-string-both",
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-empty-string-both-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-empty-string-both",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 10,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "empty-string-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "empty-string-both",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "empty-string-both",
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-empty-string-both-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-empty-string-both",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 11,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "empty-string-both"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario empty-string-both.",
+        "operationRef": "medusa-scenario-empty-string-both",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "empty-string-both",
+        "input": {
+          "starts_at": "",
+          "ends_at": ""
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-start-iso-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-start-iso",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 12,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-start-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "conditions": {
+          "starts_atTruthy": true,
+          "ends_atTruthy": false,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "valid-start-iso",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "valid-start-iso",
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-start-iso-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-start-iso",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 13,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-start-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "valid-start-iso",
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-start-iso-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-start-iso",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 14,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-start-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "valid-start-iso",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "valid-start-iso",
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-start-iso-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-start-iso",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 15,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-start-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario valid-start-iso.",
+        "operationRef": "medusa-scenario-valid-start-iso",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "valid-start-iso",
+        "input": {
+          "starts_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-end-iso-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-end-iso",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 16,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-end-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "conditions": {
+          "starts_atTruthy": false,
+          "ends_atTruthy": true,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "valid-end-iso",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "valid-end-iso",
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-end-iso-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-end-iso",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 17,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-end-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "valid-end-iso",
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-end-iso-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-end-iso",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 18,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-end-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "valid-end-iso",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "valid-end-iso",
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-valid-end-iso-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-valid-end-iso",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 19,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "valid-end-iso"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario valid-end-iso.",
+        "operationRef": "medusa-scenario-valid-end-iso",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "valid-end-iso",
+        "input": {
+          "ends_at": "2026-12-31T23:59:59.999Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-start-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-start",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 20,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": "not-a-date"
+        },
+        "conditions": {
+          "starts_atTruthy": true,
+          "ends_atTruthy": false,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "rejected"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "rejected",
+        "extensions": {
+          "scenarioLabel": "invalid-start",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "invalid-start",
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-start-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-start",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 21,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": "not-a-date"
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "rejected",
+          "errorType": "invalid_data",
+          "errorField": "starts_at"
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "invalid-start",
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-start-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-start",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 22,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "rejected",
+            "errorField": "starts_at",
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "throws-invalid-data",
+        "extensions": {
+          "scenarioLabel": "invalid-start",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "invalid-start",
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-start-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-start",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 23,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario invalid-start.",
+        "operationRef": "medusa-scenario-invalid-start",
+        "error": {
+          "category": "invalid_data",
+          "code": "INVALID_DATA",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "caller receives validation error",
+        "terminalOutcome": "rejected",
+        "expectedRejection": true,
+        "extensions": {
+          "errorField": "starts_at",
+          "sourceErrorClass": "ValueError"
+        }
+      },
+      "rawValue": {
+        "label": "invalid-start",
+        "input": {
+          "starts_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at",
+        "rejected": true
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-end-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-end",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 24,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-end"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "ends_at": "not-a-date"
+        },
+        "conditions": {
+          "starts_atTruthy": false,
+          "ends_atTruthy": true,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "rejected"
+          }
+        ],
+        "decision": "rejected",
+        "extensions": {
+          "scenarioLabel": "invalid-end",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "invalid-end",
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "ends_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-end-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-end",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 25,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-end"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "ends_at": "not-a-date"
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "rejected",
+          "errorType": "invalid_data",
+          "errorField": "ends_at"
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "invalid-end",
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "ends_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-end-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-end",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 26,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-end"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "rejected",
+            "errorField": "ends_at",
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "throws-invalid-data",
+        "extensions": {
+          "scenarioLabel": "invalid-end",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "invalid-end",
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "ends_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-invalid-end-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-invalid-end",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 27,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "invalid-end"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario invalid-end.",
+        "operationRef": "medusa-scenario-invalid-end",
+        "error": {
+          "category": "invalid_data",
+          "code": "INVALID_DATA",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "caller receives validation error",
+        "terminalOutcome": "rejected",
+        "expectedRejection": true,
+        "extensions": {
+          "errorField": "ends_at",
+          "sourceErrorClass": "ValueError"
+        }
+      },
+      "rawValue": {
+        "label": "invalid-end",
+        "input": {
+          "ends_at": "not-a-date"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "ends_at",
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "ends_at",
+        "rejected": true
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-date-object-start-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-date-object-start",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 28,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "date-object-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "conditions": {
+          "starts_atTruthy": true,
+          "ends_atTruthy": false,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "date-object-start",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "date-object-start",
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-date-object-start-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-date-object-start",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 29,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "date-object-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "date-object-start",
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-date-object-start-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-date-object-start",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 30,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "date-object-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "date-object-start",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "date-object-start",
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-date-object-start-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-date-object-start",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 31,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "date-object-start"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario date-object-start.",
+        "operationRef": "medusa-scenario-date-object-start",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "date-object-start",
+        "input": {
+          "starts_at": {
+            "__date": "2026-01-01T00:00:00.000Z"
+          }
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-reversed-range-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-reversed-range",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 32,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "reversed-range"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "conditions": {
+          "starts_atTruthy": true,
+          "ends_atTruthy": true,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "valid-or-not-evaluated"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "accepted",
+        "extensions": {
+          "scenarioLabel": "reversed-range",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "reversed-range",
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-reversed-range-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-reversed-range",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 33,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "reversed-range"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "accepted",
+          "errorType": null,
+          "errorField": null
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "reversed-range",
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-reversed-range-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-reversed-range",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 34,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "reversed-range"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "accepted",
+            "errorField": null,
+            "validationOrder": "not-discriminated"
+          }
+        ],
+        "termination": "returns-without-error",
+        "extensions": {
+          "scenarioLabel": "reversed-range",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "reversed-range",
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "validationOrder": "not-discriminated",
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-reversed-range-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-reversed-range",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 35,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "reversed-range"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario reversed-range.",
+        "operationRef": "medusa-scenario-reversed-range",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "validation continues",
+        "terminalOutcome": "accepted",
+        "expectedRejection": false,
+        "extensions": {
+          "errorField": null,
+          "sourceErrorClass": null
+        }
+      },
+      "rawValue": {
+        "label": "reversed-range",
+        "input": {
+          "starts_at": "2026-12-31T00:00:00.000Z",
+          "ends_at": "2026-01-01T00:00:00.000Z"
+        },
+        "outcome": "accepted",
+        "errorType": null,
+        "errorName": null,
+        "isMedusaError": false,
+        "errorField": null,
+        "validationOrder": "not-discriminated"
+      },
+      "normalizedValue": {
+        "outcome": "accepted",
+        "errorType": null,
+        "errorField": null,
+        "rejected": false
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-both-invalid-start-first-business-rules",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-both-invalid-start-first",
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 36,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "both-invalid-start-first"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "business-rules",
+        "kind": "domain-decision",
+        "subject": "medusa-price-list-date-validation",
+        "decisionSubject": "optional price-list starts_at and ends_at fields",
+        "inputs": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "conditions": {
+          "starts_atTruthy": true,
+          "ends_atTruthy": true,
+          "validationOrder": "starts_at-before-ends_at"
+        },
+        "ruleIdentifier": "MEDUSA-BR-001",
+        "evaluatedCriteria": [
+          {
+            "field": "starts_at",
+            "result": "rejected"
+          },
+          {
+            "field": "ends_at",
+            "result": "valid-or-not-evaluated"
+          }
+        ],
+        "decision": "rejected",
+        "extensions": {
+          "scenarioLabel": "both-invalid-start-first",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "both-invalid-start-first",
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "starts_at-first"
+      },
+      "normalizedValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-both-invalid-start-first-data",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-both-invalid-start-first",
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 37,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "both-invalid-start-first"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "Medusa price-list date fields",
+        "dataSubject": "price-list temporal inputs",
+        "fieldPath": "starts_at / ends_at",
+        "observedValue": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "observedType": "object",
+        "nullability": "nullable",
+        "format": "ISO-8601 string or JavaScript Date object",
+        "constraints": [
+          {
+            "field": "starts_at",
+            "constraint": "truthy values must parse as a valid date"
+          },
+          {
+            "field": "ends_at",
+            "constraint": "truthy values must parse as a valid date"
+          }
+        ],
+        "validation": {
+          "result": "rejected",
+          "errorType": "invalid_data",
+          "errorField": "starts_at"
+        },
+        "serialization": {
+          "representation": "JSON input; Date marker hydrated to JavaScript Date in source probe"
+        }
+      },
+      "rawValue": {
+        "label": "both-invalid-start-first",
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "starts_at-first"
+      },
+      "normalizedValue": {
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-both-invalid-start-first-behavior",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-both-invalid-start-first",
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 38,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "both-invalid-start-first"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "validatePriceListDates",
+        "trigger": "Pricing service receives a price-list input object.",
+        "preconditions": [
+          "The input is passed to validatePriceListDates before date normalization."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Check truthy starts_at with isDate."
+          },
+          {
+            "sequence": 2,
+            "action": "Check truthy ends_at with isDate if starts_at did not throw."
+          }
+        ],
+        "outputs": [
+          {
+            "outcome": "rejected",
+            "errorField": "starts_at",
+            "validationOrder": "starts_at-first"
+          }
+        ],
+        "termination": "throws-invalid-data",
+        "extensions": {
+          "scenarioLabel": "both-invalid-start-first",
+          "chronologyCompared": false
+        }
+      },
+      "rawValue": {
+        "label": "both-invalid-start-first",
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "starts_at-first"
+      },
+      "normalizedValue": {
+        "validationOrder": "starts_at-first",
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at"
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "medusa-obs-replica-both-invalid-start-first-errors-recovery",
+      "targetId": "python-date-replica",
+      "executionId": "medusa-exec-replica-both-invalid-start-first",
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "observedAt": "2026-11-27T02:30:00.425736Z",
+      "sequence": 39,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Invoke the pinned validator and record accept/reject, error type, and failing field.",
+        "tool": "Python validator"
+      },
+      "conditions": {
+        "scenario": "both-invalid-start-first"
+      },
+      "trigger": "validatePriceListDates(input)",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "medusa-price-list-date-validation",
+        "trigger": "Validate price-list date fields for scenario both-invalid-start-first.",
+        "operationRef": "medusa-scenario-both-invalid-start-first",
+        "error": {
+          "category": "invalid_data",
+          "code": "INVALID_DATA",
+          "message": ""
+        },
+        "origin": "validatePriceListDates",
+        "propagationBoundary": "pricing service input validation",
+        "recoveryActions": [],
+        "recoveryState": "caller receives validation error",
+        "terminalOutcome": "rejected",
+        "expectedRejection": true,
+        "extensions": {
+          "errorField": "starts_at",
+          "sourceErrorClass": "ValueError"
+        }
+      },
+      "rawValue": {
+        "label": "both-invalid-start-first",
+        "input": {
+          "starts_at": "bad-start",
+          "ends_at": "bad-end"
+        },
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorName": "ValueError",
+        "isMedusaError": false,
+        "errorField": "starts_at",
+        "validationOrder": "starts_at-first"
+      },
+      "normalizedValue": {
+        "outcome": "rejected",
+        "errorType": "invalid_data",
+        "errorField": "starts_at",
+        "rejected": true
+      },
+      "evidenceRefs": [
+        "medusa-python-runtime-json"
+      ],
+      "status": "observed"
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "MEDUSA-BR-001",
+      "facet": "business-rules",
+      "subject": "optional price-list date fields",
+      "proposition": "A truthy starts_at or ends_at value must be parseable as a valid date; missing, null, and empty-string values bypass validation.",
+      "trigger": "A price-list input is passed to validatePriceListDates.",
+      "applicability": {
+        "scope": "Declared ISO-8601, Date-object, missing, null, and empty-string probes."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "medusa-obs-replica-omitted-both-business-rules",
+        "medusa-obs-replica-null-both-business-rules",
+        "medusa-obs-replica-empty-string-both-business-rules",
+        "medusa-obs-replica-valid-start-iso-business-rules",
+        "medusa-obs-replica-valid-end-iso-business-rules",
+        "medusa-obs-replica-invalid-start-business-rules",
+        "medusa-obs-replica-invalid-end-business-rules",
+        "medusa-obs-replica-date-object-start-business-rules"
+      ]
+    },
+    {
+      "ruleId": "MEDUSA-BR-002",
+      "facet": "business-rules",
+      "subject": "date range chronology",
+      "proposition": "validatePriceListDates validates each date independently and does not compare starts_at with ends_at for chronological ordering.",
+      "trigger": "A price-list input contains both start and end dates.",
+      "applicability": {
+        "scope": "The reversed-range scenario."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "medusa-obs-replica-reversed-range-business-rules"
+      ]
+    },
+    {
+      "ruleId": "MEDUSA-BEH-001",
+      "facet": "behavior",
+      "subject": "validation order",
+      "proposition": "The validator checks starts_at before ends_at; when both are invalid, the starts_at error is thrown first.",
+      "trigger": "Both optional date fields contain invalid values.",
+      "applicability": {
+        "scope": "The both-invalid-start-first scenario."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "medusa-obs-replica-both-invalid-start-first-behavior"
+      ]
+    },
+    {
+      "ruleId": "MEDUSA-ERR-001",
+      "facet": "errors-recovery",
+      "subject": "invalid date input",
+      "proposition": "A truthy invalid start or end date throws a MedusaError with type invalid_data.",
+      "trigger": "A date field is truthy but isDate returns false.",
+      "applicability": {
+        "scope": "Invalid start, invalid end, and both-invalid scenarios."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "medusa-obs-replica-invalid-start-errors-recovery",
+        "medusa-obs-replica-invalid-end-errors-recovery",
+        "medusa-obs-replica-both-invalid-start-first-errors-recovery"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "medusa-python-runtime-json",
+      "evidenceClass": "runtime",
+      "evidenceType": "source-utility-runtime-capture",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "python-date-replica",
+        "collector": "Python 3.12 ISO-8601 validator",
+        "sourceRevision": "83631192947038f0bc914604433d5c571cdb79f8",
+        "location": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/medusa-replica-capture.json"
+      },
+      "capturedAt": "2026-11-27T02:30:00.425736Z",
+      "embedded": {
+        "scenarioLabels": [
+          "omitted-both",
+          "null-both",
+          "empty-string-both",
+          "valid-start-iso",
+          "valid-end-iso",
+          "invalid-start",
+          "invalid-end",
+          "date-object-start",
+          "reversed-range",
+          "both-invalid-start-first"
+        ],
+        "sha256": "bff185cb79a87ec40a327750eccaf589e0affee73327c973394bf1f48726b330"
+      },
+      "locator": "conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/medusa-replica-capture.json",
+      "digest": "bff185cb79a87ec40a327750eccaf589e0affee73327c973394bf1f48726b330",
+      "sizeBytes": 3286,
+      "retention": {
+        "status": "retained",
+        "access": "Version-controlled repository artifact path"
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "business-rules",
+      "subject": "medusa-price-list-date-validation",
+      "status": "observed",
+      "reason": "All ten declared input scenarios have facet-specific observations.",
+      "scenarioIds": [
+        "medusa-scenario-omitted-both",
+        "medusa-scenario-null-both",
+        "medusa-scenario-empty-string-both",
+        "medusa-scenario-valid-start-iso",
+        "medusa-scenario-valid-end-iso",
+        "medusa-scenario-invalid-start",
+        "medusa-scenario-invalid-end",
+        "medusa-scenario-date-object-start",
+        "medusa-scenario-reversed-range",
+        "medusa-scenario-both-invalid-start-first"
+      ],
+      "executionIds": [
+        "medusa-exec-replica-omitted-both",
+        "medusa-exec-replica-null-both",
+        "medusa-exec-replica-empty-string-both",
+        "medusa-exec-replica-valid-start-iso",
+        "medusa-exec-replica-valid-end-iso",
+        "medusa-exec-replica-invalid-start",
+        "medusa-exec-replica-invalid-end",
+        "medusa-exec-replica-date-object-start",
+        "medusa-exec-replica-reversed-range",
+        "medusa-exec-replica-both-invalid-start-first"
+      ]
+    },
+    {
+      "facet": "data",
+      "subject": "medusa-price-list-date-validation",
+      "status": "observed",
+      "reason": "All ten declared input scenarios have facet-specific observations.",
+      "scenarioIds": [
+        "medusa-scenario-omitted-both",
+        "medusa-scenario-null-both",
+        "medusa-scenario-empty-string-both",
+        "medusa-scenario-valid-start-iso",
+        "medusa-scenario-valid-end-iso",
+        "medusa-scenario-invalid-start",
+        "medusa-scenario-invalid-end",
+        "medusa-scenario-date-object-start",
+        "medusa-scenario-reversed-range",
+        "medusa-scenario-both-invalid-start-first"
+      ],
+      "executionIds": [
+        "medusa-exec-replica-omitted-both",
+        "medusa-exec-replica-null-both",
+        "medusa-exec-replica-empty-string-both",
+        "medusa-exec-replica-valid-start-iso",
+        "medusa-exec-replica-valid-end-iso",
+        "medusa-exec-replica-invalid-start",
+        "medusa-exec-replica-invalid-end",
+        "medusa-exec-replica-date-object-start",
+        "medusa-exec-replica-reversed-range",
+        "medusa-exec-replica-both-invalid-start-first"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "medusa-price-list-date-validation",
+      "status": "observed",
+      "reason": "All ten declared input scenarios have facet-specific observations.",
+      "scenarioIds": [
+        "medusa-scenario-omitted-both",
+        "medusa-scenario-null-both",
+        "medusa-scenario-empty-string-both",
+        "medusa-scenario-valid-start-iso",
+        "medusa-scenario-valid-end-iso",
+        "medusa-scenario-invalid-start",
+        "medusa-scenario-invalid-end",
+        "medusa-scenario-date-object-start",
+        "medusa-scenario-reversed-range",
+        "medusa-scenario-both-invalid-start-first"
+      ],
+      "executionIds": [
+        "medusa-exec-replica-omitted-both",
+        "medusa-exec-replica-null-both",
+        "medusa-exec-replica-empty-string-both",
+        "medusa-exec-replica-valid-start-iso",
+        "medusa-exec-replica-valid-end-iso",
+        "medusa-exec-replica-invalid-start",
+        "medusa-exec-replica-invalid-end",
+        "medusa-exec-replica-date-object-start",
+        "medusa-exec-replica-reversed-range",
+        "medusa-exec-replica-both-invalid-start-first"
+      ]
+    },
+    {
+      "facet": "errors-recovery",
+      "subject": "medusa-price-list-date-validation",
+      "status": "observed",
+      "reason": "All ten declared input scenarios have facet-specific observations.",
+      "scenarioIds": [
+        "medusa-scenario-omitted-both",
+        "medusa-scenario-null-both",
+        "medusa-scenario-empty-string-both",
+        "medusa-scenario-valid-start-iso",
+        "medusa-scenario-valid-end-iso",
+        "medusa-scenario-invalid-start",
+        "medusa-scenario-invalid-end",
+        "medusa-scenario-date-object-start",
+        "medusa-scenario-reversed-range",
+        "medusa-scenario-both-invalid-start-first"
+      ],
+      "executionIds": [
+        "medusa-exec-replica-omitted-both",
+        "medusa-exec-replica-null-both",
+        "medusa-exec-replica-empty-string-both",
+        "medusa-exec-replica-valid-start-iso",
+        "medusa-exec-replica-valid-end-iso",
+        "medusa-exec-replica-invalid-start",
+        "medusa-exec-replica-invalid-end",
+        "medusa-exec-replica-date-object-start",
+        "medusa-exec-replica-reversed-range",
+        "medusa-exec-replica-both-invalid-start-first"
+      ]
+    }
+  ],
+  "limitations": [
+    "The source harness executes the exact pinned utility and helper source files with a temporary import-resolution shim; it does not run the complete Medusa application.",
+    "The independent Python parser is limited to ISO-8601 date strings and the declared Date-object marker."
+  ],
+  "replicationScope": {
+    "scopeId": "medusa-ten-probe-price-date-scope",
+    "description": "Complete inventory for ten date validation probes and four facets.",
+    "facets": [
+      "business-rules",
+      "data",
+      "behavior",
+      "errors-recovery"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "MEDUSA-P-001",
+        "facet": "business-rules",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "optional-date-field-bypass",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-omitted-both-business-rules",
+          "medusa-obs-replica-null-both-business-rules",
+          "medusa-obs-replica-empty-string-both-business-rules"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "Missing, null, and empty-string start/end values are accepted."
+      },
+      {
+        "propertyId": "MEDUSA-P-002",
+        "facet": "business-rules",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "valid-date-acceptance",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-valid-start-iso-business-rules",
+          "medusa-obs-replica-valid-end-iso-business-rules",
+          "medusa-obs-replica-date-object-start-business-rules"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "Valid ISO date strings and a valid Date object are accepted."
+      },
+      {
+        "propertyId": "MEDUSA-P-003",
+        "facet": "business-rules",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "invalid-start-rejection",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-invalid-start-business-rules"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "A truthy invalid starts_at value is rejected with invalid_data."
+      },
+      {
+        "propertyId": "MEDUSA-P-004",
+        "facet": "business-rules",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "invalid-end-rejection",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-invalid-end-business-rules"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "A truthy invalid ends_at value is rejected with invalid_data."
+      },
+      {
+        "propertyId": "MEDUSA-P-005",
+        "facet": "business-rules",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "no-chronology-check",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-reversed-range-business-rules"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "The validator accepts a reversed starts_at/ends_at range; it does not enforce date ordering."
+      },
+      {
+        "propertyId": "MEDUSA-P-006",
+        "facet": "behavior",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "validation-order",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-both-invalid-start-first-behavior"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "When both values are invalid, starts_at is checked first and its error is returned."
+      },
+      {
+        "propertyId": "MEDUSA-P-007",
+        "facet": "errors-recovery",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "medusa-invalid-data-error",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-invalid-start-errors-recovery",
+          "medusa-obs-replica-invalid-end-errors-recovery",
+          "medusa-obs-replica-both-invalid-start-first-errors-recovery"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "Invalid dates raise a MedusaError with type invalid_data."
+      },
+      {
+        "propertyId": "MEDUSA-P-008",
+        "facet": "data",
+        "subject": "medusa-price-list-date-validation",
+        "dimension": "accepted-date-representations",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "medusa-obs-replica-omitted-both-data",
+          "medusa-obs-replica-null-both-data",
+          "medusa-obs-replica-empty-string-both-data",
+          "medusa-obs-replica-valid-start-iso-data",
+          "medusa-obs-replica-valid-end-iso-data",
+          "medusa-obs-replica-invalid-start-data",
+          "medusa-obs-replica-invalid-end-data",
+          "medusa-obs-replica-date-object-start-data",
+          "medusa-obs-replica-reversed-range-data",
+          "medusa-obs-replica-both-invalid-start-first-data"
+        ],
+        "evidenceRefs": [
+          "medusa-python-runtime-json"
+        ],
+        "rationale": "The declared accepted representations include ISO strings, JavaScript Date objects, null, omitted, and empty string."
+      }
+    ],
+    "completeness": {
+      "status": "complete",
+      "assessedAt": "2026-11-27T02:30:00.543028Z",
+      "assessmentMethod": "All eight required properties are linked to runtime observations and retained evidence in both implementations.",
+      "rationale": "Every declared date-validation property is observed on the pinned source utility and independent Python implementation."
+    }
+  }
+}

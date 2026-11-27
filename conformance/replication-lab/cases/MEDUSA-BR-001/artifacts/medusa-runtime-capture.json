@@ -1,0 +1,154 @@
+{
+  "capturedAt": "2026-11-27T02:30:00.343Z",
+  "completedAt": "2026-11-27T02:30:00.344Z",
+  "source": "Medusa pinned source utility runtime",
+  "sourceCommit": "6e28e10acb9676392315b3ff1a9c7147fce4b5ab",
+  "pricingModuleVersion": "2.23.1",
+  "typescriptVersion": "6.0.2",
+  "dependencyResolution": "The validator, isDate helper, and MedusaError class are transpiled from the pinned source commit; a temporary module shim resolves the original framework-utils import to those same pinned helper sources.",
+  "sourceFileDigests": {
+    "validator": "53089099d3b3f8335558b6087fa1e4dce680b1193ea70b6c01390fe0c76aa193",
+    "dateHelper": "080205e738f1c397bbee97f4e2de8c8d27ea3b7a04a0a332020542b94b20c387",
+    "errorClass": "88bbc7224b967507b035daed1e01a98e486f933ff2a917f1ea911831e8ed3974",
+    "serviceUsage": "ff4b44f3b6fa608959b840b18aa65f4646372fc95f761c98541f38211157930e"
+  },
+  "scenarios": [
+    {
+      "label": "omitted-both",
+      "input": {},
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "null-both",
+      "input": {
+        "starts_at": null,
+        "ends_at": null
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "empty-string-both",
+      "input": {
+        "starts_at": "",
+        "ends_at": ""
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "valid-start-iso",
+      "input": {
+        "starts_at": "2026-01-01T00:00:00.000Z"
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "valid-end-iso",
+      "input": {
+        "ends_at": "2026-12-31T23:59:59.999Z"
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "invalid-start",
+      "input": {
+        "starts_at": "not-a-date"
+      },
+      "outcome": "rejected",
+      "errorType": "invalid_data",
+      "errorName": "Error",
+      "isMedusaError": true,
+      "errorField": "starts_at",
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "invalid-end",
+      "input": {
+        "ends_at": "not-a-date"
+      },
+      "outcome": "rejected",
+      "errorType": "invalid_data",
+      "errorName": "Error",
+      "isMedusaError": true,
+      "errorField": "ends_at",
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "date-object-start",
+      "input": {
+        "starts_at": {
+          "__date": "2026-01-01T00:00:00.000Z"
+        }
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "reversed-range",
+      "input": {
+        "starts_at": "2026-12-31T00:00:00.000Z",
+        "ends_at": "2026-01-01T00:00:00.000Z"
+      },
+      "outcome": "accepted",
+      "errorType": null,
+      "errorName": null,
+      "isMedusaError": false,
+      "errorField": null,
+      "validationOrder": "not-discriminated"
+    },
+    {
+      "label": "both-invalid-start-first",
+      "input": {
+        "starts_at": "bad-start",
+        "ends_at": "bad-end"
+      },
+      "outcome": "rejected",
+      "errorType": "invalid_data",
+      "errorName": "Error",
+      "isMedusaError": true,
+      "errorField": "starts_at",
+      "validationOrder": "starts_at-first"
+    }
+  ],
+  "checks": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "passed": true
+}

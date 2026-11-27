@@ -1,0 +1,10 @@
+{
+  "result": "match",
+  "scenarioCount": 10,
+  "comparedFields": [
+    "accept/reject outcome",
+    "Medusa invalid_data category",
+    "field-specific validation order"
+  ],
+  "errors": []
+}

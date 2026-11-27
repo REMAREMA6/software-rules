@@ -1,6 +1,6 @@
 # Background Processing Facet
 
-**Maturity:** Draft — Phase 3 facet specification  
+**Maturity:** Draft — Software Rules specification 0.3.0  
 **Facet ID:** `background-processing`
 
 ## 1. Purpose and boundary
@@ -30,9 +30,9 @@ The conceptual payload should support:
 - Timeout/cancellation.
 - Retry/backoff.
 - Terminal result.
-- And correlation to initiating operation..
+- correlation to initiating operation.
 
-These are semantic dimensions, not frozen serialized field names. Phase 4 will define types, cardinality, requiredness, identifiers, and schema constraints. Preserve raw evidence and record normalization separately.
+These dimensions describe the facet's semantic inventory. The current serialization mapping is in [`schemas/v1/facets/`](././schemas/v1/facets/); the JSON Schema defines the draft 0.2.0 wire structure, while this document defines the intended meaning. The schema does not prove that a particular capture inventoried every property required by its declared replication scope. Preserve raw evidence and record normalization separately.
 
 ## 4. Scenario requirements
 
@@ -66,8 +66,8 @@ Trigger a report-generation task and observe enqueue, start, completion, output 
 
 ## 9. Research and mapping
 
-Reuse relevant standards and platform conventions where they solve a specific part of the facet; do not treat any one of them as the complete Software Rules representation. See [standards review](../../research/STANDARDS-REVIEW.md) and [references](../../research/REFERENCES.md).
+Reuse relevant standards and platform conventions where they solve a specific part of the facet; do not treat any one of them as the complete Software Rules representation. See [standards review](././research/STANDARDS-REVIEW.md) and [references](././research/REFERENCES.md).
 
-## 10. Phase 4 schema questions
+## 10. Serialization mapping and remaining limits
 
-Before schema freeze, resolve exact property names/types, optionality, cardinality, stable identifiers, enumerations, units, null/missing/redaction representation, extension handling, and evidence-reference constraints. The schema must preserve the semantic distinctions defined in the common model.
+The corresponding typed payload schema is maintained in `schemas/v1/facets/`. Schema validation checks the declared serialization shape; it does not determine whether the inventory is exhaustive, whether the observation is true, or whether evidence is semantically sufficient. Those determinations remain governed by the common model, the Replication Completeness Rule, and the conformance review process.

@@ -6,6 +6,11 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
+### Verified
+- TORM-PERSIST-001 passed pinned TypeORM 1.1.3 source execution, independent Python/sqlite3 comparison (8 projections), six mutation tests, Software Rules 0.2.0 capture/report validation, and evidence-integrity checks. Workflow run #45928766010; artifact retained through 2026-12-27.
+- BMQ-MSG-001 passed pinned BullMQ/Redis source execution against the independent Python queue model (10 projections) and six mutation tests. Workflow run #45928721261; schema-native capture validation remains pending.
+- The living 15-facet matrix and Phase 6 tracker now distinguish bounded case passes from facet-wide completeness.
+
 ### Added
 - TypeORM TORM-PERSIST-001 transaction/rollback case with pinned-source compilation/runtime workflow, SQL.js probe, independent Python sqlite3 model, comparator, and mutation tests; runtime equivalence remains pending.
 - BullMQ BMQ-MSG-001 messaging case for duplicate job IDs, queue event order, consumer completion/failure, independent Python queue model, comparator mutations, and Redis-backed source workflow; runtime equivalence remains pending.

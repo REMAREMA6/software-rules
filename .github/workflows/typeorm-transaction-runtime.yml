@@ -1,0 +1,123 @@
+name: TypeORM transaction cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/TYPEORM-PERSIST-001/**"
+      - "conformance/replication-lab/projects/typeorm-transaction-python/**"
+      - ".github/workflows/typeorm-transaction-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/TYPEORM-PERSIST-001/**"
+      - "conformance/replication-lab/projects/typeorm-transaction-python/**"
+      - ".github/workflows/typeorm-transaction-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: typeorm-transaction-runtime
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  typeorm-transaction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Enable pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@12.22.0 --activate
+          pnpm --version
+      - name: Checkout exact TypeORM source commit
+        env:
+          TYPEORM_SOURCE_COMMIT: "b1e211fc2654d412612a08f8a7fb890f3352614f"
+        run: |
+          mkdir -p /tmp/typeorm
+          git -C /tmp/typeorm init
+          git -C /tmp/typeorm remote add origin https://github.com/typeorm/typeorm.git
+          git -C /tmp/typeorm fetch --depth=1 origin "$TYPEORM_SOURCE_COMMIT"
+          git -C /tmp/typeorm checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/typeorm rev-parse HEAD)" = "$TYPEORM_SOURCE_COMMIT"
+      - name: Install frozen TypeORM workspace dependencies
+        working-directory: /tmp/typeorm
+        run: |
+          pnpm install --filter typeorm... --filter . --frozen-lockfile
+          pnpm list --depth Infinity --json --filter typeorm... > dependency-tree.json
+      - name: Compile pinned TypeORM source
+        working-directory: /tmp/typeorm
+        run: pnpm --filter typeorm run compile
+      - name: Run pinned TypeORM transaction probe
+        working-directory: /tmp/typeorm/packages/typeorm
+        env:
+          TYPEORM_SOURCE_COMMIT: "b1e211fc2654d412612a08f8a7fb890f3352614f"
+        run: |
+          set -o pipefail
+          cp "$GITHUB_WORKSPACE/conformance/replication-lab/cases/TYPEORM-PERSIST-001/source_probe.cjs" ./software-rules-transaction-probe.cjs
+          node ./software-rules-transaction-probe.cjs | tee "$GITHUB_WORKSPACE/typeorm-runtime-capture.json"
+      - name: Run independent Python SQLite replica
+        run: |
+          python conformance/replication-lab/projects/typeorm-transaction-python/replica_probe.py > typeorm-replica-capture.json
+      - name: Compare TypeORM and Python transaction outcomes
+        run: |
+          set -o pipefail
+          python conformance/replication-lab/cases/TYPEORM-PERSIST-001/compare.py typeorm-runtime-capture.json typeorm-replica-capture.json | tee typeorm-comparison-report.json
+      - name: Stage raw TypeORM evidence and build Software Rules captures
+        run: |
+          evidence_dir="conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp typeorm-runtime-capture.json "$evidence_dir/typeorm-runtime-capture.json"
+          cp typeorm-replica-capture.json "$evidence_dir/typeorm-replica-capture.json"
+          cp typeorm-comparison-report.json "$evidence_dir/typeorm-raw-comparison-report.json"
+          cp /tmp/typeorm/pnpm-lock.yaml "$evidence_dir/pnpm-lock.yaml"
+          cp /tmp/typeorm/dependency-tree.json "$evidence_dir/dependency-tree.json"
+          python conformance/replication-lab/cases/TYPEORM-PERSIST-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/typeorm-runtime-capture.json" \
+            --replica "$GITHUB_WORKSPACE/typeorm-replica-capture.json" \
+            --output-dir "$GITHUB_WORKSPACE/typeorm-software-rules" \
+            --lockfile "$GITHUB_WORKSPACE/$evidence_dir/pnpm-lock.yaml"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/typeorm-software-rules/typeorm-source.capture.json" \
+            "$GITHUB_WORKSPACE/typeorm-software-rules/typeorm-python-replica.capture.json" \
+            "$GITHUB_WORKSPACE/typeorm-software-rules/typeorm-comparison.report.json"
+      - name: Commit verified TypeORM evidence to the repository
+        if: success() && github.event_name != 'pull_request'
+        run: |
+          evidence_dir="conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts"
+          cp typeorm-software-rules/typeorm-source.capture.json "$evidence_dir/typeorm-source.capture.json"
+          cp typeorm-software-rules/typeorm-python-replica.capture.json "$evidence_dir/typeorm-python-replica.capture.json"
+          cp typeorm-software-rules/typeorm-comparison.report.json "$evidence_dir/typeorm-comparison.report.json"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$evidence_dir"
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified TypeORM transaction evidence"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Retain TypeORM source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typeorm-transaction-cross-stack-captures
+          path: |
+            typeorm-runtime-capture.json
+            typeorm-replica-capture.json
+            typeorm-comparison-report.json
+            typeorm-software-rules/*.json
+            conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/*.json
+            conformance/replication-lab/cases/TYPEORM-PERSIST-001/artifacts/pnpm-lock.yaml
+          if-no-files-found: warn
+          retention-days: 30

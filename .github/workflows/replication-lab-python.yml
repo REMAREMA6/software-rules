@@ -24,4 +24,6 @@ jobs:
         run: |
           python -m unittest discover -s conformance/replication-lab/projects/retry-policy-python -v
           python -m unittest discover -s conformance/replication-lab/cases/BMQ-ER-002 -p "test_*.py" -v
+          python -m unittest discover -s conformance/replication-lab/cases/EXP-API-001 -p "test_*.py" -v
           python conformance/replication-lab/projects/retry-policy-python/replicate_retry_probe.py > /tmp/bullmq-replica-capture.json
+          python conformance/replication-lab/projects/express-routing-python/replica_probe.py > /tmp/express-replica-capture.json

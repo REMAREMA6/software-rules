@@ -34,4 +34,4 @@ The suite detects always-select-sale, default-as-original, allowing-sale-as-orig
 
 ## Acceptance gate
 
-Accept only after all nine source/replica returned-price objects match; all six mutations are detected; source method provenance and digest are retained; and Software Rules 0.2.0 captures/comparison pass schema and cross-record integrity validation. This is bounded price-selection evidence, not full commerce or business-rule facet coverage.
+Accept only after all nine source/replica returned-price objects match; all five deliberate mutations are detected; source method provenance and digest are retained; and Software Rules 0.2.0 captures/comparison pass schema and cross-record integrity validation. This is bounded price-selection evidence, not full commerce or business-rule facet coverage.

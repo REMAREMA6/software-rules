@@ -2,6 +2,7 @@ name: Express configuration cross-stack conformance
 
 on:
   push:
+    branches: [main]
     paths:
       - "conformance/replication-lab/cases/EXP-CONFIG-001/**"
       - "conformance/replication-lab/projects/express-config-python/**"

@@ -219,7 +219,7 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 **Work sequence**
 - [x] Establish the independent replication-lab structure, case manifests, evidence layout, and initial runners; reports are generated per case as evidence becomes available.
 - [x] Re-audit Task Board and preserve it as bounded evidence; unresolved properties remain partial/incomplete rather than being promoted to complete.
-- [x] Register nine immutable source candidates and inspect the selected source implementations.
+- [x] Register eleven immutable source repositories and inspect the selected source implementations.
 - [x] Accept BMQ-ER-002 (BullMQ retry/backoff) and EXP-API-001 (Express routing/API) after successful pinned-source runtime, independent Python replica, comparison, mutation, schema/integrity, and artifact-retention runs.
 - [x] TORM-PERSIST-001: pinned TypeORM source + SQL.js vs Python sqlite3; two scenarios, eight semantic projections, six mutation tests, schema 0.2.0 capture/report and evidence-integrity validation passed.
 - [x] BMQ-MSG-001: pinned BullMQ source + Redis vs Python queue model; two scenarios, ten semantic projections, six mutation tests, schema-native capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).

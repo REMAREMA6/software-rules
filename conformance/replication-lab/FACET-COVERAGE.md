@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Twelve bounded cross-stack cases have passed: the original eight cases, TASKBOARD-UI-001, EXP-CONFIG-001, PROM-PERF-001, and CASBIN-ADV-AUTHZ-001. No entire facet is complete for the project-wide objective. No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Thirteen bounded cross-stack cases have passed: the original eight cases, TASKBOARD-UI-001, EXP-CONFIG-001, PROM-PERF-001, CASBIN-ADV-AUTHZ-001, and MEDUSA-PRICE-001. No entire facet is complete for the project-wide objective. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 
@@ -42,6 +42,7 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [EXP-CONFIG-001](cases/EXP-CONFIG-001/CASE.md) | Configuration; API; behaviour | Five configuration profiles, 18 path observations, late-setting snapshot semantics, three deliberate mutation tests, Software Rules 0.2.0 captures/report, schema/integrity validation; run [#45937990537](https://github.com/REMAREMA6/software-rules/actions/runs/45937990537), artifact `15171850580` |
 | [PROM-PERF-001](cases/PROM-PERF-001/CASE.md) | Performance and resource behaviour; behaviour; data | Three pinned Prometheus runs and three Python model runs; 20,000 samples per run, three semantic matches, dropped-scrape and missing-repeat mutations detected, Software Rules captures/report validated; run [#45938387274](https://github.com/REMAREMA6/software-rules/actions/runs/45938387274), artifact `15171587211` |
 | [CASBIN-ADV-AUTHZ-001](cases/CASBIN-ADV-AUTHZ-001/CASE.md) | Authorization and permissions; behaviour; data; security controls | 19 domain-RBAC/ABAC/deny-override/policy-mutation decisions matched, four mutations detected, Software Rules captures/report validated; run [#45938792630](https://github.com/REMAREMA6/software-rules/actions/runs/45938792630), artifact `15172101161` |
+| [MEDUSA-PRICE-001](cases/MEDUSA-PRICE-001/CASE.md) | Business rules; data; behaviour | Exact pinned Medusa service method body matched independent Python across nine calculated/original price-selection scenarios; five mutations detected; Software Rules captures/report validated; run [#45939713683](https://github.com/REMAREMA6/software-rules/actions/runs/45939713683), artifact `15172460158` |
 
 
 ## Pending cases\n\n| Case | Facet | Current status |\n|---|---|---|\n| [PROM-PERF-001](cases/PROM-PERF-001/CASE.md) | Performance and resource behaviour; behaviour; data | Pending pinned Prometheus runtime benchmark, three repeated measurements, independent workload model, mutation detection, Software Rules capture/report validation, and evidence review.\n\n## Completion rule

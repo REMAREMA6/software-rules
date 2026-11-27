@@ -1,7 +1,7 @@
 # Case — Prometheus TSDB write workload and resource measurement
 
 **Case ID:** PROM-PERF-001  
-**Status:** Pending runtime execution and evidence review.  
+**Status:** PASSED for the declared 200-series × 100-scrape workload and three repetitions in [run #45938387274](https://github.com/REMAREMA6/software-rules/actions/runs/45938387274). The pinned Prometheus command and independent Python model matched all three workload/sample-count comparisons; the dropped-scrape and missing-repeat mutations were detected; Software Rules 0.2.0 source/replica captures and comparison passed schema and evidence-integrity validation. Artifact `15171587211` retained through 2026-12-27. Median observed throughput was approximately 5.64M samples/s for Prometheus and 0.95M samples/s for the Python model; these are implementation-specific measurements, not an equality claim. This is bounded workload/resource evidence, not complete performance-facet coverage.  
 **Facet:** Performance and resource behaviour; behaviour; data  
 **Source:** https://github.com/prometheus/prometheus  
 **Immutable source commit:** `1e794b83ad0d1df86c26fc607f87197734b9d9d9`  

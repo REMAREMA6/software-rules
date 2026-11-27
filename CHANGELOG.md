@@ -7,6 +7,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- VIPER-CONFIG-001 passed nine Viper v1.21.0/Python configuration precedence and environment mapping scenarios; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45941776949, artifact #15172438139. Remote providers, reload/watch, secret managers and multi-file merge remain excluded.
+
+
+### Verified
 - SESSION-EXPRESS-001 passed nine express-session 1.19.0/Python session lifecycle transitions; five deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45941194819, artifact #15172927152. This is bounded MemoryStore session lifecycle evidence, not a full identity provider or complete authentication facet.
 
 

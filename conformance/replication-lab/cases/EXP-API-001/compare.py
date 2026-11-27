@@ -30,7 +30,7 @@ def compare(source, replica):
     return {
         "result": "mismatch" if errors else "match",
         "scenarioCount": len(replica_by_label),
-        "comparedFields": ["configuration", "request", "response.status", "response.body", "response.headers"],
+        "comparedFields": ["configuration", "request", "response.status", "response.body", "response.headers", "response.wireBodyBytes"],
         "errors": errors,
     }
 

@@ -10,6 +10,7 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 - Reconciled the Replication Completeness Rule with the 24-case Phase 6 exit. It remains the controlling rule for every declared replication scope; a passing validator cannot prove that a human property inventory is exhaustive.
 - Corrected the version mismatch: Software Rules specification 0.3.0 Draft; JSON Schema set 0.2.0 Draft in the reserved v1 compatibility family. Added explicit pre-1.0 task to carry specificationVersion in captures.
 - Corrected the documented schema-validation install command to install from conformance/validation/.
+- Fixed the case-artifact validator's completeness mapping so it distinguishes incomplete-reference, incomplete-implementation, incomplete-both, and undetermined; both validators now share one implementation. Added a nine-combination unit test and claim guards, passing in workflow run #45961356155.
 - Reconciled design decisions, superseded D-006 with D-010, updated schema version references, and recorded D-014 for the versioned pre-stable snapshot.
 - Added maintenance, security/privacy, issue triage, evidence retention, release-process, and stable 1.0.0 readiness policies. Published the repository release snapshot under releases/0.3.0-draft/.
 - Preserved all Phase 6 limitations and the distinction between bounded corpus validation and universal or facet-wide completeness.

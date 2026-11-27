@@ -6,7 +6,7 @@
 **Source:** https://github.com/taskforcesh/bullmq  
 **Source commit:** 526668f2c5e6de9d5d664df577f09a6bdccac1b4  
 **Source stack:** TypeScript / Node.js with Redis-backed queue  
-**Replica stack:** undecided; must be independent and different  
+**Replica stack:** Python 3.12 decision-model simulation (independent of BullMQ; deliberately narrower than the queue implementation)  
 **Rule:** BMQ-ER-002
 
 ## Declared scope
@@ -48,9 +48,9 @@ Source code and tests are pinned to the immutable commit above. See the associat
 
 ## Independent replica
 
-A narrow independent Python implementation is committed under conformance/replication-lab/projects/retry-policy-python/. It models only retry eligibility and retry routing; it does not recreate BullMQ, Redis, or the worker scheduler. It uses no BullMQ imports.
+A narrow independent Python implementation is committed under conformance/replication-lab/projects/retry-policy-python/. It models retry eligibility, attempt counts, custom backoff decisions, and the terminal result for the declared scenarios; it does not recreate BullMQ, Redis, queue storage, or the worker scheduler. It uses no BullMQ imports. The Python scenario simulator generates a separate replica capture, and the comparison script checks shared semantic fields against the source runtime capture.
 
-The eight corresponding Python test cases were exercised in an isolated local Python run and passed, including an off-by-one mutation check. The committed test module still needs to be run through the repository's automated workflow. This validates the Python model against the extracted source-code proposition, not against BullMQ runtime output.
+The original eight Python decision-model tests passed in GitHub Actions. Additional simulator/comparator tests also pass in CI, including mutations to the attempt count and backoff sequence. This verifies the replica and comparator logic internally; source/runtime equivalence remains unproven until the pinned-source workflow completes and its JSON artifacts are reviewed.
 
 Source-derived capture: examples/cross-repository/captures/bullmq-source.capture.json. It explicitly records the two rules as source-inferred and marks replication completeness incomplete.
 
@@ -60,4 +60,4 @@ The local Python test includes a deliberate off-by-one attempt-limit mutation an
 
 ## Current conclusion
 
-No pass claim. Source inspection has identified candidate rules and a discriminating test matrix; runtime capture and independent cross-stack replication remain outstanding.
+No pass claim yet. The pinned-source runtime workflow is configured to run BullMQ 6.7.10 at the exact inspected commit with Redis 7, generate source traces for three retry scenarios, produce the Python replica capture, compare shared semantic fields, and retain artifacts. The workflow result and artifacts must be reviewed before the case can pass.

@@ -42,3 +42,14 @@ One bounded ten-input case now passes: the pinned Medusa utility and independent
 [MEDUSA-PRICE-001](../../conformance/replication-lab/cases/MEDUSA-PRICE-001/CASE.md) executes the exact pinned `PricingModuleService.calculatePrices` method body using the TypeScript compiler API and a deterministic repository fixture. An independent Python 3.12 model matched nine calculated/original price-selection scenarios; five deliberate mutations were detected; Software Rules 0.2.0 captures and comparison passed schema and cross-record integrity validation in [run #45939713683](https://github.com/REMAREMA6/software-rules/actions/runs/45939713683), artifact `15172460158`.
 
 This is bounded service-level price-selection evidence. SQL candidate filtering, quantity tiers, tax inclusivity, currency normalization, cart totals, discount stacking, and broader commerce rules remain uncovered.
+
+
+## Additional accepted adjustment and tax-allocation case
+
+[MEDUSA-ADJUST-001](../../conformance/replication-lab/cases/MEDUSA-ADJUST-001/CASE.md) executes the exact pinned `calculateAdjustmentTotal` function and matches an independent Python Decimal model across nine scenarios, including exclusive/inclusive tax, mixed adjustments, missing amount, and quantity boundaries. Six mutations were detected; Software Rules schema and evidence integrity passed in [run #45943612155](https://github.com/REMAREMA6/software-rules/actions/runs/45943612155), artifact `15173389412`.
+
+## Additional accepted promotion eligibility case
+
+[MEDUSA-PROMO-001](../../conformance/replication-lab/cases/MEDUSA-PROMO-001/CASE.md) executes the exact pinned `evaluateRuleValueCondition` and `areRulesValidForContext` functions and matches an independent Python evaluator across 32 scenarios. Eight mutations were detected; Software Rules schema and evidence integrity passed in [run #45944011363](https://github.com/REMAREMA6/software-rules/actions/runs/45944011363), artifact `15174046701`.
+
+These cases cover adjustment/tax allocation and promotion eligibility only. Promotion discovery, SQL prefiltering, discount application/stacking, campaign budgets, usage registration, full cart totals, shipping, and checkout remain outside scope.

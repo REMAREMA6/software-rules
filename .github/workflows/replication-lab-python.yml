@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "conformance/replication-lab/projects/**"
+      - "conformance/replication-lab/cases/**"
       - ".github/workflows/replication-lab-python.yml"
   pull_request:
     paths:

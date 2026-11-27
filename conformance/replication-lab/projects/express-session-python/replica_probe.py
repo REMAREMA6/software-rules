@@ -16,7 +16,7 @@ def verify(cookie):
  expected=base64.b64encode(hmac.new(SECRET,sid.encode(),hashlib.sha256).digest()).decode().rstrip("=")
  return sid if hmac.compare_digest(sig,expected) else None
 def cookie_info(cookie,cleared=False):
- if not cookie:return {"name":None,"present":False,"cleared":False,"attributes":[]}
+ if not cookie and not cleared:return {"name":None,"present":False,"cleared":False,"attributes":[]}
  return {"name":"connect.sid","present":not cleared,"cleared":cleared,"attributes":["expires","httponly","path","samesite"] if cleared else ["httponly","path","samesite"]}
 def capture(mutation=None):
  m=mutation or {}; store={}; outcomes=[]

@@ -27,4 +27,4 @@ The lab is organised by rule case, not by source stack. Each case links to an im
 
 ## Current status
 
-The living facet-by-facet evidence matrix is maintained in [FACET-COVERAGE.md](FACET-COVERAGE.md). Seven bounded cases pass: BullMQ retry/backoff, BullMQ message lifecycle, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, and Casbin simple-RBAC authorization. REDIS-INT-001 is active and awaiting pinned-source runtime/schema validation. No entire facet is complete for the full project objective yet. The existing Task Board fixture remains separate and retains its bounded evidence status.
+The living facet-by-facet evidence matrix is maintained in [FACET-COVERAGE.md](FACET-COVERAGE.md). Eight bounded cases pass: BullMQ retry/backoff, BullMQ message lifecycle, Express routing, TypeORM transaction commit/rollback, Medusa price-list date validation, JOSE JWT verification, Casbin simple-RBAC authorization, and Redis client integration. No entire facet is complete for the full project objective yet. The existing Task Board fixture remains separate and retains its bounded evidence status.

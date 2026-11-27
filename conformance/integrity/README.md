@@ -1,6 +1,6 @@
 # Cross-record integrity validation
 
-**Status:** Draft — Phase 6
+**Maturity:** Draft — Software Rules specification 0.3.0
 
 JSON Schema validates each record's local shape. It cannot establish that IDs referenced by one record exist elsewhere in the same capture. This validator checks that graph-level layer.
 

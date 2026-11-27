@@ -1,7 +1,7 @@
 # Case — BullMQ message delivery, duplicate suppression, and consumer outcome
 
 **Case ID:** BMQ-MSG-001  
-**Status:** Source runtime probe, independent Python model, comparator, and mutation tests prepared; runtime execution pending.  
+**Status:** PASSED for the declared two-scenario scope. Pinned BullMQ+Redis and independent Python queue model match across ten facet/scenario projections; executable replica mutations, Software Rules schema validation, cross-record evidence integrity, and committed artifacts all pass.  
 **Facet(s):** Messaging; Behaviour; Background processing; Errors and recovery; Data  
 **Source:** https://github.com/taskforcesh/bullmq  
 **Source commit:** 526668f2c5e6de9d5d664df577f09a6bdccac1b4  
@@ -32,8 +32,8 @@ The Python model implements only the declared identifier, queue lifecycle, and t
 
 ## Mutation tests
 
-Comparator tests detect duplicate processing, payload overwrite, missing completion acknowledgement, reordered queue events, and a failed consumer incorrectly marked completed.
+Executable mutations of the independent Python model detect duplicate processing, payload overwrite, missing completion acknowledgement, reordered queue events, and a failed consumer incorrectly marked completed.
 
-## Acceptance gate
+## Result
 
-This case remains pending until the pinned BullMQ+Redis runtime, Python replica, equivalent comparisons, mutation tests, schema/integrity validation, and retained evidence all pass. It does not establish all message broker delivery guarantees or exactly-once processing.
+**Passed for the declared bounded scope.** The pinned BullMQ source at commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4` with Redis 7 and the independent Python 3.12 queue model match both scenarios across ten facet/scenario projections. Executable mutations detect duplicate processing, payload overwrite, missing completion acknowledgement, event reordering, and incorrect failure completion. Software Rules 0.2.0 source/replica captures and the comparison report passed schema and cross-record evidence validation in [workflow run #25](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126). Raw runtime captures, structured captures, and comparison are committed under `artifacts/` at [commit ce9d0e1](https://github.com/REMAREMA6/software-rules/commit/ce9d0e1a0c62830418daa912c1a798561c897a3a). This does not establish exactly-once processing, crash redelivery, delayed jobs, or every message broker delivery guarantee.

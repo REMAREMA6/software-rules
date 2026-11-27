@@ -62,6 +62,7 @@ jobs:
           REDIS_HOST: 127.0.0.1
           REDIS_PORT: "6379"
         run: |
+          set -o pipefail
           cp "$GITHUB_WORKSPACE/conformance/replication-lab/probes/bullmq-retry-runtime.cjs" ./software-rules-retry-probe.cjs
           node ./software-rules-retry-probe.cjs | tee "$GITHUB_WORKSPACE/bullmq-runtime-capture.json"
       - uses: actions/setup-python@v5
@@ -72,6 +73,7 @@ jobs:
           python "$GITHUB_WORKSPACE/conformance/replication-lab/projects/retry-policy-python/replicate_retry_probe.py" > "$GITHUB_WORKSPACE/bullmq-replica-capture.json"
       - name: Compare source and independent replica captures
         run: |
+          set -o pipefail
           python "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-ER-002/compare_retry_probe.py" "$GITHUB_WORKSPACE/bullmq-runtime-capture.json" "$GITHUB_WORKSPACE/bullmq-replica-capture.json" | tee "$GITHUB_WORKSPACE/bullmq-comparison-report.json"
       - name: Retain source, replica, and comparison captures
         if: always()

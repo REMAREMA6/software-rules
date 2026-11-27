@@ -6,6 +6,9 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
+### Changed
+- Corrected the Phase 6 handoff and source-candidate count; explicitly separated the Python model workflow from BullMQ runtime execution and retained the source capture as unverified/incomplete. Added a pinned-source runtime-to-replica execution order and bounded cross-stack portability language.
+
 ### Added
 - Cross-repository replication lab scaffolding, rule-case and source-repository templates, and a Python rule-model CI workflow.
 - Initial source candidates for BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, n8n, Prometheus, Express, and Medusa, each pinned to an inspected commit with licence/evidence status recorded.

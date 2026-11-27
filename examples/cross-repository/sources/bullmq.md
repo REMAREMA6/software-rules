@@ -58,6 +58,8 @@ One bounded retry/backoff case has a successful pinned-source runtime-to-Python 
 
 ## Additional messaging case — BMQ-MSG-001
 
-A second bounded case now probes duplicate custom job identifiers, queue event order, successful consumer completion, and terminal consumer failure. The independent replica is a Python 3.12 queue model; the source probe runs against the same pinned BullMQ commit with Redis 7. This is distinct from the retry/backoff case and is intended to test the messaging facet rather than infer it from worker retry behaviour.
+A second bounded case probes duplicate custom job identifiers, first-payload authority, queue event order, successful consumer completion, and terminal consumer failure. The independent replica is a Python 3.12 queue model; the source probe runs against the same pinned BullMQ commit with Redis 7. This is distinct from the retry/backoff case.
 
-**Status:** Probe, replica, comparator, mutation tests, and CI workflow prepared. Runtime result and schema-native evidence validation are pending. No messaging pass is claimed yet.
+**Runtime status:** Passed in run #45928721261. Two scenarios and ten semantic projections matched; six mutation tests passed. Retained artifact ID 15167806675 expires 2026-12-27.
+
+**Remaining:** Schema-native capture/report generation and evidence-integrity validation are being added. The case does not establish exactly-once delivery, redelivery after crash, or all queue lifecycle semantics.

@@ -6,6 +6,10 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
+### Phase 6 exit
+- Approved Phase 6 for the declared 20-case cross-repository validation corpus across all 15 facets and 15 immutable source repositories. Added [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md) with case-level evidence, facet outcomes, explicit case-scope exclusions/future coverage, retention notes, and non-claims. This does not assert universal equivalence or facet-wide completeness. Phase 7 is unblocked.
+
+
 ### Verified
 - MEDUSA-ADJUST-001 passed nine pinned Medusa adjustment/tax-allocation scenarios against an independent Python Decimal model; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45943612155, artifact #15173389412.
 - MEDUSA-PROMO-001 passed 32 pinned Medusa promotion-rule eligibility scenarios against an independent Python evaluator; eight deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45944011363, artifact #15174046701.

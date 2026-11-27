@@ -97,7 +97,7 @@ def build_report(source,replica):
       a=source["observations"][i-1]; b=replica["observations"][i-1]; aid=f"prom-perf-alignment-{i}"
       align.append({"alignmentId":aid,"facet":FACET,"referenceRecordIds":[a["observationId"]],
         "implementationRecordIds":[b["observationId"]],"status":"paired",
-        "identityBasis":"same-workload-run-index","rationale":"Same declared cardinality, scrape count, and repetition index."})
+        "identityBasis":"scenario-subject-facet-condition","rationale":"Same declared cardinality, scrape count, and repetition index."})
       av=a["normalizedValue"]; bv=b["normalizedValue"]
       results.append({"resultId":f"prom-perf-result-{i}","alignmentId":aid,"facet":FACET,
         "dimension":"workload-semantic-accounting","classification":"match" if av==bv else "mismatch",

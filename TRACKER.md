@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Last updated:** 2026-11-26  
+**Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
 **Overall status:** Phase 6 in progress; replication-lab scaffolding exists, nine source candidates are registered, and the first source-derived rule has an independent Python model; no facet has passed the complete cross-stack evidence loop
 
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Multi-repository strategy and replication-lab skeleton established; six source candidates registered; first source-derived rule and Python model added. Full source-runtime/replica/comparison cases across all 15 facets remain outstanding. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Multi-repository strategy and replication-lab skeleton established; nine source candidates registered; first source-derived rule and Python model added. Full source-runtime/replica/comparison cases across all 15 facets remain outstanding. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
@@ -328,5 +328,16 @@
 - Created conformance/replication-lab with case and source templates, shared layout, and Python test workflow.
 - Registered nine source candidates with pinned inspected commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n. They remain candidates, not passed cases.
 - Inspected BullMQ retry/backoff source, guide, and tests at commit 526668f2c5e6de9d5d664df577f09a6bdccac1b4. Added a source-derived Software Rules capture with two unverified rules and an explicitly incomplete scope.
-- Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The corresponding test logic passed an isolated local Python run. Repository CI has been configured; source runtime execution and source/replica capture comparison remain outstanding.
+- Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The test logic passed an isolated local Python run. The repository workflow is configured, but no successful run has yet been verified. Source runtime execution and source/replica capture comparison remain outstanding.
 - No Phase 6 completion claim is made. The current work demonstrates the cross-repository process has begun, not that all 15 facets have passed.
+
+
+### 2026-11-27 — Phase 6 execution audit and corrected handoff
+
+- Re-read the current plan, tracker, cross-repository programme, BullMQ case, Python replica, test module, workflow, and source capture.
+- Confirmed the Python workflow runs only the isolated Python decision-model tests; it does not execute BullMQ, Redis, or an end-to-end queue scenario.
+- Confirmed the BullMQ source capture is correctly marked source-inferred/unverified and incomplete. It is not a runtime capture and must not be used as proof of source/replica equivalence.
+- Reconfirmed the pinned BullMQ package version at the selected commit is 6.7.10 and its package test command is Vitest. Runtime harness design must use the exact pinned source and Redis-backed test setup, not substitute a current npm release.
+- Corrected the source register count to nine candidates. All remain candidates until individual rule cases pass.
+- Immediate execution order: (1) make the Python model's test run reproducible and verify its workflow; (2) build a pinned-commit BullMQ+Redis runtime probe and record actual outputs; (3) capture the independent implementation in a genuinely different stack; (4) compare both captures and mutation-test; (5) repeat for every required rule/property across all 15 facets.
+- Phase 6 remains in progress; Phase 7 remains blocked. No completion claim is made.

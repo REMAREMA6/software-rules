@@ -13,6 +13,10 @@ on:
       - ".github/workflows/prometheus-performance-runtime.yml"
   workflow_dispatch:
 
+concurrency:
+  group: prometheus-performance-runtime
+  cancel-in-progress: true
+
 permissions:
   contents: read
 

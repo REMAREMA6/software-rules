@@ -420,3 +420,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Added independent Python queue model, comparator mutation tests, and Redis-backed pinned-source workflow for BMQ-MSG-001.
 - [x] Ran the Python messaging model logic locally in the analysis environment; duplicate suppression, one processing outcome, completion acknowledgement, and failed-consumer terminal state assertions passed. This does not establish BullMQ source-runtime equivalence.
 - [~] Actual TypeORM and messaging GitHub Actions outputs and Software Rules schema-native captures are still unverified. Do not promote either case to passed.
+
+
+### 2026-11-27 — Bounded Medusa date-validation case accepted
+
+- [x] Pinned Medusa commit `6e28e10acb9676392315b3ff1a9c7147fce4b5ab` and executed the exact price-list validator, `isDate`, and `MedusaError` helper source files.
+- [x] Compared ten optional/valid/invalid/Date-object/reversed-range inputs with an independent Python 3.12 ISO-8601 implementation.
+- [x] Matched 40 facet/scenario projections across business rules, data, behaviour, and errors/recovery.
+- [x] Detected four executable mutations: empty-string rejection, skipped end-date validation, added chronology enforcement, and reversed validation order.
+- [x] Generated and validated Software Rules 0.2.0 captures and comparison report.
+- [x] Committed source files, raw/structured captures, comparison, and TypeScript toolchain lock under `conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/` at [dd0ad76](https://github.com/REMAREMA6/software-rules/commit/dd0ad76f0ec9557a41250c5fcc3efa14dc5aa1a2).
+- [~] Phase 6 remains active; this case does not cover full Medusa pricing or the entire business-rules facet.

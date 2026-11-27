@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; two bounded cross-stack cases (BullMQ retry/backoff and Express routing) have passed the full evidence loop; TypeORM persistence and BullMQ messaging cases are implemented but runtime verification is pending; remaining facets are incomplete
+**Overall status:** Phase 6 in progress; four bounded cases are accepted in the 15-facet matrix (BullMQ retry/backoff, Express routing, TypeORM transactions, Medusa date validation); BullMQ messaging source/replica runtime and mutation tests pass, with schema-native validation pending; remaining facets are incomplete
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Verify TORM-PERSIST-001 and BMQ-MSG-001 source-runtime workflows, fix any failures, and produce schema-native captures/comparison reports before moving to identity, authorization, security, business rules, integrations, and performance/resource cases.
-- **Blockers:** The two accepted cases are bounded, not facet-complete. TypeORM and messaging runtime results are pending; neither case has schema-native captures yet. Identity, authorization, dedicated security, integrations, business rules, and repeatable performance cases still lack accepted cross-stack evidence. Interface needs a separate UI-stack replica and completeness audit.
-- **Next action:** Obtain and inspect actual TypeORM and BullMQ messaging runtime outputs, correct workflow/probe failures, then generate and validate Software Rules captures and comparison reports. Do not count prepared probes or local Python model checks as runtime passes.
+- **Current task:** Complete BMQ-MSG-001 schema-native captures, comparison report, schema/integrity validation, and retained evidence; then build the missing identity/authentication, authorization, security, integrations, business-rule, performance/resource, and cross-UI-stack cases.
+- **Blockers:** No entire facet is complete. BMQ-MSG-001 still needs schema-native capture validation. Identity/authentication, authorization, dedicated security, integrations, repeatable performance/resource behaviour, and a separate UI-stack replica have no accepted cross-stack case. Business-rule coverage is limited to Medusa date validation; full commerce rules remain uncovered.
+- **Next action:** Finish BMQ-MSG-001 schema validation and evidence retention. Then create and run cross-stack cases for identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and a UI framework/stack pair.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | BullMQ and Express bounded cases passed with pinned source runtimes, independent Python replicas, mutations, schema/integrity validation, and retained evidence. TypeORM persistence case is active; remaining facets still need cases and property inventories. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | BullMQ retry, Express API, TypeORM persistence, and Medusa date-validation cases are recorded as bounded passes. BullMQ messaging runtime and mutation tests also pass; schema capture validation is active. Remaining facets and property inventories are incomplete. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
@@ -157,7 +157,9 @@
 - [x] Create the replication-lab skeleton, case template, source register, and source-record template.
 - [x] Register and inspect nine immutable source candidates; candidates remain distinct from accepted cases.
 - [x] Accept bounded BullMQ retry/backoff and Express routing/API cross-stack cases after reviewing successful runtime runs and retained artifacts.
-- [~] Execute TypeORM transaction/rollback case; then add distinct cases for messaging, identity, authorization, security, business rules, integrations, and performance.
+- [x] TORM-PERSIST-001: TypeORM 1.1.3 pinned source + SQL.js versus Python 3.12 sqlite3; two scenarios, eight semantic projections, six mutations, schema 0.2.0 capture/report validation, and evidence integrity passed.
+- [~] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations passed; schema-native capture/report validation pending.
+- [ ] Add distinct cases for identity/authentication, authorization, security, integrations, broader business rules, performance/resources, and cross-UI-stack replication.
 - [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
 
@@ -175,14 +177,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] 2. Behaviour — triggers, transitions, side effects, ordering, and failure replication.
 - [ ] 3. Business rules — conditions, constraints, calculations, precedence, and boundary replication.
 - [ ] 4. Data — shapes, types, nullability, relationships, transformations, and serialization.
-- [~] 5. Persistence — TypeORM top-level commit/rollback case is implemented; runtime comparison pending; durability/restart/concurrency remain uncovered.
+- [~] 5. Persistence — bounded TypeORM top-level commit/rollback case passed; durability/restart/concurrency and other drivers remain uncovered.
 - [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.
-- [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer case is implemented; runtime comparison pending; delivery guarantees and idempotency breadth remain uncovered.
+- [~] 7. Messaging — BullMQ duplicate-ID, event-order, completion, and failed-consumer runtime comparison and mutations passed; schema-native captures pending; delivery guarantees and idempotency breadth remain uncovered.
 - [ ] 8. Identity/authentication — principal, credential/session lifecycle, expiry, and logout.
 - [ ] 9. Authorization — actor/resource/action policy matrix and enforcement.
 - [ ] 10. Security — authorized control, bypass, and containment scenarios.
 - [~] 11. Background processing — BullMQ retry/backoff case passed; scheduling/cancellation/duplicate/stalled-worker lifecycle remain uncovered.
-- [~] 12. Errors/recovery — bounded BullMQ retry/suppression and Express 404 cases passed; rollback case pending; broader failure/recovery classes remain uncovered.
+- [~] 12. Errors/recovery — bounded BullMQ retry/suppression, Express 404, TypeORM rollback, and Medusa invalid-date cases passed; broader failure/recovery classes remain uncovered.
 - [ ] 13. Integrations — external dependency contracts and controlled failure outcomes.
 - [~] 14. Configuration — Express routing defaults passed; precedence/invalid values/runtime changes remain uncovered.
 - [ ] 15. Performance/resources — repeatable workload, latency distributions, throughput, and resource behaviour.
@@ -197,7 +199,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** two bounded cross-stack cases have passed, but no entire facet is complete for the full objective. The active TypeORM case has not yet passed. Several facets have no source-runtime/replica case. The Task Board-only approach remains superseded as the overall strategy. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
+**Current blocker:** several bounded cross-stack cases pass, but no entire facet is complete for the full objective. BMQ-MSG-001 needs schema-native capture validation; identity/authentication, authorization, dedicated security, integrations, performance/resources, and cross-UI-stack replication still lack accepted cases. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
 
 ## Phase 7 — Review, release, and maintenance
 
@@ -431,3 +433,13 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Generated and validated Software Rules 0.2.0 captures and comparison report.
 - [x] Committed source files, raw/structured captures, comparison, and TypeScript toolchain lock under `conformance/replication-lab/cases/MEDUSA-BR-001/artifacts/` at [dd0ad76](https://github.com/REMAREMA6/software-rules/commit/dd0ad76f0ec9557a41250c5fcc3efa14dc5aa1a2).
 - [~] Phase 6 remains active; this case does not cover full Medusa pricing or the entire business-rules facet.
+
+
+### 2026-11-27 — TypeORM and BullMQ messaging runtime verification
+
+- [x] TORM-PERSIST-001: pinned TypeORM 1.1.3 source commit `b1e211fc2654d412612a08f8a7fb890f3352614f` compiled and executed with SQL.js; independent Python 3.12 sqlite3 replica matched two scenarios and eight facet/scenario projections.
+- [x] TORM-PERSIST-001: six mutation tests passed; Software Rules 0.2.0 source/replica captures and comparison report passed schema and evidence-integrity validation in run [#45928766010](https://github.com/REMAREMA6/software-rules/actions/runs/45928766010). Artifact ID `15167104492`, retained until 2026-12-27.
+- [x] BMQ-MSG-001: pinned BullMQ 6.7.10 source commit `526668f2c5e6de9d5d664df577f09a6bdccac1b4` + Redis 7 matched an independent Python queue model across duplicate-ID and consumer-failure scenarios; ten semantic projections matched.
+- [x] BMQ-MSG-001: six mutation tests passed in run [#45928721261](https://github.com/REMAREMA6/software-rules/actions/runs/45928721261). Artifact ID `15167806675`, retained until 2026-12-27.
+- [~] BMQ-MSG-001 schema-native capture builder, comparison report, and evidence validation workflow have been added; CI validation pending.
+- [ ] Continue with identity/authentication, authorization, security controls, integrations, broader business rules, performance/resources, and cross-UI-stack replication. No facet-wide completion claim.

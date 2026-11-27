@@ -68,16 +68,49 @@ def processor_attempt_values(scenario):
     return scenario["processorAttemptsMade"]
 
 
+def backoff_results(scenario):
+    if "backoffResults" in scenario:
+        return scenario["backoffResults"]
+    return [
+        event["delayMs"] for event in scenario.get("trace", [])
+        if event.get("event") == "backoff-result"
+    ]
+
+
+def transition_objects(scenario):
+    if "trace" in scenario:
+        result = []
+        for event in scenario["trace"]:
+            name = event.get("event", "")
+            if not name.startswith("queue:"):
+                continue
+            state = name.removeprefix("queue:")
+            if state not in {"delayed", "waiting", "failed", "completed"}:
+                continue
+            previous = event.get("data", {}).get("prev")
+            if state == "delayed":
+                previous = "active"
+            elif not previous:
+                previous = "active"
+            result.append({"from": previous, "to": state})
+        return result
+
+    result = []
+    current = "active"
+    for state in scenario["stateTransitions"]:
+        previous = "delayed" if state == "waiting" and current == "delayed" else current
+        result.append({"from": previous, "to": state})
+        current = "active" if state == "waiting" else state
+    return result
+
+
 def projection(scenario, facet):
     base = {
         "configuredAttempts": scenario["configuredAttempts"],
         "processorAttempts": scenario["processorAttempts"],
         "processorAttemptsMade": processor_attempt_values(scenario),
         "strategyAttempts": scenario["strategyAttempts"],
-        "backoffResults": scenario["backoffResults"] if "backoffResults" in scenario else [
-            event["delayMs"] for event in scenario["trace"]
-            if event.get("event") == "backoff-result"
-        ],
+        "backoffResults": backoff_results(scenario),
         "stateTransitions": transitions(scenario),
         "terminal": scenario["outcome"]["terminal"],
         "attemptsMade": scenario["outcome"]["attemptsMade"],
@@ -127,10 +160,7 @@ def payload_for(scenario, facet):
             "attemptCount": scenario["processorAttempts"],
             "inputs": {
                 "configuredAttempts": scenario["configuredAttempts"],
-                "backoffResults": scenario["backoffResults"] if "backoffResults" in scenario else [
-                    event["delayMs"] for event in scenario["trace"]
-                    if event.get("event") == "backoff-result"
-                ],
+                "backoffResults": backoff_results(scenario),
             },
             "retry": {
                 "strategyAttempts": scenario["strategyAttempts"],
@@ -180,8 +210,11 @@ def payload_for(scenario, facet):
             "subject": "job-attempt-counter",
             "dataSubject": "BullMQ Job",
             "fieldPath": "attemptsMade",
-            "observedValue": result["attemptsMade"],
-            "observedType": "integer",
+            "observedValue": {
+                "terminalAttemptsMade": result["attemptsMade"],
+                "processorStartAttemptsMade": processor_attempt_values(scenario),
+            },
+            "observedType": "object",
             "nullability": "non-null",
             "serialization": {"representation": "JSON number"},
         }
@@ -195,10 +228,7 @@ def payload_for(scenario, facet):
             {"sequence": i, "action": f"Processor attempt {i}", "input": {"attemptsMadeBeforeAttempt": value}}
             for i, value in enumerate(processor_attempt_values(scenario), start=1)
         ],
-        "stateTransitions": [
-            {"from": "active", "to": state}
-            for state in transitions(scenario)
-        ],
+        "stateTransitions": transition_objects(scenario),
         "outputs": [
             {"terminalState": scenario["finalState"], "attemptsMade": result["attemptsMade"]}
         ],
@@ -269,7 +299,7 @@ def build_capture(raw, prefix, is_source, raw_path, replica_revision):
             },
             "actualInputs": {
                 "configuredAttempts": raw_scenario["configuredAttempts"],
-                "backoffResults": raw_scenario.get("backoffResults", []),
+                "backoffResults": backoff_results(raw_scenario),
             },
             "trigger": "Enqueue and process one job in a fresh queue/model instance.",
             "collector": {"name": collector_name},

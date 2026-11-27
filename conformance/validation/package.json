@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "node validate.mjs"
+    "validate": "node validate.mjs",
+    "test:completeness": "node test-completeness.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",

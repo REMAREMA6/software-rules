@@ -4,6 +4,7 @@ import process from "node:process";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { validateCapture } from "../integrity/validate-integrity.mjs";
+import { validateComparisonCompleteness } from "./completeness.mjs";
 
 const [sourcePath, replicaPath, reportPath] = process.argv.slice(2);
 if (!sourcePath || !replicaPath || !reportPath) {
@@ -61,14 +62,11 @@ for (const [label, capture] of [["source", source], ["replica", replica]]) {
 
 failed = !validateSchema("urn:software-rules:schema:v1:comparison-report", report, "comparison") || failed;
 
-const completeness = report.replicationCompleteness ?? {};
-const expectedResult =
-  completeness.referenceStatus === "complete" && completeness.implementationStatus === "complete"
-    ? "complete-both"
-    : "undetermined";
-if (completeness.result !== expectedResult) {
+const completenessErrors = validateComparisonCompleteness(report);
+if (completenessErrors.length) {
   failed = true;
-  console.error(`FAIL comparison completeness: expected ${expectedResult}, received ${completeness.result}`);
+  console.error("FAIL comparison completeness semantics");
+  for (const error of completenessErrors) console.error(`  ${error}`);
 } else {
   console.log("PASS comparison completeness semantics");
 }

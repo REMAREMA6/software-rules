@@ -1,6 +1,6 @@
 # Facet Catalogue
 
-**Maturity:** Draft — Phase 3 facet catalogue.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 A facet is an observation perspective, not necessarily a code module, deployment, database, or team boundary. A real operation may produce linked observations in several facets.
 

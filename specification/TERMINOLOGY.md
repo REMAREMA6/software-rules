@@ -1,6 +1,6 @@
 # Terminology
 
-**Status:** Draft — Phase 2 conceptual model.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 This vocabulary applies across Software Rules. Facet documents may define narrower terms but must not silently redefine these core meanings.
 

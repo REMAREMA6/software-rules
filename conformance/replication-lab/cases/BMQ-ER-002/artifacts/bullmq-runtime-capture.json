@@ -1,6 +1,6 @@
 {
-  "capturedAt": "2026-11-27T02:36:29.997Z",
-  "completedAt": "2026-11-27T02:36:30.556Z",
+  "capturedAt": "2026-11-27T07:51:12.792Z",
+  "completedAt": "2026-11-27T07:51:13.367Z",
   "source": "BullMQ pinned source checkout",
   "sourceCommit": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
   "packageVersion": "6.7.10",
@@ -36,7 +36,7 @@
           "event": "processor",
           "attempt": 1,
           "attemptsMade": 0,
-          "atMs": 22
+          "atMs": 29
         },
         {
           "event": "backoff",
@@ -44,21 +44,21 @@
           "type": "software-rules-custom",
           "error": "transient",
           "jobId": "1",
-          "atMs": 22
+          "atMs": 29
         },
         {
           "event": "backoff-result",
           "attemptsMade": 1,
           "delayMs": 40,
-          "atMs": 22
+          "atMs": 29
         },
         {
           "event": "queue:delayed",
           "data": {
             "jobId": "1",
-            "delay": 1795746990062
+            "delay": 1795765872866
           },
-          "atMs": 24
+          "atMs": 31
         },
         {
           "event": "queue:waiting",
@@ -66,13 +66,13 @@
             "jobId": "1",
             "prev": "delayed"
           },
-          "atMs": 123
+          "atMs": 127
         },
         {
           "event": "processor",
           "attempt": 2,
           "attemptsMade": 1,
-          "atMs": 123
+          "atMs": 127
         },
         {
           "event": "backoff",
@@ -80,21 +80,21 @@
           "type": "software-rules-custom",
           "error": "transient",
           "jobId": "1",
-          "atMs": 123
+          "atMs": 127
         },
         {
           "event": "backoff-result",
           "attemptsMade": 2,
           "delayMs": 80,
-          "atMs": 123
+          "atMs": 127
         },
         {
           "event": "queue:delayed",
           "data": {
             "jobId": "1",
-            "delay": 1795746990202
+            "delay": 1795765873004
           },
-          "atMs": 124
+          "atMs": 128
         },
         {
           "event": "queue:waiting",
@@ -102,13 +102,13 @@
             "jobId": "1",
             "prev": "delayed"
           },
-          "atMs": 224
+          "atMs": 228
         },
         {
           "event": "processor",
           "attempt": 3,
           "attemptsMade": 2,
-          "atMs": 224
+          "atMs": 228
         },
         {
           "event": "queue:completed",
@@ -117,7 +117,7 @@
             "returnvalue": "ok",
             "prev": "active"
           },
-          "atMs": 226
+          "atMs": 231
         }
       ]
     },
@@ -140,10 +140,17 @@
       "finalState": "failed",
       "trace": [
         {
+          "event": "queue:waiting",
+          "data": {
+            "jobId": "1"
+          },
+          "atMs": 10
+        },
+        {
           "event": "processor",
           "attempt": 1,
           "attemptsMade": 0,
-          "atMs": 7
+          "atMs": 11
         },
         {
           "event": "backoff",
@@ -151,13 +158,13 @@
           "type": "software-rules-custom",
           "error": "stop",
           "jobId": "1",
-          "atMs": 7
+          "atMs": 11
         },
         {
           "event": "backoff-result",
           "attemptsMade": 1,
           "delayMs": -1,
-          "atMs": 7
+          "atMs": 11
         },
         {
           "event": "queue:failed",
@@ -166,7 +173,7 @@
             "failedReason": "stop",
             "prev": "active"
           },
-          "atMs": 8
+          "atMs": 12
         }
       ]
     },
@@ -192,7 +199,7 @@
           "event": "processor",
           "attempt": 1,
           "attemptsMade": 0,
-          "atMs": 8
+          "atMs": 11
         },
         {
           "event": "backoff",
@@ -200,13 +207,13 @@
           "type": "software-rules-custom",
           "error": "always-fails",
           "jobId": "1",
-          "atMs": 9
+          "atMs": 11
         },
         {
           "event": "backoff-result",
           "attemptsMade": 1,
           "delayMs": 0,
-          "atMs": 9
+          "atMs": 11
         },
         {
           "event": "queue:waiting",
@@ -214,13 +221,13 @@
             "jobId": "1",
             "prev": "active"
           },
-          "atMs": 9
+          "atMs": 12
         },
         {
           "event": "processor",
           "attempt": 2,
           "attemptsMade": 1,
-          "atMs": 10
+          "atMs": 13
         },
         {
           "event": "queue:failed",
@@ -229,7 +236,7 @@
             "failedReason": "always-fails",
             "prev": "active"
           },
-          "atMs": 10
+          "atMs": 14
         }
       ]
     }

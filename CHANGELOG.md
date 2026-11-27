@@ -4,7 +4,17 @@ All notable changes to the Software Rules specification, schemas, examples, and 
 
 This project follows a Keep a Changelog-inspired structure. Entries describe user- or implementer-relevant changes, not every typo correction.
 
-## Unreleased
+## [0.3.0] - 2026-11-27 (Draft)
+### Phase 7 — specification review and draft release
+- Reviewed and reconciled the core specification, evidence model, all 15 facet specifications, comparison documents, schemas, and conformance documentation. Replaced stale future-phase references with the current schema mapping and actual Phase 6 status.
+- Reconciled the Replication Completeness Rule with the 24-case Phase 6 exit. It remains the controlling rule for every declared replication scope; a passing validator cannot prove that a human property inventory is exhaustive.
+- Corrected the version mismatch: Software Rules specification 0.3.0 Draft; JSON Schema set 0.2.0 Draft in the reserved v1 compatibility family. Added explicit pre-1.0 task to carry specificationVersion in captures.
+- Corrected the documented schema-validation install command to install from conformance/validation/.
+- Fixed the case-artifact validator's completeness mapping so it distinguishes incomplete-reference, incomplete-implementation, incomplete-both, and undetermined; both validators now share one implementation. Added a nine-combination unit test and claim guards, passing in workflow run #45961356155.
+- Reconciled design decisions, superseded D-006 with D-010, updated schema version references, and recorded D-014 for the versioned pre-stable snapshot.
+- Added maintenance, security/privacy, issue triage, evidence retention, release-process, and stable 1.0.0 readiness policies. Published the repository release snapshot under releases/0.3.0-draft/.
+- Preserved all Phase 6 limitations and the distinction between bounded corpus validation and universal or facet-wide completeness.
+
 
 ### Phase 6 closeout — 2026-11-27
 - Added TYPEORM-ISOLATION-001: pinned TypeORM 1.1.3/PostgreSQL 16 transaction isolation (READ COMMITTED, REPEATABLE READ, SERIALIZABLE) independently replicated with Python 3.12/psycopg. Six mutations and Software Rules 0.2.0 capture/comparison/evidence-integrity validation passed in [run #45946586890](https://github.com/REMAREMA6/software-rules/actions/runs/45946586890), artifact `15175051244`.

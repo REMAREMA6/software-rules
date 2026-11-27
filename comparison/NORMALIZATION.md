@@ -1,6 +1,6 @@
 # Normalization
 
-**Status:** Draft — Phase 5
+**Maturity:** Draft — Software Rules specification 0.3.0
 
 ## 1. Purpose
 

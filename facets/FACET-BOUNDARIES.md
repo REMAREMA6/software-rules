@@ -1,6 +1,6 @@
 # Facet Boundary and Taxonomy Decision
 
-**Maturity:** Draft — Phase 3 taxonomy review.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 ## 1. Classification model
 
@@ -61,4 +61,4 @@ For this draft, accept the 15 facets as the working normative catalogue for subs
 
 ## 6. Validation examples
 
-The facet README files each include a conceptual scenario, observation dimensions, evidence expectations, limitations, and cross-facet links. The examples are illustrative model tests, not empirical captures from a real software target. Empirical end-to-end captures and schema fixtures remain Phase 6 work.
+The facet README files each include a conceptual scenario, observation dimensions, evidence expectations, limitations, and cross-facet links. The examples are illustrative model tests, not empirical captures from a real software target. The accepted empirical cross-stack evidence and its limits are recorded in the Phase 6 exit audit; future facet/property expansions require new cases.

@@ -3,7 +3,7 @@
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
 **Status:** Phase 6 complete for the declared 24-case cross-repository validation corpus across all 15 facets and 15 immutable source repositories. The exit decision and limitations are recorded in [PHASE6-EXIT-AUDIT.md](conformance/replication-lab/PHASE6-EXIT-AUDIT.md). No facet-wide completeness or universal-equivalence claim is made. The 24 accepted cases include the eight original cases plus TASKBOARD-UI-001, EXP-CONFIG-001, PROM-PERF-001, CASBIN-ADV-AUTHZ-001, MEDUSA-PRICE-001, AXIOS-HTTP-001, SESSION-EXPRESS-001, VIPER-CONFIG-001, TORM-PERSIST-002, BMQ-RECOVERY-001, MEDUSA-ADJUST-001, MEDUSA-PROMO-001, TYPEORM-PERSIST-001, BMQ-SCHED-001, MEDUSA-LINE-ITEM-001, and TYPEORM-ISOLATION-001 (PostgreSQL 16 transaction isolation). Persistence concurrency/isolation is now represented only for the declared PostgreSQL 16 scenarios; other engines, deadlocks, pool exhaustion, distributed transactions, and crash/power-loss durability remain outside scope. Other future property classes remain explicit. The independent UI-stack case is accepted only for its bounded Task Board scope.  
-**Plan version:** 0.3.1  
+**Plan version:** 0.3.2  
 **Last updated:** 2026-11-27
 
 ## 1. Mission
@@ -174,7 +174,7 @@ Tasks:
 
 Deliverables:
 - `specification/SCHEMA-DESIGN.md`
-- `schemas/v1/*.schema.json` (draft schema version 0.1.0; not a stable 1.0.0 release)
+- `schemas/v1/*.schema.json` (draft schema version 0.2.0; not a stable 1.0.0 release)
 - `schemas/v1/fixtures/valid/` and `schemas/v1/fixtures/invalid/`
 - `conformance/validation/`
 
@@ -262,16 +262,18 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 
 ### Phase 7 — Review, release, and maintenance
 
-Phase 7 is unblocked. Phase 6 has exited for the declared 24-case validation corpus; the bounded scope and remaining future extensions are documented in the exit audit.
+Phase 7 reviews the specification for the versioned 0.3.0 Draft release. Phase 6 has exited for the declared 24-case validation corpus; the bounded scope and remaining future extensions are documented in the exit audit.
 
-- [ ] Review the full specification for contradictions and omissions.
-- [ ] Enforce the Replication Completeness Rule across every applicable facet.
-- [ ] Verify schema, examples, conformance checks, and evidence provenance.
-- [ ] Review comparison claims and limitations.
-- [ ] Document unresolved questions and known limitations.
-- [ ] Publish a versioned specification release and maintenance process.
+- [x] Review the full specification for contradictions and omissions; reconcile completed-phase maturity labels and superseded decisions.
+- [x] Review propagation of the Replication Completeness Rule across the core model, all 15 facets, schemas, integrity validation, and comparison semantics; retain human inventory-exhaustiveness review as an explicit requirement.
+- [x] Verify schema version references, positive/negative fixtures, conformance checks, evidence provenance, and reproducible validation instructions.
+- [x] Review comparison claims and limitations; preserve the 24-case Phase 6 boundary and all future-coverage exclusions.
+- [x] Document unresolved questions, known limitations, evidence retention, issue triage, and maintenance ownership.
+- [x] Publish the versioned 0.3.0 Draft specification snapshot, schema version 0.2.0 reference, and maintenance process in `releases/0.3.0-draft/` and `MAINTENANCE.md`.
+- [x] Define stable 1.0.0 readiness criteria; do not mislabel the current draft as stable.
+- [ ] Pass the release-candidate PR schema/fixture, integrity, and applicable conformance workflows; record the final merge commit and CI run URLs in the release audit.
 
-**Exit gate:** The specification review is complete, schema/examples/conformance and evidence provenance are verified, known limitations are documented, and a versioned specification release and maintenance process are published.
+**Exit gate:** Pending until the final release-candidate PR workflows pass and the merged main commit is verified. The specification and schema remain pre-stable; all known limitations and 1.0.0 readiness criteria are explicit. A stable 1.0.0 release remains gated by the criteria in `specification/VERSIONING.md`.
 
 ## 4. Target repository layout
 
@@ -372,4 +374,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Begin Phase 7: review the full specification for contradictions and omissions; verify the Replication Completeness Rule across the normative specification; audit schemas, examples, conformance checks, and evidence provenance; confirm limitations are explicit; and prepare the versioned release. Preserve the Phase 6 boundary: the 24 accepted cases validate only their declared scopes. The future coverage list must not be presented as captured, and no universal-equivalence or facet-wide completeness claim may be added.
+Phase 7 review and the 0.3.0 Draft snapshot are complete. Continue maintenance under `MAINTENANCE.md`; new property classes require evidence-backed cases and a new versioned review. Preserve the Phase 6 boundary: the 24 accepted cases validate only their declared scopes. No universal-equivalence or facet-wide completeness claim may be added.

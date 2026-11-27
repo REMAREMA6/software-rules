@@ -1,6 +1,6 @@
 # Software Rules Core Model
 
-**Status:** Draft — Phase 2 conceptual model.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 ## 1. Purpose
 
@@ -67,4 +67,4 @@ Before records can be compared, establish target/scope alignment, scenario/condi
 
 ## 7. Versioning
 
-A capture identifies the Software Rules format/schema version. Target build/version is a separate identity. Future schemas may add fields/facets; tools claiming lossless handling must preserve unknown extension data. Compatibility rules will be formalized with machine schemas in Phase 4.
+A capture identifies the Software Rules format/schema version. Target build/version is a separate identity. Later schema versions may add fields/facets; tools claiming lossless handling must preserve unknown extension data under the declared extension policy. Compatibility and migration policy are defined in `specification/VERSIONING.md` and `schemas/v1/README.md`. The current 0.2.0 schema is Draft and does not guarantee backward compatibility.

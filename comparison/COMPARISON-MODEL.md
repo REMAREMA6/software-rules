@@ -1,6 +1,6 @@
 # Comparison Model
 
-**Status:** Draft — Phase 5  
+**Maturity:** Draft — Software Rules specification 0.3.0  
 **Normative terms:** MUST, MUST NOT, SHOULD, MAY are used in their ordinary specification sense.
 
 ## 1. Purpose
@@ -59,6 +59,10 @@ Every result is local to a dimension and its evidence. Overall report status is:
 - `not-comparable`: the declared comparison cannot establish a valid shared scope.
 
 The report MUST set `scopeBounded` true and `universalEquivalenceClaimed` false. Agreement is never a claim that all possible inputs or states are equivalent.
+
+## 7. Replication completeness gate
+
+Observed agreement and replication-scope completeness are separate determinations. A report MUST retain the completeness status of the reference and implementation captures and the combined result. If either capture is incomplete or undetermined, the report MAY state that the compared observations agree within the observed scope, but MUST NOT describe the result as faithful replication, complete equivalence, or proof that the declared scope has been reproduced. Required inventory gaps remain gaps even when every available comparison result is a match. A structurally valid inventory is not proof that the inventory itself is exhaustive; that requires explicit scope review and facet/domain analysis.
 
 ## 8. Repeated and nondeterministic behaviour
 

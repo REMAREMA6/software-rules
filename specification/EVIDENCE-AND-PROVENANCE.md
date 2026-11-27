@@ -1,6 +1,6 @@
 # Evidence and Provenance
 
-**Status:** Draft — Phase 2 conceptual model.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 ## 1. Three distinct levels
 
@@ -48,7 +48,7 @@ Unknown values remain unknown; do not invent defaults.
 
 ## 5. Evidence artifact metadata
 
-The future evidence representation should support:
+The current evidence record schema in `schemas/v1/records.schema.json` provides the serialized evidence identity, class, origin, media/location, integrity, redaction, and retention fields where applicable. The conceptual evidence model requires:
 - Stable evidence ID.
 - Evidence type/media type.
 - Origin/target/collector/source artifact.
@@ -79,4 +79,4 @@ Redacted/withheld values must not be represented as empty strings, null values, 
 
 ## 9. Evidence quality
 
-Do not use one unqualified numeric confidence score as a substitute for evidence description. Record relevant dimensions separately: directness, completeness/sampling, method reliability, correlation to execution, reproducibility, and integrity. No universal scoring formula is prescribed in Phase 2.
+Do not use one unqualified numeric confidence score as a substitute for evidence description. Record relevant dimensions separately: directness, completeness/sampling, method reliability, correlation to execution, reproducibility, and integrity. No universal scoring formula is prescribed in this draft; evidence quality must be assessed against the property and method rather than reduced to one confidence score.

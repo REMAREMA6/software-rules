@@ -1,6 +1,8 @@
 # Software Rules
 
-A technology-independent specification system for capturing, representing, and comparing software according to its observable behaviour.
+A technology-independent, evidence-backed specification for capturing software rules and reproducing declared software scopes across different technologies and stacks.
+
+**Current release:** Software Rules 0.3.0 (Draft). **Schema:** 0.2.0 (Draft). This is a pre-stable release; see the [release snapshot](releases/0.3.0-draft/README.md) and [known limitations](PHASE7-RELEASE-AUDIT.md).
 
 ## Project navigation
 
@@ -10,6 +12,9 @@ A technology-independent specification system for capturing, representing, and c
 - [Changelog](CHANGELOG.md)
 - [Design decisions](research/DESIGN-DECISIONS.md)
 - [Maturity and versioning policy](specification/VERSIONING.md)
+- [Maintenance and release policy](MAINTENANCE.md)
+- [Phase 7 specification review and release audit](PHASE7-RELEASE-AUDIT.md)
+- [Software Rules 0.3.0 draft release snapshot](releases/0.3.0-draft/README.md)
 - [Standards and prior-art review](research/STANDARDS-REVIEW.md)
 - [Research references](research/REFERENCES.md)
 - [Core model](specification/CORE.md)

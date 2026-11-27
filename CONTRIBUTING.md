@@ -1,6 +1,6 @@
 # Contributing to Software Rules
 
-This document defines the working process for changing the repository. It applies while the specification is under development and may be refined as the project grows.
+This document defines the working process for changing the repository. It is supplemented by [MAINTENANCE.md](MAINTENANCE.md), which defines issue triage, security/privacy handling, evidence retention, versioning, and release operations.
 
 ## 1. Before making a change
 

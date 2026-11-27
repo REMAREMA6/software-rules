@@ -1,6 +1,6 @@
 # Rule Classification
 
-**Status:** Draft — Phase 2 conceptual model.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 ## 1. Evidence classes
 
@@ -52,7 +52,7 @@ For source-derived rules, maintain a separate verification state such as unverif
 
 ## 4. Rule identity and relationships
 
-Rule identity represents a proposition and its scope, not one observation. It should account for target/system scope, facet/subject, trigger, applicability conditions, and claimed outcome. The final identifier syntax is deferred to schema design.
+Rule identity represents a proposition and its scope, not one observation. It should account for target/system scope, facet/subject, trigger, applicability conditions, and claimed outcome. The current draft schema constrains serialized identifiers to the documented ID pattern in `schemas/v1/records.schema.json`; semantic identity remains the proposition plus its scope, not merely the serialized ID.
 
 Do not rely only on a hash of serialized content: wording or ordering changes should not automatically erase history. A material proposition change requires a new identity or explicit revision relationship.
 

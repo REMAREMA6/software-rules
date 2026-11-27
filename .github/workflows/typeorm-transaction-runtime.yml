@@ -56,7 +56,9 @@ jobs:
           pnpm list --depth Infinity --json --filter typeorm... > dependency-tree.json
       - name: Compile pinned TypeORM Node entrypoint
         working-directory: /tmp/typeorm
-        run: pnpm --filter typeorm exec tsc -p tsconfig.node.json
+        run: |
+          pnpm --filter typeorm exec tsc -p tsconfig.node.json
+          test -f packages/typeorm/build/package/index.js
       - name: Run pinned TypeORM transaction probe
         working-directory: /tmp/typeorm/packages/typeorm
         env:

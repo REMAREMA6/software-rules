@@ -1,8 +1,8 @@
 # Specification Maturity and Versioning
 
 **Status:** Accepted project-governance policy  
-**Policy version:** 0.1.0  
-**Last updated:** 2026-11-26
+**Policy version:** 0.2.0  
+**Last updated:** 2026-11-27
 
 This document defines how the maturity and versions of Software Rules documents and machine-readable formats are identified. It does not define the eventual runtime capture schema.
 
@@ -28,7 +28,7 @@ Software Rules uses separate version identifiers for:
 - Machine-readable schema releases.
 - Individual facet specifications when independently versioned.
 
-Do not assume these versions are identical. A capture manifest must eventually identify the exact specification and schema versions used.
+Do not assume these versions are identical. In the 0.3.0 draft, captures identify schema version 0.2.0; the overall specification version is recorded in release provenance, not yet as a required capture field. Adding an explicit `specificationVersion` to captures is a tracked pre-1.0 compatibility task.
 
 ### 2.1 Version format
 
@@ -59,7 +59,7 @@ Do not silently reinterpret an older capture under new semantics. Preserve its d
 
 Schema files must carry an explicit schema identifier and version. Use versioned directories such as schemas/v1/ for a stable major schema line. Draft schema work must be clearly labelled and must not be mistaken for a released stable schema.
 
-The draft schema identifier namespace is `urn:software-rules:schema:v1:`. These URNs are identifiers, not retrieval URLs. The `schemas/v1/` directory reserves the intended major compatibility family; the current pre-release schema version is `0.2.0`. The release publication mechanism remains undecided.
+The draft schema identifier namespace is `urn:software-rules:schema:v1:`. These URNs are identifiers, not retrieval URLs. The `schemas/v1/` directory reserves the intended major compatibility family; the current pre-release schema version is `0.2.0`. For this 0.3.0 draft, the repository's versioned `releases/0.3.0-draft/` snapshot and release audit are the publication record. A Git tag/GitHub Release object is a separate publication action and is not implied by that snapshot.
 
 ## 3. Normative language
 
@@ -81,4 +81,19 @@ Use normative terms only when the requirement is sufficiently defined and testab
 
 ## 5. Current project status
 
-The project has a draft machine-readable schema set at version `0.1.0` in the intended v1 compatibility family. It is not a stable 1.0.0 release and carries no backward-compatibility guarantee. Validation fixtures and instructions exist; the validation run and cross-record conformance checks remain to be completed.
+The current overall specification release is `0.3.0` (Draft). The machine-readable schema set is `0.2.0` (Draft) in the reserved `v1` compatibility family. These are separate versions; neither is a stable 1.0.0 release, and no backward-compatibility guarantee is made. Schema/fixture validation and cross-record integrity checks are implemented and run in CI. The capture format does not yet carry a separate `specificationVersion` field; consumers must retain the release version as external provenance until that field is introduced.
+
+
+## 6. Stable 1.0.0 readiness criteria
+
+A stable 1.0.0 release MUST NOT be issued until all of the following are reviewed and approved:
+- Normative documents have no unresolved contradictions or phase-status references that misstate completed work.
+- Every normative MUST/SHOULD has a defined scope and a conformance interpretation.
+- The capture records identify both schema and specification versions, or a formally accepted alternative provides unambiguous version provenance.
+- Schema compatibility, extension preservation, migration, and deprecation behaviour are tested and documented.
+- The Replication Completeness Rule is represented in schemas, integrity checks, comparison reporting, and human scope review; automation is not misrepresented as proving inventory exhaustiveness.
+- Positive and negative fixtures, cross-record tests, and independent conformance cases pass on the release candidate.
+- At least one independent implementer has reviewed the format and reproduced a declared scope without relying on the reference implementation for the tested rules.
+- Known limitations, evidence-retention arrangements, maintenance ownership, and release procedures are published.
+
+A passing CI workflow is necessary evidence for the tested checks, not a substitute for these review criteria.

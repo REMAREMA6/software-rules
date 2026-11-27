@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-27T02:53:50.058380Z",
+  "capturedAt": "2026-11-27T02:55:22.614560Z",
   "implementation": "Independent Python 3.12 HMAC/JWT claim verifier",
   "scenarios": [
     {

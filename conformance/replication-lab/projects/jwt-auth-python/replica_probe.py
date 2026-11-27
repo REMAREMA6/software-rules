@@ -142,10 +142,19 @@ def verify_one(scenario, verify_signature=True, verify_exp=True, verify_nbf=True
 
 
 def capture(source, **mutations):
+    scenarios = []
+    for item in source["scenarios"]:
+        observed = verify_one(item, **mutations)
+        # Preserve the exact token and verification policy supplied by the source
+        # so the normalized capture records identical inputs on both sides.
+        observed["verificationOptions"] = item["verificationOptions"]
+        observed["token"] = item["token"]
+        observed["keyBase64url"] = item["keyBase64url"]
+        scenarios.append(observed)
     return {
         "capturedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "implementation": "Independent Python 3.12 HMAC/JWT claim verifier",
-        "scenarios": [verify_one(item, **mutations) for item in source["scenarios"]],
+        "scenarios": scenarios,
     }
 
 

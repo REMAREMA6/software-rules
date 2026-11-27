@@ -1,0 +1,95 @@
+name: Prometheus performance and resource cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/PROM-PERF-001/**"
+      - "conformance/replication-lab/projects/prometheus-write-python/**"
+      - ".github/workflows/prometheus-performance-runtime.yml"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/PROM-PERF-001/**"
+      - "conformance/replication-lab/projects/prometheus-write-python/**"
+      - ".github/workflows/prometheus-performance-runtime.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: prometheus-performance-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  performance-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.10"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout immutable Prometheus source
+        env:
+          PROM_SOURCE_COMMIT: "1e794b83ad0d1df86c26fc607f87197734b9d9d9"
+        run: |
+          git init /tmp/prometheus
+          git -C /tmp/prometheus remote add origin https://github.com/prometheus/prometheus.git
+          git -C /tmp/prometheus fetch --depth=1 origin "$PROM_SOURCE_COMMIT"
+          git -C /tmp/prometheus checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/prometheus rev-parse HEAD)" = "$PROM_SOURCE_COMMIT"
+      - name: Build pinned promtool
+        run: |
+          cd /tmp/prometheus
+          go build -o /tmp/promtool ./cmd/promtool
+      - name: Generate deterministic unique-series workload
+        run: |
+          python - <<'PY'
+          import json
+          with open("prometheus-labels.json", "w") as f:
+              for i in range(200):
+                  labels={"__name__":f"benchmark_metric_{i:04d}","job":"software-rules","instance":f"series-{i:04d}"}
+                  f.write(json.dumps(labels,separators=(",",":"))+"\n")
+          PY
+      - name: Run pinned Prometheus benchmark three times
+        env:
+          PROM_SOURCE_COMMIT: "1e794b83ad0d1df86c26fc607f87197734b9d9d9"
+        run: python conformance/replication-lab/cases/PROM-PERF-001/source_probe.py /tmp/promtool prometheus-labels.json prometheus-source.json
+      - name: Run independent Python workload model
+        run: python conformance/replication-lab/projects/prometheus-write-python/replica_probe.py prometheus-python.json
+      - name: Compare workload semantics and performance distributions
+        run: python conformance/replication-lab/cases/PROM-PERF-001/compare.py prometheus-source.json prometheus-python.json prometheus-comparison.json
+      - name: Run mutation tests
+        run: |
+          python -m unittest discover -s conformance/replication-lab/cases/PROM-PERF-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          mkdir -p prometheus-software-rules
+          python conformance/replication-lab/cases/PROM-PERF-001/build_software_rules_artifacts.py \
+            --source prometheus-source.json \
+            --replica prometheus-python.json \
+            --output-dir prometheus-software-rules
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            prometheus-software-rules/prometheus-source.capture.json \
+            prometheus-software-rules/prometheus-python-replica.capture.json \
+            prometheus-software-rules/prometheus-comparison.report.json
+      - name: Retain raw source, replica, and comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prometheus-performance-cross-stack
+          path: |
+            prometheus-labels.json
+            prometheus-source.json
+            prometheus-python.json
+            prometheus-comparison.json
+            prometheus-software-rules/*.json
+          if-no-files-found: warn
+          retention-days: 30

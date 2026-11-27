@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Six bounded cases pass, including JOSE JWT authentication/security and schema-native BullMQ messaging captures. No facet-wide completeness claim is justified; the remaining property inventories and several facet cases are incomplete. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Eight bounded cases pass, including JOSE JWT verification, Casbin simple RBAC, and go-redis integration. No facet-wide completeness claim is justified; the remaining property inventories and several facet cases are incomplete. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
@@ -202,7 +202,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** six bounded cross-stack cases pass, but no entire facet is complete for the full objective. Authorization, integrations, broad security, performance/resources, and cross-UI-stack replication still lack accepted cases; other facets have incomplete property inventories. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
+**Current blocker:** eight bounded cross-stack cases pass, but no entire facet is complete for the full objective. Authorization covers simple RBAC only; integrations cover seven Redis operations only; security covers limited JWT controls. Performance/resources and independent UI-stack replication still lack accepted cases. Business rules, data, persistence, API, messaging, background processing, errors, and configuration have unresolved property inventories. The Task Board-only approach remains superseded. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
 
 
 ### 2026-11-27 — JOSE JWT authentication/security case accepted

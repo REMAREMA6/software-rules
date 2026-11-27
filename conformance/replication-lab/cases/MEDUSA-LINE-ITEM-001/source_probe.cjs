@@ -31,17 +31,19 @@ const fixtures=[
  {label:"fractional-quantity",unit_price:40,quantity:2.5,tax_lines:[{rate:10}],adjustments:[]},
  {label:"zero-quantity",unit_price:100,quantity:0,tax_lines:[{rate:20}],adjustments:[]},
  {label:"empty-tax-context-with-discount",unit_price:100,quantity:1,tax_lines:[],adjustments:[{amount:20,is_tax_inclusive:false}]},
- {label:"inclusive-price-with-multiple-tax-lines",unit_price:115,quantity:1,is_tax_inclusive:true,tax_lines:[{rate:10},{rate:5}],adjustments:[{amount:11.5,is_tax_inclusive:true}]}
+ {label:"inclusive-price-with-multiple-tax-lines",unit_price:115,quantity:1,is_tax_inclusive:true,tax_lines:[{rate:10},{rate:5}],adjustments:[{amount:11.5,is_tax_inclusive:true}]},
+ {label:"returned-quantity-prorated-discount",unit_price:25,quantity:4,tax_lines:[{rate:20}],adjustments:[{amount:40,is_tax_inclusive:false}],detail:{return_received_quantity:1}},
+ {label:"inclusive-return-refund",unit_price:120,quantity:2,is_tax_inclusive:true,tax_lines:[{rate:20}],adjustments:[{amount:24,is_tax_inclusive:true}],detail:{return_dismissed_quantity:1}}
 ];
 function round(v){return v===undefined||v===null?null:Number(Number(v).toFixed(8))}
 function normalize(result,item){
- const out={};for(const k of ["quantity","unit_price","subtotal","total","original_subtotal","original_total","discount_subtotal","discount_tax_total","discount_total","tax_total","original_tax_total"])out[k]=round(result[k]?.value??result[k]);
+ const out={};for(const k of ["quantity","unit_price","subtotal","total","original_subtotal","original_total","discount_subtotal","discount_tax_total","discount_total","tax_total","original_tax_total","refundable_total","refundable_total_per_unit"])out[k]=round(result[k]?.value??result[k]);
  out.adjustments=(item.adjustments||[]).map(a=>({amount:round(a.amount),is_tax_inclusive:a.is_tax_inclusive??null,subtotal:round(a.subtotal?.value??a.subtotal),total:round(a.total?.value??a.total)}));
  return out;
 }
 const scenarios=fixtures.map(f=>{const item={...f,adjustments:f.adjustments.map(a=>({...a})),tax_lines:f.tax_lines.map(t=>({...t}))};
  const result=calculate(item,{includeTax:false});
- return {label:f.label,inputs:{unit_price:f.unit_price,quantity:f.quantity,is_tax_inclusive:f.is_tax_inclusive??false,tax_lines:f.tax_lines,adjustments:f.adjustments},output:normalize(result,item)};
+ return {label:f.label,inputs:{unit_price:f.unit_price,quantity:f.quantity,is_tax_inclusive:f.is_tax_inclusive??false,tax_lines:f.tax_lines,adjustments:f.adjustments,detail:f.detail??null},output:normalize(result,item)};
 });
 console.log(JSON.stringify({source:"Medusa getLineItemTotals / calculateAdjustmentTotal / calculateTaxTotal",
  sourceCommit:process.env.MEDUSA_SOURCE_COMMIT,sourceFiles:hashes,typescriptVersion:ts.version,scenarios},null,2));

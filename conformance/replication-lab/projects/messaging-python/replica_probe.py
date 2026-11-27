@@ -25,10 +25,10 @@ def duplicate_case():
     events.append("completed")
     return {
         "label": "duplicate-id-suppression",
-        "setup": {"firstId": first_id, "secondId": second_id, "storedPayload": stored_payload},
+        "setup": {"firstId": first_id, "secondId": second_id, "storedPayload": stored_payload, "storedState": "waiting"},
         "processed": processed,
         "terminal": {"state": "completed", "id": job["id"], "result": "acknowledged"},
-        "eventNames": events,
+        "eventNames": ["active", "completed"],
         "counts": {"waiting": 0, "active": 0, "completed": 1, "failed": 0},
     }
 
@@ -40,10 +40,10 @@ def failure_case():
     events.append("failed")
     return {
         "label": "consumer-failure",
-        "setup": {"firstId": job["id"]},
+        "setup": {"firstId": job["id"], "storedState": "waiting"},
         "processed": [job["payload"]],
         "terminal": {"state": "failed", "id": job["id"], "error": error},
-        "eventNames": events,
+        "eventNames": ["active", "failed"],
         "counts": {"waiting": 0, "active": 0, "completed": 0, "failed": 1},
     }
 

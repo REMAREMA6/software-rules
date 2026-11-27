@@ -1,14 +1,15 @@
 import json
 import threading
+import socket
 from datetime import datetime, timezone
 from http.client import HTTPConnection
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 
 
-def make_handler(case_sensitive=False, strict_routing=False, suppress_head_body=True, options_includes_head=True, explicit_options_override=True):
+def make_handler(case_sensitive=False, strict_routing=False, suppress_head_body=True, options_includes_head=True, explicit_options_override=True, query_in_path=False):
     def route_matches(path):
-        pathname = urlsplit(path).path
+        pathname = path if query_in_path else urlsplit(path).path
         expected = "/widgets"
         actual = pathname
         if not strict_routing:
@@ -69,10 +70,24 @@ def make_handler(case_sensitive=False, strict_routing=False, suppress_head_body=
     return Handler
 
 
-def capture(case_sensitive=False, strict_routing=False, suppress_head_body=True, options_includes_head=True, explicit_options_override=True):
+def raw_head_body_bytes(host, port):
+    chunks = []
+    with socket.create_connection((host, port), timeout=5) as client:
+        client.sendall(b"HEAD /widgets HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n")
+        while True:
+            chunk = client.recv(4096)
+            if not chunk:
+                break
+            chunks.append(chunk)
+    raw = b"".join(chunks)
+    separator = raw.find(b"\r\n\r\n")
+    return 0 if separator < 0 else len(raw) - separator - 4
+
+
+def capture(case_sensitive=False, strict_routing=False, suppress_head_body=True, options_includes_head=True, explicit_options_override=True, query_in_path=False):
     server = ThreadingHTTPServer(
         ("127.0.0.1", 0),
-        make_handler(case_sensitive, strict_routing, suppress_head_body, options_includes_head, explicit_options_override),
+        make_handler(case_sensitive, strict_routing, suppress_head_body, options_includes_head, explicit_options_override, query_in_path),
     )
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -108,6 +123,7 @@ def capture(case_sensitive=False, strict_routing=False, suppress_head_body=True,
                 },
             })
             connection.close()
+        scenarios[1]["response"]["wireBodyBytes"] = raw_head_body_bytes(host, port)
     finally:
         server.shutdown()
         server.server_close()

@@ -3,11 +3,12 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { createRequire } from "node:module";
 import { setTimeout as sleep } from "node:timers/promises";
-import { PNG } from "pngjs";
-import pixelmatch from "pixelmatch";
+import { pathToFileURL } from "node:url";
 
 const require = createRequire(new URL("../../../runtime/package.json", import.meta.url));
 const { chromium } = require("playwright");
+const { PNG } = require("pngjs");
+const pixelmatch = (await import(pathToFileURL(require.resolve("pixelmatch")))).default;
 const root = process.cwd();
 const sourceHtml = await readFile(root + "/examples/task-board/reference/index.html");
 const sourceServer = createServer((req, res) => { res.writeHead(200, { "content-type": "text/html; charset=utf-8" }); res.end(sourceHtml); });

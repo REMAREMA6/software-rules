@@ -1,7 +1,7 @@
 # Case — Medusa calculated-price and original-price selection
 
 **Case ID:** MEDUSA-PRICE-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all nine declared price-selection scenarios in [run #45939713683](https://github.com/REMAREMA6/software-rules/actions/runs/45939713683). The exact pinned Medusa service method body and independent Python model matched all nine returned-price objects; five deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and cross-record integrity validation. Artifact `15172460158` retained through 2026-12-27. This is bounded service-level price-selection evidence; SQL filtering, quantity tiers, tax, currency normalization, cart totals and discounts remain outside scope.  
 **Facet(s):** Business rules; data; behaviour  
 **Source:** https://github.com/medusajs/medusa  
 **Immutable source commit:** `6e28e10acb9676392315b3ff1a9c7147fce4b5ab`  

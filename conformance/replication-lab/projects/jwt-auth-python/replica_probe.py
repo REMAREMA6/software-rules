@@ -50,7 +50,7 @@ def sign_token_fixture_capture():
         token = sign_token_fixture(payload, alg, key)
         if tamper:
             parts = token.split(".")
-            parts[2] = parts[2][:-1] + ("B" if parts[2][-1] == "A" else "A")
+            parts[2] = ("B" if parts[2][0] == "A" else "A") + parts[2][1:]
             token = ".".join(parts)
         accepted = outcome == "accepted"
         scenarios.append({

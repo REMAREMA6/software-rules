@@ -85,7 +85,7 @@ def build_capture(raw, side, raw_path):
             "principalRef": request["subject"],
             "action": request["action"],
             "resource": request["resource"],
-            "contextAttributes": {key: request[key] for key in ("domain", "owner") if key in request},
+            "contextAttributes": {"modelClass": item["modelClass"], **{key: request[key] for key in ("domain", "owner") if key in request}},
             "policyEvidence": ["Pinned model and policy files for the declared authorization model class."],
             "decision": decision,
             "enforcementPoint": "Casbin Enforcer.Enforce" if source else "Independent Python decide()",
@@ -101,12 +101,12 @@ def build_capture(raw, side, raw_path):
             "observedAt": captured,
             "sequence": index,
             "method": {"class": "instrumentation", "procedure": "Submit the fixed request and model-class context to the authorization evaluator and record its permit/deny decision.", "tool": runtime_name},
-            "conditions": {"scenario": label},
+            "conditions": {"scenario": label, "modelClass": item["modelClass"]},
             "trigger": "Enforce(request) under the declared model class",
             "payload": payload,
             "rawValue": item,
-            "normalizedValue": {"request": request, "decision": decision},
-            "evidenceRefs": ["casbin-" + side + "-runtime"],
+            "normalizedValue": {"modelClass": item["modelClass"], "request": request, "decision": decision},
+            "evidenceRefs": ["casbin-adv-" + side + "-runtime"],
             "status": "observed",
         })
 
@@ -120,7 +120,7 @@ def build_capture(raw, side, raw_path):
     inventory = [{
         "propertyId": pid, "facet": FACET, "subject": "Advanced Casbin authorization decision",
         "dimension": dimension, "requirement": "required", "status": "captured",
-        "observationRefs": obs_ids, "evidenceRefs": ["casbin-" + side + "-runtime"],
+        "observationRefs": obs_ids, "evidenceRefs": ["casbin-adv-" + side + "-runtime"],
         "rationale": rationale,
     } for pid, dimension, rationale in property_specs]
     rules = [{
@@ -136,7 +136,7 @@ def build_capture(raw, side, raw_path):
         "purpose": "Capture bounded domain-RBAC, ABAC, deny-override, and policy-mutation authorization decisions for 19 requests.",
         "target": {
             "targetId": target_id,
-            "systemName": "Apache Casbin" if source else "Independent Python RBAC replica",
+            "systemName": "Apache Casbin" if source else "Independent Python advanced authorization replica",
             "systemVersion": "pinned source commit" if source else "Python 3.12",
             "build": {"revision": raw.get("sourceCommit", os.getenv("GITHUB_SHA", "working-tree"))},
             "boundary": {
@@ -153,7 +153,7 @@ def build_capture(raw, side, raw_path):
         "observations": observations,
         "runtimeRules": rules,
         "evidence": [{
-            "evidenceId": "casbin-" + side + "-runtime",
+            "evidenceId": "casbin-adv-" + side + "-runtime",
             "evidenceClass": "runtime",
             "evidenceType": "instrumented-advanced-authorization-decision-capture",
             "mediaType": "application/json",

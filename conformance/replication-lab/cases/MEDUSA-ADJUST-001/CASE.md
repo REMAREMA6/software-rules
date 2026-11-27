@@ -1,7 +1,7 @@
 # Case — Medusa adjustment, discount, and tax allocation rules
 
 **Case ID:** MEDUSA-ADJUST-001  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all nine adjustment scenarios. Pinned Medusa source function and independent Python 3.12 Decimal model matched; six deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence-integrity validation in [run #45943606395](https://github.com/REMAREMA6/software-rules/actions/runs/45943606395), artifact `15173925704` (expires 2026-12-27).  
 **Facets:** Business rules; data; behaviour  
 **Source:** https://github.com/medusajs/medusa  
 **Immutable source commit:** `6e28e10acb9676392315b3ff1a9c7147fce4b5ab`  

@@ -174,7 +174,7 @@ Tasks:
 
 Deliverables:
 - `specification/SCHEMA-DESIGN.md`
-- `schemas/v1/*.schema.json` (draft schema version 0.1.0; not a stable 1.0.0 release)
+- `schemas/v1/*.schema.json` (draft schema version 0.2.0; not a stable 1.0.0 release)
 - `schemas/v1/fixtures/valid/` and `schemas/v1/fixtures/invalid/`
 - `conformance/validation/`
 
@@ -262,7 +262,7 @@ The operating model, source register, replication-lab layout, rule-level pass cr
 
 ### Phase 7 — Review, release, and maintenance
 
-Phase 7 is unblocked. Phase 6 has exited for the declared 24-case validation corpus; the bounded scope and remaining future extensions are documented in the exit audit.
+Phase 7 reviews the specification for the versioned 0.3.0 Draft release. Phase 6 has exited for the declared 24-case validation corpus; the bounded scope and remaining future extensions are documented in the exit audit.
 
 - [x] Review the full specification for contradictions and omissions; reconcile completed-phase maturity labels and superseded decisions.
 - [x] Review propagation of the Replication Completeness Rule across the core model, all 15 facets, schemas, integrity validation, and comparison semantics; retain human inventory-exhaustiveness review as an explicit requirement.
@@ -271,8 +271,9 @@ Phase 7 is unblocked. Phase 6 has exited for the declared 24-case validation cor
 - [x] Document unresolved questions, known limitations, evidence retention, issue triage, and maintenance ownership.
 - [x] Publish the versioned 0.3.0 Draft specification snapshot, schema version 0.2.0 reference, and maintenance process in `releases/0.3.0-draft/` and `MAINTENANCE.md`.
 - [x] Define stable 1.0.0 readiness criteria; do not mislabel the current draft as stable.
+- [ ] Pass the release-candidate PR schema/fixture, integrity, and applicable conformance workflows; record the final merge commit and CI run URLs in the release audit.
 
-**Exit gate:** Satisfied for a versioned 0.3.0 Draft release. The specification and schema remain pre-stable; all known limitations and 1.0.0 readiness criteria are explicit. Final PR and main-branch CI evidence is recorded in `PHASE7-RELEASE-AUDIT.md`. A stable 1.0.0 release remains gated by the criteria in `specification/VERSIONING.md`.
+**Exit gate:** Pending until the final release-candidate PR workflows pass and the merged main commit is verified. The specification and schema remain pre-stable; all known limitations and 1.0.0 readiness criteria are explicit. A stable 1.0.0 release remains gated by the criteria in `specification/VERSIONING.md`.
 
 ## 4. Target repository layout
 

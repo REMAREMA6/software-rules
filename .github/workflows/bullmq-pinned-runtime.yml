@@ -83,6 +83,10 @@ jobs:
           python "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-ER-002/compare_retry_probe.py" "$GITHUB_WORKSPACE/bullmq-runtime-capture.json" "$GITHUB_WORKSPACE/bullmq-replica-capture.json" | tee "$GITHUB_WORKSPACE/bullmq-comparison-report.json"
       - name: Build Software Rules captures and comparison report
         run: |
+          evidence_dir="conformance/replication-lab/cases/BMQ-ER-002/artifacts"
+          mkdir -p "$evidence_dir"
+          cp bullmq-runtime-capture.json "$evidence_dir/bullmq-runtime-capture.json"
+          cp bullmq-replica-capture.json "$evidence_dir/bullmq-replica-capture.json"
           python "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-ER-002/build_software_rules_artifacts.py" \
             --source "$GITHUB_WORKSPACE/bullmq-runtime-capture.json" \
             --replica "$GITHUB_WORKSPACE/bullmq-replica-capture.json" \
@@ -122,5 +126,6 @@ jobs:
             bullmq-replica-capture.json
             bullmq-comparison-report.json
             bullmq-software-rules/*.json
+            conformance/replication-lab/cases/BMQ-ER-002/artifacts/*.json
           if-no-files-found: warn
           retention-days: 30

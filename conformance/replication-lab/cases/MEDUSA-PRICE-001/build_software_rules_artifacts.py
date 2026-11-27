@@ -141,6 +141,6 @@ def main():
  r=build_capture(read(a.replica),"replica",a.replica,{})
  report=build_report(s,r)
  write(out/"medusa-price-source.capture.json",s); write(out/"medusa-price-python-replica.capture.json",r); write(out/"medusa-price-comparison.report.json",report)
- print(json.dumps({"results":len(results),"mismatches":len([x for x in report["results"] if x["classification"]!="match"])},indent=2))
+ print(json.dumps({"results":len(report["results"]),"mismatches":len([x for x in report["results"] if x["classification"]!="match"])},indent=2))
  if report["conclusion"]["status"]!="agreement-within-observed-scope": raise SystemExit(1)
 if __name__=="__main__": main()

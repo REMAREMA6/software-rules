@@ -1,6 +1,6 @@
 # Source record — BullMQ
 
-**Selection status:** Candidate inspected; runtime capture and independent replication not yet complete.  
+**Selection status:** Accepted for one bounded retry/backoff conformance case; broader BullMQ facet coverage remains a candidate/investigation task.  
 **Repository:** taskforcesh/bullmq  
 **Canonical URL:** https://github.com/taskforcesh/bullmq  
 **Immutable commit:** 526668f2c5e6de9d5d664df577f09a6bdccac1b4  
@@ -23,7 +23,7 @@ The initial investigation is limited to one queued job processed by a worker, wh
 - README.md: describes BullMQ as a Redis-based distributed queue and links to its documentation.
 - LICENSE: MIT.
 - docs/gitbook/guide/retrying-failing-jobs.md: describes attempts, automatic retry, fixed/exponential/custom backoff, and custom strategy outcomes.
-- src/classes/job.ts: contains attemptsMade/attemptsStarted state and shouldRetryJob logic; source lines around 683–830 include failure and retry decision handling.
+- src/classes/job.ts: contains attemptsMade/attemptsStarted state and shouldRetryJob logic; moveToCompleted increments attemptsMade at line 683, shouldRetryJob is at line 706, and moveToFailed increments attemptsMade at line 824.
 - tests/worker.test.ts: custom-backoff tests around lines 4596–4747 exercise error-dependent, job-data-dependent, and asynchronous custom backoff strategies.
 - src/classes/worker.ts: defines worker lifecycle and events including active, completed, failed, stalled, and error.
 
@@ -33,9 +33,9 @@ The initial investigation is limited to one queued job processed by a worker, wh
 |---|---|---|---|---|
 | BMQ-BG-001 | Background processing | A worker takes queued jobs and invokes a processor; observable lifecycle events include active, completed, failed, and stalled | Source-derived from worker interface/implementation | Pending runtime verification |
 | BMQ-ER-001 | Errors and recovery | A processor failure can trigger an automatic retry when the job's attempt policy allows it | Source-derived from retry guide and job implementation | Pending boundary/runtime verification |
-| BMQ-ER-002 | Errors and recovery | A configured custom backoff strategy can determine the delay before a retry | Source-derived from guide and worker tests | Pending runtime verification |
+| BMQ-ER-002 | Errors and recovery | A custom backoff result of -1 suppresses retry, a positive delay routes to delayed, and zero routes to waiting | Source-derived plus pinned runtime/independent Python comparison for three scenarios | Bounded scenarios verified; broader branches pending |
 | BMQ-ER-003 | Errors and recovery | A custom backoff strategy may inspect the error and job data, and may be asynchronous | Source-derived from worker tests | Pending runtime verification |
-| BMQ-BG-002 | Background processing | A custom backoff result of -1 suppresses retry and leaves the job failed; a result of 0 requests immediate requeue semantics | Source-derived from guide | Pending exact state/order verification |
+| BMQ-BG-002 | Background processing | A custom backoff result of -1 suppresses retry and leaves the job failed; a result of 0 requeues immediately to waiting | Source-derived plus pinned runtime/independent Python comparison | Bounded scenarios verified |\n| BMQ-DATA-001 | Data | attemptsMade increments after failed attempts and successful completion; at processor start it reflects prior failures | Source-derived from pinned Job implementation; observed in three bounded runtime scenarios | Bounded scenarios verified |
 
 ## Open questions
 
@@ -49,8 +49,8 @@ The initial investigation is limited to one queued job processed by a worker, wh
 
 ## Independent replication
 
-Not started. Proposed replica: a small independent Go or Python worker/queue model, with no BullMQ imports and a separately chosen storage/queue mechanism. The exact stack will be selected after the source rule and probe matrix are finalized.
+A deliberately narrow Python 3.12 decision-model replica exists under `conformance/replication-lab/projects/retry-policy-python/`. It has no BullMQ imports and does not recreate Redis, queue storage, or the worker scheduler. The pinned BullMQ runtime and Python model matched three scenarios in [GitHub Actions run #18](https://github.com/REMAREMA6/software-rules/actions/runs/45924520050): positive delays then completion, -1 suppression, and zero-delay retry followed by attempt-limit failure. The comparison also matched processor attempt counters, strategy arguments/results, state transitions, terminal states, and final attemptsMade values. This is not a complete BullMQ replica.
 
 ## Acceptance status
 
-Candidate only. No runtime capture, independent replica, comparison report, or mutation result is claimed yet.
+One bounded retry/backoff case has a successful pinned-source runtime-to-Python semantic comparison (run #18). The structured Software Rules captures and comparison report are being generated and schema/integrity-validated in the follow-up workflow. This does not establish full BullMQ coverage or completion of the 15-facet Phase 6 programme.

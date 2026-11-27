@@ -31,8 +31,10 @@ async function runScenario(label, { attempts, backoffStrategy, processor }) {
     settings: {
       backoffStrategy: (attemptsMade, type, error, job) => {
         strategyAttempts.push(attemptsMade);
+        const delayMs = backoffStrategy(attemptsMade, type, error, job);
         trace.push({ event: 'backoff', attemptsMade, type, error: error.message, jobId: job.id, atMs: Date.now() - startedAt });
-        return backoffStrategy(attemptsMade, type, error, job);
+        trace.push({ event: 'backoff-result', attemptsMade, delayMs, atMs: Date.now() - startedAt });
+        return delayMs;
       },
     },
   });

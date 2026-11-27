@@ -4,7 +4,7 @@
 **Repository:** REMAREMA6/software-rules  
 **Last updated:** 2026-11-27  
 **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance  
-**Overall status:** Phase 6 in progress; nine source candidates are registered; the BullMQ source capture passes schema/integrity checks; the independent Python model, simulator, and mutation-comparison tests pass CI; the pinned BullMQ runtime-to-replica comparison is still pending
+**Overall status:** Phase 6 in progress; two bounded cross-stack cases (BullMQ and Express) have passed source-runtime comparison, mutation testing, schema validation, and evidence retention; TypeORM persistence case is now active; 15-facet programme remains incomplete
 
 > This file is the persistent progress and handoff record. Update it whenever task status changes. Keep the current task, blockers, and next action explicit so work can resume in a new chat.
 
@@ -19,9 +19,9 @@
 ## Current position
 
 - **Current phase:** Phase 6 — Cross-repository, cross-stack replication and conformance
-- **Current task:** Begin a persistence/data case using the pinned TypeORM repository; extract a transaction/rollback rule and reproduce it independently in Python/SQLite, then capture and compare both runtimes.
-- **Blockers:** The Task Board is only one fixture. The cross-repository case set is incomplete; BullMQ source runtime and capture comparison are pending; the other source candidates still require property-level inspection and suitable independent replicas.
-- **Next action:** Inspect TypeORM transaction and rollback implementation/tests at the registered immutable commit; define a narrow reproducible database transaction case and an independent Python/SQLite implementation. Continue until every required facet/property has adequate cases.
+- **Current task:** Execute TORM-PERSIST-001 against the pinned TypeORM source checkout and Python/sqlite3 replica; then proceed through messaging, identity/authentication, authorization, security, integrations, business rules, and repeatable performance/resource cases.
+- **Blockers:** The two accepted cases are bounded, not facet-complete. TypeORM source/replica run is pending. Messaging, identity, authorization, dedicated security, integrations, business-rule and repeatable performance cases have no accepted cross-stack evidence. Interface needs a separate UI-stack replica and completeness audit.
+- **Next action:** Verify the TypeORM workflow result and fix any source-build/runtime issues; generate schema-native captures and validate the complete evidence loop before accepting the case.
 - **Existing result:** The initial reference/independent Task Board baseline is pixel-identical across seven tested UI states at 1280×800 in Chromium 159.0.8154.6 on Linux; the deliberate mutation produces a 272-pixel visual mismatch. This is bounded evidence, not proof of complete interface capture or whole-system replication.
 
 ## Phase tracking
@@ -34,7 +34,7 @@
 | 3 | Facet specifications | [x] Complete | Accepted 15-facet draft catalogue; all facets have boundaries, conceptual payload dimensions, scenario/evidence requirements, limitations, cross-facet links, and illustrative worked examples. Not empirical captures. |
 | 4 | Machine-readable schemas | [x] Complete | Draft v0.2.0 schemas; 15 typed facets; positive/negative fixtures; Ajv 2020-12 CI passed. |
 | 5 | Canonicalization and comparison | [x] Complete | Matching, normalization, classifications, coverage, bounded conclusions, report schema, example, and CI validation completed. |
-| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | Multi-repository strategy and replication-lab skeleton established; nine source candidates registered; first source-derived rule and Python model added. Full source-runtime/replica/comparison cases across all 15 facets remain outstanding. |
+| 6 | Cross-repository, cross-stack replication and conformance | [~] In progress | BullMQ and Express bounded cases passed with pinned source runtimes, independent Python replicas, mutations, schema/integrity validation, and retained evidence. TypeORM persistence case is active; remaining facets still need cases and property inventories. |
 | 7 | Review, release, and maintenance | [ ] Not started | Blocked until the expanded Phase 6 exit gate is satisfied. |
 
 ## Phase 0 — Repository and project governance
@@ -155,8 +155,10 @@
 - [x] Rules must be extracted into a technology-independent specification before implementation.
 - [x] Equivalent source/replica probes, comparison, and mutation detection are required.
 - [x] Create the replication-lab skeleton, case template, source register, and source-record template.
-- [~] Start source selection and inspection; nine immutable repository candidates are registered. This is not yet complete 15-facet coverage.
-- [~] Start the first independent rule case: BullMQ retry-policy source capture plus a Python decision-model replica. Source runtime comparison remains pending.
+- [x] Register and inspect nine immutable source candidates; candidates remain distinct from accepted cases.
+- [x] Accept bounded BullMQ retry/backoff and Express routing/API cross-stack cases after reviewing successful runtime runs and retained artifacts.
+- [~] Execute TypeORM transaction/rollback case; then add distinct cases for messaging, identity, authorization, security, business rules, integrations, and performance.
+- [x] BMQ-ER-002: BullMQ pinned TypeScript/Node.js + Redis source versus Python model; three scenarios, 12 semantic projections, mutation tests, schema/integrity validation, evidence retained..
 - [ ] Complete the final evidence and coverage audit.
 
 ### Existing bounded evidence
@@ -173,16 +175,16 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] 2. Behaviour — triggers, transitions, side effects, ordering, and failure replication.
 - [ ] 3. Business rules — conditions, constraints, calculations, precedence, and boundary replication.
 - [ ] 4. Data — shapes, types, nullability, relationships, transformations, and serialization.
-- [ ] 5. Persistence — durable state, transactions, rollback, concurrency, and consistency.
-- [ ] 6. API — request/response, protocol, validation, and failure semantics.
+- [~] 5. Persistence — TypeORM top-level commit/rollback case is implemented; runtime comparison pending; durability/restart/concurrency remain uncovered.
+- [~] 6. API — Express routing case passed; payload validation/authentication/pagination/concurrency and broader failure contracts remain uncovered.
 - [ ] 7. Messaging — publish/consume, delivery, acknowledgement, ordering, retries, and idempotency.
 - [ ] 8. Identity/authentication — principal, credential/session lifecycle, expiry, and logout.
 - [ ] 9. Authorization — actor/resource/action policy matrix and enforcement.
 - [ ] 10. Security — authorized control, bypass, and containment scenarios.
-- [ ] 11. Background processing — enqueue, worker lifecycle, retry, cancellation, and terminal outcomes.
-- [ ] 12. Errors/recovery — failure classes, retry/fallback/compensation, and recovered-state replication.
+- [~] 11. Background processing — BullMQ retry/backoff case passed; scheduling/cancellation/duplicate/stalled-worker lifecycle remain uncovered.
+- [~] 12. Errors/recovery — bounded BullMQ retry/suppression and Express 404 cases passed; rollback case pending; broader failure/recovery classes remain uncovered.
 - [ ] 13. Integrations — external dependency contracts and controlled failure outcomes.
-- [ ] 14. Configuration — defaults, precedence, invalid/missing values, and runtime changes.
+- [~] 14. Configuration — Express routing defaults passed; precedence/invalid values/runtime changes remain uncovered.
 - [ ] 15. Performance/resources — repeatable workload, latency distributions, throughput, and resource behaviour.
 
 ### Rule-level completion checklist
@@ -195,7 +197,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [ ] Meaningful mutation detected.
 - [ ] Evidence, provenance, cross-facet links, and reproduction instructions retained.
 
-**Current blocker:** the replication lab skeleton exists, but the multi-repository case set is only at candidate/source-inspection stage. No facet has yet passed the full source-runtime → independent replica → comparison → mutation loop. The earlier Task Board-only approach is superseded as the overall Phase 6 strategy. Do not claim Phase 6 complete until the 15-facet cross-repository exit gate passes.
+**Current blocker:** two bounded cross-stack cases have passed, but no entire facet is complete for the full objective. The active TypeORM case has not yet passed. Several facets have no source-runtime/replica case. The Task Board-only approach remains superseded as the overall strategy. Do not claim Phase 6 complete until every 15-facet exit-gate requirement is evidenced.
 
 ## Phase 7 — Review, release, and maintenance
 
@@ -384,3 +386,14 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - [x] Generated and validated Software Rules 0.2.0 captures and the comparison report.
 - [x] Committed raw/structured captures, comparison, package lock, and dependency tree under `conformance/replication-lab/cases/EXP-API-001/artifacts/` at commit [ad30376](https://github.com/REMAREMA6/software-rules/commit/ad3037693d32221a6d7bdb6b9883c45db7b2be9c).
 - [~] Phase 6 remains active; this case proves only the declared seven-request scope, not complete Express/API coverage.
+
+
+### 2026-11-27 — Cross-stack evidence audit and TypeORM case start
+
+- [x] Re-checked GitHub Actions job steps and retained artifacts for BullMQ run [#45925568609](https://github.com/REMAREMA6/software-rules/actions/runs/45925568609): all source checkout/build/runtime, replica, comparison, schema/integrity, and artifact-retention steps succeeded.
+- [x] Re-checked GitHub Actions job steps and retained artifacts for Express run [#45926714897](https://github.com/REMAREMA6/software-rules/actions/runs/45926714897): all pinned source runtime, Python replica, comparison, mutation/schema/integrity, and evidence-retention steps succeeded.
+- [x] Corrected the facet evidence matrix to distinguish bounded case passes from facet-wide completeness.
+- [x] Inspected TypeORM transaction manager and SQLite-compatible query-runner implementation at the registered immutable commit.
+- [x] Added TORM-PERSIST-001 source probe, independent Python/sqlite3 model, comparator, mutation tests, and pinned-source CI workflow.
+- [~] TypeORM workflow execution and generated runtime evidence are pending. Do not count the case as passed until the actual run and artifacts are reviewed.
+- [ ] Messaging, identity/authentication, authorization, dedicated security, integrations, business rules, and repeatable performance/resource cases remain unimplemented or incomplete.

@@ -9,10 +9,12 @@ def capture():
         connection.execute("CREATE TABLE records (id INTEGER PRIMARY KEY, value TEXT NOT NULL)")
         rollback_error = None
         rollback_callback_result = None
+        rows_inside_callback = []
         try:
             connection.execute("BEGIN")
             connection.execute("INSERT INTO records(value) VALUES (?)", ("rolled-back",))
-            inside = connection.execute("SELECT value FROM records ORDER BY id").fetchall()
+            inside = connection.execute("SELECT id, value FROM records ORDER BY id").fetchall()
+            rows_inside_callback = [dict(row) for row in inside]
             if len(inside) != 1 or inside[0]["value"] != "rolled-back":
                 raise RuntimeError("transaction-read-your-write-failed")
             raise RuntimeError("forced-transaction-failure")
@@ -29,7 +31,7 @@ def capture():
             "implementation": "Independent Python 3 sqlite3 transaction model",
             "capturedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "scenarios": {
-                "rollback": {"error": rollback_error, "callbackResult": rollback_callback_result, "rowsAfterRollback": after_rollback},
+                "rollback": {"error": rollback_error, "callbackResult": rollback_callback_result, "rowsInsideCallback": rows_inside_callback, "rowsAfterRollback": after_rollback},
                 "commit": {"callbackReturn": committed_return, "rowsAfterCommit": after_commit}
             }
         }

@@ -1,0 +1,95 @@
+name: Medusa adjustment and tax allocation cross-stack conformance
+
+on:
+  push:
+    paths:
+      - "conformance/replication-lab/cases/MEDUSA-ADJUST-001/**"
+      - "conformance/replication-lab/projects/medusa-adjustment-python/**"
+      - ".github/workflows/medusa-adjustment-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/MEDUSA-ADJUST-001/**"
+      - "conformance/replication-lab/projects/medusa-adjustment-python/**"
+      - ".github/workflows/medusa-adjustment-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: medusa-adjustment-runtime
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  adjustment-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout immutable Medusa source
+        env:
+          MEDUSA_SOURCE_COMMIT: "6e28e10acb9676392315b3ff1a9c7147fce4b5ab"
+        run: |
+          git init /tmp/medusa
+          git -C /tmp/medusa remote add origin https://github.com/medusajs/medusa.git
+          git -C /tmp/medusa fetch --depth=1 origin "$MEDUSA_SOURCE_COMMIT"
+          git -C /tmp/medusa checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/medusa rev-parse HEAD)" = "$MEDUSA_SOURCE_COMMIT"
+      - name: Install pinned TypeScript compiler
+        run: |
+          npm install --prefix /tmp/medusa-toolchain --no-audit --no-fund typescript@6.0.2
+          node -e "const ts=require('/tmp/medusa-toolchain/node_modules/typescript'); if(ts.version!=='6.0.2') process.exit(1)"
+      - name: Execute exact pinned Medusa adjustment function
+        env:
+          MEDUSA_SOURCE_ROOT: /tmp/medusa
+          MEDUSA_SOURCE_COMMIT: "6e28e10acb9676392315b3ff1a9c7147fce4b5ab"
+          TYPESCRIPT_PATH: /tmp/medusa-toolchain/node_modules/typescript
+        run: node conformance/replication-lab/cases/MEDUSA-ADJUST-001/source_probe.cjs > medusa-adjust-source-runtime.json
+      - name: Execute independent Python Decimal replica
+        run: python conformance/replication-lab/projects/medusa-adjustment-python/replica_probe.py > medusa-adjust-python-runtime.json
+      - name: Compare all adjustment and tax outcomes
+        run: python conformance/replication-lab/cases/MEDUSA-ADJUST-001/compare.py medusa-adjust-source-runtime.json medusa-adjust-python-runtime.json
+      - name: Run six deliberate adjustment-rule mutations
+        run: python -m unittest discover -s conformance/replication-lab/cases/MEDUSA-ADJUST-001 -p "test_*.py" -v
+      - name: Stage pinned source and runtime evidence
+        run: |
+          evidence_dir="conformance/replication-lab/cases/MEDUSA-ADJUST-001/artifacts"
+          mkdir -p "$evidence_dir"
+          cp medusa-adjust-source-runtime.json "$evidence_dir/medusa-adjust-source-runtime.json"
+          cp medusa-adjust-python-runtime.json "$evidence_dir/medusa-adjust-python-runtime.json"
+          cp /tmp/medusa/packages/core/utils/src/totals/adjustment/index.ts "$evidence_dir/adjustment-index.ts"
+          cp /tmp/medusa/packages/core/utils/src/totals/line-item/index.ts "$evidence_dir/line-item-index.ts"
+          cp /tmp/medusa/yarn.lock "$evidence_dir/yarn.lock"
+          cp /tmp/medusa-toolchain/package-lock.json "$evidence_dir/typescript-toolchain-package-lock.json"
+          python conformance/replication-lab/cases/MEDUSA-ADJUST-001/build_software_rules_artifacts.py \
+            --source "$GITHUB_WORKSPACE/medusa-adjust-source-runtime.json" \
+            --replica "$GITHUB_WORKSPACE/medusa-adjust-python-runtime.json" \
+            --output-dir "$GITHUB_WORKSPACE/medusa-adjust-software-rules" \
+            --source-artifacts "{\"adjustmentFunction\":\"$GITHUB_WORKSPACE/$evidence_dir/adjustment-index.ts\",\"lineItemFunction\":\"$GITHUB_WORKSPACE/$evidence_dir/line-item-index.ts\",\"sourceLockfile\":\"$GITHUB_WORKSPACE/$evidence_dir/yarn.lock\",\"typescriptLockfile\":\"$GITHUB_WORKSPACE/$evidence_dir/typescript-toolchain-package-lock.json\"}"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            medusa-adjust-software-rules/medusa-adjust-source.capture.json \
+            medusa-adjust-software-rules/medusa-adjust-python-replica.capture.json \
+            medusa-adjust-software-rules/medusa-adjust-comparison.report.json
+      - name: Retain source, replica, comparison, and Software Rules artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: medusa-adjustment-cross-stack
+          path: |
+            medusa-adjust-source-runtime.json
+            medusa-adjust-python-runtime.json
+            medusa-adjust-software-rules/*.json
+            conformance/replication-lab/cases/MEDUSA-ADJUST-001/artifacts/*
+          if-no-files-found: warn
+          retention-days: 30

@@ -116,4 +116,4 @@ Phase 6 is complete only when:
 
 ## Current status
 
-This programme defines the corrected strategy; it does not claim that new cross-repository cases have already passed. The next task is to create the replication-lab skeleton and case manifest, then select and inspect the first source repository for a facet not adequately represented by Task Board.
+This programme now has twenty accepted bounded cross-stack cases across the 15-facet catalogue, backed by immutable source commits, independent replicas, discriminating probes, mutation tests, and validated Software Rules 0.2.0 captures. The current evidence matrix and required-property inventory remain authoritative: no facet is complete, and Phase 6 remains open until every required property gap is evidenced or explicitly resolved. The next work is full cart totals and promotion application/campaign usage, then the remaining persistence, messaging, security, identity, integration, performance, and cross-facet recovery gaps.

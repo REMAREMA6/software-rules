@@ -341,4 +341,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 with the next bounded case using the pinned Express source repository for API routing semantics and an independent Python HTTP implementation. Then continue across all remaining facets using additional pinned source repositories and genuinely different stacks. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 with a bounded TypeORM persistence/data case using the pinned source repository and an independent Python/SQLite implementation. Then continue across all remaining facets using additional pinned source repositories and genuinely different stacks. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

@@ -2,7 +2,7 @@
 
 **Project:** Software Rules  
 **Repository:** REMAREMA6/software-rules  
-**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; eight bounded cases pass (BullMQ retry/backoff, BullMQ messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and Redis client integration). No facet-wide completeness claim is justified; authorization, integrations, broader security, performance/resources, cross-UI-stack replication, and incomplete property inventories remain.  
+**Status:** Phase 6 — cross-repository, cross-stack replication and conformance in progress; nine bounded cases pass, including TASKBOARD-UI-001 (independent React UI replication) alongside BullMQ retry/backoff/messaging, Express routing, TypeORM transactions, Medusa date validation, JOSE JWT verification, Casbin RBAC authorization, and Redis client integration. No facet-wide completeness claim is justified; authorization, integrations, broader security, performance/resources, cross-UI-stack replication, and incomplete property inventories remain.  
 **Plan version:** 0.3.0  
 **Last updated:** 2026-11-27
 
@@ -356,4 +356,4 @@ The tracker is the operational source of truth for progress. The plan is the sou
 
 ## 7. Immediate next work
 
-Continue Phase 6 by completing BMQ-MSG-001 schema-native capture validation and retaining the validated evidence. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, external integrations, broader business rules, and repeatable performance/resource behaviour; add a separate cross-UI-stack case. Keep the 15-facet inventory explicit and do not mark a facet complete from a single bounded case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.
+Continue Phase 6 by completing BMQ-MSG-001 schema-native capture validation and retaining the validated evidence. Then build and execute distinct cases for identity/authentication, authorization, dedicated security, external integrations, broader business rules, and repeatable performance/resource behaviour; extend interface property inventories beyond the accepted bounded Task Board UI case. Keep the 15-facet inventory explicit and do not mark a facet complete from a single bounded case. Do not mark the phase complete while any required facet inventory or evidence loop remains unresolved. Do not force all facets into one target application. Keep Phase 7 blocked until the expanded Phase 6 exit gate is satisfied.

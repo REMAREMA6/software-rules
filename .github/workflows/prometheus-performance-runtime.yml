@@ -2,6 +2,7 @@ name: Prometheus performance and resource cross-stack conformance
 
 on:
   push:
+    branches: [main]
     paths:
       - "conformance/replication-lab/cases/PROM-PERF-001/**"
       - "conformance/replication-lab/projects/prometheus-write-python/**"

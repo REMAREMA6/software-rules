@@ -5,6 +5,67 @@ import json
 from datetime import datetime, timezone
 
 
+
+def b64url_encode(value):
+    return base64.urlsafe_b64encode(value).rstrip(b"=").decode("ascii")
+
+
+def sign_token_fixture(payload, alg, key):
+    header = {"alg": alg}
+    header_part = b64url_encode(json.dumps(header, separators=(",", ":")).encode())
+    payload_part = b64url_encode(json.dumps(payload, separators=(",", ":")).encode())
+    signing_input = (header_part + "." + payload_part).encode("ascii")
+    digest = {"HS256": hashlib.sha256, "HS384": hashlib.sha384}[alg]
+    signature = hmac.new(key, signing_input, digest).digest()
+    return header_part + "." + payload_part + "." + b64url_encode(signature)
+
+
+def sign_token_fixture_capture():
+    now = 1700000000
+    issuer = "https://issuer.example"
+    audience = "api.example"
+    secret = b"software-rules-jose-hmac-key-32bytes!!"
+    secret384 = b"software-rules-jose-hmac-key-48bytes!!"
+    base_options = {
+        "algorithms": ["HS256"],
+        "issuer": issuer,
+        "audience": audience,
+        "currentDateEpochSeconds": now,
+    }
+    cases = [
+        ("valid-token", {"sub": "user-1", "iss": issuer, "aud": audience, "exp": now + 600, "nbf": now - 60}, "HS256", secret, False, "accepted", None),
+        ("expired-token", {"sub": "user-1", "iss": issuer, "aud": audience, "exp": now - 1, "nbf": now - 60}, "HS256", secret, False, "rejected", "token-expired"),
+        ("not-before-future", {"sub": "user-1", "iss": issuer, "aud": audience, "exp": now + 600, "nbf": now + 1}, "HS256", secret, False, "rejected", "token-not-yet-valid"),
+        ("issuer-mismatch", {"sub": "user-1", "iss": "https://wrong-issuer.example", "aud": audience, "exp": now + 600}, "HS256", secret, False, "rejected", "issuer-mismatch"),
+        ("audience-mismatch", {"sub": "user-1", "iss": issuer, "aud": "other-api.example", "exp": now + 600}, "HS256", secret, False, "rejected", "audience-mismatch"),
+        ("tampered-signature", {"sub": "user-1", "iss": issuer, "aud": audience, "exp": now + 600}, "HS256", secret, True, "rejected", "signature-invalid"),
+        ("algorithm-not-allowed", {"sub": "user-1", "iss": issuer, "aud": audience, "exp": now + 600}, "HS384", secret384, False, "rejected", "algorithm-not-allowed"),
+        ("missing-exp-is-optional", {"sub": "user-1", "iss": issuer, "aud": audience}, "HS256", secret, False, "accepted", None),
+        ("audience-array-match", {"sub": "user-1", "iss": issuer, "aud": [audience, "other-api.example"], "exp": now + 600}, "HS256", secret, False, "accepted", None),
+        ("missing-issuer", {"sub": "user-1", "aud": audience, "exp": now + 600}, "HS256", secret, False, "rejected", "issuer-missing"),
+        ("missing-audience", {"sub": "user-1", "iss": issuer, "exp": now + 600}, "HS256", secret, False, "rejected", "audience-missing"),
+    ]
+    scenarios = []
+    for label, payload, alg, key, tamper, outcome, category in cases:
+        token = sign_token_fixture(payload, alg, key)
+        if tamper:
+            parts = token.split(".")
+            parts[2] = parts[2][:-1] + ("B" if parts[2][-1] == "A" else "A")
+            token = ".".join(parts)
+        accepted = outcome == "accepted"
+        scenarios.append({
+            "label": label,
+            "token": token,
+            "keyBase64url": b64url_encode(key),
+            "verificationOptions": base_options,
+            "outcome": outcome,
+            "errorCategory": category,
+            "claims": payload if accepted else None,
+            "protectedHeader": {"alg": alg} if accepted else None,
+        })
+    return {"scenarios": scenarios}
+
+
 def b64url_decode(value):
     return base64.urlsafe_b64decode(value + "=" * ((4 - len(value) % 4) % 4))
 

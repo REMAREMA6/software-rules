@@ -75,7 +75,20 @@ jobs:
         run: |
           set -o pipefail
           python "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-ER-002/compare_retry_probe.py" "$GITHUB_WORKSPACE/bullmq-runtime-capture.json" "$GITHUB_WORKSPACE/bullmq-replica-capture.json" | tee "$GITHUB_WORKSPACE/bullmq-comparison-report.json"
-      - name: Retain source, replica, and comparison captures
+      - name: Build Software Rules captures and comparison report
+        run: |
+          python "$GITHUB_WORKSPACE/conformance/replication-lab/cases/BMQ-ER-002/build_software_rules_artifacts.py" \
+            --source "$GITHUB_WORKSPACE/bullmq-runtime-capture.json" \
+            --replica "$GITHUB_WORKSPACE/bullmq-replica-capture.json" \
+            --output-dir "$GITHUB_WORKSPACE/bullmq-software-rules"
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            "$GITHUB_WORKSPACE/bullmq-software-rules/bullmq-source.capture.json" \
+            "$GITHUB_WORKSPACE/bullmq-software-rules/bullmq-python-replica.capture.json" \
+            "$GITHUB_WORKSPACE/bullmq-software-rules/bullmq-comparison.report.json"
+      - name: Retain source, replica, and Software Rules captures
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -84,5 +97,6 @@ jobs:
             bullmq-runtime-capture.json
             bullmq-replica-capture.json
             bullmq-comparison-report.json
+            bullmq-software-rules/*.json
           if-no-files-found: warn
           retention-days: 30

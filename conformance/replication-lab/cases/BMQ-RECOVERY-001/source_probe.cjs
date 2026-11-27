@@ -12,7 +12,7 @@ async function runScenario(label,maxStalledCount){
  try{
   await Promise.all([queue.waitUntilReady(),events.waitUntilReady()]);
   events.on('stalled',()=>eventCounts.stalled++);
-  const job=await queue.add('work',{value:label});
+  const job=await queue.add('work',{value:label},{jobId:'recovery-job'});
   worker1=new Worker(name,async()=>new Promise(()=>{}),{connection:w1c,lockDuration:1000,stalledInterval:100,concurrency:1});
   const active=await new Promise((resolve,reject)=>{
    const timer=setTimeout(()=>reject(new Error(label+': initial worker did not activate job')),5000);

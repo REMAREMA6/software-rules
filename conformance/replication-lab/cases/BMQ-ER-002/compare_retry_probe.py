@@ -25,7 +25,9 @@ def field_value(source_scenario, field):
                 "queue:waiting",
                 "queue:failed",
                 "queue:completed",
-            }
+            } and not (
+                event["event"] == "queue:waiting" and not event.get("data", {}).get("prev")
+            )
         ]
     return source_scenario[field]
 

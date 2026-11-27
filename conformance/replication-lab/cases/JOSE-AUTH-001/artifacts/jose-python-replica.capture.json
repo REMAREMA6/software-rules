@@ -1,14 +1,14 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "python-jwt-replica-capture",
-  "createdAt": "2026-11-27T02:55:22.776260Z",
+  "createdAt": "2026-11-27T02:57:18.754811Z",
   "purpose": "Capture the declared eleven-scenario JWT verification scope.",
   "target": {
     "targetId": "python-jwt-replica",
     "systemName": "Independent Python JWT verifier",
     "systemVersion": "Python 3.12",
     "build": {
-      "revision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572"
+      "revision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd"
     },
     "boundary": {
       "description": "Compact HMAC-signed JWT verification with a fixed clock and explicit issuer/audience/algorithm policy.",
@@ -477,12 +477,12 @@
       "executionId": "jose-exec-replica-valid-token",
       "scenarioId": "jose-scenario-valid-token",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -509,12 +509,12 @@
       "executionId": "jose-exec-replica-expired-token",
       "scenarioId": "jose-scenario-expired-token",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -541,12 +541,12 @@
       "executionId": "jose-exec-replica-not-before-future",
       "scenarioId": "jose-scenario-not-before-future",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -573,12 +573,12 @@
       "executionId": "jose-exec-replica-issuer-mismatch",
       "scenarioId": "jose-scenario-issuer-mismatch",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -605,12 +605,12 @@
       "executionId": "jose-exec-replica-audience-mismatch",
       "scenarioId": "jose-scenario-audience-mismatch",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -637,12 +637,12 @@
       "executionId": "jose-exec-replica-tampered-signature",
       "scenarioId": "jose-scenario-tampered-signature",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -669,12 +669,12 @@
       "executionId": "jose-exec-replica-algorithm-not-allowed",
       "scenarioId": "jose-scenario-algorithm-not-allowed",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -701,12 +701,12 @@
       "executionId": "jose-exec-replica-missing-exp-is-optional",
       "scenarioId": "jose-scenario-missing-exp-is-optional",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -733,12 +733,12 @@
       "executionId": "jose-exec-replica-audience-array-match",
       "scenarioId": "jose-scenario-audience-array-match",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -765,12 +765,12 @@
       "executionId": "jose-exec-replica-missing-issuer",
       "scenarioId": "jose-scenario-missing-issuer",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -797,12 +797,12 @@
       "executionId": "jose-exec-replica-missing-audience",
       "scenarioId": "jose-scenario-missing-audience",
       "targetId": "python-jwt-replica",
-      "startedAt": "2026-11-27T02:55:22.614560Z",
-      "endedAt": "2026-11-27T02:55:22.776260Z",
+      "startedAt": "2026-11-27T02:57:18.501430Z",
+      "endedAt": "2026-11-27T02:57:18.754811Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "testTimeEpochSeconds": null,
         "verificationKey": "synthetic HMAC test key"
       },
@@ -833,7 +833,7 @@
       "executionId": "jose-exec-replica-valid-token",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -919,7 +919,7 @@
       "executionId": "jose-exec-replica-valid-token",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -1002,7 +1002,7 @@
       "executionId": "jose-exec-replica-valid-token",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -1101,7 +1101,7 @@
       "executionId": "jose-exec-replica-valid-token",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -1199,7 +1199,7 @@
       "executionId": "jose-exec-replica-valid-token",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -1271,7 +1271,7 @@
       "executionId": "jose-exec-replica-expired-token",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -1334,7 +1334,7 @@
       "executionId": "jose-exec-replica-expired-token",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -1409,7 +1409,7 @@
       "executionId": "jose-exec-replica-expired-token",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1488,7 +1488,7 @@
       "executionId": "jose-exec-replica-expired-token",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1572,7 +1572,7 @@
       "executionId": "jose-exec-replica-expired-token",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1636,7 +1636,7 @@
       "executionId": "jose-exec-replica-not-before-future",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1699,7 +1699,7 @@
       "executionId": "jose-exec-replica-not-before-future",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1774,7 +1774,7 @@
       "executionId": "jose-exec-replica-not-before-future",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 12,
       "method": {
         "class": "instrumentation",
@@ -1853,7 +1853,7 @@
       "executionId": "jose-exec-replica-not-before-future",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 13,
       "method": {
         "class": "instrumentation",
@@ -1937,7 +1937,7 @@
       "executionId": "jose-exec-replica-not-before-future",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 14,
       "method": {
         "class": "instrumentation",
@@ -2001,7 +2001,7 @@
       "executionId": "jose-exec-replica-issuer-mismatch",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 15,
       "method": {
         "class": "instrumentation",
@@ -2064,7 +2064,7 @@
       "executionId": "jose-exec-replica-issuer-mismatch",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 16,
       "method": {
         "class": "instrumentation",
@@ -2139,7 +2139,7 @@
       "executionId": "jose-exec-replica-issuer-mismatch",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 17,
       "method": {
         "class": "instrumentation",
@@ -2218,7 +2218,7 @@
       "executionId": "jose-exec-replica-issuer-mismatch",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 18,
       "method": {
         "class": "instrumentation",
@@ -2302,7 +2302,7 @@
       "executionId": "jose-exec-replica-issuer-mismatch",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 19,
       "method": {
         "class": "instrumentation",
@@ -2366,7 +2366,7 @@
       "executionId": "jose-exec-replica-audience-mismatch",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 20,
       "method": {
         "class": "instrumentation",
@@ -2429,7 +2429,7 @@
       "executionId": "jose-exec-replica-audience-mismatch",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 21,
       "method": {
         "class": "instrumentation",
@@ -2504,7 +2504,7 @@
       "executionId": "jose-exec-replica-audience-mismatch",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 22,
       "method": {
         "class": "instrumentation",
@@ -2583,7 +2583,7 @@
       "executionId": "jose-exec-replica-audience-mismatch",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 23,
       "method": {
         "class": "instrumentation",
@@ -2667,7 +2667,7 @@
       "executionId": "jose-exec-replica-audience-mismatch",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 24,
       "method": {
         "class": "instrumentation",
@@ -2731,7 +2731,7 @@
       "executionId": "jose-exec-replica-tampered-signature",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 25,
       "method": {
         "class": "instrumentation",
@@ -2794,7 +2794,7 @@
       "executionId": "jose-exec-replica-tampered-signature",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 26,
       "method": {
         "class": "instrumentation",
@@ -2869,7 +2869,7 @@
       "executionId": "jose-exec-replica-tampered-signature",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 27,
       "method": {
         "class": "instrumentation",
@@ -2948,7 +2948,7 @@
       "executionId": "jose-exec-replica-tampered-signature",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 28,
       "method": {
         "class": "instrumentation",
@@ -3032,7 +3032,7 @@
       "executionId": "jose-exec-replica-tampered-signature",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 29,
       "method": {
         "class": "instrumentation",
@@ -3096,7 +3096,7 @@
       "executionId": "jose-exec-replica-algorithm-not-allowed",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 30,
       "method": {
         "class": "instrumentation",
@@ -3159,7 +3159,7 @@
       "executionId": "jose-exec-replica-algorithm-not-allowed",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 31,
       "method": {
         "class": "instrumentation",
@@ -3234,7 +3234,7 @@
       "executionId": "jose-exec-replica-algorithm-not-allowed",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 32,
       "method": {
         "class": "instrumentation",
@@ -3313,7 +3313,7 @@
       "executionId": "jose-exec-replica-algorithm-not-allowed",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 33,
       "method": {
         "class": "instrumentation",
@@ -3397,7 +3397,7 @@
       "executionId": "jose-exec-replica-algorithm-not-allowed",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 34,
       "method": {
         "class": "instrumentation",
@@ -3461,7 +3461,7 @@
       "executionId": "jose-exec-replica-missing-exp-is-optional",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 35,
       "method": {
         "class": "instrumentation",
@@ -3540,7 +3540,7 @@
       "executionId": "jose-exec-replica-missing-exp-is-optional",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 36,
       "method": {
         "class": "instrumentation",
@@ -3621,7 +3621,7 @@
       "executionId": "jose-exec-replica-missing-exp-is-optional",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 37,
       "method": {
         "class": "instrumentation",
@@ -3714,7 +3714,7 @@
       "executionId": "jose-exec-replica-missing-exp-is-optional",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 38,
       "method": {
         "class": "instrumentation",
@@ -3808,7 +3808,7 @@
       "executionId": "jose-exec-replica-missing-exp-is-optional",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 39,
       "method": {
         "class": "instrumentation",
@@ -3878,7 +3878,7 @@
       "executionId": "jose-exec-replica-audience-array-match",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 40,
       "method": {
         "class": "instrumentation",
@@ -3970,7 +3970,7 @@
       "executionId": "jose-exec-replica-audience-array-match",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 41,
       "method": {
         "class": "instrumentation",
@@ -4055,7 +4055,7 @@
       "executionId": "jose-exec-replica-audience-array-match",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 42,
       "method": {
         "class": "instrumentation",
@@ -4160,7 +4160,7 @@
       "executionId": "jose-exec-replica-audience-array-match",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 43,
       "method": {
         "class": "instrumentation",
@@ -4262,7 +4262,7 @@
       "executionId": "jose-exec-replica-audience-array-match",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 44,
       "method": {
         "class": "instrumentation",
@@ -4336,7 +4336,7 @@
       "executionId": "jose-exec-replica-missing-issuer",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 45,
       "method": {
         "class": "instrumentation",
@@ -4399,7 +4399,7 @@
       "executionId": "jose-exec-replica-missing-issuer",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 46,
       "method": {
         "class": "instrumentation",
@@ -4474,7 +4474,7 @@
       "executionId": "jose-exec-replica-missing-issuer",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 47,
       "method": {
         "class": "instrumentation",
@@ -4553,7 +4553,7 @@
       "executionId": "jose-exec-replica-missing-issuer",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 48,
       "method": {
         "class": "instrumentation",
@@ -4637,7 +4637,7 @@
       "executionId": "jose-exec-replica-missing-issuer",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 49,
       "method": {
         "class": "instrumentation",
@@ -4701,7 +4701,7 @@
       "executionId": "jose-exec-replica-missing-audience",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 50,
       "method": {
         "class": "instrumentation",
@@ -4764,7 +4764,7 @@
       "executionId": "jose-exec-replica-missing-audience",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 51,
       "method": {
         "class": "instrumentation",
@@ -4839,7 +4839,7 @@
       "executionId": "jose-exec-replica-missing-audience",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 52,
       "method": {
         "class": "instrumentation",
@@ -4918,7 +4918,7 @@
       "executionId": "jose-exec-replica-missing-audience",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 53,
       "method": {
         "class": "instrumentation",
@@ -5002,7 +5002,7 @@
       "executionId": "jose-exec-replica-missing-audience",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.776260Z",
+      "observedAt": "2026-11-27T02:57:18.754811Z",
       "sequence": 54,
       "method": {
         "class": "instrumentation",
@@ -5135,10 +5135,10 @@
       "origin": {
         "targetId": "python-jwt-replica",
         "collector": "Python 3.12 / standard-library HMAC",
-        "sourceRevision": "dd2608cc1e1620dfeaec4acdf4f82326f589a572",
+        "sourceRevision": "5c368f6c48fa62d2455d792d0bee6cf1708780cd",
         "location": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jose-python-runtime.json"
       },
-      "capturedAt": "2026-11-27T02:55:22.776260Z",
+      "capturedAt": "2026-11-27T02:57:18.754811Z",
       "embedded": {
         "scenarioLabels": [
           "valid-token",
@@ -5153,10 +5153,10 @@
           "missing-issuer",
           "missing-audience"
         ],
-        "sha256": "ce32e7ca8af5cbc63e3275c2b44abec4daa4877cda7cd7e86d53f4135bf0bd3c"
+        "sha256": "a5b34efd104639b22e3455509735aa2ba67e21d2ece974c8747fb16365f1efe5"
       },
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jose-python-runtime.json",
-      "digest": "ce32e7ca8af5cbc63e3275c2b44abec4daa4877cda7cd7e86d53f4135bf0bd3c",
+      "digest": "a5b34efd104639b22e3455509735aa2ba67e21d2ece974c8747fb16365f1efe5",
       "sizeBytes": 7971,
       "retention": {
         "status": "retained",
@@ -5476,7 +5476,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:55:22.776260Z",
+      "assessedAt": "2026-11-27T02:57:18.754811Z",
       "assessmentMethod": "All eight required properties link to runtime observations and retained evidence in both implementations.",
       "rationale": "Every required property in the declared HMAC JWT verification scope was observed on the pinned jose runtime and independent Python verifier."
     }

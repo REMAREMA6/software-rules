@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "jose-source-capture",
-  "createdAt": "2026-11-27T02:55:22.775763Z",
+  "createdAt": "2026-11-27T02:57:18.754046Z",
   "purpose": "Capture the declared eleven-scenario JWT verification scope.",
   "target": {
     "targetId": "jose-source-runtime",
@@ -477,8 +477,8 @@
       "executionId": "jose-exec-source-valid-token",
       "scenarioId": "jose-scenario-valid-token",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -509,8 +509,8 @@
       "executionId": "jose-exec-source-expired-token",
       "scenarioId": "jose-scenario-expired-token",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -541,8 +541,8 @@
       "executionId": "jose-exec-source-not-before-future",
       "scenarioId": "jose-scenario-not-before-future",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -573,8 +573,8 @@
       "executionId": "jose-exec-source-issuer-mismatch",
       "scenarioId": "jose-scenario-issuer-mismatch",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -605,8 +605,8 @@
       "executionId": "jose-exec-source-audience-mismatch",
       "scenarioId": "jose-scenario-audience-mismatch",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -637,8 +637,8 @@
       "executionId": "jose-exec-source-tampered-signature",
       "scenarioId": "jose-scenario-tampered-signature",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -669,8 +669,8 @@
       "executionId": "jose-exec-source-algorithm-not-allowed",
       "scenarioId": "jose-scenario-algorithm-not-allowed",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -701,8 +701,8 @@
       "executionId": "jose-exec-source-missing-exp-is-optional",
       "scenarioId": "jose-scenario-missing-exp-is-optional",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -733,8 +733,8 @@
       "executionId": "jose-exec-source-audience-array-match",
       "scenarioId": "jose-scenario-audience-array-match",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -765,8 +765,8 @@
       "executionId": "jose-exec-source-missing-issuer",
       "scenarioId": "jose-scenario-missing-issuer",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -797,8 +797,8 @@
       "executionId": "jose-exec-source-missing-audience",
       "scenarioId": "jose-scenario-missing-audience",
       "targetId": "jose-source-runtime",
-      "startedAt": "2026-11-27T02:55:22.548Z",
-      "endedAt": "2026-11-27T02:55:22.548Z",
+      "startedAt": "2026-11-27T02:57:18.399Z",
+      "endedAt": "2026-11-27T02:57:18.400Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / jose 6.2.18",
@@ -833,7 +833,7 @@
       "executionId": "jose-exec-source-valid-token",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -928,7 +928,7 @@
       "executionId": "jose-exec-source-valid-token",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -1027,7 +1027,7 @@
       "executionId": "jose-exec-source-valid-token",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -1135,7 +1135,7 @@
       "executionId": "jose-exec-source-valid-token",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -1242,7 +1242,7 @@
       "executionId": "jose-exec-source-valid-token",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -1323,7 +1323,7 @@
       "executionId": "jose-exec-source-expired-token",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -1395,7 +1395,7 @@
       "executionId": "jose-exec-source-expired-token",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -1486,7 +1486,7 @@
       "executionId": "jose-exec-source-expired-token",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1574,7 +1574,7 @@
       "executionId": "jose-exec-source-expired-token",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1667,7 +1667,7 @@
       "executionId": "jose-exec-source-expired-token",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1740,7 +1740,7 @@
       "executionId": "jose-exec-source-not-before-future",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1812,7 +1812,7 @@
       "executionId": "jose-exec-source-not-before-future",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1903,7 +1903,7 @@
       "executionId": "jose-exec-source-not-before-future",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 12,
       "method": {
         "class": "instrumentation",
@@ -1991,7 +1991,7 @@
       "executionId": "jose-exec-source-not-before-future",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 13,
       "method": {
         "class": "instrumentation",
@@ -2084,7 +2084,7 @@
       "executionId": "jose-exec-source-not-before-future",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 14,
       "method": {
         "class": "instrumentation",
@@ -2157,7 +2157,7 @@
       "executionId": "jose-exec-source-issuer-mismatch",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 15,
       "method": {
         "class": "instrumentation",
@@ -2229,7 +2229,7 @@
       "executionId": "jose-exec-source-issuer-mismatch",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 16,
       "method": {
         "class": "instrumentation",
@@ -2320,7 +2320,7 @@
       "executionId": "jose-exec-source-issuer-mismatch",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 17,
       "method": {
         "class": "instrumentation",
@@ -2408,7 +2408,7 @@
       "executionId": "jose-exec-source-issuer-mismatch",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 18,
       "method": {
         "class": "instrumentation",
@@ -2501,7 +2501,7 @@
       "executionId": "jose-exec-source-issuer-mismatch",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 19,
       "method": {
         "class": "instrumentation",
@@ -2574,7 +2574,7 @@
       "executionId": "jose-exec-source-audience-mismatch",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 20,
       "method": {
         "class": "instrumentation",
@@ -2646,7 +2646,7 @@
       "executionId": "jose-exec-source-audience-mismatch",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 21,
       "method": {
         "class": "instrumentation",
@@ -2737,7 +2737,7 @@
       "executionId": "jose-exec-source-audience-mismatch",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 22,
       "method": {
         "class": "instrumentation",
@@ -2825,7 +2825,7 @@
       "executionId": "jose-exec-source-audience-mismatch",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 23,
       "method": {
         "class": "instrumentation",
@@ -2918,7 +2918,7 @@
       "executionId": "jose-exec-source-audience-mismatch",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 24,
       "method": {
         "class": "instrumentation",
@@ -2991,7 +2991,7 @@
       "executionId": "jose-exec-source-tampered-signature",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 25,
       "method": {
         "class": "instrumentation",
@@ -3063,7 +3063,7 @@
       "executionId": "jose-exec-source-tampered-signature",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 26,
       "method": {
         "class": "instrumentation",
@@ -3154,7 +3154,7 @@
       "executionId": "jose-exec-source-tampered-signature",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 27,
       "method": {
         "class": "instrumentation",
@@ -3242,7 +3242,7 @@
       "executionId": "jose-exec-source-tampered-signature",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 28,
       "method": {
         "class": "instrumentation",
@@ -3335,7 +3335,7 @@
       "executionId": "jose-exec-source-tampered-signature",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 29,
       "method": {
         "class": "instrumentation",
@@ -3408,7 +3408,7 @@
       "executionId": "jose-exec-source-algorithm-not-allowed",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 30,
       "method": {
         "class": "instrumentation",
@@ -3480,7 +3480,7 @@
       "executionId": "jose-exec-source-algorithm-not-allowed",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 31,
       "method": {
         "class": "instrumentation",
@@ -3571,7 +3571,7 @@
       "executionId": "jose-exec-source-algorithm-not-allowed",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 32,
       "method": {
         "class": "instrumentation",
@@ -3659,7 +3659,7 @@
       "executionId": "jose-exec-source-algorithm-not-allowed",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 33,
       "method": {
         "class": "instrumentation",
@@ -3752,7 +3752,7 @@
       "executionId": "jose-exec-source-algorithm-not-allowed",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 34,
       "method": {
         "class": "instrumentation",
@@ -3825,7 +3825,7 @@
       "executionId": "jose-exec-source-missing-exp-is-optional",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 35,
       "method": {
         "class": "instrumentation",
@@ -3913,7 +3913,7 @@
       "executionId": "jose-exec-source-missing-exp-is-optional",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 36,
       "method": {
         "class": "instrumentation",
@@ -4010,7 +4010,7 @@
       "executionId": "jose-exec-source-missing-exp-is-optional",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 37,
       "method": {
         "class": "instrumentation",
@@ -4112,7 +4112,7 @@
       "executionId": "jose-exec-source-missing-exp-is-optional",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 38,
       "method": {
         "class": "instrumentation",
@@ -4215,7 +4215,7 @@
       "executionId": "jose-exec-source-missing-exp-is-optional",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 39,
       "method": {
         "class": "instrumentation",
@@ -4294,7 +4294,7 @@
       "executionId": "jose-exec-source-audience-array-match",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 40,
       "method": {
         "class": "instrumentation",
@@ -4395,7 +4395,7 @@
       "executionId": "jose-exec-source-audience-array-match",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 41,
       "method": {
         "class": "instrumentation",
@@ -4496,7 +4496,7 @@
       "executionId": "jose-exec-source-audience-array-match",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 42,
       "method": {
         "class": "instrumentation",
@@ -4610,7 +4610,7 @@
       "executionId": "jose-exec-source-audience-array-match",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 43,
       "method": {
         "class": "instrumentation",
@@ -4721,7 +4721,7 @@
       "executionId": "jose-exec-source-audience-array-match",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 44,
       "method": {
         "class": "instrumentation",
@@ -4804,7 +4804,7 @@
       "executionId": "jose-exec-source-missing-issuer",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 45,
       "method": {
         "class": "instrumentation",
@@ -4876,7 +4876,7 @@
       "executionId": "jose-exec-source-missing-issuer",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 46,
       "method": {
         "class": "instrumentation",
@@ -4967,7 +4967,7 @@
       "executionId": "jose-exec-source-missing-issuer",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 47,
       "method": {
         "class": "instrumentation",
@@ -5055,7 +5055,7 @@
       "executionId": "jose-exec-source-missing-issuer",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 48,
       "method": {
         "class": "instrumentation",
@@ -5148,7 +5148,7 @@
       "executionId": "jose-exec-source-missing-issuer",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 49,
       "method": {
         "class": "instrumentation",
@@ -5221,7 +5221,7 @@
       "executionId": "jose-exec-source-missing-audience",
       "facet": "identity-authentication",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 50,
       "method": {
         "class": "instrumentation",
@@ -5293,7 +5293,7 @@
       "executionId": "jose-exec-source-missing-audience",
       "facet": "security-controls",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 51,
       "method": {
         "class": "instrumentation",
@@ -5384,7 +5384,7 @@
       "executionId": "jose-exec-source-missing-audience",
       "facet": "data",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 52,
       "method": {
         "class": "instrumentation",
@@ -5472,7 +5472,7 @@
       "executionId": "jose-exec-source-missing-audience",
       "facet": "behavior",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 53,
       "method": {
         "class": "instrumentation",
@@ -5565,7 +5565,7 @@
       "executionId": "jose-exec-source-missing-audience",
       "facet": "errors-recovery",
       "subject": "compact-jwt-bearer-verification",
-      "observedAt": "2026-11-27T02:55:22.548Z",
+      "observedAt": "2026-11-27T02:57:18.400Z",
       "sequence": 54,
       "method": {
         "class": "instrumentation",
@@ -5710,7 +5710,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jose-source-runtime.json"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "embedded": {
         "scenarioLabels": [
           "valid-token",
@@ -5725,10 +5725,10 @@
           "missing-issuer",
           "missing-audience"
         ],
-        "sha256": "a2ae3b067f663f1fb3831b73c9fbd00040c6d4ec56bed1f340e54a9bda42b4c7"
+        "sha256": "0bc3fec7b3c81b31671730016253ad91c127ba602d087b007c7b4cda782d80cd"
       },
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jose-source-runtime.json",
-      "digest": "a2ae3b067f663f1fb3831b73c9fbd00040c6d4ec56bed1f340e54a9bda42b4c7",
+      "digest": "0bc3fec7b3c81b31671730016253ad91c127ba602d087b007c7b4cda782d80cd",
       "sizeBytes": 9953,
       "retention": {
         "status": "retained",
@@ -5745,7 +5745,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "src/jwt/verify.ts"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jwt-verify.ts",
       "digest": "7549a77e4db39257ddfcb6752ec3d107fe1c52d85d5df3c262f9896e4199fddf",
       "sizeBytes": 9218,
@@ -5764,7 +5764,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "src/lib/jwt_claims_set.ts"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jwt-claims-set.ts",
       "digest": "b8497895c8547a0810073293ba17e6474fa07d8fc970902b3e73115592b6ee84",
       "sizeBytes": 10363,
@@ -5783,7 +5783,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "src/lib/jws_verify.ts"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jws-verify.ts",
       "digest": "94e9a76fbadc1e9cd6bf811076482f49d353b9959a6810267802ac2983a643ce",
       "sizeBytes": 8603,
@@ -5802,7 +5802,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "test/jwt/verify.test.ts"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/jwt-verify.test.ts",
       "digest": "8b23ff56b35c4edc18bf97f6f79df69af1421d4192eb86056a62972789dc588b",
       "sizeBytes": 20723,
@@ -5821,7 +5821,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "package.json"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/package.json",
       "digest": "8d8c09d46a9b6d815f57f4bd2a98b8f81535c96a2a9d3d131157a0860db1fac1",
       "sizeBytes": 6096,
@@ -5840,7 +5840,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "LICENSE.md"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/LICENSE.md",
       "digest": "8078b0829d6c3e9ecde2f003e1966e4cad3efc6e7a640efbab0313cc166b1af1",
       "sizeBytes": 1079,
@@ -5859,7 +5859,7 @@
         "sourceRevision": "f4457b3e3c5a40359b40ad6fa9721d11aa2a2bd0",
         "location": "tsconfig.json"
       },
-      "capturedAt": "2026-11-27T02:55:22.548Z",
+      "capturedAt": "2026-11-27T02:57:18.400Z",
       "locator": "conformance/replication-lab/cases/JOSE-AUTH-001/artifacts/tsconfig.json",
       "digest": "52842b9a6abbe968cb9da9b3c970dad340e32a708182601cf11c6a4517b74d03",
       "sizeBytes": 650,
@@ -6237,7 +6237,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:55:22.775763Z",
+      "assessedAt": "2026-11-27T02:57:18.754046Z",
       "assessmentMethod": "All eight required properties link to runtime observations and retained evidence in both implementations.",
       "rationale": "Every required property in the declared HMAC JWT verification scope was observed on the pinned jose runtime and independent Python verifier."
     }

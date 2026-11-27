@@ -216,7 +216,7 @@ def payload_for(scenario, facet):
             },
             "observedType": "object",
             "nullability": "non-null",
-            "serialization": {"representation": "JSON number"},
+            "serialization": {"representation": "JSON object containing integer counter observations"},
         }
     return {
         "facet": "behavior",

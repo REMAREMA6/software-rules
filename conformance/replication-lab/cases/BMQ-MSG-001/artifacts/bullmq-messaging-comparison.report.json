@@ -1,0 +1,678 @@
+{
+  "schemaVersion": "0.2.0",
+  "reportId": "bullmq-messaging-cross-stack-comparison",
+  "createdAt": "2026-11-27T02:36:24.347707Z",
+  "referenceCapture": {
+    "captureId": "bullmq-messaging-source-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-source.capture.json"
+  },
+  "implementationCapture": {
+    "captureId": "bullmq-messaging-python-capture",
+    "schemaVersion": "0.2.0",
+    "artifactRef": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-python.capture.json"
+  },
+  "comparisonScope": {
+    "description": "Compare duplicate suppression, event order, consumer outcome, processed payload, and terminal queue counts.",
+    "facets": [
+      "messaging",
+      "background-processing",
+      "behavior",
+      "errors-recovery",
+      "data"
+    ],
+    "scenarioIds": [
+      "bullmq-msg-scenario-duplicate-id-suppression",
+      "bullmq-msg-scenario-consumer-failure"
+    ],
+    "conditions": [
+      "BullMQ 6.7.10 at pinned source commit with Redis 7",
+      "Python 3.12 independent in-memory queue model",
+      "Attempts=1 and worker concurrency=1"
+    ],
+    "excludedDimensions": [
+      "Crash redelivery, exactly-once semantics, delayed jobs, priorities, and distributed worker recovery"
+    ],
+    "limitations": [
+      "The comparison establishes only the two declared queue scenarios."
+    ]
+  },
+  "normalizationProfile": {
+    "profileId": "bullmq-message-lifecycle-projection",
+    "version": "1.0.0",
+    "operations": [
+      {
+        "operationId": "compare-message-lifecycle",
+        "facet": "messaging",
+        "dimension": "message-lifecycle-semantic-projection",
+        "method": "Compare job identity and stored payload, processed payload, ordered QueueEvents names, terminal outcome, and queue counts.",
+        "methodVersion": "1.0.0",
+        "inputRepresentation": "Raw BullMQ and Python queue captures",
+        "outputRepresentation": "Normalized message lifecycle projection",
+        "preservesRaw": true
+      }
+    ]
+  },
+  "alignments": [
+    {
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-messaging",
+      "facet": "messaging",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-messaging"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-messaging"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-background-processing",
+      "facet": "background-processing",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-background-processing"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-background-processing"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-behavior"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-data"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-consumer-failure-messaging",
+      "facet": "messaging",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-consumer-failure-messaging"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-consumer-failure-messaging"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-consumer-failure-background-processing",
+      "facet": "background-processing",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-consumer-failure-background-processing"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-consumer-failure-background-processing"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-consumer-failure-behavior",
+      "facet": "behavior",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-consumer-failure-behavior"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-consumer-failure-behavior"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-consumer-failure-errors-recovery",
+      "facet": "errors-recovery",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-consumer-failure-errors-recovery"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-consumer-failure-errors-recovery"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    },
+    {
+      "alignmentId": "bullmq-msg-align-consumer-failure-data",
+      "facet": "data",
+      "referenceRecordIds": [
+        "bullmq-msg-obs-source-consumer-failure-data"
+      ],
+      "implementationRecordIds": [
+        "bullmq-msg-obs-replica-consumer-failure-data"
+      ],
+      "status": "paired",
+      "identityBasis": "scenario-subject-facet-condition",
+      "rationale": "Both observations cover the same queue scenario and facet."
+    }
+  ],
+  "results": [
+    {
+      "resultId": "bullmq-msg-result-duplicate-id-suppression-messaging",
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-messaging",
+      "facet": "messaging",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-messaging"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-messaging"
+      ],
+      "referenceValue": {
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        }
+      },
+      "implementationValue": {
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-duplicate-id-suppression-background-processing",
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-background-processing",
+      "facet": "background-processing",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-background-processing"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-background-processing"
+      ],
+      "referenceValue": {
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "implementationValue": {
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-duplicate-id-suppression-behavior",
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-behavior",
+      "facet": "behavior",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-behavior"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-behavior"
+      ],
+      "referenceValue": {
+        "processed": [
+          "first"
+        ],
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        }
+      },
+      "implementationValue": {
+        "processed": [
+          "first"
+        ],
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-duplicate-id-suppression-errors-recovery",
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-errors-recovery"
+      ],
+      "referenceValue": {
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "implementationValue": {
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-duplicate-id-suppression-data",
+      "alignmentId": "bullmq-msg-align-duplicate-id-suppression-data",
+      "facet": "data",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-data"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-duplicate-id-suppression-data"
+      ],
+      "referenceValue": {
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ]
+      },
+      "implementationValue": {
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ]
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-consumer-failure-messaging",
+      "alignmentId": "bullmq-msg-align-consumer-failure-messaging",
+      "facet": "messaging",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-consumer-failure-messaging"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-consumer-failure-messaging"
+      ],
+      "referenceValue": {
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        }
+      },
+      "implementationValue": {
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-consumer-failure-background-processing",
+      "alignmentId": "bullmq-msg-align-consumer-failure-background-processing",
+      "facet": "background-processing",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-consumer-failure-background-processing"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-consumer-failure-background-processing"
+      ],
+      "referenceValue": {
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "implementationValue": {
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-consumer-failure-behavior",
+      "alignmentId": "bullmq-msg-align-consumer-failure-behavior",
+      "facet": "behavior",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-consumer-failure-behavior"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-consumer-failure-behavior"
+      ],
+      "referenceValue": {
+        "processed": [
+          "failure-case"
+        ],
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        }
+      },
+      "implementationValue": {
+        "processed": [
+          "failure-case"
+        ],
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-consumer-failure-errors-recovery",
+      "alignmentId": "bullmq-msg-align-consumer-failure-errors-recovery",
+      "facet": "errors-recovery",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-consumer-failure-errors-recovery"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-consumer-failure-errors-recovery"
+      ],
+      "referenceValue": {
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "implementationValue": {
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "reason": "The message lifecycle projection matches."
+    },
+    {
+      "resultId": "bullmq-msg-result-consumer-failure-data",
+      "alignmentId": "bullmq-msg-align-consumer-failure-data",
+      "facet": "data",
+      "dimension": "message-lifecycle-semantic-projection",
+      "classification": "match",
+      "comparisonBasis": "semantic",
+      "referenceObservationIds": [
+        "bullmq-msg-obs-source-consumer-failure-data"
+      ],
+      "implementationObservationIds": [
+        "bullmq-msg-obs-replica-consumer-failure-data"
+      ],
+      "referenceValue": {
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ]
+      },
+      "implementationValue": {
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ]
+      },
+      "reason": "The message lifecycle projection matches."
+    }
+  ],
+  "coverage": {
+    "reference": {
+      "declaredUnits": 10,
+      "observedUnits": 10,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "implementation": {
+      "declaredUnits": 10,
+      "observedUnits": 10,
+      "notObservedUnits": 0,
+      "unknownUnits": 0,
+      "unavailableUnits": 0,
+      "notApplicableUnits": 0,
+      "partialUnits": 0,
+      "conflictingUnits": 0,
+      "sourceInferredUnits": 0,
+      "excludedUnits": 0
+    },
+    "sharedComparableUnits": 10,
+    "incomparableUnits": 0,
+    "limitations": [
+      "Coverage is limited to ten scenario/facet projections."
+    ]
+  },
+  "conclusion": {
+    "status": "agreement-within-observed-scope",
+    "statement": "The independent Python implementation matches BullMQ for the two declared message scenarios and 10 facet/scenario projections. This is bounded evidence, not universal equivalence.",
+    "scopeBounded": true,
+    "universalEquivalenceClaimed": false
+  },
+  "limitations": [
+    "No claim is made about BullMQ behaviour outside the declared message lifecycle scope."
+  ],
+  "replicationCompleteness": {
+    "referenceStatus": "complete",
+    "implementationStatus": "complete",
+    "result": "complete-both",
+    "statement": "Both captures account for all required properties in the two-scenario case scope, not the entire messaging facet."
+  }
+}

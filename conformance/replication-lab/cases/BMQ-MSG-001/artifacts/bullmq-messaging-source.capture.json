@@ -1,0 +1,1469 @@
+{
+  "schemaVersion": "0.2.0",
+  "captureId": "bullmq-messaging-source-capture",
+  "createdAt": "2026-11-27T02:36:24.347384Z",
+  "purpose": "Capture bounded BullMQ message lifecycle, duplicate suppression, and consumer outcome rules.",
+  "target": {
+    "targetId": "bullmq-messaging-source",
+    "systemName": "BullMQ",
+    "systemVersion": "6.7.10",
+    "build": {
+      "revision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4"
+    },
+    "boundary": {
+      "description": "Two queue scenarios: duplicate custom job ID and terminal consumer failure.",
+      "included": [
+        "Duplicate custom job ID suppression",
+        "First payload remains authoritative",
+        "Waiting-active-completed event sequence",
+        "Waiting-active-failed event sequence",
+        "Terminal job state and counts"
+      ],
+      "excluded": [
+        "Exactly-once delivery guarantees",
+        "Redelivery after process crash",
+        "Delayed/scheduled jobs",
+        "Priority and concurrency greater than one",
+        "Distributed worker recovery and stalled jobs"
+      ]
+    },
+    "environment": {
+      "platform": "GitHub Actions runner",
+      "os": "Ubuntu Linux",
+      "runtime": "Node.js / BullMQ / Redis 7",
+      "configuration": {
+        "state": "observed",
+        "value": {
+          "attempts": 1,
+          "workerConcurrency": 1,
+          "redis": "7"
+        }
+      }
+    }
+  },
+  "scope": {
+    "description": "Two message lifecycle scenarios across five facets and five required properties.",
+    "facetIds": [
+      "messaging",
+      "background-processing",
+      "behavior",
+      "errors-recovery",
+      "data"
+    ],
+    "subjects": [
+      "bullmq-message-job"
+    ],
+    "scenarioIds": [
+      "bullmq-msg-scenario-duplicate-id-suppression",
+      "bullmq-msg-scenario-consumer-failure"
+    ]
+  },
+  "collector": {
+    "name": "BullMQ QueueEvents runtime probe",
+    "methodDescription": "Enqueue controlled jobs, observe event sequence, processed payload, terminal state, and queue counts."
+  },
+  "scenarios": [
+    {
+      "scenarioId": "bullmq-msg-scenario-duplicate-id-suppression",
+      "title": "Duplicate Id Suppression",
+      "purpose": "Probe queue message identity, worker processing, event ordering, and terminal acknowledgement/failure.",
+      "facetIds": [
+        "messaging",
+        "background-processing",
+        "behavior",
+        "errors-recovery",
+        "data"
+      ],
+      "subject": "bullmq-message-job",
+      "preconditions": [
+        "A Redis-backed BullMQ queue or independent in-memory queue is initialized.",
+        "A single worker is configured for the scenario."
+      ],
+      "trigger": "Enqueue a job and let the worker process it.",
+      "inputs": {
+        "firstId": "stable-message-id",
+        "secondId": "stable-message-id",
+        "storedPayload": "first",
+        "storedState": "waiting",
+        "queuedCount": 1
+      },
+      "observableQuestions": [
+        "Is a duplicate custom job identifier suppressed?",
+        "Which payload is processed?",
+        "What is the event order?",
+        "What terminal state and counts are recorded?"
+      ]
+    },
+    {
+      "scenarioId": "bullmq-msg-scenario-consumer-failure",
+      "title": "Consumer Failure",
+      "purpose": "Probe queue message identity, worker processing, event ordering, and terminal acknowledgement/failure.",
+      "facetIds": [
+        "messaging",
+        "background-processing",
+        "behavior",
+        "errors-recovery",
+        "data"
+      ],
+      "subject": "bullmq-message-job",
+      "preconditions": [
+        "A Redis-backed BullMQ queue or independent in-memory queue is initialized.",
+        "A single worker is configured for the scenario."
+      ],
+      "trigger": "Enqueue a job and let the worker process it.",
+      "inputs": {
+        "firstId": "failure-message-id",
+        "storedState": "waiting",
+        "queuedCount": 1
+      },
+      "observableQuestions": [
+        "Is a duplicate custom job identifier suppressed?",
+        "Which payload is processed?",
+        "What is the event order?",
+        "What terminal state and counts are recorded?"
+      ]
+    }
+  ],
+  "executions": [
+    {
+      "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
+      "scenarioId": "bullmq-msg-scenario-duplicate-id-suppression",
+      "targetId": "bullmq-messaging-source",
+      "startedAt": "2026-11-27T02:36:23.990Z",
+      "endedAt": "2026-11-27T02:36:23.990Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js / BullMQ / Redis 7",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "packageVersion": "6.7.10"
+      },
+      "actualInputs": {
+        "firstId": "stable-message-id",
+        "secondId": "stable-message-id",
+        "storedPayload": "first",
+        "storedState": "waiting",
+        "queuedCount": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "collector": {
+        "name": "BullMQ QueueEvents runtime probe"
+      },
+      "limitations": [
+        "Only duplicate custom job IDs and one successful/one failed processing outcome are covered."
+      ]
+    },
+    {
+      "executionId": "bullmq-msg-exec-source-consumer-failure",
+      "scenarioId": "bullmq-msg-scenario-consumer-failure",
+      "targetId": "bullmq-messaging-source",
+      "startedAt": "2026-11-27T02:36:23.990Z",
+      "endedAt": "2026-11-27T02:36:23.990Z",
+      "status": "completed",
+      "actualContext": {
+        "runtime": "Node.js / BullMQ / Redis 7",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "packageVersion": "6.7.10"
+      },
+      "actualInputs": {
+        "firstId": "failure-message-id",
+        "storedState": "waiting",
+        "queuedCount": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "collector": {
+        "name": "BullMQ QueueEvents runtime probe"
+      },
+      "limitations": [
+        "Only duplicate custom job IDs and one successful/one failed processing outcome are covered."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "observationId": "bullmq-msg-obs-source-duplicate-id-suppression-messaging",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
+      "facet": "messaging",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 0,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "duplicate-id-suppression",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "messaging",
+        "kind": "message-lifecycle",
+        "subject": "bullmq-message-job",
+        "channel": "BullMQ queue",
+        "message": {
+          "messageId": "stable-message-id",
+          "headers": {
+            "customJobId": "stable-message-id"
+          },
+          "payload": "first"
+        },
+        "producer": "BullMQ Queue.add",
+        "consumer": "BullMQ Worker",
+        "deliveryAttempts": [
+          {
+            "attempt": 1,
+            "event": "active"
+          }
+        ],
+        "ordering": {
+          "events": [
+            "waiting",
+            "active",
+            "completed"
+          ]
+        },
+        "acknowledgement": {
+          "state": "completed",
+          "result": "acknowledged"
+        },
+        "processingOutcome": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "brokerContext": {
+          "broker": "Redis 7",
+          "jobStateCounts": {
+            "waiting": 0,
+            "active": 0,
+            "completed": 1,
+            "failed": 0
+          }
+        }
+      },
+      "rawValue": {
+        "label": "duplicate-id-suppression",
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "normalizedValue": {
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-duplicate-id-suppression-background-processing",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
+      "facet": "background-processing",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 1,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "duplicate-id-suppression",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "bullmq-message-job",
+        "job": "stable-message-id",
+        "trigger": "A queue worker receives a waiting job.",
+        "enqueue": {
+          "jobId": "stable-message-id",
+          "initialState": "waiting"
+        },
+        "worker": {
+          "name": "BullMQ Worker",
+          "concurrency": 1
+        },
+        "lifecycle": [
+          {
+            "state": "waiting",
+            "sequence": 0
+          },
+          {
+            "state": "active",
+            "sequence": 1
+          },
+          {
+            "state": "completed",
+            "sequence": 2
+          }
+        ],
+        "attemptCount": 1,
+        "inputs": {
+          "payload": "first"
+        },
+        "output": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "retry": {
+          "attempts": 1
+        },
+        "terminalResult": "completed"
+      },
+      "rawValue": {
+        "label": "duplicate-id-suppression",
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "normalizedValue": {
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-duplicate-id-suppression-behavior",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
+      "facet": "behavior",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 2,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "duplicate-id-suppression",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "bullmq-message-job",
+        "trigger": "A worker processes a queued job.",
+        "preconditions": [
+          "A job is waiting in the queue.",
+          "A worker with concurrency one is ready."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Worker claims the queued job."
+          },
+          {
+            "sequence": 2,
+            "action": "Processor handles the job payload."
+          },
+          {
+            "sequence": 3,
+            "action": "Worker records the terminal outcome."
+          }
+        ],
+        "outputs": [
+          {
+            "processed": [
+              "first"
+            ],
+            "terminal": {
+              "state": "completed",
+              "id": "stable-message-id",
+              "result": "acknowledged"
+            },
+            "events": [
+              "waiting",
+              "active",
+              "completed"
+            ]
+          }
+        ],
+        "termination": "completed"
+      },
+      "rawValue": {
+        "label": "duplicate-id-suppression",
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "normalizedValue": {
+        "processed": [
+          "first"
+        ],
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-duplicate-id-suppression-errors-recovery",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
+      "facet": "errors-recovery",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 3,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "duplicate-id-suppression",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "bullmq-message-job",
+        "trigger": "The worker processor completes successfully.",
+        "operationRef": "bullmq-msg-scenario-duplicate-id-suppression",
+        "error": {
+          "category": "none",
+          "code": "",
+          "message": ""
+        },
+        "origin": "none",
+        "propagationBoundary": "BullMQ Worker",
+        "recoveryActions": [],
+        "recoveryState": "job moved to completed state",
+        "terminalOutcome": "completed",
+        "expectedRejection": false
+      },
+      "rawValue": {
+        "label": "duplicate-id-suppression",
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "normalizedValue": {
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-duplicate-id-suppression-data",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
+      "facet": "data",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 4,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "duplicate-id-suppression",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "bullmq-message-job",
+        "dataSubject": "queued job",
+        "fieldPath": "setup and processed payload",
+        "observedValue": {
+          "setup": {
+            "firstId": "stable-message-id",
+            "secondId": "stable-message-id",
+            "storedPayload": "first",
+            "storedState": "waiting",
+            "queuedCount": 1
+          },
+          "processed": [
+            "first"
+          ]
+        },
+        "observedType": "object",
+        "nullability": "not-applicable",
+        "constraints": [
+          {
+            "type": "unique-custom-job-id",
+            "field": "jobId"
+          }
+        ]
+      },
+      "rawValue": {
+        "label": "duplicate-id-suppression",
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ],
+        "terminal": {
+          "state": "completed",
+          "id": "stable-message-id",
+          "result": "acknowledged"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "completed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 1,
+          "failed": 0
+        }
+      },
+      "normalizedValue": {
+        "setup": {
+          "firstId": "stable-message-id",
+          "secondId": "stable-message-id",
+          "storedPayload": "first",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "first"
+        ]
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-consumer-failure-messaging",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-consumer-failure",
+      "facet": "messaging",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 5,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "consumer-failure",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "messaging",
+        "kind": "message-lifecycle",
+        "subject": "bullmq-message-job",
+        "channel": "BullMQ queue",
+        "message": {
+          "messageId": "failure-message-id",
+          "headers": {
+            "customJobId": "failure-message-id"
+          },
+          "payload": "failure-case"
+        },
+        "producer": "BullMQ Queue.add",
+        "consumer": "BullMQ Worker",
+        "deliveryAttempts": [
+          {
+            "attempt": 1,
+            "event": "active"
+          }
+        ],
+        "ordering": {
+          "events": [
+            "waiting",
+            "active",
+            "failed"
+          ]
+        },
+        "acknowledgement": {
+          "state": "failed",
+          "result": null
+        },
+        "processingOutcome": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "brokerContext": {
+          "broker": "Redis 7",
+          "jobStateCounts": {
+            "waiting": 0,
+            "active": 0,
+            "completed": 0,
+            "failed": 1
+          }
+        }
+      },
+      "rawValue": {
+        "label": "consumer-failure",
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "normalizedValue": {
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-consumer-failure-background-processing",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-consumer-failure",
+      "facet": "background-processing",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 6,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "consumer-failure",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "background-processing",
+        "kind": "job-lifecycle",
+        "subject": "bullmq-message-job",
+        "job": "failure-message-id",
+        "trigger": "A queue worker receives a waiting job.",
+        "enqueue": {
+          "jobId": "failure-message-id",
+          "initialState": "waiting"
+        },
+        "worker": {
+          "name": "BullMQ Worker",
+          "concurrency": 1
+        },
+        "lifecycle": [
+          {
+            "state": "waiting",
+            "sequence": 0
+          },
+          {
+            "state": "active",
+            "sequence": 1
+          },
+          {
+            "state": "failed",
+            "sequence": 2
+          }
+        ],
+        "attemptCount": 1,
+        "inputs": {
+          "payload": "failure-case"
+        },
+        "output": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "retry": {
+          "attempts": 1
+        },
+        "terminalResult": "failed"
+      },
+      "rawValue": {
+        "label": "consumer-failure",
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "normalizedValue": {
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-consumer-failure-behavior",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-consumer-failure",
+      "facet": "behavior",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 7,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "consumer-failure",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "behavior",
+        "kind": "triggered-operation",
+        "subject": "bullmq-message-job",
+        "trigger": "A worker processes a queued job.",
+        "preconditions": [
+          "A job is waiting in the queue.",
+          "A worker with concurrency one is ready."
+        ],
+        "actions": [
+          {
+            "sequence": 1,
+            "action": "Worker claims the queued job."
+          },
+          {
+            "sequence": 2,
+            "action": "Processor handles the job payload."
+          },
+          {
+            "sequence": 3,
+            "action": "Worker records the terminal outcome."
+          }
+        ],
+        "outputs": [
+          {
+            "processed": [
+              "failure-case"
+            ],
+            "terminal": {
+              "state": "failed",
+              "id": "failure-message-id",
+              "error": "consumer-failed"
+            },
+            "events": [
+              "waiting",
+              "active",
+              "failed"
+            ]
+          }
+        ],
+        "termination": "failed"
+      },
+      "rawValue": {
+        "label": "consumer-failure",
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "normalizedValue": {
+        "processed": [
+          "failure-case"
+        ],
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-consumer-failure-errors-recovery",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-consumer-failure",
+      "facet": "errors-recovery",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 8,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "consumer-failure",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "errors-recovery",
+        "kind": "failure-recovery-event",
+        "subject": "bullmq-message-job",
+        "trigger": "The worker processor throws an error.",
+        "operationRef": "bullmq-msg-scenario-consumer-failure",
+        "error": {
+          "category": "processor-error",
+          "code": "Error",
+          "message": "consumer-failed"
+        },
+        "origin": "worker processor",
+        "propagationBoundary": "BullMQ Worker",
+        "recoveryActions": [],
+        "recoveryState": "job moved to failed state",
+        "terminalOutcome": "failed",
+        "expectedRejection": true
+      },
+      "rawValue": {
+        "label": "consumer-failure",
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "normalizedValue": {
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    },
+    {
+      "observationId": "bullmq-msg-obs-source-consumer-failure-data",
+      "targetId": "bullmq-messaging-source",
+      "executionId": "bullmq-msg-exec-source-consumer-failure",
+      "facet": "data",
+      "subject": "bullmq-message-job",
+      "observedAt": "2026-11-27T02:36:23.990Z",
+      "sequence": 9,
+      "method": {
+        "class": "instrumentation",
+        "procedure": "Enqueue controlled jobs, observe queue events and worker outcomes, and query terminal job counts.",
+        "tool": "BullMQ Queue/Worker/QueueEvents"
+      },
+      "conditions": {
+        "scenario": "consumer-failure",
+        "attempts": 1,
+        "workerConcurrency": 1
+      },
+      "trigger": "Enqueue a job and let the worker process it.",
+      "payload": {
+        "facet": "data",
+        "kind": "data-value",
+        "subject": "bullmq-message-job",
+        "dataSubject": "queued job",
+        "fieldPath": "setup and processed payload",
+        "observedValue": {
+          "setup": {
+            "firstId": "failure-message-id",
+            "storedState": "waiting",
+            "queuedCount": 1
+          },
+          "processed": [
+            "failure-case"
+          ]
+        },
+        "observedType": "object",
+        "nullability": "not-applicable",
+        "constraints": [
+          {
+            "type": "unique-custom-job-id",
+            "field": "jobId"
+          }
+        ]
+      },
+      "rawValue": {
+        "label": "consumer-failure",
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ],
+        "terminal": {
+          "state": "failed",
+          "id": "failure-message-id",
+          "error": "consumer-failed"
+        },
+        "eventNames": [
+          "waiting",
+          "active",
+          "failed"
+        ],
+        "counts": {
+          "waiting": 0,
+          "active": 0,
+          "completed": 0,
+          "failed": 1
+        }
+      },
+      "normalizedValue": {
+        "setup": {
+          "firstId": "failure-message-id",
+          "storedState": "waiting",
+          "queuedCount": 1
+        },
+        "processed": [
+          "failure-case"
+        ]
+      },
+      "evidenceRefs": [
+        "bullmq-messaging-source-runtime"
+      ],
+      "status": "observed"
+    }
+  ],
+  "runtimeRules": [
+    {
+      "ruleId": "BMQ-M-001",
+      "facet": "messaging",
+      "subject": "duplicate-custom-job-id",
+      "proposition": "Adding a second job with the same retained custom job ID does not replace or redeliver the first job.",
+      "trigger": "A queue job is added and processed by the worker.",
+      "applicability": {
+        "scope": "BullMQ 6.7.10 pinned source commit, Redis 7, attempts=1, worker concurrency=1."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-messaging"
+      ]
+    },
+    {
+      "ruleId": "BMQ-M-002",
+      "facet": "messaging",
+      "subject": "queue-event-order",
+      "proposition": "The observed queue event order is waiting, active, then completed or failed.",
+      "trigger": "A queue job is added and processed by the worker.",
+      "applicability": {
+        "scope": "BullMQ 6.7.10 pinned source commit, Redis 7, attempts=1, worker concurrency=1."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-messaging",
+        "bullmq-msg-obs-source-consumer-failure-messaging"
+      ]
+    },
+    {
+      "ruleId": "BMQ-BG-001",
+      "facet": "background-processing",
+      "subject": "single-worker-processing",
+      "proposition": "One queued job is processed once by a worker with concurrency one.",
+      "trigger": "A queue job is added and processed by the worker.",
+      "applicability": {
+        "scope": "BullMQ 6.7.10 pinned source commit, Redis 7, attempts=1, worker concurrency=1."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-background-processing"
+      ]
+    },
+    {
+      "ruleId": "BMQ-E-001",
+      "facet": "errors-recovery",
+      "subject": "terminal-consumer-failure",
+      "proposition": "A processor error with attempts set to one produces a terminal failed job state.",
+      "trigger": "A queue job is added and processed by the worker.",
+      "applicability": {
+        "scope": "BullMQ 6.7.10 pinned source commit, Redis 7, attempts=1, worker concurrency=1."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bullmq-msg-obs-source-consumer-failure-errors-recovery"
+      ]
+    },
+    {
+      "ruleId": "BMQ-D-001",
+      "facet": "data",
+      "subject": "first-payload-authority",
+      "proposition": "The payload attached to the first retained job ID remains the payload processed after a duplicate add.",
+      "trigger": "A queue job is added and processed by the worker.",
+      "applicability": {
+        "scope": "BullMQ 6.7.10 pinned source commit, Redis 7, attempts=1, worker concurrency=1."
+      },
+      "status": "supported",
+      "supportingObservationIds": [
+        "bullmq-msg-obs-source-duplicate-id-suppression-data"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "bullmq-messaging-source-runtime",
+      "evidenceClass": "runtime",
+      "evidenceType": "instrumented-queue-runtime-capture",
+      "mediaType": "application/json",
+      "origin": {
+        "targetId": "bullmq-messaging-source",
+        "collector": "BullMQ QueueEvents runtime probe",
+        "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
+        "location": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-source-runtime.json"
+      },
+      "capturedAt": "2026-11-27T02:36:23.990Z",
+      "embedded": {
+        "scenarios": [
+          "duplicate-id-suppression",
+          "consumer-failure"
+        ],
+        "sha256": "7c5cbace1856fa875583bdc9b14633d47477e9f6942a94f4d8a130d83c3716c4"
+      },
+      "locator": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-source-runtime.json",
+      "digest": "7c5cbace1856fa875583bdc9b14633d47477e9f6942a94f4d8a130d83c3716c4",
+      "sizeBytes": 1563,
+      "retention": {
+        "status": "retained",
+        "access": "Retained CI artifact and repository evidence after successful main-branch validation."
+      }
+    }
+  ],
+  "coverage": [
+    {
+      "facet": "messaging",
+      "subject": "bullmq-message-job",
+      "status": "observed",
+      "reason": "Both declared scenarios have a facet-specific runtime observation.",
+      "scenarioIds": [
+        "bullmq-msg-scenario-duplicate-id-suppression",
+        "bullmq-msg-scenario-consumer-failure"
+      ],
+      "executionIds": [
+        "bullmq-msg-exec-source-duplicate-id-suppression",
+        "bullmq-msg-exec-source-consumer-failure"
+      ]
+    },
+    {
+      "facet": "background-processing",
+      "subject": "bullmq-message-job",
+      "status": "observed",
+      "reason": "Both declared scenarios have a facet-specific runtime observation.",
+      "scenarioIds": [
+        "bullmq-msg-scenario-duplicate-id-suppression",
+        "bullmq-msg-scenario-consumer-failure"
+      ],
+      "executionIds": [
+        "bullmq-msg-exec-source-duplicate-id-suppression",
+        "bullmq-msg-exec-source-consumer-failure"
+      ]
+    },
+    {
+      "facet": "behavior",
+      "subject": "bullmq-message-job",
+      "status": "observed",
+      "reason": "Both declared scenarios have a facet-specific runtime observation.",
+      "scenarioIds": [
+        "bullmq-msg-scenario-duplicate-id-suppression",
+        "bullmq-msg-scenario-consumer-failure"
+      ],
+      "executionIds": [
+        "bullmq-msg-exec-source-duplicate-id-suppression",
+        "bullmq-msg-exec-source-consumer-failure"
+      ]
+    },
+    {
+      "facet": "errors-recovery",
+      "subject": "bullmq-message-job",
+      "status": "observed",
+      "reason": "Both declared scenarios have a facet-specific runtime observation.",
+      "scenarioIds": [
+        "bullmq-msg-scenario-duplicate-id-suppression",
+        "bullmq-msg-scenario-consumer-failure"
+      ],
+      "executionIds": [
+        "bullmq-msg-exec-source-duplicate-id-suppression",
+        "bullmq-msg-exec-source-consumer-failure"
+      ]
+    },
+    {
+      "facet": "data",
+      "subject": "bullmq-message-job",
+      "status": "observed",
+      "reason": "Both declared scenarios have a facet-specific runtime observation.",
+      "scenarioIds": [
+        "bullmq-msg-scenario-duplicate-id-suppression",
+        "bullmq-msg-scenario-consumer-failure"
+      ],
+      "executionIds": [
+        "bullmq-msg-exec-source-duplicate-id-suppression",
+        "bullmq-msg-exec-source-consumer-failure"
+      ]
+    }
+  ],
+  "limitations": [
+    "This bounded case does not prove exactly-once processing or every BullMQ delivery guarantee."
+  ],
+  "replicationScope": {
+    "scopeId": "bullmq-message-lifecycle-scope",
+    "description": "Complete inventory for two queue scenarios and five required properties.",
+    "facets": [
+      "messaging",
+      "background-processing",
+      "behavior",
+      "errors-recovery",
+      "data"
+    ],
+    "propertyInventory": [
+      {
+        "propertyId": "BMQ-M-001",
+        "facet": "messaging",
+        "subject": "bullmq-message-job",
+        "dimension": "duplicate-custom-job-id",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bullmq-msg-obs-source-duplicate-id-suppression-messaging"
+        ],
+        "evidenceRefs": [
+          "bullmq-messaging-source-runtime"
+        ],
+        "rationale": "Adding a second job with the same retained custom job ID does not replace or redeliver the first job."
+      },
+      {
+        "propertyId": "BMQ-M-002",
+        "facet": "messaging",
+        "subject": "bullmq-message-job",
+        "dimension": "queue-event-order",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bullmq-msg-obs-source-duplicate-id-suppression-messaging",
+          "bullmq-msg-obs-source-consumer-failure-messaging"
+        ],
+        "evidenceRefs": [
+          "bullmq-messaging-source-runtime"
+        ],
+        "rationale": "The observed queue event order is waiting, active, then completed or failed."
+      },
+      {
+        "propertyId": "BMQ-BG-001",
+        "facet": "background-processing",
+        "subject": "bullmq-message-job",
+        "dimension": "single-worker-processing",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bullmq-msg-obs-source-duplicate-id-suppression-background-processing"
+        ],
+        "evidenceRefs": [
+          "bullmq-messaging-source-runtime"
+        ],
+        "rationale": "One queued job is processed once by a worker with concurrency one."
+      },
+      {
+        "propertyId": "BMQ-E-001",
+        "facet": "errors-recovery",
+        "subject": "bullmq-message-job",
+        "dimension": "terminal-consumer-failure",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bullmq-msg-obs-source-consumer-failure-errors-recovery"
+        ],
+        "evidenceRefs": [
+          "bullmq-messaging-source-runtime"
+        ],
+        "rationale": "A processor error with attempts set to one produces a terminal failed job state."
+      },
+      {
+        "propertyId": "BMQ-D-001",
+        "facet": "data",
+        "subject": "bullmq-message-job",
+        "dimension": "first-payload-authority",
+        "requirement": "required",
+        "status": "captured",
+        "observationRefs": [
+          "bullmq-msg-obs-source-duplicate-id-suppression-data"
+        ],
+        "evidenceRefs": [
+          "bullmq-messaging-source-runtime"
+        ],
+        "rationale": "The payload attached to the first retained job ID remains the payload processed after a duplicate add."
+      }
+    ],
+    "completeness": {
+      "status": "complete",
+      "assessedAt": "2026-11-27T02:36:24.347384Z",
+      "assessmentMethod": "Every required property in this bounded case is linked to observed facet-specific records and retained runtime evidence.",
+      "rationale": "All five required properties were observed on the pinned source and independent implementation."
+    }
+  }
+}

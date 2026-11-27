@@ -6,6 +6,12 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 
 ## Unreleased
 
+### Added
+- Pinned BullMQ source-runtime probe using the exact inspected commit and Redis, plus an independent Python scenario simulator, capture comparator, and mutation-detection tests.
+
+### Fixed
+- Cross-record integrity now accepts direct source-artifact evidence for explicitly source-inferred inventory properties while keeping runtime observations separate; added a BullMQ source capture fixture and regression tests.
+
 ### Changed
 - Corrected the Phase 6 handoff and source-candidate count; explicitly separated the Python model workflow from BullMQ runtime execution and retained the source capture as unverified/incomplete. Added a pinned-source runtime-to-replica execution order and bounded cross-stack portability language.
 

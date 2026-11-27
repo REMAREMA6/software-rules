@@ -183,14 +183,15 @@
 21. [TYPEORM-PERSIST-001](conformance/replication-lab/cases/TYPEORM-PERSIST-001/CASE.md) — TypeORM callback transaction atomicity on better-sqlite3.
 22. [BMQ-SCHED-001](conformance/replication-lab/cases/BMQ-SCHED-001/CASE.md) — delayed-job rescheduling and cancellation.
 23. [MEDUSA-LINE-ITEM-001](conformance/replication-lab/cases/MEDUSA-LINE-ITEM-001/CASE.md) — line-item subtotal, tax, discount, and total calculation.
+24. [TYPEORM-ISOLATION-001](conformance/replication-lab/cases/TYPEORM-ISOLATION-001/CASE.md) — PostgreSQL 16 transaction isolation (READ COMMITTED, REPEATABLE READ, SERIALIZABLE).
 
 ### Final exit evidence and audit
-- [x] 23 case directories and their case manifests exist on main; the repository tree was checked directly.
+- [x] 24 case directories and their case manifests exist on main; the repository tree was checked directly.
 - [x] 15 immutable source repositories are registered; source candidates are distinguished from accepted cases.
 - [x] All 15 facets are represented in the evidence matrix and reviewed property inventory.
 - [x] Independent UI-stack replication is accepted for the declared browser Task Board scope.
 - [x] Business-rule coverage includes date validation, price selection, adjustment/tax allocation, promotion eligibility, and line-item totals/tax.
-- [x] Persistence coverage includes SQL.js and better-sqlite3 transaction cases plus file-backed reopen durability.
+- [x] Persistence coverage includes SQL.js and better-sqlite3 transaction cases, file-backed reopen durability, and PostgreSQL 16 isolation levels (READ COMMITTED, REPEATABLE READ, SERIALIZABLE).
 - [x] Background-processing coverage includes retry/backoff, message lifecycle, stalled recovery, and delayed-job rescheduling/cancellation.
 - [x] The latest BullMQ scheduling workflow [#45946359808](https://github.com/REMAREMA6/software-rules/actions/runs/45946359808) passed source/replica comparison, six mutation tests, capture schemas, and evidence integrity; artifact 15174518117.
 - [x] The latest Medusa line-item workflow [#45946618440](https://github.com/REMAREMA6/software-rules/actions/runs/45946618440) passed 14 matching scenario results, six mutation tests, capture schemas, and evidence integrity; artifact 15175295192.
@@ -200,16 +201,16 @@
 
 ### Explicit boundaries and non-claims
 - No facet is declared universally complete.
-- The 23 cases validate the method and the declared corpus; they do not prove equivalence for arbitrary software, stacks, environments, or untested behaviours.
+- The 24 cases validate the method and the declared corpus; they do not prove equivalence for arbitrary software, stacks, environments, or untested behaviours.
 - Each case's completeness claim applies only to its declared property inventory and system boundary.
-- Remaining feature classes—such as native UI stacks, full cart/checkout combinations, multi-process persistence concurrency, identity-provider credential/MFA flows, additional authorization models, transport security, DLQs, scheduler failover, integration resilience, configuration watchers, and performance scaling/latency distributions—remain visible future coverage.
+- Remaining feature classes—such as native UI stacks, full cart/checkout combinations, multi-process persistence concurrency, non-PostgreSQL isolation semantics, deadlocks, pool exhaustion, distributed transactions, crash/power-loss durability, identity-provider credential/MFA flows, additional authorization models, transport security, DLQs, scheduler failover, integration resilience, configuration watchers, and performance scaling/latency distributions—remain visible future coverage.
 - No unresolved property is silently promoted to captured, and no case-local N/A decision means globally irrelevant.
 
-**Phase 6 exit gate: satisfied for the declared 23-case corpus.** Phase 7 is unblocked. This is a corpus/method validation decision, not a claim that all possible software rules have been discovered.
+**Phase 6 exit gate: satisfied for the declared 24-case corpus.** Phase 7 is unblocked. This is a corpus/method validation decision, not a claim that all possible software rules have been discovered.
 
 ## Phase 7 — Review, release, and maintenance
 
-**Status: [ ] Not started — unblocked by the approved 23-case Phase 6 corpus.**
+**Status: [ ] Not started — unblocked by the approved 24-case Phase 6 corpus.**
 
 - [ ] Review terminology, facet boundaries, provenance, schemas, and examples.
 - [ ] Verify completeness and comparison claims against evidence.

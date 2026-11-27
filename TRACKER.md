@@ -470,6 +470,7 @@
 - [x] Reconcile Replication Completeness Rule with the Phase 6 exit; inventory exhaustiveness remains a human scope-review responsibility.
 - [x] Correct schema version mismatch: actual schema version 0.2.0, overall specification draft version 0.3.0.
 - [x] Correct schema-validation install instructions and document current conformance boundaries.
+- [x] Fix divergence between comparison and case-artifact completeness validation; centralize status mapping and test all nine status combinations plus claim guards (workflow run #45961356155).
 - [x] Reconcile superseded/provisional design-decision statuses and record D-014.
 - [x] Publish MAINTENANCE.md, PHASE7-RELEASE-AUDIT.md, and releases/0.3.0-draft/README.md.
 - [ ] Confirm final PR CI and main-branch schema/integrity checks; record final commit and workflow links in the release audit.

@@ -1,6 +1,6 @@
 # Difference Classification
 
-**Status:** Draft — Phase 5
+**Maturity:** Draft — Software Rules specification 0.3.0
 
 Each result classifies one aligned facet dimension. Classifications are mutually exclusive per result.
 

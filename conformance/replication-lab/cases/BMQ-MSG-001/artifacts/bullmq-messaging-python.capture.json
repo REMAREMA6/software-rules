@@ -1,14 +1,14 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "bullmq-messaging-python-capture",
-  "createdAt": "2026-11-27T02:36:24.347613Z",
+  "createdAt": "2026-11-27T02:38:25.015274Z",
   "purpose": "Capture bounded BullMQ message lifecycle, duplicate suppression, and consumer outcome rules.",
   "target": {
     "targetId": "bullmq-messaging-python-replica",
     "systemName": "Independent Python queue replica",
     "systemVersion": "Python 3.12",
     "build": {
-      "revision": "7e22a0e15062eb092621a6e5c7ac8f3b9fa794b5"
+      "revision": "96d4bb22e2d491354c6d64fa077ca9da706d4183"
     },
     "boundary": {
       "description": "Two queue scenarios: duplicate custom job ID and terminal consumer failure.",
@@ -129,12 +129,12 @@
       "executionId": "bullmq-msg-exec-replica-duplicate-id-suppression",
       "scenarioId": "bullmq-msg-scenario-duplicate-id-suppression",
       "targetId": "bullmq-messaging-python-replica",
-      "startedAt": "2026-11-27T02:36:24.173929Z",
-      "endedAt": "2026-11-27T02:36:24.173929Z",
+      "startedAt": "2026-11-27T02:38:24.809867Z",
+      "endedAt": "2026-11-27T02:38:24.809867Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 in-memory queue model",
-        "sourceRevision": "7e22a0e15062eb092621a6e5c7ac8f3b9fa794b5",
+        "sourceRevision": "96d4bb22e2d491354c6d64fa077ca9da706d4183",
         "packageVersion": "Python 3.12"
       },
       "actualInputs": {
@@ -156,12 +156,12 @@
       "executionId": "bullmq-msg-exec-replica-consumer-failure",
       "scenarioId": "bullmq-msg-scenario-consumer-failure",
       "targetId": "bullmq-messaging-python-replica",
-      "startedAt": "2026-11-27T02:36:24.173929Z",
-      "endedAt": "2026-11-27T02:36:24.173929Z",
+      "startedAt": "2026-11-27T02:38:24.809867Z",
+      "endedAt": "2026-11-27T02:38:24.809867Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Python 3.12 in-memory queue model",
-        "sourceRevision": "7e22a0e15062eb092621a6e5c7ac8f3b9fa794b5",
+        "sourceRevision": "96d4bb22e2d491354c6d64fa077ca9da706d4183",
         "packageVersion": "Python 3.12"
       },
       "actualInputs": {
@@ -185,7 +185,7 @@
       "executionId": "bullmq-msg-exec-replica-duplicate-id-suppression",
       "facet": "messaging",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -303,7 +303,7 @@
       "executionId": "bullmq-msg-exec-replica-duplicate-id-suppression",
       "facet": "background-processing",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -414,7 +414,7 @@
       "executionId": "bullmq-msg-exec-replica-duplicate-id-suppression",
       "facet": "behavior",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -524,7 +524,7 @@
       "executionId": "bullmq-msg-exec-replica-duplicate-id-suppression",
       "facet": "errors-recovery",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -608,7 +608,7 @@
       "executionId": "bullmq-msg-exec-replica-duplicate-id-suppression",
       "facet": "data",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -700,7 +700,7 @@
       "executionId": "bullmq-msg-exec-replica-consumer-failure",
       "facet": "messaging",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -814,7 +814,7 @@
       "executionId": "bullmq-msg-exec-replica-consumer-failure",
       "facet": "background-processing",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -923,7 +923,7 @@
       "executionId": "bullmq-msg-exec-replica-consumer-failure",
       "facet": "behavior",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1031,7 +1031,7 @@
       "executionId": "bullmq-msg-exec-replica-consumer-failure",
       "facet": "errors-recovery",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1113,7 +1113,7 @@
       "executionId": "bullmq-msg-exec-replica-consumer-failure",
       "facet": "data",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:24.173929Z",
+      "observedAt": "2026-11-27T02:38:24.809867Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1276,19 +1276,19 @@
       "origin": {
         "targetId": "bullmq-messaging-python-replica",
         "collector": "Independent Python queue model",
-        "sourceRevision": "7e22a0e15062eb092621a6e5c7ac8f3b9fa794b5",
+        "sourceRevision": "96d4bb22e2d491354c6d64fa077ca9da706d4183",
         "location": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-python-runtime.json"
       },
-      "capturedAt": "2026-11-27T02:36:24.173929Z",
+      "capturedAt": "2026-11-27T02:38:24.809867Z",
       "embedded": {
         "scenarios": [
           "duplicate-id-suppression",
           "consumer-failure"
         ],
-        "sha256": "a770852220a16789628e65fb0c90efe9920be9e4f79e92def0481e4d177439c4"
+        "sha256": "9ce738c078f452a3080ae9c999fcb7ba9d7a5e8508fb37fce0c3256f2a2fc1f0"
       },
       "locator": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-python-runtime.json",
-      "digest": "a770852220a16789628e65fb0c90efe9920be9e4f79e92def0481e4d177439c4",
+      "digest": "9ce738c078f452a3080ae9c999fcb7ba9d7a5e8508fb37fce0c3256f2a2fc1f0",
       "sizeBytes": 1325,
       "retention": {
         "status": "retained",
@@ -1461,7 +1461,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:36:24.347613Z",
+      "assessedAt": "2026-11-27T02:38:25.015274Z",
       "assessmentMethod": "Every required property in this bounded case is linked to observed facet-specific records and retained runtime evidence.",
       "rationale": "All five required properties were observed on the pinned source and independent implementation."
     }

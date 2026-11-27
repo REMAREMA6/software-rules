@@ -2,7 +2,7 @@
   "source": "BullMQ pinned source checkout",
   "sourceCommit": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
   "packageVersion": "6.7.10",
-  "capturedAt": "2026-11-27T02:36:23.990Z",
+  "capturedAt": "2026-11-27T02:38:24.262Z",
   "scenarios": [
     {
       "label": "duplicate-id-suppression",

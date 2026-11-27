@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "bullmq-messaging-source-capture",
-  "createdAt": "2026-11-27T02:36:24.347384Z",
+  "createdAt": "2026-11-27T02:38:25.014970Z",
   "purpose": "Capture bounded BullMQ message lifecycle, duplicate suppression, and consumer outcome rules.",
   "target": {
     "targetId": "bullmq-messaging-source",
@@ -129,8 +129,8 @@
       "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
       "scenarioId": "bullmq-msg-scenario-duplicate-id-suppression",
       "targetId": "bullmq-messaging-source",
-      "startedAt": "2026-11-27T02:36:23.990Z",
-      "endedAt": "2026-11-27T02:36:23.990Z",
+      "startedAt": "2026-11-27T02:38:24.262Z",
+      "endedAt": "2026-11-27T02:38:24.262Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js / BullMQ / Redis 7",
@@ -156,8 +156,8 @@
       "executionId": "bullmq-msg-exec-source-consumer-failure",
       "scenarioId": "bullmq-msg-scenario-consumer-failure",
       "targetId": "bullmq-messaging-source",
-      "startedAt": "2026-11-27T02:36:23.990Z",
-      "endedAt": "2026-11-27T02:36:23.990Z",
+      "startedAt": "2026-11-27T02:38:24.262Z",
+      "endedAt": "2026-11-27T02:38:24.262Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js / BullMQ / Redis 7",
@@ -185,7 +185,7 @@
       "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
       "facet": "messaging",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -303,7 +303,7 @@
       "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
       "facet": "background-processing",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -414,7 +414,7 @@
       "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
       "facet": "behavior",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -524,7 +524,7 @@
       "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
       "facet": "errors-recovery",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -608,7 +608,7 @@
       "executionId": "bullmq-msg-exec-source-duplicate-id-suppression",
       "facet": "data",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -700,7 +700,7 @@
       "executionId": "bullmq-msg-exec-source-consumer-failure",
       "facet": "messaging",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -814,7 +814,7 @@
       "executionId": "bullmq-msg-exec-source-consumer-failure",
       "facet": "background-processing",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -923,7 +923,7 @@
       "executionId": "bullmq-msg-exec-source-consumer-failure",
       "facet": "behavior",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -1031,7 +1031,7 @@
       "executionId": "bullmq-msg-exec-source-consumer-failure",
       "facet": "errors-recovery",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1113,7 +1113,7 @@
       "executionId": "bullmq-msg-exec-source-consumer-failure",
       "facet": "data",
       "subject": "bullmq-message-job",
-      "observedAt": "2026-11-27T02:36:23.990Z",
+      "observedAt": "2026-11-27T02:38:24.262Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1279,16 +1279,16 @@
         "sourceRevision": "526668f2c5e6de9d5d664df577f09a6bdccac1b4",
         "location": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-source-runtime.json"
       },
-      "capturedAt": "2026-11-27T02:36:23.990Z",
+      "capturedAt": "2026-11-27T02:38:24.262Z",
       "embedded": {
         "scenarios": [
           "duplicate-id-suppression",
           "consumer-failure"
         ],
-        "sha256": "7c5cbace1856fa875583bdc9b14633d47477e9f6942a94f4d8a130d83c3716c4"
+        "sha256": "ba4f59dddf1e3ba00d03029365ae52c1955a2b1819608c09bbf5bed88c64631a"
       },
       "locator": "conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-source-runtime.json",
-      "digest": "7c5cbace1856fa875583bdc9b14633d47477e9f6942a94f4d8a130d83c3716c4",
+      "digest": "ba4f59dddf1e3ba00d03029365ae52c1955a2b1819608c09bbf5bed88c64631a",
       "sizeBytes": 1563,
       "retention": {
         "status": "retained",
@@ -1461,7 +1461,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:36:24.347384Z",
+      "assessedAt": "2026-11-27T02:38:25.014970Z",
       "assessmentMethod": "Every required property in this bounded case is linked to observed facet-specific records and retained runtime evidence.",
       "rationale": "All five required properties were observed on the pinned source and independent implementation."
     }

@@ -14,6 +14,8 @@ def calculate(quantity, tax_rate, adjustments, mutation=None):
  for adj in adjustments:
   amount=adj.get("amount")
   if amount is None and not mutation.get("include_missing_amount"):
+   rows.append({"amount":None,"is_tax_inclusive":bool(adj.get("is_tax_inclusive")),
+    "subtotal":None,"total":None})
    continue
   amount=D(amount or 0)
   inclusive=bool(adj.get("is_tax_inclusive"))

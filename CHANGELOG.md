@@ -7,6 +7,13 @@ This project follows a Keep a Changelog-inspired structure. Entries describe use
 ## Unreleased
 
 ### Verified
+- EXP-CONFIG-001 passed five Express routing-configuration profiles and 18 route observations, including lazy-router configuration snapshot behaviour; three mutations and Software Rules 0.2.0 schema/integrity validation passed in run #45937990537, artifact #15171850580.
+- PROM-PERF-001 passed three pinned Prometheus TSDB workload runs and three independent Python workload-model runs; sample-accounting comparisons matched, repeat/drop-scrape mutations were detected, and Software Rules schema/integrity passed in run #45938387274, artifact #15171587211.
+- CASBIN-ADV-AUTHZ-001 passed 19 domain-RBAC, ABAC, deny-override and policy-mutation decisions; four mutations and Software Rules schema/integrity passed in run #45938792630, artifact #15172101161.
+- MEDUSA-PRICE-001 passed nine exact pinned Medusa price-selection scenarios against Python; five mutations and Software Rules schema/integrity passed in run #45939713683, artifact #15172460158.
+
+
+### Verified
 - MEDUSA-PRICE-001 passed nine pinned Medusa calculated/original price-selection scenarios against an independent Python model; five deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and evidence integrity in run #45939713683, artifact #15172460158. The case explicitly excludes SQL candidate filtering, quantity tiers, tax, currency normalization, cart totals and discounts.
 
 

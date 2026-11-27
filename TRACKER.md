@@ -155,7 +155,7 @@
 - [x] Rules must be extracted into a technology-independent specification before implementation.
 - [x] Equivalent source/replica probes, comparison, and mutation detection are required.
 - [x] Create the replication-lab skeleton, case template, source register, and source-record template.
-- [x] Register and inspect nine immutable source candidates; candidates remain distinct from accepted cases.
+- [x] Register and inspect eleven immutable source repositories; source candidates remain distinct from accepted bounded cases.
 - [x] Accept bounded BullMQ retry/backoff and Express routing/API cross-stack cases after reviewing successful runtime runs and retained artifacts.
 - [x] TORM-PERSIST-001: TypeORM 1.1.3 pinned source + SQL.js versus Python 3.12 sqlite3; two scenarios, eight semantic projections, six mutations, schema 0.2.0 capture/report validation, and evidence integrity passed.
 - [x] BMQ-MSG-001: BullMQ pinned source + Redis versus Python queue model; two scenarios, ten semantic projections, six mutations, Software Rules 0.2.0 capture/report validation, and evidence integrity passed in run [#45929249126](https://github.com/REMAREMA6/software-rules/actions/runs/45929249126).
@@ -365,7 +365,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - Added the full 15-facet matrix, source register requirements, independent replication layout, rule-level pass criteria, mutation requirement, and Phase 6 exit gate in examples/CROSS-REPOSITORY-REPLICATION-PROGRAM.md.
 - Updated PLAN.md, TRACKER.md, and CHANGELOG.md to use the cross-repository strategy.
 - Created conformance/replication-lab with case and source templates, shared layout, and Python test workflow.
-- Registered nine source candidates with pinned inspected commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, and n8n. They remain candidates, not passed cases.
+- Registered eleven source repositories with pinned commits and licence notes: BullMQ, Keycloak, OWASP Juice Shop, Grafana, TypeORM, n8n, Prometheus, Express, Medusa, Apache Casbin, and go-redis. Candidate status remains distinct from accepted bounded cases.
 - Inspected BullMQ retry/backoff source, guide, and tests at commit 526668f2c5e6de9d5d664df577f09a6bdccac1b4. Added a source-derived Software Rules capture with two unverified rules and an explicitly incomplete scope.
 - Added a narrow independent Python retry-decision model and eight tests, including an off-by-one mutation check. The Python rule-model, replica-simulation, and comparison mutation tests passed in GitHub Actions run [#4](https://github.com/REMAREMA6/software-rules/actions/runs/45923895261). The BullMQ source runtime workflow now checks out the exact source commit, starts Redis, builds BullMQ, captures three retry scenarios, generates the independent Python capture, and compares the results. The runtime workflow is still running; no source/replica pass is claimed.
 - No Phase 6 completion claim is made. The current work demonstrates the cross-repository process has begun, not that all 15 facets have passed.
@@ -377,7 +377,7 @@ See the [living 15-facet evidence matrix](conformance/replication-lab/FACET-COVE
 - Confirmed the Python workflow runs only the isolated Python decision-model tests; it does not execute BullMQ, Redis, or an end-to-end queue scenario.
 - Confirmed the BullMQ source capture is correctly marked source-inferred/unverified and incomplete. It is not a runtime capture and must not be used as proof of source/replica equivalence.
 - Reconfirmed the pinned BullMQ package version at the selected commit is 6.7.10 and its package test command is Vitest. Runtime harness design must use the exact pinned source and Redis-backed test setup, not substitute a current npm release.
-- Corrected the source register count to nine candidates. All remain candidates until individual rule cases pass.
+- Corrected the source register count to eleven repositories; individual rule cases must still pass before being accepted.
 - Immediate execution order: (1) make the Python model's test run reproducible and verify its workflow; (2) build a pinned-commit BullMQ+Redis runtime probe and record actual outputs; (3) capture the independent implementation in a genuinely different stack; (4) compare both captures and mutation-test; (5) repeat for every required rule/property across all 15 facets.
 - Phase 6 remains in progress; Phase 7 remains blocked. No completion claim is made.
 

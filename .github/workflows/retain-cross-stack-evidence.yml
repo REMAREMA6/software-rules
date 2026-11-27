@@ -1,0 +1,83 @@
+name: Retain verified cross-stack evidence
+
+on:
+  workflow_run:
+    workflows:
+      - TypeORM persistence cross-stack conformance (verification)
+      - BullMQ messaging cross-stack conformance
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  retain:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      github.event.workflow_run.actor.login == 'REMAREMA6'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Download TypeORM evidence artifact
+        if: github.event.workflow_run.name == 'TypeORM persistence cross-stack conformance (verification)'
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: typeorm-persistence-cross-stack-captures
+          path: downloaded
+      - name: Download BullMQ messaging evidence artifact
+        if: github.event.workflow_run.name == 'BullMQ messaging cross-stack conformance'
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: bullmq-messaging-cross-stack-captures
+          path: downloaded
+      - name: Retain TypeORM evidence
+        if: github.event.workflow_run.name == 'TypeORM persistence cross-stack conformance (verification)'
+        run: |
+          dest="conformance/replication-lab/cases/TORM-PERSIST-001/artifacts"
+          mkdir -p "$dest"
+          cp downloaded/conformance/replication-lab/cases/TORM-PERSIST-001/artifacts/* "$dest/"
+          cp downloaded/typeorm-software-rules/typeorm-source.capture.json "$dest/"
+          cp downloaded/typeorm-software-rules/typeorm-python-replica.capture.json "$dest/"
+          cp downloaded/typeorm-software-rules/typeorm-comparison.report.json "$dest/"
+      - name: Retain BullMQ messaging evidence
+        if: github.event.workflow_run.name == 'BullMQ messaging cross-stack conformance'
+        run: |
+          dest="conformance/replication-lab/cases/BMQ-MSG-001/artifacts"
+          mkdir -p "$dest"
+          cp downloaded/conformance/replication-lab/cases/BMQ-MSG-001/artifacts/* "$dest/"
+          cp downloaded/bullmq-messaging-software-rules/bullmq-messaging-source.capture.json "$dest/"
+          cp downloaded/bullmq-messaging-software-rules/bullmq-messaging-python.capture.json "$dest/"
+          cp downloaded/bullmq-messaging-software-rules/bullmq-messaging-comparison.report.json "$dest/"
+      - name: Revalidate retained captures and evidence
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          if [ "${{ github.event.workflow_run.name }}" = "TypeORM persistence cross-stack conformance (verification)" ]; then
+            node conformance/validation/validate-case-artifacts.mjs \
+              conformance/replication-lab/cases/TORM-PERSIST-001/artifacts/typeorm-source.capture.json \
+              conformance/replication-lab/cases/TORM-PERSIST-001/artifacts/typeorm-python-replica.capture.json \
+              conformance/replication-lab/cases/TORM-PERSIST-001/artifacts/typeorm-comparison.report.json
+          else
+            node conformance/validation/validate-case-artifacts.mjs \
+              conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-source.capture.json \
+              conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-python.capture.json \
+              conformance/replication-lab/cases/BMQ-MSG-001/artifacts/bullmq-messaging-comparison.report.json
+          fi
+      - name: Commit retained evidence to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add conformance/replication-lab/cases/TORM-PERSIST-001/artifacts conformance/replication-lab/cases/BMQ-MSG-001/artifacts
+          if ! git diff --cached --quiet; then
+            git commit -m "test: retain verified cross-stack case evidence"
+            git push origin main
+          fi

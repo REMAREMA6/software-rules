@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Nine bounded cross-stack cases have passed: the eight listed below plus TASKBOARD-UI-001 (plain HTML/CSS/browser JavaScript to independent React 19/Vite UI replication). No entire facet is complete for the project-wide objective.
+**Overall status:** In progress. Nine bounded cross-stack cases have passed. PROM-PERF-001 is pending CI and evidence review; it is not yet accepted. No entire facet is complete for the project-wide objective.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 
@@ -22,7 +22,7 @@ This matrix distinguishes a facet having some validated evidence from a facet be
 | 12 | Errors and recovery | BullMQ retry suppression/consumer failure, Express 404 fallback, TypeORM rollback, Medusa invalid_data, and JOSE semantic JWT rejection categories pass bounded cases; broader failure classes remain uncovered. | Python retry, queue, HTTP, SQLite, date, and JWT models | In progress |
 | 13 | Integrations | REDIS-INT-001 matches pinned go-redis Go client and Python redis-py across seven normalized operations against Redis 7; five executable mutations, Software Rules 0.2.0 schema validation, comparison validation, and evidence integrity passed in run [#45932496414](https://github.com/REMAREMA6/software-rules/actions/runs/45932496414). Other integration protocols, authentication, TLS, clustering, and broader dependency behaviour remain untested. | Python 3.12 / redis-py | In progress |
 | 14 | Configuration | Express default case-sensitive/strict routing settings pass in the seven-request case. Effective configuration precedence in Grafana/Keycloak remains untested. | Python HTTP server | In progress |
-| 15 | Performance and resource behaviour | Prometheus is a registered candidate; no reproducible source workload and independent measurement case has passed. | None yet | Not started |
+| 15 | Performance and resource behaviour | PROM-PERF-001 now pins Prometheus TSDB write benchmark and defines a 200-series × 100-scrape workload, three repeated measurements, throughput/resource capture, semantic comparison, and mutation checks. Runtime CI and schema/evidence validation are pending; no pass is claimed yet. | Independent Python 3.12 workload-accounting model; not a TSDB storage-engine replica | Pending |
 
 ## Accepted bounded cases
 
@@ -41,6 +41,6 @@ TypeORM verification: run [#45928766010](https://github.com/REMAREMA6/software-r
 | [TASKBOARD-UI-001](cases/TASKBOARD-UI-001/CASE.md) | Interface | Nine viewport/state comparisons, zero differing pixels, matching semantic snapshots/API traces, active-count mutation detected, Software Rules 0.2.0 captures/report, schema and integrity validation; run [#45934802401](https://github.com/REMAREMA6/software-rules/actions/runs/45934802401), artifact `15170370565` |
 
 
-## Completion rule
+## Pending cases\n\n| Case | Facet | Current status |\n|---|---|---|\n| [PROM-PERF-001](cases/PROM-PERF-001/CASE.md) | Performance and resource behaviour; behaviour; data | Pending pinned Prometheus runtime benchmark, three repeated measurements, independent workload model, mutation detection, Software Rules capture/report validation, and evidence review.\n\n## Completion rule
 
 Do not mark a facet complete because a repository has a similarly named feature or because one bounded case passes. Completion requires a reviewed property inventory for that facet, suitable source evidence, independent implementations in different stacks, equivalent normal/boundary/negative/failure probes, comparison, meaningful mutation detection, validated Software Rules captures, and explicit resolution of every required unknown or partial property.

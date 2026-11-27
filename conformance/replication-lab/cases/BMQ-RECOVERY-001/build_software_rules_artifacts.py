@@ -132,7 +132,7 @@ def build_report(source,replica):
 def main():
  p=argparse.ArgumentParser();p.add_argument("--source",required=True);p.add_argument("--replica",required=True);p.add_argument("--output-dir",required=True);a=p.parse_args()
  out=Path(a.output_dir);out.mkdir(parents=True,exist_ok=True)
- s=build_capture(read(a.source),"source",a.source);r=build_capture(read(a.replica),"replica",a.replica,{})
+ s=build_capture(read(a.source),"source",a.source);r=build_capture(read(a.replica),"replica",a.replica)
  report=build_report(s,r)
  write(out/"bullmq-stalled-source.capture.json",s);write(out/"bullmq-stalled-python-replica.capture.json",r);write(out/"bullmq-stalled-comparison.report.json",report)
  print(json.dumps({"results":len(report["results"]),"mismatches":len([x for x in report["results"] if x["classification"]!="match"])},indent=2))

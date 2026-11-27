@@ -25,6 +25,8 @@ def validate_price_list_dates(data, empty_string_is_missing=True, validate_end=T
             continue
         if value == "" and empty_string_is_missing:
             continue
+        if value == "" and not empty_string_is_missing:
+            raise ValueError(("invalid_data", field))
         if value and not is_iso_date(value):
             raise ValueError(("invalid_data", field))
 

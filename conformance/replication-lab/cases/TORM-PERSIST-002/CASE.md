@@ -1,7 +1,7 @@
 # Case — TypeORM file-backed commit durability and rollback recovery
 
 **Case ID:** TORM-PERSIST-002  
-**Status:** Pending runtime and evidence validation.  
+**Status:** PASSED for all four file-backed durability scenarios in [run #45942572930](https://github.com/REMAREMA6/software-rules/actions/runs/45942572930). Pinned TypeORM 1.1.3 and independent Python sqlite3 matched all four post-reopen states; four deliberate mutations were detected; Software Rules 0.2.0 captures/comparison passed schema and cross-record integrity validation. Artifact `15172764857` retained through 2026-12-27. This is bounded SQLite file-durability evidence, not complete persistence-facet coverage.  
 **Facets:** Persistence; data; behaviour; errors and recovery  
 **Source:** https://github.com/typeorm/typeorm  
 **Immutable source commit:** `b1e211fc2654d412612a08f8a7fb890f3352614f`  

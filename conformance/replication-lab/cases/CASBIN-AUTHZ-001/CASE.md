@@ -1,7 +1,7 @@
 # Case — Casbin RBAC authorization decisions
 
 **Case ID:** CASBIN-AUTHZ-001  
-**Status:** Source and independent replica probes prepared; pinned-source runtime, Software Rules capture validation, and CI pending  
+**Status:** PASSED for the declared ten-request simple-RBAC scope. Pinned Apache Casbin Go runtime and independent Python 3.12 model matched all ten decisions; four executable mutations passed; Software Rules 0.2.0 source/replica captures, comparison, schema validation, and evidence-integrity checks passed in [workflow run #45931911753](https://github.com/REMAREMA6/software-rules/actions/runs/45931911753). Retained CI artifact ID `15168623669` (expires 2026-12-27). This does not establish complete authorization-facet coverage.  
 **Facet(s):** Authorization and permissions; behaviour; data  
 **Source:** https://github.com/apache/casbin  
 **Source commit:** `fa4023fd7d02d9b7d023515e76b19b3be637f613`  

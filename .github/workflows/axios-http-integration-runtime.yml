@@ -48,6 +48,8 @@ jobs:
       - name: Install pinned Axios runtime dependencies
         working-directory: /tmp/axios
         run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Retain pinned Axios package manifest
+        run: cp /tmp/axios/package.json axios-source-package.json
       - name: Execute pinned Axios Node HTTP adapter
         env:
           AXIOS_SOURCE_ROOT: /tmp/axios
@@ -66,7 +68,7 @@ jobs:
             --source axios-http-source-runtime.json \
             --replica axios-http-python-runtime.json \
             --output-dir axios-http-software-rules \
-            --source-package /tmp/axios/package.json
+            --source-package axios-source-package.json
       - name: Validate Software Rules captures, comparison, and evidence integrity
         run: |
           npm install --prefix conformance/validation --no-audit --no-fund
@@ -83,6 +85,6 @@ jobs:
             axios-http-source-runtime.json
             axios-http-python-runtime.json
             axios-http-software-rules/*.json
-            /tmp/axios/package.json
+            axios-source-package.json
           if-no-files-found: warn
           retention-days: 30

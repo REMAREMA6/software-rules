@@ -1,7 +1,7 @@
 # Case — BullMQ message delivery, duplicate suppression, and consumer outcome
 
 **Case ID:** BMQ-MSG-001  
-**Status:** Source runtime probe, independent Python model, comparator, and mutation tests prepared; runtime execution pending.  
+**Status:** Source runtime probe, independent Python model, comparator, and mutation tests prepared; runtime recheck queued after observed QueueEvents trace reconciliation.  
 **Facet(s):** Messaging; Behaviour; Background processing; Errors and recovery; Data  
 **Source:** https://github.com/taskforcesh/bullmq  
 **Source commit:** 526668f2c5e6de9d5d664df577f09a6bdccac1b4  

@@ -38,19 +38,24 @@ async function installApi(page){
  return requests;
 }
 async function open(url,viewport){const page=await browser.newPage({viewport});const requests=await installApi(page);await page.goto(url);await page.locator("#task-input").waitFor();return{page,requests};}
-function diff(a,b){const x=PNG.sync.read(a),y=PNG.sync.read(b);if(x.width!==y.width||x.height!==y.height)return{width:x.width,height:x.height,otherWidth:y.width,otherHeight:y.height,differentPixels:-1};return{width:x.width,height:x.height,differentPixels:pixelmatch(x.data,y.data,null,x.width,x.height,{threshold:0.1})};}
+function diff(a,b){const x=PNG.sync.read(a),y=PNG.sync.read(b);if(x.width!==y.width||x.height!==y.height)return{width:x.width,height:x.height,otherWidth:y.width,otherHeight:y.height,differentPixels:-1};const delta=new PNG({width:x.width,height:x.height});const differentPixels=pixelmatch(x.data,y.data,delta.data,x.width,x.height,{threshold:0.1});return{width:x.width,height:x.height,differentPixels,diffImage:PNG.sync.write(delta)};}
 async function snapshot(page){return page.locator("main").evaluate(root=>({text:root.innerText,roles:[...root.querySelectorAll("h1,form,input,button,nav,ul,li,p")].map(el=>({tag:el.tagName.toLowerCase(),text:(el.innerText||"").trim(),role:el.getAttribute("role"),label:el.getAttribute("aria-label"),pressed:el.getAttribute("aria-pressed"),live:el.getAttribute("aria-live"),required:el.required??false,type:el.type??null}))}));}
 try{
  for(const viewport of [{width:1280,height:800},{width:768,height:900},{width:320,height:720}]){
   const a=await open("http://127.0.0.1:4172",viewport),b=await open("http://127.0.0.1:4173",viewport);
-  const result=diff(await a.page.screenshot({fullPage:true}),await b.page.screenshot({fullPage:true}));
-  output.viewportResults.push({viewport,...result});
+  const shotA=await a.page.screenshot({fullPage:true}),shotB=await b.page.screenshot({fullPage:true});
+  const result=diff(shotA,shotB);
+  await mkdir(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence",{recursive:true});
+  await writeFile(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/viewport-"+viewport.width+"-source.png",shotA);
+  await writeFile(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/viewport-"+viewport.width+"-react.png",shotB);
+  await writeFile(root + "/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/viewport-"+viewport.width+"-diff.png",result.diffImage);
+  output.viewportResults.push({viewport,width:result.width,height:result.height,differentPixels:result.differentPixels});
   assert(result.differentPixels===0,"Initial viewport mismatch at "+viewport.width+"px: "+result.differentPixels);
   assert(JSON.stringify(await snapshot(a.page))===JSON.stringify(await snapshot(b.page)),"Initial semantic snapshot mismatch at "+viewport.width+"px");
   await a.page.close();await b.page.close();
  }
  const a=await open("http://127.0.0.1:4172",{width:1280,height:800}),b=await open("http://127.0.0.1:4173",{width:1280,height:800});
- async function compareState(name){const d=diff(await a.page.screenshot({fullPage:true}),await b.page.screenshot({fullPage:true}));const same=JSON.stringify(await snapshot(a.page))===JSON.stringify(await snapshot(b.page));output.workflowResults.push({state:name,...d,semanticMatch:same});assert(d.differentPixels===0,name+" visual mismatch: "+d.differentPixels);assert(same,name+" semantic mismatch");}
+ async function compareState(name){const shotA=await a.page.screenshot({fullPage:true}),shotB=await b.page.screenshot({fullPage:true});const d=diff(shotA,shotB);await writeFile(root+"/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/"+name+"-source.png",shotA);await writeFile(root+"/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/"+name+"-react.png",shotB);await writeFile(root+"/conformance/replication-lab/cases/TASKBOARD-UI-001/evidence/"+name+"-diff.png",d.diffImage);const same=JSON.stringify(await snapshot(a.page))===JSON.stringify(await snapshot(b.page));output.workflowResults.push({state:name,width:d.width,height:d.height,differentPixels:d.differentPixels,semanticMatch:same});assert(d.differentPixels===0,name+" visual mismatch: "+d.differentPixels);assert(same,name+" semantic mismatch");}
  await a.page.locator("#task-input").fill("Write specification");await b.page.locator("#task-input").fill("Write specification");
  await Promise.all([a.page.getByRole("button",{name:"Add task"}).click(),b.page.getByRole("button",{name:"Add task"}).click()]);
  await Promise.all([a.page.locator("#task-list li").nth(0).waitFor(),b.page.locator("#task-list li").nth(0).waitFor()]);

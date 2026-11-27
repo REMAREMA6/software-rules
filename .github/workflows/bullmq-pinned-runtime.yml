@@ -13,6 +13,10 @@ on:
       - ".github/workflows/bullmq-pinned-runtime.yml"
   workflow_dispatch:
 
+concurrency:
+  group: bullmq-pinned-runtime
+  cancel-in-progress: true
+
 jobs:
   pinned-bullmq-runtime:
     runs-on: ubuntu-latest

@@ -39,6 +39,10 @@ for (const file of ["reference.capture.json", "independent.capture.json", "indep
     }
   }
 }
+const bullmqSource = JSON.parse(fs.readFileSync(path.resolve("examples/cross-repository/captures/bullmq-source.capture.json"), "utf8"));
+assert.deepEqual(validateCapture(bullmqSource), [], "BullMQ source-derived capture must have valid references and an explicit incomplete inventory");
+assert.equal(bullmqSource.replicationScope.completeness.status, "incomplete", "source-derived rules must not be treated as runtime-complete");
+assert.ok(bullmqSource.replicationScope.propertyInventory.every(property => property.status === "source-inferred"), "BullMQ properties remain explicitly source-inferred until runtime evidence is collected");
 const minimal = JSON.parse(fs.readFileSync(path.resolve("schemas/v1/fixtures/valid/minimal-capture.json"), "utf8"));
 assert.deepEqual(validateCapture(minimal), [], "minimal capture fixture must have valid inventory references");
 assert.equal(minimal.replicationScope.completeness.status, "incomplete", "minimal fixture must not claim replication completeness");

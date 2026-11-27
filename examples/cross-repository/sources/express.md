@@ -36,4 +36,4 @@ A Python 3.12 standard-library HTTP server is prepared under `conformance/replic
 
 ## Status
 
-Source evidence has been inspected and the bounded seven-request runtime/replica workflow is configured. No cross-stack case pass is claimed until the pinned Express runtime, Python replica, comparison, mutation tests, Software Rules captures, and evidence validation all pass.
+One bounded seven-request case now passes: pinned Express 5.3.0 and the independent Python 3.12 HTTP replica match across 28 facet/scenario projections; executable mutations are detected; Software Rules captures and comparison report pass schema/integrity validation. Evidence is committed under `conformance/replication-lab/cases/EXP-API-001/artifacts/` at [commit ad30376](https://github.com/REMAREMA6/software-rules/commit/ad3037693d32221a6d7bdb6b9883c45db7b2be9c). This is not full Express or full API-facet coverage.

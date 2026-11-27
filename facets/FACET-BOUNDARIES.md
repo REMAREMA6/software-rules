@@ -1,6 +1,6 @@
 # Facet Boundary and Taxonomy Decision
 
-**Maturity:** Draft — Phase 3 taxonomy review.
+**Maturity:** Draft — Software Rules specification 0.3.0.
 
 ## 1. Classification model
 

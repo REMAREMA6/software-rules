@@ -10,7 +10,7 @@ Do not mark a facet covered merely because a repository has a feature with a sim
 
 | Repository | Candidate facets | Inspected immutable commit | Licence status | Current evidence status |
 |---|---|---|---|---|
-| [BullMQ](https://github.com/taskforcesh/bullmq) | Background processing; errors/recovery; messaging | `526668f2c5e6de9d5d664df577f09a6bdccac1b4` | MIT verified | BMQ-ER-002 retry/backoff and BMQ-MSG-001 message lifecycle pass with independent Python models, mutation tests, Software Rules schema validation, and evidence integrity. |
+| [BullMQ](https://github.com/taskforcesh/bullmq) | Background processing; errors/recovery; messaging | `526668f2c5e6de9d5d664df577f09a6bdccac1b4` | MIT verified | BMQ-ER-002 retry/backoff, BMQ-MSG-001 message lifecycle, and BMQ-RECOVERY-001 stalled-job recovery/terminal-limit behaviour pass independent Python comparisons, mutation tests, and Software Rules schema/evidence integrity validation. |
 | [Keycloak](https://github.com/keycloak/keycloak) | Identity/authentication; authorization; configuration | `d22c7c587818ecf3517c349e9efa199b24623bbe` | Apache-2.0 verified | Authentication SPI documentation inspected; runtime identity/session lifecycle case pending. |
 | [OWASP Juice Shop](https://github.com/juice-shop/juice-shop) | Security; authentication; authorization; interface; API | `c9f99228d9d56afb5f5ca7925376292f7fa44b13` | MIT verified | Security challenge taxonomy inspected; target challenge and runtime pending. |
 | [Grafana](https://github.com/grafana/grafana) | Configuration; integrations; identity/access; API; performance | `d82f399ab7ff0aba6b762f6137fe72ec06be0480` | AGPL-3.0 verified | Defaults and NATS auth settings inspected; effective runtime precedence pending. |

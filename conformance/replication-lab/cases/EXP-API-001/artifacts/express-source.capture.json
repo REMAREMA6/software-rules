@@ -1,7 +1,7 @@
 {
   "schemaVersion": "0.2.0",
   "captureId": "express-source-runtime-capture",
-  "createdAt": "2026-11-27T02:35:54.677027Z",
+  "createdAt": "2026-11-27T07:54:43.668156Z",
   "purpose": "Capture the declared seven-request Express routing/API conformance scope.",
   "target": {
     "targetId": "express-source-runtime",
@@ -269,8 +269,8 @@
       "executionId": "express-exec-source-get-base",
       "scenarioId": "express-scenario-get-base",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -293,8 +293,8 @@
       "executionId": "express-exec-source-head-fallback",
       "scenarioId": "express-scenario-head-fallback",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -317,8 +317,8 @@
       "executionId": "express-exec-source-options-auto",
       "scenarioId": "express-scenario-options-auto",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -341,8 +341,8 @@
       "executionId": "express-exec-source-options-missing",
       "scenarioId": "express-scenario-options-missing",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -365,8 +365,8 @@
       "executionId": "express-exec-source-options-explicit",
       "scenarioId": "express-scenario-options-explicit",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -389,8 +389,8 @@
       "executionId": "express-exec-source-case-and-trailing-slash",
       "scenarioId": "express-scenario-case-and-trailing-slash",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -413,8 +413,8 @@
       "executionId": "express-exec-source-query-ignored",
       "scenarioId": "express-scenario-query-ignored",
       "targetId": "express-source-runtime",
-      "startedAt": "2026-11-27T02:35:53.779Z",
-      "endedAt": "2026-11-27T02:35:53.854Z",
+      "startedAt": "2026-11-27T07:54:42.880Z",
+      "endedAt": "2026-11-27T07:54:42.929Z",
       "status": "completed",
       "actualContext": {
         "runtime": "Node.js 22 / Express 5.3.0",
@@ -441,7 +441,7 @@
       "executionId": "express-exec-source-get-base",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 0,
       "method": {
         "class": "instrumentation",
@@ -519,7 +519,7 @@
       "executionId": "express-exec-source-get-base",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 1,
       "method": {
         "class": "instrumentation",
@@ -590,7 +590,7 @@
       "executionId": "express-exec-source-get-base",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 2,
       "method": {
         "class": "instrumentation",
@@ -647,7 +647,7 @@
       "executionId": "express-exec-source-get-base",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 3,
       "method": {
         "class": "instrumentation",
@@ -709,7 +709,7 @@
       "executionId": "express-exec-source-head-fallback",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 4,
       "method": {
         "class": "instrumentation",
@@ -788,7 +788,7 @@
       "executionId": "express-exec-source-head-fallback",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 5,
       "method": {
         "class": "instrumentation",
@@ -860,7 +860,7 @@
       "executionId": "express-exec-source-head-fallback",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 6,
       "method": {
         "class": "instrumentation",
@@ -918,7 +918,7 @@
       "executionId": "express-exec-source-head-fallback",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 7,
       "method": {
         "class": "instrumentation",
@@ -981,7 +981,7 @@
       "executionId": "express-exec-source-options-auto",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 8,
       "method": {
         "class": "instrumentation",
@@ -1059,7 +1059,7 @@
       "executionId": "express-exec-source-options-auto",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 9,
       "method": {
         "class": "instrumentation",
@@ -1130,7 +1130,7 @@
       "executionId": "express-exec-source-options-auto",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 10,
       "method": {
         "class": "instrumentation",
@@ -1187,7 +1187,7 @@
       "executionId": "express-exec-source-options-auto",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 11,
       "method": {
         "class": "instrumentation",
@@ -1249,7 +1249,7 @@
       "executionId": "express-exec-source-options-missing",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 12,
       "method": {
         "class": "instrumentation",
@@ -1327,7 +1327,7 @@
       "executionId": "express-exec-source-options-missing",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 13,
       "method": {
         "class": "instrumentation",
@@ -1398,7 +1398,7 @@
       "executionId": "express-exec-source-options-missing",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 14,
       "method": {
         "class": "instrumentation",
@@ -1455,7 +1455,7 @@
       "executionId": "express-exec-source-options-missing",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 15,
       "method": {
         "class": "instrumentation",
@@ -1517,7 +1517,7 @@
       "executionId": "express-exec-source-options-explicit",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 16,
       "method": {
         "class": "instrumentation",
@@ -1595,7 +1595,7 @@
       "executionId": "express-exec-source-options-explicit",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 17,
       "method": {
         "class": "instrumentation",
@@ -1666,7 +1666,7 @@
       "executionId": "express-exec-source-options-explicit",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 18,
       "method": {
         "class": "instrumentation",
@@ -1723,7 +1723,7 @@
       "executionId": "express-exec-source-options-explicit",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 19,
       "method": {
         "class": "instrumentation",
@@ -1785,7 +1785,7 @@
       "executionId": "express-exec-source-case-and-trailing-slash",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 20,
       "method": {
         "class": "instrumentation",
@@ -1863,7 +1863,7 @@
       "executionId": "express-exec-source-case-and-trailing-slash",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 21,
       "method": {
         "class": "instrumentation",
@@ -1934,7 +1934,7 @@
       "executionId": "express-exec-source-case-and-trailing-slash",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 22,
       "method": {
         "class": "instrumentation",
@@ -1991,7 +1991,7 @@
       "executionId": "express-exec-source-case-and-trailing-slash",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 23,
       "method": {
         "class": "instrumentation",
@@ -2053,7 +2053,7 @@
       "executionId": "express-exec-source-query-ignored",
       "facet": "api",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 24,
       "method": {
         "class": "instrumentation",
@@ -2133,7 +2133,7 @@
       "executionId": "express-exec-source-query-ignored",
       "facet": "behavior",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 25,
       "method": {
         "class": "instrumentation",
@@ -2204,7 +2204,7 @@
       "executionId": "express-exec-source-query-ignored",
       "facet": "configuration",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 26,
       "method": {
         "class": "instrumentation",
@@ -2261,7 +2261,7 @@
       "executionId": "express-exec-source-query-ignored",
       "facet": "errors-recovery",
       "subject": "express-route-dispatch",
-      "observedAt": "2026-11-27T02:35:53.854Z",
+      "observedAt": "2026-11-27T07:54:42.929Z",
       "sequence": 27,
       "method": {
         "class": "instrumentation",
@@ -2411,7 +2411,7 @@
         "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
         "location": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-runtime-capture.json"
       },
-      "capturedAt": "2026-11-27T02:35:53.854Z",
+      "capturedAt": "2026-11-27T07:54:42.929Z",
       "embedded": {
         "scenarioLabels": [
           "get-base",
@@ -2422,10 +2422,10 @@
           "case-and-trailing-slash",
           "query-ignored"
         ],
-        "sha256": "1f35622f56da1086ffa377a4fcee6ec9e7900262a1da224cb6f6248887d9f9f3"
+        "sha256": "a4ec5975dcf21deaef7b7392d2ce63cb570b8dd831e1517a5217c0f6ec76db44"
       },
       "locator": "conformance/replication-lab/cases/EXP-API-001/artifacts/express-runtime-capture.json",
-      "digest": "1f35622f56da1086ffa377a4fcee6ec9e7900262a1da224cb6f6248887d9f9f3",
+      "digest": "a4ec5975dcf21deaef7b7392d2ce63cb570b8dd831e1517a5217c0f6ec76db44",
       "sizeBytes": 3042,
       "retention": {
         "status": "retained",
@@ -2442,7 +2442,7 @@
         "sourceRevision": "43fca52d28a422c8be48fd489cbd4f2d6152bab6",
         "location": "conformance/replication-lab/cases/EXP-API-001/artifacts/package-lock.json"
       },
-      "capturedAt": "2026-11-27T02:35:53.854Z",
+      "capturedAt": "2026-11-27T07:54:42.929Z",
       "locator": "conformance/replication-lab/cases/EXP-API-001/artifacts/package-lock.json",
       "digest": "248b8542cbe29d5546f9a69ab7fcf475e7a7e65d08b014b3eb392c59c9ac1102",
       "sizeBytes": 185538,
@@ -2702,7 +2702,7 @@
     ],
     "completeness": {
       "status": "complete",
-      "assessedAt": "2026-11-27T02:35:54.677027Z",
+      "assessedAt": "2026-11-27T07:54:43.668156Z",
       "assessmentMethod": "Every required property is linked to observed facet-specific records and retained runtime evidence across all seven requests.",
       "rationale": "All eight required properties in this bounded case scope were observed on both source and independent replica."
     }

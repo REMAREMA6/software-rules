@@ -1,0 +1,90 @@
+name: Axios external HTTP integration cross-stack conformance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "conformance/replication-lab/cases/AXIOS-HTTP-001/**"
+      - "conformance/replication-lab/projects/axios-http-python/**"
+      - ".github/workflows/axios-http-integration-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  pull_request:
+    paths:
+      - "conformance/replication-lab/cases/AXIOS-HTTP-001/**"
+      - "conformance/replication-lab/projects/axios-http-python/**"
+      - ".github/workflows/axios-http-integration-runtime.yml"
+      - "conformance/validation/validate-case-artifacts.mjs"
+  workflow_dispatch:
+
+concurrency:
+  group: axios-http-integration-runtime-${{ github.event_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  axios-http-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Checkout immutable Axios source commit
+        env:
+          AXIOS_SOURCE_COMMIT: "71c87d506567e2fe37ba9f6fae6a4fc9411583d0"
+        run: |
+          git init /tmp/axios
+          git -C /tmp/axios remote add origin https://github.com/axios/axios.git
+          git -C /tmp/axios fetch --depth=1 origin "$AXIOS_SOURCE_COMMIT"
+          git -C /tmp/axios checkout --detach FETCH_HEAD
+          test "$(git -C /tmp/axios rev-parse HEAD)" = "$AXIOS_SOURCE_COMMIT"
+          node -e "const p=require('/tmp/axios/package.json'); if(p.version!=='1.21.1') process.exit(1); console.log(p.version)"
+      - name: Install pinned Axios runtime dependencies
+        working-directory: /tmp/axios
+        run: npm install --omit=dev --ignore-scripts --no-audit --no-fund
+      - name: Retain pinned Axios package manifest
+        run: cp /tmp/axios/package.json axios-source-package.json
+      - name: Execute pinned Axios Node HTTP adapter
+        env:
+          AXIOS_SOURCE_ROOT: /tmp/axios
+          AXIOS_SOURCE_COMMIT: "71c87d506567e2fe37ba9f6fae6a4fc9411583d0"
+        run: node conformance/replication-lab/cases/AXIOS-HTTP-001/source_probe.cjs > axios-http-source-runtime.json
+      - name: Execute independent Python urllib client
+        run: python conformance/replication-lab/projects/axios-http-python/replica_probe.py > axios-http-python-runtime.json
+      - name: Compare HTTP integration outcomes
+        run: python conformance/replication-lab/cases/AXIOS-HTTP-001/compare.py axios-http-source-runtime.json axios-http-python-runtime.json
+      - name: Run deliberate integration mutation tests
+        run: python -m unittest discover -s conformance/replication-lab/cases/AXIOS-HTTP-001 -p "test_*.py" -v
+      - name: Build Software Rules captures and comparison
+        run: |
+          mkdir -p axios-http-software-rules
+          python conformance/replication-lab/cases/AXIOS-HTTP-001/build_software_rules_artifacts.py \
+            --source axios-http-source-runtime.json \
+            --replica axios-http-python-runtime.json \
+            --output-dir axios-http-software-rules \
+            --source-package axios-source-package.json
+      - name: Validate Software Rules captures, comparison, and evidence integrity
+        run: |
+          npm install --prefix conformance/validation --no-audit --no-fund
+          node conformance/validation/validate-case-artifacts.mjs \
+            axios-http-software-rules/axios-http-source.capture.json \
+            axios-http-software-rules/axios-http-python-replica.capture.json \
+            axios-http-software-rules/axios-http-comparison.report.json
+      - name: Retain source, replica, and Software Rules evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axios-http-integration-cross-stack
+          path: |
+            axios-http-source-runtime.json
+            axios-http-python-runtime.json
+            axios-http-software-rules/*.json
+            axios-source-package.json
+          if-no-files-found: warn
+          retention-days: 30

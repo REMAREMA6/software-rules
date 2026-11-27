@@ -8,10 +8,12 @@ const express = require(process.cwd());
 
 const captureStartedAt = new Date().toISOString();
 const app = express();
+const router = express.Router();
 
-app.get('/widgets', (req, res) => res.send('get'));
-app.put('/widgets', (req, res) => res.send('put'));
-app.options('/override', (req, res) => res.set('Allow', 'GET').send('GET'));
+router.get('/widgets', (req, res) => res.send('get'));
+router.put('/widgets', (req, res) => res.send('put'));
+router.options('/override', (req, res) => res.set('Allow', 'GET').send('GET'));
+app.use(router);
 app.use((req, res) => res.status(404).send('not found'));
 
 async function headWireBodyBytes(port) {

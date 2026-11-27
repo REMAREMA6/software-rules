@@ -46,7 +46,7 @@ async function main() {
  r=await request("/regenerate",firstCookie); const secondCookie=r.setCookie?.split(";")[0]; outcomes.push({label:"regenerate-session",data:r.data,cookie:r.cookieInfo});
  r=await request("/read",firstCookie); outcomes.push({label:"old-id-rejected",data:r.data,cookie:r.cookieInfo});
  r=await request("/read",secondCookie); outcomes.push({label:"new-id-restored",data:r.data,cookie:r.cookieInfo});
- const tampered=secondCookie.replace(/.$/,"x");
+ const last=secondCookie.slice(-1); const tampered=secondCookie.slice(0,-1)+(last==="x"?"y":"x");
  r=await request("/read",tampered); outcomes.push({label:"tampered-cookie-rejected",data:r.data,cookie:r.cookieInfo});
  r=await request("/destroy",secondCookie); outcomes.push({label:"destroy-session",data:r.data,cookie:r.cookieInfo});
  r=await request("/read",secondCookie); outcomes.push({label:"destroyed-id-rejected",data:r.data,cookie:r.cookieInfo});

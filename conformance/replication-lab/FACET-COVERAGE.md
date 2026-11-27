@@ -1,6 +1,6 @@
 # Phase 6 — Fifteen-facet evidence coverage
 
-**Overall status:** In progress. Twenty bounded cross-stack cases have passed: the eight original cases plus TASKBOARD-UI-001, EXP-CONFIG-001, PROM-PERF-001, CASBIN-ADV-AUTHZ-001, MEDUSA-PRICE-001, AXIOS-HTTP-001, SESSION-EXPRESS-001, VIPER-CONFIG-001, TORM-PERSIST-002, BMQ-RECOVERY-001, MEDUSA-ADJUST-001, and MEDUSA-PROMO-001. No entire facet is complete for the project-wide objective.
+**Overall status:** Phase 6 exit approved for the declared validation corpus. Twenty bounded cross-stack cases have passed: the eight original cases plus TASKBOARD-UI-001, EXP-CONFIG-001, PROM-PERF-001, CASBIN-ADV-AUTHZ-001, MEDUSA-PRICE-001, AXIOS-HTTP-001, SESSION-EXPRESS-001, VIPER-CONFIG-001, TORM-PERSIST-002, BMQ-RECOVERY-001, MEDUSA-ADJUST-001, and MEDUSA-PROMO-001. No entire facet is complete for the project-wide objective. This is a bounded corpus completion decision, not a universal-equivalence or facet-wide completeness claim. See [the Phase 6 exit audit](PHASE6-EXIT-AUDIT.md) for the formal decision and explicit exclusions.
 
 This matrix distinguishes a facet having some validated evidence from a facet being complete. A bounded case does not establish complete facet coverage.
 

@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timezone
 
 from retry_policy import decide_retry
 
@@ -82,6 +83,8 @@ scenarios = [
 ]
 
 capture = {
+    "capturedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+    "completedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     "implementation": "independent Python retry-policy model",
     "scenarios": scenarios,
 }
